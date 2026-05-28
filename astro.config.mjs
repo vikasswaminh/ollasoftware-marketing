@@ -32,12 +32,14 @@ export default defineConfig({
         'https://ollasoftware.com/process/',
         'https://ollasoftware.com/pricing/',
         'https://ollasoftware.com/about/',
+        'https://ollasoftware.com/jobs/',
         'https://ollasoftware.com/contact/',
       ],
       serialize(item) {
-        // Higher priority for home + services.
+        // Higher priority for home + services + jobs (high-intent pages).
         if (item.url === 'https://ollasoftware.com/') item.priority = 1.0;
         else if (item.url.startsWith('https://ollasoftware.com/services/')) item.priority = 0.9;
+        else if (item.url === 'https://ollasoftware.com/jobs/') item.priority = 0.9;
         else if (item.url === 'https://ollasoftware.com/contact/') item.priority = 0.7;
         return item;
       },

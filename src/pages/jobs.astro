@@ -1,0 +1,537 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/primitives/PageHero.astro';
+import SectionHead from '../components/primitives/SectionHead.astro';
+import Btn from '../components/primitives/Btn.astro';
+import Tag from '../components/primitives/Tag.astro';
+import { jobs, jobCategories, hiringOverview, type JobCategoryKey } from '../lib/jobs';
+import { SITE } from '../lib/seo';
+
+// Group jobs by category, preserving canonical order.
+const grouped = jobCategories.map(cat => ({
+  ...cat,
+  items: jobs.filter(j => j.category === cat.key),
+}));
+
+// Build a JobPosting JSON-LD per role so Google Jobs and answer engines can
+// surface them as discrete postings. Valid through 90 days from build time.
+const now = new Date();
+const validThrough = new Date(now.getTime() + 90 * 24 * 60 * 60 * 1000);
+
+const employmentTypeMap: Record<string, string> = {
+  'Full-time': 'FULL_TIME',
+  'Part-time': 'PART_TIME',
+  'Contract': 'CONTRACTOR',
+  'Internship': 'INTERN',
+};
+
+const jobLd = jobs.map(j => ({
+  '@context': 'https://schema.org',
+  '@type': 'JobPosting',
+  '@id': `${SITE}/jobs/#${j.slug}`,
+  title: j.title,
+  description: `${j.summary} Skills: ${j.skills.join(', ')}.`,
+  datePosted: now.toISOString().slice(0, 10),
+  validThrough: validThrough.toISOString().slice(0, 10),
+  employmentType: employmentTypeMap[j.employmentType] ?? 'FULL_TIME',
+  hiringOrganization: { '@id': `${SITE}#organization` },
+  jobLocation: {
+    '@type': 'Place',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'HSR Layout',
+      addressLocality: 'Bangalore',
+      addressRegion: 'Karnataka',
+      postalCode: '560102',
+      addressCountry: 'IN',
+    },
+  },
+  jobLocationType: 'TELECOMMUTE',
+  applicantLocationRequirements: { '@type': 'Country', name: 'India' },
+  baseSalary: {
+    '@type': 'MonetaryAmount',
+    currency: 'INR',
+    value: { '@type': 'QuantitativeValue', unitText: 'YEAR', name: j.compensation },
+  },
+  experienceRequirements: j.experience,
+  skills: j.skills.join(', '),
+  industry: 'AI Software Development',
+  occupationalCategory: jobCategories.find(c => c.key === j.category)?.label ?? '',
+  totalJobOpenings: j.openings,
+  url: `${SITE}/jobs/#${j.slug}`,
+  directApply: false,
+}));
+
+const itemListLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  numberOfItems: jobs.length,
+  itemListElement: jobs.map((j, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: j.title,
+    url: `${SITE}/jobs/#${j.slug}`,
+  })),
+};
+---
+<Layout
+  title="Jobs at Ollasoftware — 1,200+ AI Engineering Roles in Bangalore, India"
+  description="1,200+ open roles at Ollasoftware across 16 founder companies in Bangalore. Frontend, backend, MCP server, DevOps, SOC, pentest, prompt engineering, AI product. Hybrid (3+2). ₹4.5–15 LPA. 1+ year AI tooling required."
+  breadcrumb={[
+    { name: 'Home', url: `${SITE}/` },
+    { name: 'Jobs', url: `${SITE}/jobs/` },
+  ]}
+  jsonLd={[itemListLd, ...jobLd]}
+>
+  <PageHero
+    eyebrow="Jobs · Bangalore HQ"
+    title="1,200+ open roles. 16 founder companies. One senior team."
+    sub="Build AI software in production at the pioneer AI software development company in India. Real work on real founder-owned products — AEONITI, Crawlcrawl, Switchllm, Ollima, NHPREP, Quick21, FreeFreeCV and more. Hybrid out of HSR Layout, Bangalore."
+    breadcrumb={[{ label: 'home', href: '/' }, { label: 'jobs' }]}
+  >
+    <Btn primary href="#roles">Browse all roles →</Btn>
+    <Btn href="#apply">How to apply</Btn>
+  </PageHero>
+
+  <section class="overview">
+    <div class="stat">
+      <span class="stat-num">{hiringOverview.totalOpenings}+</span>
+      <span class="stat-label mono">total openings</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">{hiringOverview.founderCompanies}</span>
+      <span class="stat-label mono">founder companies</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num accent">Bangalore</span>
+      <span class="stat-label mono">{hiringOverview.location}</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">{hiringOverview.salaryBand}</span>
+      <span class="stat-label mono">salary band</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">{hiringOverview.workModel.split(' · ')[0]}</span>
+      <span class="stat-label mono">{hiringOverview.workModel.split(' · ')[1]}</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">{hiringOverview.minAIExperience}</span>
+      <span class="stat-label mono">min AI tooling xp</span>
+    </div>
+  </section>
+
+  <section class="category-jump">
+    <span class="jump-label mono">Jump to:</span>
+    {jobCategories.map(c => (
+      <a class="jump-link mono" href={`#${c.key}`} style={`--accent:${c.accentVar}`}>
+        {c.label}
+        <span class="jump-count">
+          ({jobs.filter(j => j.category === c.key).length})
+        </span>
+      </a>
+    ))}
+  </section>
+
+  <section id="roles" class="roles">
+    {grouped.map(g => (
+      <div id={g.key} class="cat-block" style={`--accent:${g.accentVar}`}>
+        <div class="cat-head">
+          <Tag color={g.accentVar}>{g.label}</Tag>
+          <span class="cat-count mono">{g.items.length} roles · {g.items.reduce((acc, j) => {
+            const n = parseInt(j.openings.replace(/\D/g, ''), 10);
+            return Number.isNaN(n) ? acc : acc + n;
+          }, 0)}+ openings</span>
+        </div>
+
+        <div class="job-list">
+          {g.items.map(j => (
+            <article id={j.slug} class="job-card">
+              <div class="job-top">
+                <div class="job-title-row">
+                  <h2 class="job-title">{j.title}</h2>
+                  <span class="job-openings mono">{j.openings} openings</span>
+                </div>
+                <div class="job-meta mono">
+                  <span>{j.location}</span>
+                  <span class="dot">·</span>
+                  <span>{j.employmentType}</span>
+                  <span class="dot">·</span>
+                  <span>{j.compensation}</span>
+                </div>
+              </div>
+
+              <p class="job-summary">{j.summary}</p>
+
+              <div class="job-grid">
+                <div class="job-cell">
+                  <span class="cell-label mono">Experience</span>
+                  <span class="cell-value">{j.experience}</span>
+                </div>
+                <div class="job-cell">
+                  <span class="cell-label mono">Key skills &amp; tools</span>
+                  <ul class="skills mono">
+                    {j.skills.map(s => <li><span>{s}</span></li>)}
+                  </ul>
+                </div>
+              </div>
+
+              <div class="job-foot">
+                <a href={`/contact?role=${j.slug}`} class="apply mono">Apply for {j.title} →</a>
+                <a href={`#${j.slug}`} class="permalink mono" aria-label="Permalink">#</a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    ))}
+  </section>
+
+  <section id="apply" class="how-to-apply">
+    <SectionHead
+      tag="How to apply"
+      title="The application loop."
+      sub="We hire fast. We move slowly on the wrong fits. The faster you give us a real signal, the faster we say yes or no."
+    />
+    <ol class="loop">
+      <li>
+        <span class="loop-num mono">01</span>
+        <h3>Submit via the form</h3>
+        <p>
+          Include role title, your top 3 AI tools, and one production link
+          — a GitHub PR, a deployed app, an MCP repo. Generic CVs get
+          auto-filtered. Less is more if the production link is strong.
+        </p>
+      </li>
+      <li>
+        <span class="loop-num mono">02</span>
+        <h3>{hiringOverview.interviewRounds} interview rounds</h3>
+        <p>
+          Round 1: 30-min screen with hiring manager. Round 2: paired
+          work with a senior engineer on a real ticket. Round 3:
+          system / architecture discussion. Round 4: founder fit.
+        </p>
+      </li>
+      <li>
+        <span class="loop-num mono">03</span>
+        <h3>{hiringOverview.typicalTimeline}</h3>
+        <p>
+          From submission to offer in 7–14 days. We tell you yes or no
+          fast. We do not ghost. We give written feedback either way,
+          because we owe it to you.
+        </p>
+      </li>
+    </ol>
+
+    <div class="cta-row">
+      <Btn primary href="/contact?intent=jobs">Start your application →</Btn>
+      <Btn href="/about/">Learn about the company</Btn>
+    </div>
+  </section>
+
+  <section class="fine-print">
+    <div class="fp-block">
+      <span class="fp-label mono">Remote policy</span>
+      <p>Default hybrid (3 office, 2 remote). Fully remote available for engineers with 5+ years of proven async track record on production teams.</p>
+    </div>
+    <div class="fp-block">
+      <span class="fp-label mono">Freshers</span>
+      <p>Premier-institute graduates (IIT / IIM / NIT / IIIT) can apply to the unpaid internship track. Non-premier graduates can route through the Networkers Home placement-guarantee programme first.</p>
+    </div>
+    <div class="fp-block">
+      <span class="fp-label mono">Generic CVs</span>
+      <p>We auto-filter applications without a production link. This is not a hard gate against career-changers — a working side project counts. It is a hard gate against unread CVs.</p>
+    </div>
+    <div class="fp-block">
+      <span class="fp-label mono">Equal opportunity</span>
+      <p>Ollasoftware hires on evidence of work, not pedigree of where it came from. We have no degree filter for roles outside the premier-institute intern track. If you can do the work, we want to talk.</p>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .overview {
+    padding: 48px 56px;
+    border-bottom: 1px solid var(--o-line);
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1px;
+    background: var(--o-line);
+  }
+  .stat {
+    background: var(--o-panel);
+    padding: 22px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .stat-num {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--o-ink);
+    letter-spacing: -0.4px;
+  }
+  .stat-num.accent { color: var(--o-accent); }
+  .stat-label {
+    font-size: 10px;
+    color: var(--o-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .category-jump {
+    padding: 24px 56px;
+    border-bottom: 1px solid var(--o-line);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 18px;
+    background: var(--o-panel);
+  }
+  .jump-label {
+    font-size: 11px;
+    color: var(--o-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+  .jump-link {
+    font-size: 12px;
+    color: var(--o-mute);
+    text-decoration: none;
+    padding: 4px 10px;
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius-sm);
+    transition: color .14s, border-color .14s, background .14s;
+  }
+  .jump-link:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+  }
+  .jump-count { color: var(--o-faint); margin-left: 4px; }
+
+  .roles {
+    padding: 64px 56px;
+    border-bottom: 1px solid var(--o-line);
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+  }
+
+  .cat-block { scroll-margin-top: 80px; }
+  .cat-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--o-line);
+  }
+  .cat-count { font-size: 11px; color: var(--o-faint); }
+
+  .job-list { display: flex; flex-direction: column; gap: 14px; }
+
+  .job-card {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--o-radius-lg);
+    padding: 28px 32px;
+    scroll-margin-top: 80px;
+    transition: background .14s;
+  }
+  .job-card:hover {
+    background: var(--o-panel-hi);
+  }
+
+  .job-top { margin-bottom: 14px; }
+  .job-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
+  .job-title {
+    margin: 0;
+    font-size: 24px;
+    color: var(--o-ink);
+    letter-spacing: -0.5px;
+    font-weight: 600;
+    line-height: 1.15;
+  }
+  .job-openings {
+    font-size: 11px;
+    color: var(--accent);
+    padding: 3px 10px;
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+  .job-meta {
+    font-size: 12px;
+    color: var(--o-mute);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  .job-meta .dot { opacity: 0.5; }
+
+  .job-summary {
+    margin: 0 0 18px;
+    font-size: 15px;
+    color: var(--o-mute);
+    line-height: 1.55;
+    max-width: 820px;
+  }
+
+  .job-grid {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 20px 28px;
+    padding: 18px 0;
+    border-top: 1px dashed var(--o-line);
+  }
+  .job-cell { display: flex; flex-direction: column; gap: 8px; }
+  .cell-label {
+    font-size: 10px;
+    color: var(--o-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+  .cell-value {
+    font-size: 13px;
+    color: var(--o-ink);
+  }
+
+  .skills {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 8px;
+  }
+  .skills li span {
+    font-size: 11px;
+    color: var(--o-ink);
+    background: var(--o-panel-hi);
+    padding: 4px 10px;
+    border: 1px solid var(--o-line);
+    border-radius: 3px;
+    display: inline-block;
+  }
+
+  .job-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    padding-top: 14px;
+    border-top: 1px solid var(--o-line);
+  }
+  .apply {
+    font-size: 13px;
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .apply:hover { filter: brightness(1.1); }
+  .permalink {
+    font-size: 14px;
+    color: var(--o-faint);
+    text-decoration: none;
+    padding: 4px 8px;
+    border-radius: 3px;
+  }
+  .permalink:hover { color: var(--accent); }
+
+  .how-to-apply {
+    padding: 96px 56px;
+    border-bottom: 1px solid var(--o-line);
+    background: linear-gradient(var(--o-bg), var(--o-panel) 50%, var(--o-bg));
+  }
+  .loop {
+    list-style: none;
+    margin: 0 0 36px;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .loop li {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius-lg);
+    padding: 28px;
+  }
+  .loop-num {
+    font-size: 11px;
+    color: var(--o-accent);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .loop h3 {
+    margin: 12px 0 10px;
+    font-size: 20px;
+    color: var(--o-ink);
+    letter-spacing: -0.4px;
+    font-weight: 500;
+  }
+  .loop p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--o-mute);
+    line-height: 1.55;
+  }
+  .cta-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .fine-print {
+    padding: 64px 56px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .fp-block {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius);
+    padding: 22px 24px;
+  }
+  .fp-label {
+    font-size: 11px;
+    color: var(--o-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .fp-block p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--o-mute);
+    line-height: 1.55;
+  }
+
+  @media (max-width: 1100px) {
+    .overview { grid-template-columns: repeat(3, 1fr); }
+    .loop { grid-template-columns: 1fr; }
+    .fine-print { grid-template-columns: repeat(2, 1fr); }
+    .job-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 700px) {
+    .overview, .category-jump, .roles, .how-to-apply, .fine-print {
+      padding-left: 24px; padding-right: 24px;
+    }
+    .overview { grid-template-columns: repeat(2, 1fr); }
+    .fine-print { grid-template-columns: 1fr; }
+    .job-card { padding: 22px; }
+    .job-title { font-size: 20px; }
+  }
+</style>

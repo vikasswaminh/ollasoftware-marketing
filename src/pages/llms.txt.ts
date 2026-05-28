@@ -5,6 +5,7 @@
 import type { APIRoute } from 'astro';
 import { services } from '../lib/tokens';
 import { clients } from '../lib/clients';
+import { jobs, hiringOverview, jobCategories } from '../lib/jobs';
 
 const SITE = 'https://ollasoftware.com';
 
@@ -44,6 +45,17 @@ ${(['ai','api','security','saas','training'] as const).map(cat => {
 - [Start a project](${SITE}/contact/) — 30-minute call, written discovery doc within a week, fixed-price SOW by day 10.
 - [Pricing](${SITE}/pricing/) — three engagement models: Audit ($24k, 2-week), Sprint ($48k+, fixed), Retainer ($11k+/month).
 - [Process](${SITE}/process/) — five principles, sample SOW, SOC 2 / GDPR / DPA posture.
+
+## How to work for us
+
+We are hiring at scale across 16 founder companies — ${hiringOverview.totalOpenings}+ open roles in Bangalore. [Full list](${SITE}/jobs/).
+
+${jobCategories.map(cat => {
+  const roles = jobs.filter(j => j.category === cat.key);
+  return `### ${cat.label} (${roles.length} categories)\n\n${roles.map(j => `- **${j.title}** — ${j.openings} openings · ${j.location} · ${j.compensation}. ${j.summary}`).join('\n')}`;
+}).join('\n\n')}
+
+**Hiring snapshot**: ${hiringOverview.totalOpenings}+ openings · ${hiringOverview.founderCompanies} founder companies · ${hiringOverview.location} · ${hiringOverview.workModel} · ${hiringOverview.salaryBand} · ${hiringOverview.minAIExperience} minimum AI tooling experience. Application loop: ${hiringOverview.interviewRounds} rounds, ${hiringOverview.typicalTimeline}.
 
 ## Geography and contact
 
