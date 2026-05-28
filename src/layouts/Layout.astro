@@ -2,43 +2,118 @@
 import '../styles/global.css';
 import SiteNav from '../components/chrome/SiteNav.astro';
 import SiteFooter from '../components/chrome/SiteFooter.astro';
+import { organizationLd, websiteLd, breadcrumbLd, ldScript } from '../lib/seo';
 
 interface Props {
   title: string;
   description?: string;
+  /** Optional extra JSON-LD payload(s) injected before </head>. */
+  jsonLd?: unknown[];
+  /** Breadcrumb trail for BreadcrumbList schema. If omitted, no crumb schema. */
+  breadcrumb?: Array<{ name: string; url: string }>;
+  /** Custom OG image URL; defaults to favicon. */
+  ogImage?: string;
 }
 
 const {
   title,
-  description = 'Ollasoftware — the pioneer AI software development company. Owners of 40+ AI brands in production. We build custom AI, software, AEO/SEO, social and performance for clients who want what we ship ourselves.',
+  description = 'Pioneer AI software development company in India. Headquartered in Bangalore. Owners of 40+ AI brands in production. We build custom AI, software, AEO/SEO, social and performance marketing for clients worldwide.',
+  jsonLd = [],
+  breadcrumb,
+  ogImage = '/favicon.svg',
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const ogImageAbs = new URL(ogImage, Astro.site).toString();
+
+// Always inject Organization + WebSite; add Breadcrumb if provided; then any
+// page-specific schemas the caller passed via `jsonLd`.
+const allLd: unknown[] = [organizationLd, websiteLd];
+if (breadcrumb && breadcrumb.length > 0) allLd.push(breadcrumbLd(breadcrumb));
+for (const x of jsonLd) allLd.push(x);
 ---
 <!doctype html>
-<html lang="en">
+<html lang="en-IN">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Primary SEO -->
+    <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
+    <!-- Crawl policy mirrors robots.txt; per-page meta makes intent explicit. -->
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="googlebot" content="index, follow, max-image-preview:large" />
+
+    <!-- Geo targeting: India / Bangalore -->
+    <meta name="geo.region" content="IN-KA" />
+    <meta name="geo.placename" content="Bangalore" />
+    <meta name="geo.position" content="12.9716;77.5946" />
+    <meta name="ICBM" content="12.9716, 77.5946" />
+
+    <!-- hreflang: single-locale for now (en-IN serves worldwide too) -->
+    <link rel="alternate" hreflang="en-IN" href={canonical} />
+    <link rel="alternate" hreflang="x-default" href={canonical} />
+
+    <!-- Author / publisher -->
+    <meta name="author" content="Ollasoftware" />
+    <meta name="publisher" content="Ollasoftware" />
+    <link rel="publisher" href="https://ollasoftware.com/" />
+
+    <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Ollasoftware" />
+    <meta property="og:locale" content="en_IN" />
+    <meta property="og:image" content={ogImageAbs} />
+
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@ollasoftware" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageAbs} />
 
-    <title>{title}</title>
+    <!-- Performance: resource hints + favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="dns-prefetch" href="//ollasoftware-marketing.pages.dev" />
+
+    <!-- AEO crawler hints: where to find the long-form summary -->
+    <link rel="alternate" type="text/markdown" title="LLM index" href="/llms.txt" />
+    <link rel="alternate" type="text/markdown" title="LLM index (full)" href="/llms-full.txt" />
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+
+    <!-- Structured data: Organization + WebSite + optional Breadcrumb + per-page schemas -->
+    {allLd.map(ld => <Fragment set:html={ldScript(ld)} />)}
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <SiteNav />
-    <main>
+    <main id="main">
       <slot />
     </main>
     <SiteFooter />
   </body>
 </html>
+
+<style is:global>
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    background: var(--o-accent);
+    color: #0a0a0a;
+    padding: 10px 16px;
+    z-index: 100;
+    text-decoration: none;
+    font-family: var(--o-font-mono);
+    font-size: 13px;
+  }
+  .skip-link:focus {
+    left: 0;
+  }
+</style>

@@ -6,6 +6,7 @@ import Btn from '../primitives/Btn.astro';
 import Code from '../primitives/Code.astro';
 import { services, type Service } from '../../lib/tokens';
 import { serviceDetails, type ServiceDetail } from '../../lib/service-details';
+import { serviceLd, faqLd, SITE } from '../../lib/seo';
 
 interface Props {
   slug: string;
@@ -20,10 +21,69 @@ if (!svc || !det) throw new Error(`Unknown service: ${slug}`);
 const idx = services.findIndex(s => s.slug === slug);
 const prev = services[(idx - 1 + services.length) % services.length];
 const next = services[(idx + 1) % services.length];
+
+// SEO copy — geo-targeted titles + descriptions per service. Bangalore +
+// India keywords woven in without keyword-stuffing.
+const seoCopy: Record<string, { title: string; description: string; serviceType: string }> = {
+  'ai-software': {
+    title: 'Best AI Software Development Company in India & Bangalore | Ollasoftware',
+    description: 'Pioneer AI software development company in India, headquartered in Bangalore. Custom AI agents, RAG pipelines, copilots, and LLM applications shipped to production in 4–16 weeks. Owners of 40+ AI brands. Fixed price, eval-driven, you own the code.',
+    serviceType: 'AI Software Development',
+  },
+  'software-dev': {
+    title: 'Custom Software Development Company in Bangalore, India | Ollasoftware',
+    description: 'Top custom software development company in Bangalore. Senior engineers, boring stacks (TypeScript, Rust, Go, Postgres), CI/CD on day one. Web, mobile, backend, integrations — built fast, handed off cleanly.',
+    serviceType: 'Custom Software Development',
+  },
+  'aeo': {
+    title: 'AEO Agency in India | Answer Engine Optimization | Ollasoftware',
+    description: 'Be the cited answer when buyers ask ChatGPT, Perplexity, Gemini, and Claude. India\'s pioneer AEO (Answer Engine Optimization) agency, headquartered in Bangalore. We rebuild your content, schema, llms.txt, and source authority to win the AI citation game.',
+    serviceType: 'Answer Engine Optimization',
+  },
+  'seo': {
+    title: 'Best SEO Agency in Bangalore, India | Ollasoftware',
+    description: 'Top SEO services in Bangalore, India. Technical audits, cluster-based content, link earning, and reporting in pipeline (not vanity metrics). Built by senior strategists across India and the US.',
+    serviceType: 'Search Engine Optimization',
+  },
+  'social-media': {
+    title: 'Social Media Marketing Agency in Bangalore, India | Ollasoftware',
+    description: 'Founder-led social media marketing across LinkedIn, X, YouTube, and Instagram. Strategy, scripts, posts, video edits, and DM ops — built around your founder voice, not a brand template. Bangalore-headquartered, serving clients worldwide.',
+    serviceType: 'Social Media Marketing',
+  },
+  'performance-marketing': {
+    title: 'Performance Marketing Agency in India | Paid Ads | Ollasoftware',
+    description: 'Performance marketing agency in India headquartered in Bangalore. Google, Meta, LinkedIn, TikTok paid ads with server-side attribution, in-house creative, and reporting against real CAC and LTV — not Ads Manager screenshots.',
+    serviceType: 'Performance Marketing',
+  },
+};
+
+const seo = seoCopy[svc.slug] ?? {
+  title: `${svc.name} — Ollasoftware`,
+  description: svc.blurb,
+  serviceType: svc.name,
+};
+
+const breadcrumb = [
+  { name: 'Home', url: `${SITE}/` },
+  { name: 'Services', url: `${SITE}/services/` },
+  { name: svc.name, url: `${SITE}/services/${svc.slug}/` },
+];
+
+const pageLd: unknown[] = [
+  serviceLd({
+    slug: svc.slug,
+    name: svc.name,
+    description: seo.description,
+    serviceType: seo.serviceType,
+  }),
+  faqLd(det.faqs),
+];
 ---
 <Layout
-  title={`${svc.name} — Ollasoftware`}
-  description={svc.blurb}
+  title={seo.title}
+  description={seo.description}
+  breadcrumb={breadcrumb}
+  jsonLd={pageLd}
 >
   <PageHero
     eyebrow={svc.tag}
