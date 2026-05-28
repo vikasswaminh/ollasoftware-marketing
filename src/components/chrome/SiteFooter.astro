@@ -4,7 +4,7 @@ import { o, services } from '../../lib/tokens';
 const cols: Array<[string, Array<[string, string]>]> = [
   ['Services', services.map(s => [s.name, `/services/${s.slug}`])],
   ['Work',     [['Case studies', '/work'], ['Recent work', '/work'], ['Industries', '/work#industries'], ['Sample SOW', '/process#sow']]],
-  ['Studio',   [['Process', '/process'], ['About', '/about'], ['Careers', '/about#careers'], ['Press', '/about#press']]],
+  ['Company',  [['Process', '/process'], ['About', '/about'], ['Careers', '/about#careers'], ['Press', '/about#press']]],
   ['Trust',    [['SOC 2', '/process#security'], ['GDPR / DPA', '/process#gdpr'], ['Master MSA', '/process#msa'], ['Security FAQ', '/process#bounty']]],
 ];
 
@@ -21,8 +21,9 @@ const year = new Date().getFullYear();
         <span class="brand-name">ollasoftware</span>
       </div>
       <p class="tagline">
-        A full-service software &amp; growth studio. AI builds, custom software,
-        AEO/SEO, social and performance marketing.
+        Pioneer AI software development company. Owners of 40+ AI brands.
+        We build custom AI, software, AEO/SEO, social and performance for
+        clients who want what we ship ourselves.
       </p>
       <form class="newsletter" onsubmit="event.preventDefault();">
         <input
@@ -49,8 +50,8 @@ const year = new Date().getFullYear();
   </div>
 
   <div class="legal">
-    <span class="mono">© {year} Ollasoftware Studio, Inc. · Brooklyn / Lisboa</span>
-    <span class="mono">built by 14 engineers, 3 marketers, and one designer</span>
+    <span class="mono">© {year} Ollasoftware, Inc. · Brooklyn / Lisboa · est. 2021</span>
+    <span class="mono">40+ AI brands shipped · 1 senior team</span>
   </div>
 </footer>
 

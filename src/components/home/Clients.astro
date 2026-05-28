@@ -1,0 +1,201 @@
+---
+import SectionHead from '../primitives/SectionHead.astro';
+import { clients, categoryMeta, type ClientCategory } from '../../lib/clients';
+
+// Group by category, preserve declaration order within each.
+const groups: Array<{ category: ClientCategory; items: typeof clients[number][] }> = [];
+for (const c of clients) {
+  let g = groups.find(x => x.category === c.category);
+  if (!g) { g = { category: c.category, items: [] }; groups.push(g); }
+  g.items.push(c);
+}
+
+const total = clients.length;
+---
+<section class="clients-section">
+  <SectionHead
+    tag="01 · Our clients"
+    title={`${total}+ AI brands run on Ollasoftware.`}
+    sub="Every name here ships in production. Every one was built, hardened, and grown by the same senior team you'd be hiring."
+  >
+    <a slot="right" class="more mono" href="/work">recent ships →</a>
+  </SectionHead>
+
+  <div class="legend">
+    {Object.entries(categoryMeta).map(([key, meta]) => (
+      <span class="legend-item mono" style={`--accent:${meta.accentVar}`}>
+        <span class="dot" aria-hidden="true"></span>{meta.label}
+      </span>
+    ))}
+  </div>
+
+  <div class="groups">
+    {groups.map(g => (
+      <div class="group">
+        <div class="group-head" style={`--accent:${categoryMeta[g.category].accentVar}`}>
+          <span class="g-label mono">{categoryMeta[g.category].label}</span>
+          <span class="g-count mono">{g.items.length}</span>
+        </div>
+        <div class="grid">
+          {g.items.map(c => (
+            <a
+              class="cell"
+              href={`https://${c.domain}`}
+              target="_blank"
+              rel="noopener"
+              style={`--accent:${categoryMeta[g.category].accentVar}`}
+            >
+              <span class="cell-name">{c.name}</span>
+              <span class="cell-blurb">{c.blurb}</span>
+              <span class="cell-domain mono">{c.domain} ↗</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <div class="footnote mono">
+    Plus a handful of external clients we can't name here.
+    <a href="/work">See engagements we can show →</a>
+  </div>
+</section>
+
+<style>
+  .clients-section {
+    padding: 110px 56px;
+    border-bottom: 1px solid var(--o-line);
+  }
+
+  .more {
+    color: var(--o-accent);
+    font-size: 12px;
+    text-decoration: none;
+  }
+
+  .legend {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    padding: 14px 18px;
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius);
+    margin-bottom: 28px;
+  }
+  .legend-item {
+    font-size: 11px;
+    color: var(--o-mute);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .legend-item .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    background: var(--accent);
+  }
+
+  .groups {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .group {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius-lg);
+    overflow: hidden;
+  }
+
+  .group-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 22px;
+    border-bottom: 1px solid var(--o-line);
+    background: var(--o-panel-hi);
+  }
+  .g-label {
+    font-size: 11px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .g-count {
+    font-size: 11px;
+    color: var(--o-faint);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--o-line);
+  }
+
+  .cell {
+    background: var(--o-panel);
+    padding: 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-decoration: none;
+    color: inherit;
+    transition: background .14s, border-color .14s;
+    border-left: 2px solid transparent;
+  }
+  .cell:hover {
+    background: var(--o-panel-hi);
+    border-left-color: var(--accent);
+  }
+  .cell-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--o-ink);
+    letter-spacing: -0.3px;
+  }
+  .cell-blurb {
+    font-size: 12px;
+    color: var(--o-mute);
+    line-height: 1.45;
+    flex: 1;
+  }
+  .cell-domain {
+    font-size: 10px;
+    color: var(--o-faint);
+    letter-spacing: 0.3px;
+  }
+  .cell:hover .cell-domain {
+    color: var(--accent);
+  }
+
+  .footnote {
+    margin-top: 28px;
+    font-size: 12px;
+    color: var(--o-mute);
+    text-align: center;
+  }
+  .footnote a {
+    color: var(--o-accent);
+    text-decoration: none;
+    margin-left: 6px;
+  }
+  .footnote a:hover { text-decoration: underline; }
+
+  @media (max-width: 1100px) {
+    .grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 800px) {
+    .grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 500px) {
+    .clients-section { padding: 64px 24px; }
+    .grid { grid-template-columns: 1fr; }
+    .legend { gap: 12px; }
+  }
+</style>

@@ -23,3 +23,8 @@ pnpm-debug.log*
 # os
 .DS_Store
 Thumbs.db
+
+# transient secrets / scratch files (never commit)
+.cf-*.tmp
+.cf-*.tmp.json
+*.html.tmp
