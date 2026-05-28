@@ -1,0 +1,24 @@
+---
+interface Props {
+  label: string;
+  tag?: string;
+}
+
+const { label, tag } = Astro.props;
+---
+<div class="tile-head">
+  <span class="label mono">{label}</span>
+  {tag && <span class="tag mono">{tag}</span>}
+</div>
+
+<style>
+  .tile-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--o-line);
+  }
+  .label { font-size: 10.5px; color: var(--o-mute); letter-spacing: 0.3px; }
+  .tag { font-size: 10px; color: var(--o-faint); }
+</style>

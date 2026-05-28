@@ -1,0 +1,23 @@
+---
+interface Props {
+  col?: string;
+  row?: string;
+}
+
+const { col = 'span 1', row = 'span 1' } = Astro.props;
+const style = `grid-column:${col};grid-row:${row}`;
+---
+<div class="tile" style={style}>
+  <slot />
+</div>
+
+<style>
+  .tile {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+</style>

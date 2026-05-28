@@ -1,0 +1,127 @@
+---
+import Tag from '../primitives/Tag.astro';
+import Btn from '../primitives/Btn.astro';
+import Code from '../primitives/Code.astro';
+import { o } from '../../lib/tokens';
+---
+<section class="hero">
+  <div class="grid-bg" aria-hidden="true"></div>
+
+  <div class="hero-grid">
+    <div class="copy">
+      <Tag>Now booking · Q3 2026</Tag>
+      <h1>
+        Software, search,<br />
+        <span class="accent">shipped</span>{' '}
+        <span class="dim">on</span><br />
+        demand.
+      </h1>
+      <p class="sub mono">
+        Ollasoftware is a senior software &amp; growth studio. We build AI products,
+        ship custom software, and run AEO/SEO, social, and performance campaigns
+        that actually move pipeline. <span class="ink">Tight scope. Honest price.</span>
+      </p>
+      <div class="actions">
+        <Btn primary href="/contact">Start a project →</Btn>
+        <Btn href="/services">See what we ship</Btn>
+      </div>
+      <div class="trust mono">
+        <span>Discovery in 5 days</span><span class="dot">·</span>
+        <span>SOC 2 Type II</span><span class="dot">·</span>
+        <span>You own the code</span><span class="dot">·</span>
+        <span>SOW signed in a week</span>
+      </div>
+    </div>
+
+    <Code title="~/engagements — multi-pod · live status" foot="● live">
+<Fragment set:html={`> olla status --week 22
+
+<span style="color:${o.mute}">[mon 09:02] ai-software · acme-fintech · pod=phoenix · sprint 03
+[mon 09:02] seo        · helio-bank   · pod=cobalt  · month 04
+[mon 09:02] social     · pelago       · pod=ember   · month 02
+</span><span style="color:${o.accent}">✓ </span>build       · 6 PRs merged into acme/intake-agent
+<span style="color:${o.accent}">✓ </span>rankings    · helio-bank +14 keywords in top-10 this week
+<span style="color:${o.accent}">✓ </span>reach       · pelago · 2.4M impressions · 38% MoM
+<span style="color:${o.warn}">! </span><span style="color:${o.warn}">decision    · acme · eval threshold 0.84  (needs sign-off)</span>
+<span style="color:${o.mute}">           › approved by @priya (VP eng) · 09:14
+</span><span style="color:${o.accent}">✓ </span>deploy      · staging green · 92% eval pass · $0.04/run
+<span style="color:${o.accent}">✓ </span>cac         · pelago paid social · $42 · ↓ 18% MoM
+<span style="color:${o.mute}">
+[fri 16:30] weekly demos · video + loom in shared drive
+[fri 16:30] handoff notes → confluence/eng/intake-agent
+</span>> _<span style="color:${o.accent}">▍</span>`} />
+    </Code>
+  </div>
+</section>
+
+<style>
+  .hero {
+    padding: 120px 56px 100px;
+    border-bottom: 1px solid var(--o-line);
+    position: relative;
+    overflow: hidden;
+  }
+  .grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(var(--o-line) 1px, transparent 1px);
+    background-size: 24px 24px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 30%, transparent 100%);
+            mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 30%, transparent 100%);
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    position: relative;
+    align-items: center;
+  }
+
+  h1 {
+    margin: 20px 0 24px;
+    font-size: 84px;
+    line-height: 0.94;
+    letter-spacing: -3px;
+    font-weight: 600;
+    color: var(--o-ink);
+  }
+  h1 .accent { color: var(--o-accent); }
+  h1 .dim { color: var(--o-mute); font-weight: 400; }
+
+  .sub {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--o-mute);
+    max-width: 520px;
+    margin: 0 0 32px;
+  }
+  .sub .ink { color: var(--o-ink); }
+
+  .actions {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+
+  .trust {
+    display: flex;
+    gap: 16px;
+    font-size: 11px;
+    color: var(--o-faint);
+    flex-wrap: wrap;
+  }
+  .trust .dot { opacity: 0.6; }
+
+  @media (max-width: 1100px) {
+    .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+    h1 { font-size: 64px; letter-spacing: -2px; }
+  }
+  @media (max-width: 700px) {
+    .hero { padding: 72px 24px 56px; }
+    h1 { font-size: 44px; letter-spacing: -1.4px; }
+  }
+</style>

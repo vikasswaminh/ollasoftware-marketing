@@ -1,0 +1,372 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../primitives/PageHero.astro';
+import SectionHead from '../primitives/SectionHead.astro';
+import Btn from '../primitives/Btn.astro';
+import Code from '../primitives/Code.astro';
+import { services, type Service } from '../../lib/tokens';
+import { serviceDetails, type ServiceDetail } from '../../lib/service-details';
+
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
+const svc = services.find(s => s.slug === slug) as Service;
+const det = serviceDetails[slug] as ServiceDetail;
+if (!svc || !det) throw new Error(`Unknown service: ${slug}`);
+
+// Adjacent services for "next/prev" navigation at the bottom.
+const idx = services.findIndex(s => s.slug === slug);
+const prev = services[(idx - 1 + services.length) % services.length];
+const next = services[(idx + 1) % services.length];
+---
+<Layout
+  title={`${svc.name} — Ollasoftware`}
+  description={svc.blurb}
+>
+  <PageHero
+    eyebrow={svc.tag}
+    title={svc.name}
+    sub={det.intro}
+    breadcrumb={[
+      { label: 'home', href: '/' },
+      { label: 'services', href: '/services' },
+      { label: svc.name },
+    ]}
+  >
+    <Btn primary href="/contact">Start a project →</Btn>
+    <Btn href="/pricing">See pricing</Btn>
+  </PageHero>
+
+  <section class="meta" style={`--accent:${svc.accent}`}>
+    <div class="meta-cell">
+      <span class="meta-label mono">Glyph</span>
+      <span class="meta-glyph">{svc.glyph}</span>
+    </div>
+    <div class="meta-cell">
+      <span class="meta-label mono">Cadence</span>
+      <span class="meta-val">{svc.chip}</span>
+    </div>
+    <div class="meta-cell">
+      <span class="meta-label mono">Starting</span>
+      <span class="meta-val">{det.starting}</span>
+    </div>
+    <div class="meta-cell">
+      <span class="meta-label mono">Ownership</span>
+      <span class="meta-val">You, day one</span>
+    </div>
+  </section>
+
+  <section class="features" style={`--accent:${svc.accent}`}>
+    <SectionHead
+      tag="01 · What you get"
+      title="Six things in every engagement."
+      sub="Not a checklist of deliverables. Things that show up because we work the way we work."
+    />
+    <div class="grid">
+      {det.features.map((f, i) => (
+        <article class="feature">
+          <div class="f-num mono">{String(i + 1).padStart(2, '0')}</div>
+          <h3>{f.name}</h3>
+          <p>{f.body}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="phases">
+    <SectionHead
+      tag="02 · How it runs"
+      title="A typical engagement, laid out."
+      sub="Every engagement varies. The shape stays the same."
+    />
+    <ol class="phase-list">
+      {det.phases.map((p, i) => (
+        <li class:list={['phase', { first: i === 0 }]}>
+          <span class="phase-when mono">{p.week}</span>
+          <h3>{p.head}</h3>
+          <p>{p.body}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="sample-sow">
+    <SectionHead
+      tag="03 · Sample SOW"
+      title={`What we'd write down before we started.`}
+      sub="A real-shaped excerpt. Names changed. Numbers honest."
+    />
+    <Code title={`SOW · sample-${svc.slug}.txt`} foot="● fixed price">{det.sample}</Code>
+  </section>
+
+  <section class="not-for-us">
+    <SectionHead
+      tag="04 · What we won't take on"
+      title="The honest list."
+      sub="Saving us both a bad-fit call."
+    />
+    <ul class="not-list">
+      {det.notForUs.map(item => (
+        <li>
+          <span class="x" aria-hidden="true">×</span>
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="faqs">
+    <SectionHead
+      tag="05 · Common questions"
+      title="The ones we hear on most discovery calls."
+    />
+    <div class="faq-list">
+      {det.faqs.map(f => (
+        <details class="faq">
+          <summary>{f.q}</summary>
+          <p>{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <section class="nextprev">
+    <a class="np" href={`/services/${prev!.slug}`} style={`--accent:${prev!.accent}`}>
+      <span class="np-label mono">← Previous service</span>
+      <span class="np-name">{prev!.name}</span>
+    </a>
+    <a class="np right" href={`/services/${next!.slug}`} style={`--accent:${next!.accent}`}>
+      <span class="np-label mono">Next service →</span>
+      <span class="np-name">{next!.name}</span>
+    </a>
+  </section>
+
+  <section class="cta">
+    <h2>Start with {svc.name}.</h2>
+    <p class="mono">A 30-minute call. A written discovery doc in a week. Fixed-price SOW by day 10.</p>
+    <div class="actions">
+      <Btn primary href="/contact">Start a project →</Btn>
+      <Btn href="/services">See all services</Btn>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .meta {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid var(--o-line);
+    background: var(--o-panel);
+  }
+  .meta-cell {
+    padding: 24px 32px;
+    border-right: 1px solid var(--o-line);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .meta-cell:last-child { border-right: none; }
+  .meta-label {
+    font-size: 10px;
+    color: var(--o-faint);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .meta-glyph {
+    font-size: 22px;
+    color: var(--accent);
+  }
+  .meta-val {
+    font-size: 15px;
+    color: var(--o-ink);
+  }
+
+  .features, .phases, .sample-sow, .not-for-us, .faqs {
+    padding: 96px 56px;
+    border-bottom: 1px solid var(--o-line);
+  }
+
+  .features .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .feature {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .f-num {
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.5px;
+  }
+  .feature h3 {
+    margin: 0;
+    font-size: 18px;
+    color: var(--o-ink);
+    font-weight: 500;
+    letter-spacing: -0.3px;
+  }
+  .feature p {
+    margin: 0;
+    font-size: 14px;
+    color: var(--o-mute);
+    line-height: 1.55;
+  }
+
+  .phase-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .phase {
+    display: grid;
+    grid-template-columns: 140px 1fr 1.5fr;
+    gap: 32px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--o-line);
+    align-items: baseline;
+  }
+  .phase.first { border-top: 1px solid var(--o-line); }
+  .phase-when { font-size: 12px; color: var(--o-accent); }
+  .phase h3 {
+    margin: 0;
+    font-size: 22px;
+    color: var(--o-ink);
+    font-weight: 500;
+    letter-spacing: -0.4px;
+  }
+  .phase p {
+    margin: 0;
+    font-size: 15px;
+    color: var(--o-mute);
+    line-height: 1.55;
+  }
+
+  .not-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .not-list li {
+    display: flex;
+    gap: 16px;
+    font-size: 16px;
+    color: var(--o-ink);
+    line-height: 1.5;
+    padding: 16px 20px;
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius);
+  }
+  .x {
+    color: var(--o-red);
+    font-size: 20px;
+    line-height: 1.2;
+    flex-shrink: 0;
+  }
+
+  .faq-list { display: flex; flex-direction: column; gap: 10px; }
+  .faq {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius);
+    padding: 18px 22px;
+  }
+  .faq summary {
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--o-ink);
+    font-weight: 500;
+    letter-spacing: -0.2px;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after {
+    content: '+';
+    color: var(--o-mute);
+    font-size: 20px;
+    font-weight: 300;
+    transition: transform .14s;
+  }
+  .faq[open] summary::after { transform: rotate(45deg); }
+  .faq p {
+    margin: 14px 0 0;
+    font-size: 14px;
+    color: var(--o-mute);
+    line-height: 1.6;
+  }
+
+  .nextprev {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border-bottom: 1px solid var(--o-line);
+  }
+  .np {
+    padding: 32px 56px;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-right: 1px solid var(--o-line);
+    transition: background .14s;
+  }
+  .np:last-child { border-right: none; }
+  .np.right { text-align: right; align-items: flex-end; }
+  .np:hover { background: var(--o-panel); }
+  .np-label { font-size: 11px; color: var(--o-faint); text-transform: uppercase; letter-spacing: 1px; }
+  .np-name {
+    font-size: 22px;
+    color: var(--accent);
+    font-weight: 500;
+    letter-spacing: -0.3px;
+  }
+
+  .cta {
+    padding: 96px 56px;
+    text-align: center;
+  }
+  .cta h2 {
+    margin: 0 0 12px;
+    font-size: 40px;
+    letter-spacing: -1px;
+    font-weight: 600;
+    color: var(--o-ink);
+  }
+  .cta p {
+    font-size: 14px;
+    color: var(--o-mute);
+    margin: 0 0 28px;
+  }
+  .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+  @media (max-width: 1100px) {
+    .features .grid { grid-template-columns: repeat(2, 1fr); }
+    .meta { grid-template-columns: repeat(2, 1fr); }
+    .meta-cell:nth-child(2) { border-right: none; }
+    .meta-cell:nth-child(1), .meta-cell:nth-child(2) { border-bottom: 1px solid var(--o-line); }
+  }
+  @media (max-width: 700px) {
+    .features, .phases, .sample-sow, .not-for-us, .faqs, .cta { padding: 64px 24px; }
+    .features .grid { grid-template-columns: 1fr; }
+    .phase { grid-template-columns: 1fr; gap: 8px; }
+    .nextprev { grid-template-columns: 1fr; }
+    .np { padding: 24px; border-right: none; border-bottom: 1px solid var(--o-line); }
+    .np.right { text-align: left; align-items: flex-start; }
+  }
+</style>

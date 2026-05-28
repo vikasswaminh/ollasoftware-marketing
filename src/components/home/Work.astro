@@ -1,0 +1,85 @@
+---
+import SectionHead from '../primitives/SectionHead.astro';
+
+const entries = [
+  { date: '2026.05.18', tag: 'ai-software', title: 'Intake agent for a 4M-customer bank',
+    body: 'Triages support tickets, drafts replies, and routes escalations. Shipped in 5 weeks. 86% precision on the gold set.' },
+  { date: '2026.05.11', tag: 'seo / aeo',   title: 'Doubled organic pipeline for a fintech',
+    body: 'New cluster strategy + technical debt cleanup + 60-page content sprint. +14 keywords in top-10, +2.1× qualified leads from search.' },
+  { date: '2026.05.04', tag: 'social',      title: 'Founder-led playbook for a Series B SaaS',
+    body: 'Weekly LinkedIn + X cadence, short-form video. 2.4M impressions, 38% MoM follower growth, 18 inbound enterprise convos.' },
+  { date: '2026.04.28', tag: 'perf',        title: 'CAC down 38% in 6 weeks',
+    body: 'Rebuilt Meta + Google funnels, new LPs in our stack, real attribution. CAC $68 → $42, LTV/CAC 4.1 → 6.8.' },
+];
+---
+<section class="work">
+  <SectionHead
+    tag="06 · Recent ships"
+    title={`Recent work, <span style="color:var(--o-mute)">last quarter.</span>`}
+  >
+    <a slot="right" class="more mono" href="/work">all case studies →</a>
+  </SectionHead>
+
+  <div>
+    {entries.map((e, i) => (
+      <a class:list={['row', { first: i === 0 }]} href="/work">
+        <span class="date mono">{e.date}</span>
+        <span class="tag mono">{e.tag}</span>
+        <div>
+          <div class="title">{e.title}</div>
+          <div class="body">{e.body}</div>
+        </div>
+        <span class="arrow">→</span>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .work { padding: 110px 56px; border-bottom: 1px solid var(--o-line); }
+
+  .more { color: var(--o-accent); font-size: 12px; text-decoration: none; }
+
+  .row {
+    display: grid;
+    grid-template-columns: 140px 110px 1fr 40px;
+    gap: 24px;
+    padding: 22px 0;
+    align-items: baseline;
+    border-bottom: 1px solid var(--o-line);
+    text-decoration: none;
+    color: inherit;
+    transition: background .14s;
+  }
+  .row.first { border-top: 1px solid var(--o-line); }
+  .row:hover { background: var(--o-panel); }
+
+  .date { font-size: 12px; color: var(--o-faint); }
+  .tag {
+    font-size: 11px;
+    color: var(--o-accent);
+    padding: 2px 8px;
+    border: 1px solid color-mix(in srgb, var(--o-accent) 40%, transparent);
+    border-radius: 3px;
+    justify-self: start;
+  }
+  .title {
+    font-size: 18px;
+    color: var(--o-ink);
+    font-weight: 500;
+    letter-spacing: -0.2px;
+    margin-bottom: 4px;
+  }
+  .body { font-size: 14px; color: var(--o-mute); line-height: 1.5; }
+  .arrow { color: var(--o-faint); text-align: right; }
+
+  @media (max-width: 900px) {
+    .row { grid-template-columns: 100px 1fr 24px; }
+    .tag { display: none; }
+  }
+  @media (max-width: 700px) {
+    .work { padding: 64px 24px; }
+    .row { grid-template-columns: 1fr 24px; gap: 12px; }
+    .date { display: none; }
+  }
+</style>

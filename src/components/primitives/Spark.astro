@@ -1,0 +1,26 @@
+---
+import { o } from '../../lib/tokens';
+
+interface Props {
+  points?: number[];
+  color?: string;
+  height?: number;
+}
+
+const {
+  points = [38, 30, 34, 28, 26, 24, 22, 25, 20, 18, 16, 19, 14, 12, 14, 10, 12, 8, 10, 7],
+  color = o.accent,
+  height = 70,
+} = Astro.props;
+
+const W = 200, H = 60, max = 40;
+const d = points
+  .map((p, i) => `${i === 0 ? 'M' : 'L'} ${(i * W) / (points.length - 1)} ${H - (p / max) * H}`)
+  .join(' ');
+const lastY = H - (points[points.length - 1]! / max) * H;
+---
+<svg viewBox={`0 0 ${W} ${H}`} width="100%" height={height} role="img" aria-label="Sparkline">
+  <path d={`${d} L ${W} ${H} L 0 ${H} Z`} fill={color} opacity="0.1" />
+  <path d={d} fill="none" stroke={color} stroke-width="1.5" />
+  <circle cx={W} cy={lastY} r="3" fill={color} />
+</svg>

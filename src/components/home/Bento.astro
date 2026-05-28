@@ -1,0 +1,201 @@
+---
+import SectionHead from '../primitives/SectionHead.astro';
+import Tile from '../primitives/Tile.astro';
+import TileHead from '../primitives/TileHead.astro';
+import Spark from '../primitives/Spark.astro';
+import { o } from '../../lib/tokens';
+
+const timeline: Array<[string, string, string]> = [
+  ['day 01', 'kickoff · 3 stakeholders',        o.accent],
+  ['day 03', 'strategy doc · v1',               o.warn],
+  ['day 07', '↳ first deliverable shipped',     o.mute],
+  ['day 12', '⏸ review · scope check-in',       o.blue],
+  ['day 14', '✓ demo · staging green',          o.accent],
+];
+
+const bars = Array.from({ length: 30 }, (_, i) => i);
+---
+<section class="bento">
+  <SectionHead
+    tag="02 · How we work"
+    title={`A studio, not an <em>agency</em>.`}
+    sub="Five things that show up on every engagement, by default."
+  >
+    <a slot="right" class="more mono" href="/pricing">see engagement →</a>
+  </SectionHead>
+
+  <div class="grid">
+    <!-- Big-left: cadence -->
+    <Tile col="span 3" row="span 2">
+      <TileHead label="cadence / engagement" tag="every sprint" />
+      <div class="cadence">
+        <div class="lead">
+          Weekly demos. <span class="accent">Working software</span> in your repo by day 7.
+          Decision points written down, not whiteboarded.
+        </div>
+        <div class="timeline mono">
+          {timeline.map(([t, txt, c]) => (
+            <div class="t-row">
+              <span class="t-when">{t}</span>
+              <span style={`color:${c}`}>{txt}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </Tile>
+
+    <!-- Top-right: SOW -->
+    <Tile col="span 3">
+      <TileHead label="scope / SOW" tag="fixed price" />
+      <div class="sow">
+        <div class="lead">
+          Scoped tightly. Priced before we start.
+          <span class="dim">If we over-scope, it's on us — not on the change order.</span>
+        </div>
+        <pre class="mono"><Fragment set:html={`SOW · acme / intake-agent
+  scope    : RAG · 3 doc sources · 1 UI surface
+  duration : 4 weeks · 2 engineers + 1 PM
+  price    : $96,000  fixed<span style="color:${o.accent}">
+  + change-orders only on new scope</span>`} /></pre>
+      </div>
+    </Tile>
+
+    <!-- Mid-left: speed -->
+    <Tile col="span 2" row="span 2">
+      <TileHead label="speed / kickoff" tag="median" />
+      <div class="metric">
+        <div class="metric-label mono">days from intro to first deliverable</div>
+        <div class="metric-num">
+          5<span class="metric-unit">days</span>
+        </div>
+        <div class="metric-delta mono">↘ 4× faster than industry avg</div>
+        <Spark />
+      </div>
+    </Tile>
+
+    <!-- Mid-wide: engagement schema -->
+    <Tile col="span 4">
+      <TileHead label="a 4-week sprint, written down" tag="real SOW excerpt" />
+      <pre class="schema mono"><Fragment set:html={`<span style="color:${o.faint}">// scope a project the way you'd scope a function</span>
+<span style="color:${o.purple}">engagement</span> <span style="color:${o.blue}">acme.intakeAgent</span> = {
+  <span style="color:${o.warn}">outcome</span>:   <span style="color:${o.accent}">'agent that triages support tickets'</span>,
+  <span style="color:${o.warn}">success</span>:   <span style="color:${o.accent}">'≥85% precision · &lt;2s p95 · in-app'</span>,
+  <span style="color:${o.warn}">team</span>:      [<span style="color:${o.accent}">'@rin (lead)'</span>, <span style="color:${o.accent}">'@marco'</span>, <span style="color:${o.accent}">'@anika'</span>],
+  <span style="color:${o.warn}">stack</span>:     [<span style="color:${o.accent}">'your repo'</span>, <span style="color:${o.accent}">'your VPC'</span>, <span style="color:${o.accent}">'your eval set'</span>],
+  <span style="color:${o.warn}">price</span>:     <span style="color:${o.accent}">'$96k · 4 weeks · fixed'</span>,
+  <span style="color:${o.warn}">ownership</span>: <span style="color:${o.accent}">'you · MIT-licensed code, day 1'</span>,
+}`} /></pre>
+    </Tile>
+
+    <!-- Mid-right: track record -->
+    <Tile col="span 2">
+      <TileHead label="track record" tag="last 24 mo" />
+      <div class="metric">
+        <div class="metric-num accent">42<span class="metric-faded">/44</span></div>
+        <div class="metric-label mono">shipped on time, on price</div>
+        <div class="bars">
+          {bars.map(i => (
+            <div
+              class="bar"
+              style={`background:${i === 19 || i === 27 ? o.warn : o.accent};height:${i === 19 || i === 27 ? '18px' : '38px'}`}
+            ></div>
+          ))}
+        </div>
+        <div class="metric-foot mono">38 sprints · 2 came in late (refunded)</div>
+      </div>
+    </Tile>
+  </div>
+</section>
+
+<style>
+  .bento {
+    padding: 110px 56px;
+    border-bottom: 1px solid var(--o-line);
+  }
+
+  .more {
+    color: var(--o-accent);
+    font-size: 12px;
+    text-decoration: none;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 180px;
+    gap: 14px;
+  }
+
+  .cadence { flex: 1; padding: 18px 22px; }
+  .cadence .lead {
+    font-size: 20px;
+    color: var(--o-ink);
+    line-height: 1.3;
+    letter-spacing: -0.3px;
+    margin-bottom: 18px;
+    max-width: 360px;
+  }
+  .cadence .lead .accent { color: var(--o-accent); }
+  .timeline { font-size: 11px; color: var(--o-mute); line-height: 1.7; }
+  .t-row { display: flex; gap: 14px; }
+  .t-when { color: var(--o-faint); width: 64px; }
+
+  .sow {
+    flex: 1;
+    padding: 18px 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .sow .lead {
+    font-size: 19px;
+    color: var(--o-ink);
+    line-height: 1.3;
+    letter-spacing: -0.3px;
+    max-width: 400px;
+  }
+  .sow .lead .dim { color: var(--o-mute); }
+  .sow pre {
+    margin: 0;
+    font-size: 11px;
+    color: var(--o-mute);
+    line-height: 1.6;
+    white-space: pre-wrap;
+  }
+
+  .metric { padding: 14px 18px; display: flex; flex-direction: column; gap: 6px; }
+  .metric-label { font-size: 10px; color: var(--o-faint); margin-bottom: 4px; }
+  .metric-num {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--o-ink);
+    letter-spacing: -0.5px;
+  }
+  .metric-num.accent { color: var(--o-accent); }
+  .metric-unit { font-size: 14px; color: var(--o-mute); font-weight: 400; margin-left: 4px; }
+  .metric-faded { font-size: 14px; opacity: 0.5; }
+  .metric-delta { font-size: 10px; color: var(--o-accent); margin-bottom: 6px; }
+  .metric-foot { font-size: 9.5px; color: var(--o-faint); margin-top: 4px; }
+
+  .bars { display: flex; gap: 2px; align-items: flex-end; height: 38px; }
+  .bar { flex: 1; opacity: 0.7; border-radius: 1px; }
+
+  .schema {
+    margin: 0;
+    padding: 16px 20px;
+    font-size: 12px;
+    line-height: 1.7;
+    color: var(--o-ink);
+    white-space: pre;
+    overflow-x: auto;
+  }
+
+  @media (max-width: 1100px) {
+    .grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: auto; }
+    .grid > :global(*) { grid-column: span 1 !important; grid-row: span 1 !important; }
+  }
+  @media (max-width: 700px) {
+    .bento { padding: 64px 24px; }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>

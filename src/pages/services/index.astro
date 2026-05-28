@@ -1,0 +1,274 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/primitives/PageHero.astro';
+import Btn from '../../components/primitives/Btn.astro';
+import { o, services } from '../../lib/tokens';
+---
+<Layout
+  title="Services — Ollasoftware"
+  description="Six services. One senior team. AI software, custom software, AEO, SEO, social media, and performance marketing — all under one roof."
+>
+  <PageHero
+    eyebrow="The lineup"
+    title="Six services. One senior team."
+    sub="Built to work alone. Better together. Each detail page covers the gnarlier bits — sample SOWs, eval methodology, what we won't take on."
+    breadcrumb={[{ label: 'home', href: '/' }, { label: 'services' }]}
+  >
+    <Btn primary href="/contact">Start a project →</Btn>
+    <Btn href="/pricing">See engagement models</Btn>
+  </PageHero>
+
+  <section class="rows">
+    {services.map(s => (
+      <a class="row" href={`/services/${s.slug}`} style={`--accent:${s.accent}`}>
+        <div class="left">
+          <div class="row-top">
+            <div class="glyph" aria-hidden="true">{s.glyph}</div>
+            <span class="chip mono">{s.chip}</span>
+          </div>
+          <div>
+            <div class="name">{s.name}</div>
+            <div class="tag mono">{s.tag}</div>
+          </div>
+          <p class="blurb">{s.blurb}</p>
+          <ul class="bullets mono">
+            {s.bullets.map(b => <li><span class="arr">›</span>{b}</li>)}
+          </ul>
+        </div>
+        <div class="right">
+          <pre class="sample mono"><Fragment set:html={`<span class="comment"># sample engagement</span>
+<span class="key">service</span>  : <span class="str">'${s.name}'</span>
+<span class="key">cadence</span>  : <span class="str">'${s.chip}'</span>
+<span class="key">delivery</span> : <span class="str">'in your stack · your accounts'</span>
+<span class="key">team</span>     : [<span class="str">'lead'</span>, <span class="str">'specialist'</span>, <span class="str">'strategist'</span>]
+<span class="key">price</span>    : <span class="str">'fixed or monthly · no surprise invoices'</span>`} /></pre>
+          <span class="more mono">read full brief →</span>
+        </div>
+      </a>
+    ))}
+  </section>
+
+  <section class="compare">
+    <h2>How they compare</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th></th>
+            {services.map(s => <th style={`color:${s.accent}`}>{s.name}</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="row-h">Engagement</td>
+            {services.map(s => <td class="mono">{s.chip}</td>)}
+          </tr>
+          <tr>
+            <td class="row-h">Team shape</td>
+            <td class="mono">2–4 eng + lead</td>
+            <td class="mono">2–6 eng + PM</td>
+            <td class="mono">strategist + writer</td>
+            <td class="mono">strategist + writer</td>
+            <td class="mono">strategist + editor</td>
+            <td class="mono">strategist + buyer</td>
+          </tr>
+          <tr>
+            <td class="row-h">Cancel notice</td>
+            <td class="mono">end of sprint</td>
+            <td class="mono">end of sprint</td>
+            <td class="mono">30 days</td>
+            <td class="mono">30 days</td>
+            <td class="mono">30 days</td>
+            <td class="mono">30 days</td>
+          </tr>
+          <tr>
+            <td class="row-h">You own outputs</td>
+            {services.map(() => <td class="mono yes">✓ day one</td>)}
+          </tr>
+          <tr>
+            <td class="row-h">Reporting cadence</td>
+            <td class="mono">weekly demo</td>
+            <td class="mono">weekly demo</td>
+            <td class="mono">monthly</td>
+            <td class="mono">monthly</td>
+            <td class="mono">weekly</td>
+            <td class="mono">weekly</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="cta">
+    <h2>Not sure which fits?</h2>
+    <p class="mono">A 30-minute call. We'll tell you which service (or which combo) gives you the cheapest path to the outcome.</p>
+    <div class="actions">
+      <Btn primary href="/contact">Book a 30-min call →</Btn>
+      <Btn href="/pricing">See engagement models</Btn>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .rows {
+    padding: 64px 56px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    border-bottom: 1px solid var(--o-line);
+  }
+
+  .row {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius-lg);
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    transition: border-color .14s, transform .14s;
+  }
+  .row:hover {
+    border-color: color-mix(in srgb, var(--accent) 53%, transparent);
+    transform: translateY(-2px);
+  }
+
+  .left { padding: 36px; display: flex; flex-direction: column; gap: 18px; }
+  .row-top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .glyph {
+    width: 56px; height: 56px;
+    border-radius: var(--o-radius-lg);
+    background: #000;
+    border: 1px solid var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--accent);
+    font-size: 26px; line-height: 1;
+  }
+  .chip {
+    font-size: 10px;
+    color: var(--o-faint);
+    padding: 3px 7px;
+    border: 1px solid var(--o-line);
+    border-radius: 3px;
+  }
+  .name {
+    font-size: 36px;
+    font-weight: 600;
+    color: var(--o-ink);
+    letter-spacing: -1px;
+    line-height: 1.05;
+  }
+  .tag {
+    font-size: 12px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 6px;
+  }
+  .blurb { font-size: 16px; color: var(--o-mute); line-height: 1.55; margin: 0; max-width: 440px; }
+  .bullets {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 12px;
+    color: var(--o-ink);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 18px;
+  }
+  .bullets li { display: flex; gap: 10px; }
+  .arr { color: var(--accent); }
+
+  .right {
+    background: var(--o-panel-hi);
+    padding: 28px 32px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 18px;
+    border-left: 1px solid var(--o-line);
+  }
+  .sample {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.8;
+    color: var(--o-ink);
+    white-space: pre-wrap;
+    font-family: var(--o-font-mono);
+  }
+  .sample .comment { color: var(--o-faint); }
+  .sample .key { color: var(--o-warn); }
+  .sample .str { color: var(--o-accent); }
+
+  .more { color: var(--accent); font-size: 12px; text-align: right; }
+
+  .compare {
+    padding: 96px 56px;
+    border-bottom: 1px solid var(--o-line);
+  }
+  .compare h2 {
+    margin: 0 0 32px;
+    font-size: 36px;
+    letter-spacing: -1px;
+    font-weight: 600;
+    color: var(--o-ink);
+  }
+  .table-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius-lg);
+    background: var(--o-panel);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  th, td {
+    text-align: left;
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--o-line);
+    white-space: nowrap;
+  }
+  th {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--o-mute);
+    font-family: var(--o-font-mono);
+    font-weight: 500;
+  }
+  .row-h { color: var(--o-ink); font-weight: 500; }
+  .yes { color: var(--o-accent); }
+  tbody tr:last-child td { border-bottom: none; }
+
+  .cta {
+    padding: 96px 56px;
+    text-align: center;
+  }
+  .cta h2 {
+    margin: 0 0 12px;
+    font-size: 40px;
+    letter-spacing: -1px;
+    font-weight: 600;
+    color: var(--o-ink);
+  }
+  .cta p {
+    font-size: 14px;
+    color: var(--o-mute);
+    margin: 0 0 28px;
+  }
+  .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+  @media (max-width: 1100px) {
+    .row { grid-template-columns: 1fr; }
+    .right { border-left: none; border-top: 1px solid var(--o-line); }
+  }
+  @media (max-width: 700px) {
+    .rows, .compare, .cta { padding-left: 24px; padding-right: 24px; }
+    .left, .right { padding: 24px; }
+    .name { font-size: 28px; }
+    .bullets { grid-template-columns: 1fr; }
+  }
+</style>

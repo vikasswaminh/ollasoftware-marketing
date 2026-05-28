@@ -1,0 +1,57 @@
+---
+import Tag from './Tag.astro';
+
+interface Props {
+  tag?: string;
+  title: string;
+  sub?: string;
+}
+
+const { tag, title, sub } = Astro.props;
+---
+<div class="section-head">
+  <div class="text">
+    {tag && <Tag>{tag}</Tag>}
+    <h2 set:html={title} />
+    {sub && <p class="sub mono">{sub}</p>}
+  </div>
+  {Astro.slots.has('right') && (
+    <div class="right">
+      <slot name="right" />
+    </div>
+  )}
+</div>
+
+<style>
+  .section-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  .text { max-width: 720px; }
+
+  h2 {
+    margin: 14px 0 8px;
+    font-size: 44px;
+    letter-spacing: -1.2px;
+    font-weight: 600;
+    color: var(--o-ink);
+    line-height: 1.04;
+  }
+  h2 :global(em) { font-style: normal; color: var(--o-accent); }
+
+  .sub {
+    font-size: 14px;
+    color: var(--o-mute);
+    line-height: 1.6;
+    margin: 0;
+    max-width: 540px;
+  }
+
+  @media (max-width: 900px) {
+    h2 { font-size: 32px; letter-spacing: -0.8px; }
+  }
+</style>

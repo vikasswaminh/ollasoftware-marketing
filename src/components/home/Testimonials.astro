@@ -1,0 +1,98 @@
+---
+import SectionHead from '../primitives/SectionHead.astro';
+
+const quotes = [
+  {
+    body: 'They embedded with us for six weeks, shipped a real intake agent, and trained two of our engineers to own it. The thing has been in production for nine months with no calls back to them.',
+    name: 'Priya Iyer', role: 'VP Engineering', co: 'Helio Bank', handle: '@priyai',
+  },
+  {
+    body: 'Organic was flat for three quarters. They rebuilt our cluster strategy, fixed the technical debt no one wanted to touch, and doubled qualified pipeline from search in 90 days.',
+    name: 'Marco Pellegrini', role: 'Head of Growth', co: 'Pelago', handle: '@marcop',
+  },
+  {
+    body: 'We had three other shops pitch the rebuild. Olla was the only one who showed up to discovery with a working prototype. Their senior bench shows up to every standup.',
+    name: 'Anika Devarajan', role: 'CTO', co: 'Forma Health', handle: '@anikadev',
+  },
+  {
+    body: 'I do not normally hire agencies for paid. They cut our CAC by 38% in six weeks and reported in pipeline, not in Ads Manager screenshots. Their LPs are nicer than ours.',
+    name: 'Theo Karras', role: 'CMO', co: 'Sundial', handle: '@theok',
+  },
+];
+---
+<section class="quotes">
+  <SectionHead
+    tag="05 · From the room"
+    title="Clients who hired a studio, on purpose."
+  />
+  <div class="grid">
+    {quotes.map(q => (
+      <article class="card">
+        <span class="quote-mark mono" aria-hidden="true">"</span>
+        <p>{q.body}</p>
+        <div class="who">
+          <div class="avatar" aria-hidden="true">{q.name[0]}</div>
+          <div class="meta">
+            <span class="name">{q.name}</span>
+            <span class="role mono">{q.role}, {q.co} · {q.handle}</span>
+          </div>
+        </div>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .quotes {
+    padding: 110px 56px;
+    border-bottom: 1px solid var(--o-line);
+  }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .card {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .quote-mark {
+    font-size: 24px;
+    color: var(--o-accent);
+    line-height: 0.5;
+  }
+  .card p {
+    margin: 0;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--o-ink);
+    letter-spacing: -0.2px;
+  }
+  .who {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid var(--o-line);
+  }
+  .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 16px;
+    background: var(--o-line-hi);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--o-ink);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .meta { display: flex; flex-direction: column; }
+  .name { font-size: 13px; color: var(--o-ink); font-weight: 500; }
+  .role { font-size: 11px; color: var(--o-mute); }
+
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+  @media (max-width: 700px) { .quotes { padding: 64px 24px; } }
+</style>

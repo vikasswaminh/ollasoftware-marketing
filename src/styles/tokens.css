@@ -1,0 +1,34 @@
+/* Design tokens — ported 1:1 from the legacy site/shared.jsx `o` palette,
+   plus one new accent (--o-teal) to give all six services a unique color. */
+
+:root {
+  /* surfaces */
+  --o-bg:        #08090b;
+  --o-panel:     #0f1114;
+  --o-panel-hi:  #15181d;
+  --o-line:      #1c2026;
+  --o-line-hi:   #2a3038;
+
+  /* text */
+  --o-ink:       #e8eaee;
+  --o-mute:      #7b828c;
+  --o-faint:     #4a5159;
+
+  /* accents */
+  --o-accent:    #a7f06c;
+  --o-accent-dim:#3a5224;
+  --o-warn:      #ffb04a;
+  --o-red:       #ff5d5d;
+  --o-blue:      #7cb7ff;
+  --o-purple:    #c79bff;
+  --o-teal:      #6dd6b8;
+
+  /* radii / typography scale used in multiple places */
+  --o-radius-sm: 4px;
+  --o-radius:    6px;
+  --o-radius-lg: 8px;
+
+  /* fonts */
+  --o-font-sans: 'Geist Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --o-font-mono: 'Geist Mono', ui-monospace, 'JetBrains Mono', monospace;
+}

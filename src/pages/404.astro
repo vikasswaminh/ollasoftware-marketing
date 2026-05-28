@@ -1,0 +1,19 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/primitives/PageHero.astro';
+import Btn from '../components/primitives/Btn.astro';
+---
+<Layout
+  title="404 — Ollasoftware"
+  description="That page is not here. Either it never existed, or it did and we deleted it."
+>
+  <PageHero
+    eyebrow="404"
+    title="That page is not here."
+    sub="Either it never existed, or it did and we deleted it. Either way: go back and try a different route."
+    breadcrumb={[{ label: 'home', href: '/' }, { label: '404' }]}
+  >
+    <Btn primary href="/">← Take me home</Btn>
+    <Btn href="/services">See services</Btn>
+  </PageHero>
+</Layout>

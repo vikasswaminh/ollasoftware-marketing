@@ -1,0 +1,97 @@
+---
+import Tag from '../primitives/Tag.astro';
+import Btn from '../primitives/Btn.astro';
+
+const points: Array<[string, string, string]> = [
+  ['I.',   'Ship working software, weekly.',
+    'A demo that runs in your repo on Friday beats a deck on Monday. Every sprint — code or campaign — ends with something you can click, read, or watch.'],
+  ['II.',  'Tight scope. Honest price.',
+    'We over-scope our discovery, then under-scope our build. If we miss, the change order is on us, not on you. No retainers you can\'t cancel.'],
+  ['III.', 'You own everything.',
+    'Code MIT-licensed to you, day one. Content, briefs, ad accounts, audience data — all in your name. The day you stop calling, you take everything with you.'],
+];
+---
+<section class="process">
+  <div class="head">
+    <Tag>04 · How we work</Tag>
+    <h2>Three rules every engagement runs on.</h2>
+    <p class="sub mono">A preview. The full version is in the process doc.</p>
+  </div>
+
+  <ol class="rules">
+    {points.map(([n, head, body], i) => (
+      <li class:list={['rule', { first: i === 0 }]}>
+        <span class="num mono">{n}</span>
+        <h3>{head}</h3>
+        <p>{body}</p>
+      </li>
+    ))}
+  </ol>
+
+  <div class="more-wrap">
+    <Btn href="/process">Read the rest →</Btn>
+  </div>
+</section>
+
+<style>
+  .process {
+    padding: 120px 56px;
+    border-bottom: 1px solid var(--o-line);
+    background: linear-gradient(var(--o-bg), var(--o-panel) 50%, var(--o-bg));
+  }
+
+  .head { max-width: 880px; margin-bottom: 56px; }
+  .head h2 {
+    margin: 14px 0 8px;
+    font-size: 56px;
+    letter-spacing: -1.8px;
+    font-weight: 600;
+    color: var(--o-ink);
+    line-height: 0.98;
+  }
+  .head .sub {
+    font-size: 14px;
+    color: var(--o-mute);
+    max-width: 540px;
+    line-height: 1.6;
+    margin: 12px 0 0;
+  }
+
+  .rules { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .rule {
+    display: grid;
+    grid-template-columns: 80px 1fr 1.4fr;
+    gap: 32px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--o-line);
+    align-items: baseline;
+  }
+  .rule.first { border-top: 1px solid var(--o-line); }
+  .num { font-size: 13px; color: var(--o-accent); }
+  .rule h3 {
+    margin: 0;
+    font-size: 32px;
+    letter-spacing: -0.8px;
+    font-weight: 500;
+    color: var(--o-ink);
+    line-height: 1.1;
+  }
+  .rule p {
+    margin: 0;
+    font-size: 16px;
+    color: var(--o-mute);
+    line-height: 1.55;
+  }
+
+  .more-wrap { margin-top: 36px; display: flex; justify-content: flex-end; }
+
+  @media (max-width: 900px) {
+    .head h2 { font-size: 36px; letter-spacing: -1px; }
+    .rule { grid-template-columns: 40px 1fr; gap: 16px; }
+    .rule p { grid-column: 2; }
+    .rule h3 { font-size: 24px; }
+  }
+  @media (max-width: 700px) {
+    .process { padding: 64px 24px; }
+  }
+</style>

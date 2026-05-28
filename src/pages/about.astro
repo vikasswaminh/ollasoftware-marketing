@@ -1,0 +1,353 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/primitives/PageHero.astro';
+import SectionHead from '../components/primitives/SectionHead.astro';
+import Btn from '../components/primitives/Btn.astro';
+
+const team = [
+  { name: 'Rin Saito',           role: 'Co-founder, eng lead',     focus: 'AI software',           place: 'Brooklyn',  hue: 'var(--o-accent)' },
+  { name: 'Theo Karras',         role: 'Co-founder, principal eng',focus: 'Software dev',          place: 'Lisboa',    hue: 'var(--o-blue)' },
+  { name: 'Maya Iyer',           role: 'Head of AEO',              focus: 'AEO',                   place: 'Brooklyn',  hue: 'var(--o-purple)' },
+  { name: 'Dev Sharma',          role: 'Head of SEO',              focus: 'SEO',                   place: 'Bangalore', hue: 'var(--o-warn)' },
+  { name: 'Noor Hassan',         role: 'Head of Social',           focus: 'Social media',          place: 'Brooklyn',  hue: 'var(--o-red)' },
+  { name: 'Kiran Patel',         role: 'Head of Performance',      focus: 'Paid media',            place: 'Lisboa',    hue: 'var(--o-teal)' },
+  { name: 'Marco Pellegrini',    role: 'Principal engineer',       focus: 'AI software',           place: 'Lisboa',    hue: 'var(--o-accent)' },
+  { name: 'Asha Devarajan',      role: 'Senior engineer',          focus: 'Software dev',          place: 'Bangalore', hue: 'var(--o-blue)' },
+  { name: 'Oksana Hrytsenko',    role: 'Senior engineer',          focus: 'Software dev',          place: 'Brooklyn',  hue: 'var(--o-blue)' },
+  { name: 'Arjun Menon',         role: 'Lead editor',              focus: 'SEO / AEO',             place: 'Bangalore', hue: 'var(--o-warn)' },
+  { name: 'Ian Brewster',        role: 'Senior writer',            focus: 'Social',                place: 'Brooklyn',  hue: 'var(--o-red)' },
+  { name: 'Yuna Park',           role: 'Senior video editor',      focus: 'Social / perf',         place: 'Lisboa',    hue: 'var(--o-red)' },
+  { name: 'Priya Iyer',          role: 'Senior strategist',        focus: 'Pricing &amp; ops',          place: 'Brooklyn',  hue: 'var(--o-mute)' },
+  { name: 'Anika Devarajan',     role: 'Senior strategist',        focus: 'Discovery',             place: 'Lisboa',    hue: 'var(--o-mute)' },
+  { name: 'Eli Tanaka',          role: 'Design lead',              focus: 'All of it',             place: 'Lisboa',    hue: 'var(--o-purple)' },
+  { name: 'Sam Wynter',          role: 'Operations',               focus: 'Procurement &amp; ops',      place: 'Brooklyn',  hue: 'var(--o-mute)' },
+  { name: 'Rae Okafor',          role: 'Finance &amp; people',          focus: 'Hiring &amp; payroll',       place: 'Lisboa',    hue: 'var(--o-mute)' },
+  { name: 'Felix Otieno',        role: 'Senior engineer',          focus: 'AI software',           place: 'Nairobi',   hue: 'var(--o-accent)' },
+];
+---
+<Layout
+  title="About — Ollasoftware"
+  description="A 14-engineer, 3-marketer, one-designer studio. Brooklyn and Lisboa. Started in 2021. Here's why."
+>
+  <PageHero
+    eyebrow="The studio"
+    title="A studio of 18, on purpose."
+    sub="Started in 2021 by two engineers who were tired of agency PowerPoint and tired of in-house politics. Built to stay senior, stay small, and stay honest."
+    breadcrumb={[{ label: 'home', href: '/' }, { label: 'about' }]}
+  >
+    <Btn primary href="/contact">Talk to us →</Btn>
+    <Btn href="/work">See our work</Btn>
+  </PageHero>
+
+  <section class="story">
+    <div class="story-grid">
+      <div class="story-text">
+        <h2>The why.</h2>
+        <p>
+          We started Ollasoftware after years of watching the same script play out
+          at every consultancy: a flashy pitch, a junior team on the actual work,
+          a quarterly invoice that explained nothing, a handoff doc nobody could
+          use. The deliverable was always a deck. The bill was always a surprise.
+        </p>
+        <p>
+          So we built the opposite shape on purpose. Senior bench only. Fixed
+          prices. Working software on Friday. The deliverable is the thing, not a
+          slide about the thing. The bill matches the SOW. The handoff doc is so
+          good that your team doesn't need us — and most don't, by month four.
+        </p>
+        <p>
+          We grew slowly. We turn down more work than we take. We have never
+          hired a salesperson. The first call you take is with someone who will
+          actually be on your engagement. That's the studio model and we won't
+          apologise for it.
+        </p>
+      </div>
+      <aside class="story-stats">
+        <div class="stat"><span class="stat-num">2021</span><span class="stat-label mono">founded</span></div>
+        <div class="stat"><span class="stat-num">18</span><span class="stat-label mono">people</span></div>
+        <div class="stat"><span class="stat-num">42 / 44</span><span class="stat-label mono">sprints on time + price</span></div>
+        <div class="stat"><span class="stat-num">$0</span><span class="stat-label mono">spent on sales staff</span></div>
+        <div class="stat"><span class="stat-num">4</span><span class="stat-label mono">cities</span></div>
+        <div class="stat"><span class="stat-num">0</span><span class="stat-label mono">investors, ever</span></div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="team">
+    <SectionHead
+      tag="The team"
+      title="Eighteen names. No avatars, on purpose."
+      sub="We don't use stock photos. We don't use AI-generated portraits. If you want to know what we look like, ask us on the call."
+    />
+    <div class="team-grid">
+      {team.map(p => (
+        <article class="card" style={`--accent:${p.hue}`}>
+          <div class="initial" aria-hidden="true">{p.name[0]}</div>
+          <div class="card-body">
+            <div class="name">{p.name}</div>
+            <div class="role mono">{p.role}</div>
+            <div class="meta">
+              <span class="focus" set:html={p.focus} />
+              <span class="dot">·</span>
+              <span class="place">{p.place}</span>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="offices">
+    <SectionHead
+      tag="Where we work"
+      title="Four cities. Three time zones."
+    />
+    <div class="o-grid">
+      <div class="office">
+        <h4 class="mono">Brooklyn, NY</h4>
+        <p class="addr">68 Jay St · Suite 414 · Brooklyn, NY 11201</p>
+        <p class="hrs mono">M–F · 09:00–18:00 ET</p>
+        <p class="note">HQ. Most of eng + AEO + social + ops.</p>
+      </div>
+      <div class="office">
+        <h4 class="mono">Lisboa, PT</h4>
+        <p class="addr">R. da Bica de Duarte Belo 42 · 1200-053 Lisboa</p>
+        <p class="hrs mono">M–F · 09:00–18:00 WET</p>
+        <p class="note">EU hub. Eng, perf marketing, design, finance.</p>
+      </div>
+      <div class="office">
+        <h4 class="mono">Bangalore, IN</h4>
+        <p class="addr">12th Main · Indiranagar · Bangalore 560038</p>
+        <p class="hrs mono">M–F · 09:30–18:30 IST</p>
+        <p class="note">Eng, SEO, editorial.</p>
+      </div>
+      <div class="office">
+        <h4 class="mono">Nairobi, KE</h4>
+        <p class="addr">Riverside Square · Riverside Dr · Nairobi</p>
+        <p class="hrs mono">M–F · 09:00–18:00 EAT</p>
+        <p class="note">Newest. Eng.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="careers" id="careers">
+    <SectionHead
+      tag="Careers"
+      title="We hire slowly."
+      sub="Three open roles, always shown. We pay top of market, we hire senior, we don't ask for take-home tests."
+    />
+    <ul class="jobs">
+      <li>
+        <span class="job-tag mono">Eng</span>
+        <div>
+          <div class="job-title">Senior engineer — AI software</div>
+          <div class="job-meta mono">Brooklyn or Lisboa · full-time · $260–320k OTE · 8+ yr senior xp</div>
+        </div>
+        <a class="apply mono" href="/contact?role=ai-eng">apply →</a>
+      </li>
+      <li>
+        <span class="job-tag mono">Editor</span>
+        <div>
+          <div class="job-title">Senior editor — SEO/AEO</div>
+          <div class="job-meta mono">Bangalore · full-time · $90–110k · 6+ yr editorial xp</div>
+        </div>
+        <a class="apply mono" href="/contact?role=seo-ed">apply →</a>
+      </li>
+      <li>
+        <span class="job-tag mono">Perf</span>
+        <div>
+          <div class="job-title">Senior media buyer — Performance</div>
+          <div class="job-meta mono">Lisboa · full-time · $130–170k · 6+ yr B2B paid xp</div>
+        </div>
+        <a class="apply mono" href="/contact?role=perf-buyer">apply →</a>
+      </li>
+    </ul>
+  </section>
+
+  <section class="press" id="press">
+    <SectionHead
+      tag="Press"
+      title="Where we've been quoted."
+    />
+    <ul class="press-list">
+      <li><span class="when mono">2026.03</span> <span class="pub mono">The Pragmatic Engineer</span> · "Why studios beat consultancies for AI work"</li>
+      <li><span class="when mono">2025.11</span> <span class="pub mono">a16z Future</span> · "The senior-bench-only thesis"</li>
+      <li><span class="when mono">2025.08</span> <span class="pub mono">Sifted</span> · "Brooklyn × Lisboa: cross-Atlantic studios"</li>
+      <li><span class="when mono">2025.04</span> <span class="pub mono">Lenny's Newsletter</span> · "How Olla scopes a 4-week AI sprint"</li>
+    </ul>
+  </section>
+
+  <section class="cta">
+    <h2>Want to talk to a partner?</h2>
+    <p class="mono">No SDR. No qualification form. No procurement theatre. Just a 30-minute call with someone who'd actually be on your engagement.</p>
+    <div class="actions">
+      <Btn primary href="/contact">Talk to us →</Btn>
+      <Btn href="/services">See services</Btn>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .story, .team, .offices, .careers, .press {
+    padding: 96px 56px;
+    border-bottom: 1px solid var(--o-line);
+  }
+
+  .story-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .story-text h2 {
+    margin: 0 0 16px;
+    font-size: 36px;
+    letter-spacing: -1px;
+    font-weight: 600;
+    color: var(--o-ink);
+  }
+  .story-text p {
+    margin: 0 0 16px;
+    font-size: 16px;
+    color: var(--o-mute);
+    line-height: 1.6;
+  }
+  .story-text p:last-child { margin-bottom: 0; }
+
+  .story-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius-lg);
+    padding: 22px;
+  }
+  .stat { display: flex; flex-direction: column; gap: 4px; padding: 8px 4px; }
+  .stat-num {
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--o-accent);
+    letter-spacing: -0.5px;
+  }
+  .stat-label {
+    font-size: 10px;
+    color: var(--o-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .team-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+  .card {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius);
+    padding: 16px 20px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+  .initial {
+    width: 40px;
+    height: 40px;
+    border-radius: 20px;
+    background: color-mix(in srgb, var(--accent) 15%, var(--o-bg));
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .card-body { display: flex; flex-direction: column; gap: 2px; }
+  .name { font-size: 14px; color: var(--o-ink); font-weight: 500; }
+  .role { font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; }
+  .meta { font-size: 11px; color: var(--o-faint); margin-top: 2px; }
+  .meta .dot { margin: 0 6px; opacity: 0.6; }
+
+  .o-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+  }
+  .office {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius);
+    padding: 22px 24px;
+  }
+  .office h4 {
+    margin: 0 0 12px;
+    font-size: 12px;
+    color: var(--o-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    font-weight: 500;
+  }
+  .addr { margin: 0 0 6px; font-size: 13px; color: var(--o-ink); line-height: 1.4; }
+  .hrs { margin: 0 0 12px; font-size: 11px; color: var(--o-faint); }
+  .note { margin: 0; font-size: 13px; color: var(--o-mute); line-height: 1.5; }
+
+  .jobs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  .jobs li {
+    display: grid;
+    grid-template-columns: 80px 1fr 80px;
+    gap: 24px;
+    align-items: center;
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius);
+    padding: 18px 24px;
+  }
+  .job-tag {
+    font-size: 10px;
+    padding: 4px 8px;
+    border: 1px solid var(--o-line);
+    border-radius: 3px;
+    color: var(--o-accent);
+    text-transform: uppercase;
+    text-align: center;
+  }
+  .job-title { font-size: 16px; color: var(--o-ink); font-weight: 500; }
+  .job-meta { font-size: 11px; color: var(--o-mute); margin-top: 4px; }
+  .apply { color: var(--o-accent); text-align: right; font-size: 12px; text-decoration: none; }
+
+  .press-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+  .press-list li {
+    font-size: 14px;
+    color: var(--o-ink);
+    padding: 14px 20px;
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius);
+    display: flex;
+    gap: 16px;
+    align-items: baseline;
+    flex-wrap: wrap;
+  }
+  .when { font-size: 11px; color: var(--o-faint); width: 60px; flex-shrink: 0; }
+  .pub { font-size: 11px; color: var(--o-accent); }
+
+  .cta { padding: 96px 56px; text-align: center; }
+  .cta h2 { margin: 0 0 12px; font-size: 40px; letter-spacing: -1px; font-weight: 600; color: var(--o-ink); }
+  .cta p { font-size: 14px; color: var(--o-mute); margin: 0 0 28px; }
+  .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+  @media (max-width: 1100px) {
+    .story-grid { grid-template-columns: 1fr; }
+    .team-grid { grid-template-columns: repeat(2, 1fr); }
+    .o-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 700px) {
+    .story, .team, .offices, .careers, .press, .cta { padding: 64px 24px; }
+    .team-grid { grid-template-columns: 1fr; }
+    .o-grid { grid-template-columns: 1fr; }
+    .jobs li { grid-template-columns: 1fr; gap: 10px; }
+    .apply { text-align: left; }
+  }
+</style>

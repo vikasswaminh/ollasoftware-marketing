@@ -1,0 +1,46 @@
+---
+interface Props {
+  primary?: boolean;
+  href?: string;
+  size?: 'sm' | 'md';
+  type?: 'button' | 'submit';
+  ariaLabel?: string;
+}
+
+const { primary = false, href, size = 'md', type = 'button', ariaLabel } = Astro.props;
+const cls = ['btn', primary ? 'primary' : 'outline', `size-${size}`];
+const Tag = href ? 'a' : 'button';
+const extra = href ? { href } : { type };
+---
+<Tag class:list={[...cls, 'mono']} aria-label={ariaLabel} {...extra}>
+  <slot />
+</Tag>
+
+<style>
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: var(--o-radius-sm);
+    transition: filter .14s, transform .12s, background .14s;
+  }
+  .btn.size-sm { padding: 6px 12px; font-size: 12px; }
+  .btn.size-md { padding: 10px 18px; font-size: 13px; }
+
+  .btn.primary {
+    border: none;
+    background: var(--o-accent);
+    color: #0a0a0a;
+  }
+  .btn.outline {
+    border: 1px solid var(--o-line-hi);
+    background: transparent;
+    color: var(--o-ink);
+  }
+  .btn:hover { filter: brightness(1.08); }
+  .btn:active { transform: translateY(1px); }
+</style>

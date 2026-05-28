@@ -1,0 +1,229 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/primitives/PageHero.astro';
+import { services } from '../lib/tokens';
+---
+<Layout
+  title="Contact — Ollasoftware"
+  description="Tell us what you're trying to ship. We'll reply in one business day with a 30-minute call slot and a sample SOW."
+>
+  <PageHero
+    eyebrow="Talk to us"
+    title="Start with a 30-minute call."
+    sub="No SDR. No qualification form longer than this one. Reply within one business day, in a real human voice, from whoever would actually lead your engagement."
+    breadcrumb={[{ label: 'home', href: '/' }, { label: 'contact' }]}
+  />
+
+  <section class="contact">
+    <div class="grid">
+      <form class="form" onsubmit="event.preventDefault(); alert('Demo: this would send. Email us at hi@ollasoftware.com.');">
+        <div class="row">
+          <label>
+            <span class="lbl mono">Your name</span>
+            <input type="text" name="name" placeholder="Maya Chen" required />
+          </label>
+          <label>
+            <span class="lbl mono">Work email</span>
+            <input type="email" name="email" placeholder="you@company.com" required />
+          </label>
+        </div>
+        <div class="row">
+          <label>
+            <span class="lbl mono">Company</span>
+            <input type="text" name="company" placeholder="Northwind, Series B" required />
+          </label>
+          <label>
+            <span class="lbl mono">Role</span>
+            <input type="text" name="role" placeholder="VP Engineering" />
+          </label>
+        </div>
+        <label class="full">
+          <span class="lbl mono">What are you looking for?</span>
+          <select name="service" required>
+            <option value="">choose one (or a combo)</option>
+            {services.map(s => <option value={s.slug}>{s.name}</option>)}
+            <option value="combo">Multiple — let's figure it out on the call</option>
+            <option value="other">Something else</option>
+          </select>
+        </label>
+        <label class="full">
+          <span class="lbl mono">Budget shape</span>
+          <select name="budget">
+            <option value="">choose one</option>
+            <option value="under-50k">Under $50k · one-off</option>
+            <option value="50-150k">$50k–$150k · single sprint</option>
+            <option value="150-500k">$150k–$500k · multi-sprint</option>
+            <option value="retainer">$10k–$30k / month · retainer</option>
+            <option value="not-sure">Not sure yet</option>
+          </select>
+        </label>
+        <label class="full">
+          <span class="lbl mono">Briefly: what are you trying to ship?</span>
+          <textarea
+            name="brief"
+            placeholder="A few sentences. What's the outcome you're after, what have you tried, what's the deadline?"
+            rows="6"
+            required
+          ></textarea>
+        </label>
+        <div class="actions">
+          <button class="mono primary" type="submit">Send → 1 business day reply</button>
+          <span class="actions-note mono">demo only · this form does not send</span>
+        </div>
+      </form>
+
+      <aside class="aside">
+        <div class="block">
+          <h3 class="mono">Or, just email us.</h3>
+          <p class="mono"><a href="mailto:hi@ollasoftware.com">hi@ollasoftware.com</a></p>
+          <p class="mute">We read every message. Replies within one business day. Calls within a week.</p>
+        </div>
+        <div class="block">
+          <h3 class="mono">Calendar</h3>
+          <div class="cal-embed">
+            <span class="cal-label mono">[ calendar embed placeholder ]</span>
+            <span class="cal-sub mono">Cal.com / Savvycal / Google in production</span>
+          </div>
+        </div>
+        <div class="block">
+          <h3 class="mono">Offices</h3>
+          <p class="addr"><strong>Brooklyn HQ</strong><br/>68 Jay St · Suite 414 · NY 11201</p>
+          <p class="addr"><strong>Lisboa</strong><br/>R. da Bica de Duarte Belo 42 · 1200-053</p>
+          <p class="addr"><strong>Bangalore</strong><br/>12th Main · Indiranagar · 560038</p>
+          <p class="addr"><strong>Nairobi</strong><br/>Riverside Square · Riverside Dr</p>
+        </div>
+        <div class="block">
+          <h3 class="mono">Other channels</h3>
+          <ul class="channels mono">
+            <li><a href="https://github.com/ollasoftware">github / ollasoftware</a></li>
+            <li><a href="https://linkedin.com/company/ollasoftware">linkedin / ollasoftware</a></li>
+            <li><a href="https://twitter.com/ollasoftware">x / @ollasoftware</a></li>
+            <li><a href="mailto:security@ollasoftware.com">security@ollasoftware.com</a> · vulns</li>
+            <li><a href="mailto:press@ollasoftware.com">press@ollasoftware.com</a> · press</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .contact {
+    padding: 64px 56px 120px;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .form {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius-lg);
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  label {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .lbl {
+    font-size: 11px;
+    color: var(--o-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+  input, select, textarea {
+    background: var(--o-bg);
+    border: 1px solid var(--o-line);
+    color: var(--o-ink);
+    border-radius: var(--o-radius-sm);
+    padding: 12px 14px;
+    font-size: 14px;
+    font-family: var(--o-font-sans);
+    outline: none;
+    transition: border-color .14s;
+  }
+  input:focus, select:focus, textarea:focus { border-color: var(--o-accent); }
+  textarea { resize: vertical; min-height: 120px; line-height: 1.5; }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 6px;
+  }
+  .primary {
+    border: none;
+    background: var(--o-accent);
+    color: #0a0a0a;
+    padding: 12px 18px;
+    border-radius: var(--o-radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: filter .14s;
+  }
+  .primary:hover { filter: brightness(1.08); }
+  .actions-note { font-size: 11px; color: var(--o-faint); }
+
+  .aside { display: flex; flex-direction: column; gap: 22px; }
+  .block {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius);
+    padding: 22px 24px;
+  }
+  .block h3 {
+    margin: 0 0 10px;
+    font-size: 11px;
+    color: var(--o-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 500;
+  }
+  .block p {
+    margin: 0 0 6px;
+    font-size: 14px;
+    color: var(--o-ink);
+    line-height: 1.5;
+  }
+  .block a { color: var(--o-ink); text-decoration: underline; text-decoration-color: var(--o-line-hi); }
+  .block a:hover { text-decoration-color: var(--o-accent); }
+  .mute { color: var(--o-mute) !important; font-size: 13px !important; }
+  .addr { font-size: 13px; }
+  .addr strong { color: var(--o-accent); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .cal-embed {
+    border: 1px dashed var(--o-line-hi);
+    border-radius: var(--o-radius-sm);
+    background: var(--o-bg);
+    padding: 32px 16px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .cal-label { font-size: 12px; color: var(--o-mute); }
+  .cal-sub { font-size: 10px; color: var(--o-faint); }
+
+  .channels { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: 12px; }
+  .channels a { color: var(--o-ink); text-decoration: none; }
+  .channels a:hover { color: var(--o-accent); }
+
+  @media (max-width: 1100px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 700px) {
+    .contact { padding: 64px 24px; }
+    .form { padding: 24px; }
+    .row { grid-template-columns: 1fr; }
+  }
+</style>

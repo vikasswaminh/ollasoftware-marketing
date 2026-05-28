@@ -1,0 +1,147 @@
+---
+import { o, services } from '../../lib/tokens';
+
+const cols: Array<[string, Array<[string, string]>]> = [
+  ['Services', services.map(s => [s.name, `/services/${s.slug}`])],
+  ['Work',     [['Case studies', '/work'], ['Recent work', '/work'], ['Industries', '/work#industries'], ['Sample SOW', '/process#sow']]],
+  ['Studio',   [['Process', '/process'], ['About', '/about'], ['Careers', '/about#careers'], ['Press', '/about#press']]],
+  ['Trust',    [['SOC 2', '/process#security'], ['GDPR / DPA', '/process#gdpr'], ['Master MSA', '/process#msa'], ['Security FAQ', '/process#bounty']]],
+];
+
+const year = new Date().getFullYear();
+---
+<footer class="foot">
+  <div class="grid">
+    <div class="brand-col">
+      <div class="brand">
+        <svg width="20" height="20" viewBox="0 0 22 22" fill="none" aria-hidden="true">
+          <path d="M3 8h16v9a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3V8z" stroke={o.accent} stroke-width="1.5"/>
+          <path d="M2 8h18" stroke={o.accent} stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span class="brand-name">ollasoftware</span>
+      </div>
+      <p class="tagline">
+        A full-service software &amp; growth studio. AI builds, custom software,
+        AEO/SEO, social and performance marketing.
+      </p>
+      <form class="newsletter" onsubmit="event.preventDefault();">
+        <input
+          type="email"
+          placeholder="you@company.com"
+          class="mono"
+          aria-label="Email for field notes newsletter"
+        />
+        <button type="submit" class="mono">field notes →</button>
+      </form>
+      <p class="newsletter-foot mono">monthly · case studies &amp; lessons · no funnel</p>
+    </div>
+
+    {cols.map(([head, items]) => (
+      <div class="col">
+        <div class="col-head mono">{head}</div>
+        <ul>
+          {items.map(([label, to]) => (
+            <li><a href={to}>{label}</a></li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+
+  <div class="legal">
+    <span class="mono">© {year} Ollasoftware Studio, Inc. · Brooklyn / Lisboa</span>
+    <span class="mono">built by 14 engineers, 3 marketers, and one designer</span>
+  </div>
+</footer>
+
+<style>
+  .foot {
+    padding: 64px 56px 48px;
+    background: var(--o-panel);
+    border-top: 1px solid var(--o-line);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1.4fr repeat(4, 1fr);
+    gap: 40px;
+    margin-bottom: 56px;
+  }
+
+  .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+  .brand-name { font-weight: 600; font-size: 16px; color: var(--o-ink); }
+  .tagline {
+    font-size: 13px;
+    color: var(--o-mute);
+    line-height: 1.55;
+    margin: 0 0 18px;
+    max-width: 280px;
+  }
+
+  .newsletter {
+    display: flex;
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius-sm);
+    overflow: hidden;
+    max-width: 320px;
+  }
+  .newsletter input {
+    flex: 1;
+    border: none;
+    background: var(--o-bg);
+    color: var(--o-ink);
+    padding: 10px 12px;
+    font-size: 12px;
+    outline: none;
+  }
+  .newsletter button {
+    border: none;
+    background: var(--o-accent);
+    color: #0a0a0a;
+    padding: 0 14px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  .newsletter button:hover { filter: brightness(1.08); }
+  .newsletter-foot { font-size: 10px; color: var(--o-faint); margin: 8px 0 0; }
+
+  .col-head {
+    font-size: 11px;
+    color: var(--o-faint);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+  }
+  .col ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .col a {
+    color: var(--o-ink);
+    font-size: 13px;
+    text-decoration: none;
+  }
+  .col a:hover { color: var(--o-accent); }
+
+  .legal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px;
+    border-top: 1px solid var(--o-line);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .legal span { font-size: 11px; color: var(--o-faint); }
+
+  @media (max-width: 900px) {
+    .foot { padding: 48px 24px 32px; }
+    .grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+    .brand-col { grid-column: 1 / -1; }
+  }
+</style>

@@ -1,0 +1,64 @@
+---
+interface Props {
+  title?: string;
+  foot?: string;
+  height?: number | string;
+}
+
+const { title, foot, height } = Astro.props;
+const heightStyle = typeof height === 'number' ? `${height}px` : height;
+---
+<div class="code-card">
+  {title && (
+    <div class="code-head">
+      <div class="dots" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+      <span class="title mono">{title}</span>
+      <span class="spacer"></span>
+      {foot && <span class="foot mono">{foot}</span>}
+    </div>
+  )}
+  <pre class="code mono" style={heightStyle ? `height:${heightStyle}` : undefined}><slot /></pre>
+</div>
+
+<style>
+  .code-card {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius-lg);
+    overflow: hidden;
+    box-shadow: 0 30px 80px -20px rgba(0,0,0,0.6);
+  }
+
+  .code-head {
+    height: 36px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 14px;
+    border-bottom: 1px solid var(--o-line);
+    background: var(--o-panel-hi);
+  }
+  .dots { display: flex; gap: 6px; }
+  .dots span {
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background: #3a3a3a;
+    display: inline-block;
+  }
+  .title { font-size: 11px; color: var(--o-mute); margin-left: 6px; }
+  .spacer { flex: 1; }
+  .foot { font-size: 10px; color: var(--o-faint); }
+
+  .code {
+    margin: 0;
+    padding: 20px 22px;
+    font-size: 12.5px;
+    line-height: 1.75;
+    color: var(--o-ink);
+    background: var(--o-panel);
+    overflow-x: auto;
+  }
+</style>

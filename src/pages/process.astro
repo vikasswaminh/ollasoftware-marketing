@@ -1,0 +1,204 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/primitives/PageHero.astro';
+import SectionHead from '../components/primitives/SectionHead.astro';
+import Code from '../components/primitives/Code.astro';
+import Btn from '../components/primitives/Btn.astro';
+import { o } from '../lib/tokens';
+
+const principles: Array<[string, string, string]> = [
+  ['I.',   'Ship working software, weekly.',
+    'A demo that runs in your repo on Friday beats a deck on Monday. Every sprint — code or campaign — ends with something you can click, read, or watch. If we couldn\'t demo this week, we say so on the call instead of dressing up a slide.'],
+  ['II.',  'Tight scope. Honest price.',
+    'We over-scope our discovery, then under-scope our build. If we miss, the change order is on us, not on you. No retainers you can\'t cancel. No invoices that arrive without a Loom explaining what they cover.'],
+  ['III.', 'You own everything.',
+    'Code MIT-licensed to you, day one. Ad accounts, CMS, repos, audience data, content briefs — all in your name. The day you stop calling, you take everything with you and the lights stay on without us.'],
+  ['IV.',  'No juniors learning on your dollar.',
+    'Every engineer, strategist, and editor on our pods has shipped to production for at least 8 years. We don\'t farm out work to overseas shops. We don\'t use AI to ghostwrite a junior into seniority.'],
+  ['V.',   'Disagree and commit, in writing.',
+    'If we think your spec is wrong, we say so on the call, write it down in the discovery doc, and ship what you asked for anyway. Then we measure. The doc is the receipt.'],
+];
+
+const sowSample = `SOW · acme-fintech / intake-agent
+═══════════════════════════════════════════════════════
+  outcome    : agent that triages support tickets
+  success    : ≥85% precision · <2s p95 · in-app
+  duration   : 4 weeks · fixed
+  team       : 2 engineers + 1 PM
+  price      : $96,000  (50% on signature, 50% on demo)
+  ownership  : you · MIT-licensed code, day 1
+  change-orders only on new scope (signed by both)
+  refund     : pro-rata if we miss the success bar
+  warranty   : 30 days, bugs in delivered scope, free`;
+---
+<Layout
+  title="Process — Ollasoftware"
+  description="Five principles, a sample SOW, our security posture, and the boring policies. How we actually run engagements."
+>
+  <PageHero
+    eyebrow="How we work"
+    title="Five principles. One SOW. Zero surprises."
+    sub="A long version of the short version. The full picture of how we run engagements, what we sign, and what we will not."
+    breadcrumb={[{ label: 'home', href: '/' }, { label: 'process' }]}
+  >
+    <Btn primary href="/contact">Start a project →</Btn>
+    <Btn href="/pricing">See pricing</Btn>
+  </PageHero>
+
+  <section class="principles" id="principles">
+    <SectionHead
+      tag="01 · Principles"
+      title="Five principles we won't apologize for."
+    />
+    <ol>
+      {principles.map(([n, head, body], i) => (
+        <li class:list={['rule', { first: i === 0 }]}>
+          <span class="num mono">{n}</span>
+          <h3>{head}</h3>
+          <p>{body}</p>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <section class="sow" id="sow">
+    <SectionHead
+      tag="02 · Sample SOW"
+      title="A real-shaped SOW excerpt."
+      sub="This is the shape every engagement ships with. Names changed. Numbers honest. The full template is in the master MSA."
+    />
+    <Code title="SOW · template-fixed-price.txt" foot="● shared by default">{sowSample}</Code>
+  </section>
+
+  <section class="security" id="security">
+    <SectionHead
+      tag="03 · Security &amp; compliance"
+      title="The boring promises."
+      sub="The stuff your procurement and security teams will ask about."
+    />
+    <div class="grid">
+      <div class="cell">
+        <span class="cell-h mono">SOC 2 Type II</span>
+        <p>Annual audit by an AICPA-accredited firm. Latest report available under NDA on day one of procurement.</p>
+      </div>
+      <div class="cell">
+        <span class="cell-h mono">GDPR / DPA</span>
+        <p>Standard DPA on file. EU SCCs ready. Sub-processor list maintained and shared on request, with 30-day notice on changes.</p>
+      </div>
+      <div class="cell">
+        <span class="cell-h mono">Background checks</span>
+        <p>Every engineer, strategist, and editor is background-checked at hire. We can re-run on a per-engagement basis if your security policy requires it.</p>
+      </div>
+      <div class="cell">
+        <span class="cell-h mono">Access &amp; offboarding</span>
+        <p>Least-privilege access. Offboarding within 24 hours of engagement end — including SSO, repos, ad accounts, CMS, design tools, everything.</p>
+      </div>
+      <div class="cell" id="msa">
+        <span class="cell-h mono">Master MSA</span>
+        <p>We sign yours, or we publish ours. Either way: no exclusivity, no IP assignment we wouldn't put in our own contracts, no auto-renewals.</p>
+      </div>
+      <div class="cell" id="bounty">
+        <span class="cell-h mono">Bug bounty</span>
+        <p>If you find a security issue in anything we shipped, we'll pay the bounty (within reason) and fix it on our dime, in or out of warranty.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="how">
+    <SectionHead
+      tag="04 · How a week looks"
+      title="The cadence."
+      sub="Same beat every week. Predictable on purpose."
+    />
+    <Code title="~/process/weekly-cadence.txt"><Fragment set:html={`<span style="color:${o.faint}">// every engagement, every week — code or campaign</span>
+
+<span style="color:${o.purple}">monday</span>     09:30   standup with your team           <span style="color:${o.mute}">(30 min, recorded)</span>
+            10:00   planning · what ships Friday
+            10:30   open PRs / drafts in your queue
+
+<span style="color:${o.purple}">wed</span>        14:00   midweek review                    <span style="color:${o.mute}">(written, in Slack)</span>
+            14:30   blockers escalated, decisions logged
+
+<span style="color:${o.purple}">friday</span>     14:00   demo / read-out                   <span style="color:${o.mute}">(30 min, recorded)</span>
+            14:30   one-page weekly note in your wiki
+            15:00   end-of-week commit + handoff
+
+<span style="color:${o.purple}">every 4 wk</span> :   retro + scope check-in            <span style="color:${o.mute}">(45 min, written follow-up)</span>
+<span style="color:${o.purple}">every 12 wk</span>:   re-strategise                     <span style="color:${o.mute}">(half-day, on-site if local)</span>`} /></Code>
+  </section>
+
+  <section class="cta">
+    <h2>Procurement done. Want to start?</h2>
+    <p class="mono">If you've made it this far, you're either evaluating us or working in our finance team. Either way: book a call.</p>
+    <div class="actions">
+      <Btn primary href="/contact">Start a project →</Btn>
+      <Btn href="/services">See services</Btn>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .principles, .sow, .security, .how {
+    padding: 96px 56px;
+    border-bottom: 1px solid var(--o-line);
+  }
+  .principles { background: linear-gradient(var(--o-bg), var(--o-panel) 50%, var(--o-bg)); }
+
+  .principles ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+  .rule {
+    display: grid;
+    grid-template-columns: 80px 1fr 1.4fr;
+    gap: 32px;
+    padding: 32px 0;
+    border-bottom: 1px solid var(--o-line);
+    align-items: baseline;
+  }
+  .rule.first { border-top: 1px solid var(--o-line); }
+  .num { font-size: 13px; color: var(--o-accent); }
+  .rule h3 {
+    margin: 0;
+    font-size: 30px;
+    letter-spacing: -0.7px;
+    font-weight: 500;
+    color: var(--o-ink);
+    line-height: 1.1;
+  }
+  .rule p { margin: 0; font-size: 16px; color: var(--o-mute); line-height: 1.55; }
+
+  .security .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .cell {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius);
+    padding: 22px 24px;
+  }
+  .cell-h {
+    display: block;
+    font-size: 11px;
+    color: var(--o-accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+  .cell p { margin: 0; font-size: 14px; color: var(--o-mute); line-height: 1.55; }
+
+  .cta { padding: 96px 56px; text-align: center; }
+  .cta h2 { margin: 0 0 12px; font-size: 40px; letter-spacing: -1px; font-weight: 600; color: var(--o-ink); }
+  .cta p { font-size: 14px; color: var(--o-mute); margin: 0 0 28px; }
+  .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+  @media (max-width: 1100px) { .security .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 900px) {
+    .rule { grid-template-columns: 40px 1fr; gap: 16px; }
+    .rule p { grid-column: 2; }
+    .rule h3 { font-size: 22px; }
+  }
+  @media (max-width: 700px) {
+    .principles, .sow, .security, .how, .cta { padding: 64px 24px; }
+    .security .grid { grid-template-columns: 1fr; }
+  }
+</style>

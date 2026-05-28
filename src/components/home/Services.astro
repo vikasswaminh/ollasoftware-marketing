@@ -1,0 +1,153 @@
+---
+import SectionHead from '../primitives/SectionHead.astro';
+import { services } from '../../lib/tokens';
+---
+<section class="services">
+  <SectionHead
+    tag="03 · What we do"
+    title="Six services. One senior team."
+  >
+    <a slot="right" class="more mono" href="/services">compare all →</a>
+  </SectionHead>
+
+  <div class="grid">
+    {services.map(s => (
+      <a class="card" href={`/services/${s.slug}`} style={`--accent:${s.accent}`}>
+        <div class="card-top">
+          <div class="glyph" aria-hidden="true">{s.glyph}</div>
+          <span class="chip mono">{s.chip}</span>
+        </div>
+        <div>
+          <div class="name">{s.name}</div>
+          <div class="tag mono">{s.tag}</div>
+        </div>
+        <p class="blurb">{s.blurb}</p>
+        <ul class="bullets mono">
+          {s.bullets.map(b => (
+            <li><span class="arr">›</span>{b}</li>
+          ))}
+        </ul>
+        <div class="card-foot">
+          <span class="mono details">details</span>
+          <span class="mono more-link">read more →</span>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .services {
+    padding: 110px 56px;
+    border-bottom: 1px solid var(--o-line);
+  }
+
+  .more {
+    color: var(--o-accent);
+    font-size: 12px;
+    text-decoration: none;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+
+  .card {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    text-decoration: none;
+    color: var(--o-ink);
+    transition: border-color .14s, transform .14s;
+  }
+  .card:hover {
+    border-color: color-mix(in srgb, var(--accent) 53%, transparent);
+    transform: translateY(-2px);
+  }
+
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .glyph {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--o-radius);
+    background: #000;
+    border: 1px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-size: 22px;
+    line-height: 1;
+  }
+
+  .chip {
+    font-size: 10px;
+    color: var(--o-faint);
+    padding: 3px 7px;
+    border: 1px solid var(--o-line);
+    border-radius: 3px;
+  }
+
+  .name {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--o-ink);
+    letter-spacing: -0.4px;
+    margin-bottom: 3px;
+    line-height: 1.15;
+  }
+  .tag {
+    font-size: 11px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .blurb {
+    font-size: 14px;
+    color: var(--o-mute);
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .bullets {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 12px;
+    color: var(--o-ink);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .bullets li { display: flex; gap: 10px; }
+  .bullets .arr { color: var(--accent); }
+
+  .card-foot {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+    border-top: 1px dashed var(--o-line);
+  }
+  .details { color: var(--o-mute); font-size: 12px; }
+  .more-link { color: var(--accent); font-size: 12px; }
+
+  @media (max-width: 1100px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 700px) {
+    .services { padding: 64px 24px; }
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>

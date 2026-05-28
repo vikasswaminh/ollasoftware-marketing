@@ -1,0 +1,246 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/primitives/PageHero.astro';
+import SectionHead from '../components/primitives/SectionHead.astro';
+import Btn from '../components/primitives/Btn.astro';
+import { services } from '../lib/tokens';
+
+const entries = [
+  { date: '2026.05.18', svc: 'ai-software',           title: 'Intake agent for a 4M-customer bank',
+    client: 'Helio Bank',
+    body: 'Triages support tickets, drafts replies, routes escalations to the right team. Shipped in 5 weeks. 86% precision on the gold set, $0.04/run inference cost.',
+    metrics: [['86%', 'precision'], ['$0.04', 'cost/run'], ['5 wks', 'sprint'], ['9 mo', 'in prod, no callbacks']] },
+
+  { date: '2026.05.11', svc: 'seo',                   title: 'Doubled organic pipeline for a fintech',
+    client: 'Pelago',
+    body: 'New cluster strategy, technical SEO fixes, 60-page content sprint over 90 days. Migrated off a JS-rendered stack that was blocking indexation.',
+    metrics: [['+14', 'top-10 keywords'], ['2.1×', 'qualified pipeline'], ['90 d', 'time to impact'], ['$0', 'paid spend']] },
+
+  { date: '2026.05.04', svc: 'social-media',          title: 'Founder-led playbook for a Series B SaaS',
+    client: 'Forma Health',
+    body: 'Weekly LinkedIn + X cadence built around the CEO\'s voice. 4 short-form videos/week from existing podcast footage. DM-ops handled by our team.',
+    metrics: [['2.4M', 'monthly impressions'], ['38%', 'MoM follower growth'], ['18', 'inbound enterprise convos'], ['6', 'closed-won attributed']] },
+
+  { date: '2026.04.28', svc: 'performance-marketing', title: 'CAC down 38% in six weeks',
+    client: 'Sundial',
+    body: 'Rebuilt the Meta + Google funnels, server-side tracking, new LPs in our stack, full attribution wired to their CRM. Killed two channels that weren\'t paying back.',
+    metrics: [['-38%', 'CAC'], ['$68 → $42', 'blended CAC'], ['4.1 → 6.8', 'LTV/CAC'], ['6 wks', 'to first lift']] },
+
+  { date: '2026.04.20', svc: 'aeo',                   title: 'Became the cited answer in a B2B category',
+    client: 'Riverlane',
+    body: 'AEO-first content rebuild across the top 40 pages. llms.txt, schema rollout, citation outreach to the sources AI engines pull from. Tracked across all four major answer engines.',
+    metrics: [['62%', 'prompt coverage'], ['#1', 'cited in ChatGPT for top 8 prompts'], ['3.2×', 'attributed inbound from AI'], ['90 d', 'to first citation']] },
+
+  { date: '2026.04.12', svc: 'software-dev',          title: 'Compliance portal · 0 → SOC 2 in 8 weeks',
+    client: 'Northwind',
+    body: 'Internal portal for evidence collection, audit prep, and policy management. TypeScript + Astro + Postgres, deployed in their VPC. Replaced a Notion + Drive setup that was costing them an audit cycle.',
+    metrics: [['8 wks', 'sprint'], ['6', 'evidence types'], ['2k', 'MAU'], ['<500ms', 'p95']] },
+
+  { date: '2026.03.30', svc: 'ai-software',           title: 'RAG copilot embedded in a legal SaaS',
+    client: 'Kestrel',
+    body: 'Copilot that answers questions about a customer\'s own contract library. Built in their codebase, runs in their VPC, uses their existing auth + audit pipeline.',
+    metrics: [['91%', 'precision'], ['1.8s', 'p95 latency'], ['7 wks', 'sprint'], ['$0.02', 'cost/run']] },
+
+  { date: '2026.03.22', svc: 'seo',                   title: 'Replatform without losing rankings',
+    client: 'Arclight',
+    body: 'Migration from a legacy CMS to a headless stack we built. Pre-migration audit, redirect map for 4,800 URLs, post-launch monitoring. Net result: rankings flat-to-up through the cutover.',
+    metrics: [['4,800', 'URLs migrated'], ['0', 'top-100 rankings lost'], ['+12%', 'organic 30d post-launch'], ['3 wks', 'cutover']] },
+];
+
+const byService = Object.fromEntries(
+  services.map(s => [s.slug, s])
+);
+---
+<Layout
+  title="Work — Ollasoftware"
+  description="Recent ships across AI software, custom software, AEO, SEO, social, and performance marketing."
+>
+  <PageHero
+    eyebrow="Recent ships"
+    title="What we shipped, last 90 days."
+    sub="Names real where we have permission. Numbers honest. Every case study links to a sample of the deliverable — the SOW, the eval set, the report — wherever we can share it."
+    breadcrumb={[{ label: 'home', href: '/' }, { label: 'work' }]}
+  >
+    <Btn primary href="/contact">Start a project →</Btn>
+    <Btn href="/services">See all services</Btn>
+  </PageHero>
+
+  <section class="feed">
+    {entries.map(e => {
+      const svc = byService[e.svc]!;
+      return (
+        <article class="entry" style={`--accent:${svc.accent}`}>
+          <div class="entry-meta">
+            <span class="date mono">{e.date}</span>
+            <span class="svc mono">{svc.glyph} {svc.name}</span>
+            <span class="client mono">{e.client}</span>
+          </div>
+          <h2>{e.title}</h2>
+          <p class="body">{e.body}</p>
+          <dl class="metrics">
+            {e.metrics.map(([num, label]) => (
+              <div class="metric">
+                <dt class="num">{num}</dt>
+                <dd class="label mono">{label}</dd>
+              </div>
+            ))}
+          </dl>
+        </article>
+      );
+    })}
+  </section>
+
+  <section class="more">
+    <SectionHead
+      tag="Selected, not all"
+      title="Older work, by category."
+      sub="A line per engagement. Ping us if you want the long form on any of them."
+    />
+    <div class="categories">
+      {services.map(s => (
+        <div class="cat" style={`--accent:${s.accent}`}>
+          <div class="cat-head">
+            <span class="cat-glyph">{s.glyph}</span>
+            <span class="cat-name">{s.name}</span>
+          </div>
+          <ul>
+            <li><span class="cat-year mono">2025</span> Migration + agent rollout · undisclosed retailer</li>
+            <li><span class="cat-year mono">2025</span> Internal tooling refactor · undisclosed insurer</li>
+            <li><span class="cat-year mono">2024</span> 12-week sprint · undisclosed health-tech</li>
+            <li><span class="cat-year mono">2024</span> Audit + roadmap · undisclosed Series A</li>
+          </ul>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <section class="cta">
+    <h2>Want a case study like this?</h2>
+    <p class="mono">Tell us what you're trying to ship. We'll tell you what we'd do, whether it fits, and what it would cost.</p>
+    <div class="actions">
+      <Btn primary href="/contact">Start a project →</Btn>
+      <Btn href="/pricing">See pricing</Btn>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .feed {
+    padding: 64px 56px;
+    border-bottom: 1px solid var(--o-line);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .entry {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--o-radius-lg);
+    padding: 32px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .entry-meta {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+    font-size: 11px;
+  }
+  .entry-meta .date { color: var(--o-faint); }
+  .entry-meta .svc {
+    color: var(--accent);
+    padding: 3px 8px;
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+    border-radius: 3px;
+  }
+  .entry-meta .client { color: var(--o-mute); }
+
+  .entry h2 {
+    margin: 0;
+    font-size: 26px;
+    color: var(--o-ink);
+    letter-spacing: -0.6px;
+    font-weight: 600;
+    line-height: 1.15;
+  }
+  .body {
+    margin: 0;
+    font-size: 15px;
+    color: var(--o-mute);
+    line-height: 1.55;
+    max-width: 800px;
+  }
+  .metrics {
+    margin: 8px 0 0;
+    padding: 16px 0 0;
+    border-top: 1px dashed var(--o-line);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .metric { display: flex; flex-direction: column; gap: 4px; }
+  .num {
+    margin: 0;
+    font-size: 22px;
+    color: var(--accent);
+    font-weight: 600;
+    letter-spacing: -0.4px;
+  }
+  .label {
+    margin: 0;
+    font-size: 10px;
+    color: var(--o-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .more {
+    padding: 96px 56px;
+    border-bottom: 1px solid var(--o-line);
+  }
+  .categories {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  .cat {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius);
+    padding: 22px 24px;
+  }
+  .cat-head { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .cat-glyph { color: var(--accent); font-size: 18px; }
+  .cat-name { color: var(--o-ink); font-weight: 500; font-size: 15px; }
+  .cat ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .cat li { font-size: 13px; color: var(--o-mute); display: flex; gap: 12px; }
+  .cat-year { color: var(--o-faint); font-size: 11px; width: 40px; flex-shrink: 0; }
+
+  .cta {
+    padding: 96px 56px;
+    text-align: center;
+  }
+  .cta h2 {
+    margin: 0 0 12px;
+    font-size: 40px;
+    letter-spacing: -1px;
+    font-weight: 600;
+    color: var(--o-ink);
+  }
+  .cta p { font-size: 14px; color: var(--o-mute); margin: 0 0 28px; }
+  .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+  @media (max-width: 1100px) {
+    .metrics { grid-template-columns: repeat(2, 1fr); }
+    .categories { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 700px) {
+    .feed, .more, .cta { padding-left: 24px; padding-right: 24px; }
+    .entry { padding: 22px; }
+    .entry h2 { font-size: 20px; }
+    .categories { grid-template-columns: 1fr; }
+  }
+</style>
