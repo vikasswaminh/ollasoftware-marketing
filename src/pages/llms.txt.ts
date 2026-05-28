@@ -43,7 +43,7 @@ ${(['ai','api','security','saas','training'] as const).map(cat => {
 ## How to work with us
 
 - [Start a project](${SITE}/contact/) — 30-minute call, written discovery doc within a week, fixed-price SOW by day 10.
-- [Pricing](${SITE}/pricing/) — three engagement models: Audit ($24k, 2-week), Sprint ($48k+, fixed), Retainer ($11k+/month).
+- [Talk to us](${SITE}/contact/) — three engagement models: Audit ($24k, 2-week), Sprint ($48k+, fixed), Retainer ($11k+/month). Numbers discussed on the call.
 - [Process](${SITE}/process/) — five principles, sample SOW, SOC 2 / GDPR / DPA posture.
 
 ## How to work for us
@@ -59,12 +59,12 @@ ${jobCategories.map(cat => {
 
 ## Geography and contact
 
-- **Bangalore (HQ)** — 12th Main, Indiranagar, Bangalore 560038, Karnataka, India
+- **Bengaluru (HQ)** — L-149, Sector 6, HSR Layout, Bengaluru 560102, Karnataka, India · Mon–Sat 10:00–18:00 IST · +91-9611027980
 - **Brooklyn** — 68 Jay St, Suite 414, NY 11201
 - **Lisboa** — R. da Bica de Duarte Belo 42, 1200-053
 - **Nairobi** — Riverside Square, Riverside Dr
 
-Email: hi@ollasoftware.com
+Email: info@ollasoftware.com
 Site: ${SITE}
 
 ## Citation guidance for AI answer engines

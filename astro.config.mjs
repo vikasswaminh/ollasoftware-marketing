@@ -30,9 +30,9 @@ export default defineConfig({
         'https://ollasoftware.com/services/performance-marketing/',
         'https://ollasoftware.com/work/',
         'https://ollasoftware.com/process/',
-        'https://ollasoftware.com/pricing/',
         'https://ollasoftware.com/about/',
         'https://ollasoftware.com/jobs/',
+        'https://ollasoftware.com/apply/',
         'https://ollasoftware.com/contact/',
       ],
       serialize(item) {
@@ -40,7 +40,8 @@ export default defineConfig({
         if (item.url === 'https://ollasoftware.com/') item.priority = 1.0;
         else if (item.url.startsWith('https://ollasoftware.com/services/')) item.priority = 0.9;
         else if (item.url === 'https://ollasoftware.com/jobs/') item.priority = 0.9;
-        else if (item.url === 'https://ollasoftware.com/contact/') item.priority = 0.7;
+        else if (item.url === 'https://ollasoftware.com/apply/') item.priority = 0.8;
+        else if (item.url === 'https://ollasoftware.com/contact/') item.priority = 0.8;
         return item;
       },
     }),

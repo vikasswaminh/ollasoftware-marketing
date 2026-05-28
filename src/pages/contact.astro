@@ -2,10 +2,22 @@
 import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/primitives/PageHero.astro';
 import { services } from '../lib/tokens';
+import { SITE } from '../lib/seo';
+
+// Endpoint slug for form4dev (Ollasoftware — Contact form). The bearer
+// stays in the CF Pages Function; this page just POSTs to /api/submit/<slug>.
+const FORM_SLUG = 'ygyv78cz1cbofy-q';
+
+// Banners are rendered hidden in CSS and toggled by an inline script that
+// reads ?ok=1 / ?err=1 at page load. Static-SSG safe.
 ---
 <Layout
-  title="Contact — Ollasoftware"
-  description="Tell us what you're trying to ship. We'll reply in one business day with a 30-minute call slot and a sample SOW."
+  title="Contact Ollasoftware — Bangalore HQ · +91-9611027980 · info@ollasoftware.com"
+  description="Talk to Ollasoftware. Pioneer AI software development company headquartered in HSR Layout, Bangalore. Phone +91-9611027980. Email info@ollasoftware.com. Mon–Sat 10:00–18:00 IST."
+  breadcrumb={[
+    { name: 'Home', url: `${SITE}/` },
+    { name: 'Contact', url: `${SITE}/contact/` },
+  ]}
 >
   <PageHero
     eyebrow="Talk to us"
@@ -14,9 +26,46 @@ import { services } from '../lib/tokens';
     breadcrumb={[{ label: 'home', href: '/' }, { label: 'contact' }]}
   />
 
-  <section class="contact">
+  <!-- Direct lines: HQ + phone + email + hours -->
+  <section class="direct-lines" aria-label="Direct lines">
+    <div class="dl">
+      <span class="dl-label mono">Hours</span>
+      <span class="dl-value">Mon–Sat</span>
+      <span class="dl-sub mono">10:00 AM – 6:00 PM IST</span>
+    </div>
+    <div class="dl">
+      <span class="dl-label mono">Campus</span>
+      <span class="dl-value">HSR Layout</span>
+      <span class="dl-sub mono">L-149, Sector 6, Bengaluru 560102</span>
+    </div>
+    <div class="dl">
+      <span class="dl-label mono">Phone</span>
+      <a class="dl-value link" href="tel:+919611027980">+91-9611027980</a>
+      <span class="dl-sub mono">talk to a partner</span>
+    </div>
+    <div class="dl">
+      <span class="dl-label mono">Email</span>
+      <a class="dl-value link" href="mailto:info@ollasoftware.com">info@ollasoftware.com</a>
+      <span class="dl-sub mono">reply within 1 business day</span>
+    </div>
+  </section>
+
+  <section class="contact-grid">
     <div class="grid">
-      <form class="form" onsubmit="event.preventDefault(); alert('Demo: this would send. Email us at hi@ollasoftware.com.');">
+      <div id="banner-ok" class="banner success" role="status" hidden>
+        <span class="banner-h mono">Thanks — we received it.</span>
+        <span class="banner-p">A partner will reply from info@ollasoftware.com within one business day. If it is urgent, call <a href="tel:+919611027980">+91-9611027980</a>.</span>
+      </div>
+      <div id="banner-err" class="banner error" role="alert" hidden>
+        <span class="banner-h mono">Something went wrong on our side.</span>
+        <span class="banner-p">Please try again, or email <a href="mailto:info@ollasoftware.com">info@ollasoftware.com</a> directly.</span>
+      </div>
+
+      <form class="form" method="POST" action={`/api/submit/${FORM_SLUG}`}>
+        <input type="hidden" name="_next" value="/contact/" />
+        <!-- honeypot: real users never fill this; bots usually do -->
+        <input type="text" name="hp_website" tabindex="-1" autocomplete="off" class="sr-only" aria-hidden="true" />
+
         <div class="row">
           <label>
             <span class="lbl mono">Your name</span>
@@ -33,7 +82,7 @@ import { services } from '../lib/tokens';
             <input type="text" name="company" placeholder="Northwind, Series B" required />
           </label>
           <label>
-            <span class="lbl mono">Role</span>
+            <span class="lbl mono">Your role</span>
             <input type="text" name="role" placeholder="VP Engineering" />
           </label>
         </div>
@@ -68,29 +117,25 @@ import { services } from '../lib/tokens';
         </label>
         <div class="actions">
           <button class="mono primary" type="submit">Send → 1 business day reply</button>
-          <span class="actions-note mono">demo only · this form does not send</span>
+          <span class="actions-note mono">No SDR. No qualification scoring.</span>
         </div>
       </form>
 
       <aside class="aside">
         <div class="block">
-          <h3 class="mono">Or, just email us.</h3>
-          <p class="mono"><a href="mailto:hi@ollasoftware.com">hi@ollasoftware.com</a></p>
-          <p class="mute">We read every message. Replies within one business day. Calls within a week.</p>
+          <h3 class="mono">Or, just call</h3>
+          <p class="mono"><a href="tel:+919611027980">+91-9611027980</a></p>
+          <p class="mute">Mon–Sat, 10:00 AM – 6:00 PM IST. A partner picks up.</p>
         </div>
         <div class="block">
-          <h3 class="mono">Calendar</h3>
-          <div class="cal-embed">
-            <span class="cal-label mono">[ calendar embed placeholder ]</span>
-            <span class="cal-sub mono">Cal.com / Savvycal / Google in production</span>
-          </div>
+          <h3 class="mono">Or, just email</h3>
+          <p class="mono"><a href="mailto:info@ollasoftware.com">info@ollasoftware.com</a></p>
+          <p class="mute">Replies within one business day. Calls within a week.</p>
         </div>
         <div class="block">
-          <h3 class="mono">Offices</h3>
-          <p class="addr"><strong>Brooklyn HQ</strong><br/>68 Jay St · Suite 414 · NY 11201</p>
-          <p class="addr"><strong>Lisboa</strong><br/>R. da Bica de Duarte Belo 42 · 1200-053</p>
-          <p class="addr"><strong>Bangalore</strong><br/>12th Main · Indiranagar · 560038</p>
-          <p class="addr"><strong>Nairobi</strong><br/>Riverside Square · Riverside Dr</p>
+          <h3 class="mono">Campus</h3>
+          <p class="addr"><strong>Bangalore HQ</strong><br/>L-149, Sector 6<br/>HSR Layout, Bengaluru 560102<br/>Karnataka, India</p>
+          <p class="addr-sub mono">also operating from Brooklyn · Lisboa · Nairobi</p>
         </div>
         <div class="block">
           <h3 class="mono">Other channels</h3>
@@ -105,10 +150,63 @@ import { services } from '../lib/tokens';
       </aside>
     </div>
   </section>
+
+  <script is:inline>
+    // Reveal post-submit banner based on the redirect query string the
+    // Pages Function appends. Then scroll the form into view so the
+    // banner is visible.
+    (() => {
+      const p = new URLSearchParams(location.search);
+      const ok  = p.get('ok')  === '1';
+      const err = p.get('err') === '1';
+      if (ok)  document.getElementById('banner-ok')?.removeAttribute('hidden');
+      if (err) document.getElementById('banner-err')?.removeAttribute('hidden');
+      if (ok || err) {
+        document.querySelector('.contact-grid')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    })();
+  </script>
 </Layout>
 
 <style>
-  .contact {
+  /* Direct-lines band — sits between hero and the form */
+  .direct-lines {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-bottom: 1px solid var(--o-line);
+    background: var(--o-panel);
+  }
+  .dl {
+    padding: 22px 28px;
+    border-right: 1px solid var(--o-line);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .dl:last-child { border-right: none; }
+  .dl-label {
+    font-size: 10px;
+    color: var(--o-faint);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .dl-value {
+    font-size: 22px;
+    color: var(--o-ink);
+    font-weight: 500;
+    letter-spacing: -0.4px;
+  }
+  .dl-value.link {
+    color: var(--o-accent);
+    text-decoration: none;
+  }
+  .dl-value.link:hover { filter: brightness(1.1); }
+  .dl-sub {
+    font-size: 11px;
+    color: var(--o-mute);
+  }
+
+  .contact-grid {
     padding: 64px 56px 120px;
   }
   .grid {
@@ -117,6 +215,29 @@ import { services } from '../lib/tokens';
     gap: 48px;
     align-items: start;
   }
+
+  /* Submission banners */
+  .banner {
+    grid-column: 1 / -1;
+    padding: 16px 22px;
+    border-radius: var(--o-radius);
+    border: 1px solid var(--o-line);
+    background: var(--o-panel);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 24px;
+  }
+  .banner.success { border-left: 3px solid var(--o-accent); }
+  .banner.error   { border-left: 3px solid var(--o-red); }
+  .banner-h {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--o-ink);
+  }
+  .banner-p { font-size: 14px; color: var(--o-mute); line-height: 1.55; }
+  .banner a { color: var(--o-accent); }
 
   .form {
     background: var(--o-panel);
@@ -198,31 +319,25 @@ import { services } from '../lib/tokens';
   .block a { color: var(--o-ink); text-decoration: underline; text-decoration-color: var(--o-line-hi); }
   .block a:hover { text-decoration-color: var(--o-accent); }
   .mute { color: var(--o-mute) !important; font-size: 13px !important; }
-  .addr { font-size: 13px; }
-  .addr strong { color: var(--o-accent); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
-
-  .cal-embed {
-    border: 1px dashed var(--o-line-hi);
-    border-radius: var(--o-radius-sm);
-    background: var(--o-bg);
-    padding: 32px 16px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-  .cal-label { font-size: 12px; color: var(--o-mute); }
-  .cal-sub { font-size: 10px; color: var(--o-faint); }
+  .addr { font-size: 14px; }
+  .addr strong { color: var(--o-accent); font-weight: 500; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; display: block; margin-bottom: 4px; }
+  .addr-sub { font-size: 11px !important; color: var(--o-faint) !important; margin-top: 8px !important; }
 
   .channels { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: 12px; }
   .channels a { color: var(--o-ink); text-decoration: none; }
   .channels a:hover { color: var(--o-accent); }
 
   @media (max-width: 1100px) {
+    .direct-lines { grid-template-columns: repeat(2, 1fr); }
+    .dl:nth-child(2) { border-right: none; }
+    .dl:nth-child(1), .dl:nth-child(2) { border-bottom: 1px solid var(--o-line); }
     .grid { grid-template-columns: 1fr; }
   }
   @media (max-width: 700px) {
-    .contact { padding: 64px 24px; }
+    .direct-lines { grid-template-columns: 1fr; }
+    .dl { border-right: none; border-bottom: 1px solid var(--o-line); }
+    .dl:last-child { border-bottom: none; }
+    .contact-grid { padding: 48px 24px 64px; }
     .form { padding: 24px; }
     .row { grid-template-columns: 1fr; }
   }

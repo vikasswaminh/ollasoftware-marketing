@@ -5,7 +5,6 @@ const nav: Array<[string, string]> = [
   ['/services', 'Services'],
   ['/work', 'Work'],
   ['/jobs', 'Jobs'],
-  ['/pricing', 'Pricing'],
   ['/about', 'About'],
 ];
 
@@ -32,11 +31,11 @@ const isActive = (to: string) =>
   </div>
 
   <div class="nav-right">
-    <span class="status mono" aria-live="polite">
-      <span class="status-dot" aria-hidden="true"></span>
-      accepting Q3 2026 projects
-    </span>
-    <a href="/contact" class="cta mono">Start a project →</a>
+    <a href="tel:+919611027980" class="phone mono" aria-label="Call Ollasoftware">
+      <span class="phone-dot" aria-hidden="true"></span>
+      +91-9611027980
+    </a>
+    <a href="/contact" class="cta mono">Contact us</a>
   </div>
 </header>
 
@@ -90,14 +89,24 @@ const isActive = (to: string) =>
 
   .nav-right { display: flex; align-items: center; gap: 10px; }
 
-  .status {
-    font-size: 11px;
+  .phone {
+    font-size: 12px;
     color: var(--o-mute);
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 8px;
+    text-decoration: none;
+    padding: 4px 10px;
+    border: 1px solid var(--o-line-hi);
+    border-radius: 4px;
+    transition: color .14s, border-color .14s, background .14s;
   }
-  .status-dot {
+  .phone:hover {
+    color: var(--o-accent);
+    border-color: var(--o-accent);
+    background: color-mix(in srgb, var(--o-accent) 10%, transparent);
+  }
+  .phone-dot {
     width: 6px;
     height: 6px;
     border-radius: 3px;
@@ -127,6 +136,6 @@ const isActive = (to: string) =>
     .nav { padding: 0 24px; height: 56px; }
     .nav-left { gap: 24px; }
     .nav-links { display: none; }
-    .status { display: none; }
+    .phone { display: none; }
   }
 </style>

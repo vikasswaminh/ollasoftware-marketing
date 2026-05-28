@@ -52,10 +52,10 @@ export const organizationLd = {
   address: [
     {
       '@type': 'PostalAddress',
-      streetAddress: '12th Main, Indiranagar',
-      addressLocality: 'Bangalore',
+      streetAddress: 'L-149, Sector 6, HSR Layout',
+      addressLocality: 'Bengaluru',
       addressRegion: 'Karnataka',
-      postalCode: '560038',
+      postalCode: '560102',
       addressCountry: 'IN',
     },
     {
@@ -76,16 +76,34 @@ export const organizationLd = {
   ],
   geo: {
     '@type': 'GeoCoordinates',
-    latitude: 12.9716,
-    longitude: 77.5946,
+    latitude: 12.9116,
+    longitude: 77.6473,
   },
+  telephone: '+91-9611027980',
+  email: 'info@ollasoftware.com',
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+      opens: '10:00',
+      closes: '18:00',
+      validFrom: '2026-01-01',
+    },
+  ],
   contactPoint: [
     {
       '@type': 'ContactPoint',
       contactType: 'sales',
-      email: 'hi@ollasoftware.com',
+      telephone: '+91-9611027980',
+      email: 'info@ollasoftware.com',
       areaServed: 'Worldwide',
       availableLanguage: ['English', 'Hindi', 'Portuguese'],
+      hoursAvailable: {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        opens: '10:00',
+        closes: '18:00',
+      },
     },
     {
       '@type': 'ContactPoint',

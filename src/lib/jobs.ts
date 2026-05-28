@@ -3,6 +3,7 @@
 // 17 roles, ~1,200 total openings across the founder-product portfolio.
 
 export type JobCategoryKey =
+  | 'mba-fresher'
   | 'application'
   | 'platform'
   | 'security'
@@ -16,11 +17,12 @@ export type JobCategory = {
 };
 
 export const jobCategories: readonly JobCategory[] = [
-  { key: 'application', label: 'Application Engineering', accentVar: 'var(--o-accent)' },
-  { key: 'platform',    label: 'Platform Engineering',    accentVar: 'var(--o-blue)' },
-  { key: 'security',    label: 'Security Engineering',    accentVar: 'var(--o-red)' },
-  { key: 'ai-native',   label: 'AI-Native Roles',         accentVar: 'var(--o-purple)' },
-  { key: 'internship',  label: 'Internship Program',      accentVar: 'var(--o-teal)' },
+  { key: 'mba-fresher', label: 'MBA Freshers · IIM & Top Institutions', accentVar: 'var(--o-purple)' },
+  { key: 'application', label: 'Application Engineering',               accentVar: 'var(--o-accent)' },
+  { key: 'platform',    label: 'Platform Engineering',                  accentVar: 'var(--o-blue)' },
+  { key: 'security',    label: 'Security Engineering',                  accentVar: 'var(--o-red)' },
+  { key: 'ai-native',   label: 'AI-Native Roles',                       accentVar: 'var(--o-purple)' },
+  { key: 'internship',  label: 'Internship Program',                    accentVar: 'var(--o-teal)' },
 ];
 
 export type Job = {
@@ -35,6 +37,7 @@ export type Job = {
   compensation: string;
   summary: string;
   skills: readonly string[];
+  featured?: boolean;
 };
 
 const slug = (title: string) =>
@@ -57,6 +60,19 @@ export const hiringOverview = {
 } as const;
 
 export const jobs: readonly Job[] = [
+  make({
+    id: 0,
+    title: 'MBA Fresher — AI Strategy & Product',
+    category: 'mba-fresher',
+    openings: '8–12 (Class of 2026)',
+    location: 'Bangalore · Hybrid · 3 office, 2 remote',
+    employmentType: 'Full-time',
+    experience: 'Final-year MBA / PGP · 0 years industry experience required',
+    compensation: 'Top-of-market · discussed on the call · plus ESOPs on conversion',
+    summary: 'The most ambitious AI strategy role for fresh MBAs in India. You will not write market-sizing decks. You will ship AI products that go live across the Ollasoftware portfolio — AEONITI, Crawlcrawl, Ollima, Switchllm — and report numbers in the Monday investor review the following week. Direct founder line. No middle-management layer. Day-1 ownership of an AI product roadmap on one founder company, mentored by Vikas and senior PMs. Fast-track to Senior AI PM in 24 months. Eligible institutes: IIM A/B/C/L/K/I/S/U/T, ISB, XLRI, FMS Delhi, SPJIMR, MDI Gurgaon, IIT-DoMS.',
+    skills: ['Eval-driven PRDs', 'Claude Projects', 'Notion AI', 'Linear AI', 'Mixpanel / Amplitude', 'OpenAPI 3.1 literacy', 'OKR methodology', 'North-Star metrics'],
+    featured: true,
+  }),
   make({
     id: 1,
     title: 'Frontend Engineer',

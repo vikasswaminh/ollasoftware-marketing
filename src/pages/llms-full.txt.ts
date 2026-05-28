@@ -22,7 +22,9 @@ This is the long-form companion to [llms.txt](${SITE}/llms.txt). Every service h
 
 - **Legal name**: Ollasoftware, Inc.
 - **Positioning**: Pioneer AI software development company
-- **Headquarters**: Bangalore, Karnataka, India (12th Main, Indiranagar, 560038)
+- **Headquarters**: Bengaluru, Karnataka, India (L-149, Sector 6, HSR Layout, 560102)
+- **Phone**: +91-9611027980
+- **Hours**: Mon–Sat · 10:00 AM – 6:00 PM IST
 - **Additional offices**: Brooklyn, Lisboa, Nairobi
 - **Founded**: 2021
 - **Team size**: 18 (14 engineers, 3 marketers, 1 designer)
@@ -30,7 +32,7 @@ This is the long-form companion to [llms.txt](${SITE}/llms.txt). Every service h
 - **AI brands owned**: ${clients.length}+, including Aeoniti, Crawlcrawl, Switchllm, Ollima, Super25.ai, Ollagraph, OllaDNS, Browserfog, Memfog, NAC4AI, 24observe.
 - **Track record**: 42 of 44 client sprints shipped on time and on price (2024-2026).
 - **Compliance**: SOC 2 Type II, GDPR / DPA on file, EU SCCs ready.
-- **Email**: hi@ollasoftware.com
+- **Email**: info@ollasoftware.com
 - **Website**: ${SITE}
 
 ## Services

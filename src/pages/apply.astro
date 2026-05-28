@@ -1,0 +1,318 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/primitives/PageHero.astro';
+import Btn from '../components/primitives/Btn.astro';
+import { jobs } from '../lib/jobs';
+import { SITE } from '../lib/seo';
+
+// Endpoint slug for form4dev (Ollasoftware — Job Application).
+const FORM_SLUG = 'h_c7vkls0hxcgduz';
+
+// Static-SSG-safe: render every role as a select option at build time,
+// then a small inline script reads ?role=<slug> on page load and selects
+// the matching option. Same approach for ok/err banners.
+---
+<Layout
+  title="Apply at Ollasoftware — AI Engineering Jobs in Bangalore, India"
+  description="Apply for an open role at Ollasoftware. 1,200+ openings across 16 founder companies. Bangalore HQ, hybrid (3+2). Include a production link and your top 3 AI tools — we read every application."
+  breadcrumb={[
+    { name: 'Home', url: `${SITE}/` },
+    { name: 'Jobs',  url: `${SITE}/jobs/` },
+    { name: 'Apply', url: `${SITE}/apply/` },
+  ]}
+>
+  <PageHero
+    eyebrow="Apply · 1,200+ roles open"
+    title="Apply for a role at Ollasoftware."
+    sub="Tell us the role, your top 3 AI tools, and one production link — a GitHub PR, a deployed app, an MCP repo. We read every application. Generic CVs without a production link get auto-filtered."
+    breadcrumb={[
+      { label: 'home', href: '/' },
+      { label: 'jobs', href: '/jobs/' },
+      { label: 'apply' },
+    ]}
+  >
+    <Btn href="/jobs/">← Back to all roles</Btn>
+  </PageHero>
+
+  <section class="apply-grid">
+    <div class="grid">
+      <div id="banner-ok" class="banner success" role="status" hidden>
+        <span class="banner-h mono">Application received.</span>
+        <span class="banner-p">We read every application from a real human. If there is a match, you will hear from a hiring partner within 7 business days from <a href="mailto:info@ollasoftware.com">info@ollasoftware.com</a>. We do not ghost.</span>
+      </div>
+      <div id="banner-err" class="banner error" role="alert" hidden>
+        <span class="banner-h mono">Something went wrong on our side.</span>
+        <span class="banner-p">Please try again, or email your application directly to <a href="mailto:info@ollasoftware.com">info@ollasoftware.com</a> with the role title in the subject line.</span>
+      </div>
+
+      <div id="role-prefill-note" class="prefill-note mono" hidden>
+        You are applying for: <strong id="role-prefill-text"></strong>.
+        <a href="/jobs/">Change role →</a>
+      </div>
+
+      <form class="form" method="POST" action={`/api/submit/${FORM_SLUG}`}>
+        <input type="hidden" name="_next" value="/apply/" />
+        <input type="text" name="hp_website" tabindex="-1" autocomplete="off" class="sr-only" aria-hidden="true" />
+
+        <div class="row">
+          <label>
+            <span class="lbl mono">Full name</span>
+            <input type="text" name="full_name" placeholder="Maya Chen" required />
+          </label>
+          <label>
+            <span class="lbl mono">Email</span>
+            <input type="email" name="email" placeholder="you@personal.com" required />
+          </label>
+        </div>
+        <div class="row">
+          <label>
+            <span class="lbl mono">Phone (with country code)</span>
+            <input type="tel" name="phone" placeholder="+91-XXXXXXXXXX" required />
+          </label>
+          <label>
+            <span class="lbl mono">Location preference</span>
+            <input type="text" name="location_pref" placeholder="Bangalore · Hybrid" value="Bangalore · Hybrid" />
+          </label>
+        </div>
+        <label class="full">
+          <span class="lbl mono">Role applying for</span>
+          <select name="role" id="role-select" required data-default="">
+            <option value="">choose a role</option>
+            {jobs.map(j => <option value={j.title} data-slug={j.slug}>{j.title}</option>)}
+            <option value="Open to suggestion">Open to suggestion</option>
+          </select>
+        </label>
+        <div class="row">
+          <label>
+            <span class="lbl mono">Institute / Company (current or most recent)</span>
+            <input type="text" name="institute" placeholder="IIM Bangalore · Class of 2026  /  Stripe · Senior Eng" required />
+          </label>
+          <label>
+            <span class="lbl mono">Years of relevant experience</span>
+            <input type="text" name="years_exp" placeholder="4" required />
+          </label>
+        </div>
+        <label class="full">
+          <span class="lbl mono">AI tooling experience (1+ year required for most roles)</span>
+          <input type="text" name="ai_experience" placeholder="2 years shipping with Cursor + Claude Code in production" required />
+        </label>
+        <label class="full">
+          <span class="lbl mono">Top 3 AI tools you ship with</span>
+          <input type="text" name="top_ai_tools" placeholder="Claude Code, Cursor, v0.dev" required />
+        </label>
+        <label class="full">
+          <span class="lbl mono">Production evidence URL (GitHub PR, deployed app, MCP repo)</span>
+          <input type="url" name="evidence_url" placeholder="https://github.com/you/something-real" required />
+          <span class="hint mono">Required. We auto-filter applications without one. A working side project counts. A WIP repo with a real README counts.</span>
+        </label>
+        <label class="full">
+          <span class="lbl mono">Cover note (optional) — why us, what you want to build</span>
+          <textarea
+            name="cover_note"
+            placeholder="3–6 sentences. Optional but read. Why Ollasoftware specifically (not 'why this role')."
+            rows="6"
+          ></textarea>
+        </label>
+        <div class="actions">
+          <button class="mono primary" type="submit">Submit application →</button>
+          <span class="actions-note mono">We reply to every application within 7 business days.</span>
+        </div>
+      </form>
+
+      <aside class="aside">
+        <div class="block">
+          <h3 class="mono">What we look for</h3>
+          <ul class="bullets">
+            <li><span class="arr">›</span><span>Evidence of shipped work. A link beats a CV.</span></li>
+            <li><span class="arr">›</span><span>Fluency with AI tools in production, not just chat-with-Claude.</span></li>
+            <li><span class="arr">›</span><span>1+ year senior production experience for engineering roles.</span></li>
+            <li><span class="arr">›</span><span>For MBA fresher track: IIM A/B/C/L/K/I/S/U/T, ISB, XLRI, FMS, SPJIMR, MDI, IIT-DoMS only.</span></li>
+            <li><span class="arr">›</span><span>For engineering intern track: IIT/IIM/NIT/IIIT freshers.</span></li>
+          </ul>
+        </div>
+        <div class="block">
+          <h3 class="mono">The application loop</h3>
+          <ol class="loop">
+            <li><span class="loop-num mono">01</span> Submit this form.</li>
+            <li><span class="loop-num mono">02</span> 30-min screen with hiring manager.</li>
+            <li><span class="loop-num mono">03</span> Paired work with a senior engineer.</li>
+            <li><span class="loop-num mono">04</span> System / architecture round.</li>
+            <li><span class="loop-num mono">05</span> Founder fit.</li>
+          </ol>
+          <p class="mute">7–14 days from submission to offer. We do not ghost. We give written feedback either way.</p>
+        </div>
+        <div class="block">
+          <h3 class="mono">Direct contact</h3>
+          <p class="mono"><a href="mailto:info@ollasoftware.com">info@ollasoftware.com</a></p>
+          <p class="mono"><a href="tel:+919611027980">+91-9611027980</a></p>
+          <p class="addr-sub mono">L-149, Sector 6, HSR Layout · Bengaluru 560102 · Mon–Sat 10–18 IST</p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <script is:inline>
+    // Prefill role from ?role=<slug> + reveal post-submit banner.
+    (() => {
+      const p = new URLSearchParams(location.search);
+
+      // Banners
+      if (p.get('ok')  === '1') document.getElementById('banner-ok')?.removeAttribute('hidden');
+      if (p.get('err') === '1') document.getElementById('banner-err')?.removeAttribute('hidden');
+
+      // Role prefill
+      const slug = p.get('role');
+      if (slug) {
+        const sel = document.getElementById('role-select');
+        const opt = sel?.querySelector(`option[data-slug="${slug.replace(/[^a-z0-9\-]/gi, '')}"]`);
+        if (opt) {
+          sel.value = opt.value;
+          const note = document.getElementById('role-prefill-note');
+          const txt  = document.getElementById('role-prefill-text');
+          if (note && txt) { txt.textContent = opt.textContent; note.removeAttribute('hidden'); }
+          // Also reflect in the page title for clarity.
+          document.title = 'Apply for ' + opt.textContent + ' — Ollasoftware';
+        }
+      }
+
+      if (p.get('ok') === '1' || p.get('err') === '1') {
+        document.querySelector('.apply-grid')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    })();
+  </script>
+</Layout>
+
+<style>
+  .apply-grid { padding: 48px 56px 120px; }
+  .grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .banner {
+    grid-column: 1 / -1;
+    padding: 16px 22px;
+    border-radius: var(--o-radius);
+    border: 1px solid var(--o-line);
+    background: var(--o-panel);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 24px;
+  }
+  .banner.success { border-left: 3px solid var(--o-accent); }
+  .banner.error   { border-left: 3px solid var(--o-red); }
+  .banner-h {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--o-ink);
+  }
+  .banner-p { font-size: 14px; color: var(--o-mute); line-height: 1.55; }
+  .banner a { color: var(--o-accent); }
+
+  .form {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius-lg);
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  label { display: flex; flex-direction: column; gap: 8px; }
+  .lbl {
+    font-size: 11px;
+    color: var(--o-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+  input, select, textarea {
+    background: var(--o-bg);
+    border: 1px solid var(--o-line);
+    color: var(--o-ink);
+    border-radius: var(--o-radius-sm);
+    padding: 12px 14px;
+    font-size: 14px;
+    font-family: var(--o-font-sans);
+    outline: none;
+    transition: border-color .14s;
+  }
+  input:focus, select:focus, textarea:focus { border-color: var(--o-accent); }
+  textarea { resize: vertical; min-height: 120px; line-height: 1.5; }
+  .hint { font-size: 11px; color: var(--o-faint); margin-top: 2px; }
+
+  .actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 6px; }
+  .primary {
+    border: none;
+    background: var(--o-accent);
+    color: #0a0a0a;
+    padding: 12px 18px;
+    border-radius: var(--o-radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: filter .14s;
+  }
+  .primary:hover { filter: brightness(1.08); }
+  .actions-note { font-size: 11px; color: var(--o-faint); }
+
+  .prefill-note {
+    grid-column: 1 / -1;
+    padding: 14px 22px;
+    margin-bottom: 24px;
+    background: color-mix(in srgb, var(--o-purple) 12%, var(--o-panel));
+    border: 1px solid color-mix(in srgb, var(--o-purple) 35%, var(--o-line));
+    border-radius: var(--o-radius);
+    font-size: 13px;
+    color: var(--o-ink);
+  }
+  .prefill-note strong { color: var(--o-purple); font-weight: 600; }
+  .prefill-note a { color: var(--o-accent); margin-left: 8px; text-decoration: none; }
+  .prefill-note a:hover { text-decoration: underline; }
+
+  .aside { display: flex; flex-direction: column; gap: 22px; }
+  .block {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius);
+    padding: 22px 24px;
+  }
+  .block h3 {
+    margin: 0 0 10px;
+    font-size: 11px;
+    color: var(--o-accent);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 500;
+  }
+  .block p {
+    margin: 0 0 6px;
+    font-size: 14px;
+    color: var(--o-ink);
+    line-height: 1.5;
+  }
+  .block a { color: var(--o-ink); text-decoration: underline; text-decoration-color: var(--o-line-hi); }
+  .block a:hover { text-decoration-color: var(--o-accent); }
+
+  .bullets { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .bullets li { display: flex; gap: 10px; font-size: 13px; color: var(--o-ink); line-height: 1.5; }
+  .arr { color: var(--o-accent); flex-shrink: 0; }
+  .loop { list-style: none; margin: 0 0 10px; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  .loop li { font-size: 13px; color: var(--o-ink); display: flex; gap: 12px; align-items: baseline; }
+  .loop-num { color: var(--o-accent); font-size: 10px; width: 24px; flex-shrink: 0; }
+  .mute { color: var(--o-mute) !important; font-size: 13px !important; }
+  .addr-sub { font-size: 11px !important; color: var(--o-faint) !important; margin-top: 8px !important; line-height: 1.5; }
+
+  @media (max-width: 1100px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 700px) {
+    .apply-grid { padding: 32px 24px 64px; }
+    .form { padding: 24px; }
+    .row { grid-template-columns: 1fr; }
+  }
+</style>
