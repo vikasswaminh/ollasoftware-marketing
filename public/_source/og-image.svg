@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <pattern id="dots" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.4" fill="#1c2026"/>
+    </pattern>
+    <radialGradient id="glow" cx="20%" cy="35%" r="55%">
+      <stop offset="0%" stop-color="#3a5224" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#08090b" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ruleAccent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#a7f06c" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#a7f06c" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background layers -->
+  <rect width="1200" height="630" fill="#08090b"/>
+  <rect width="1200" height="630" fill="url(#dots)" opacity="0.7"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <!-- Top status bar -->
+  <g transform="translate(80,72)">
+    <circle cx="6" cy="6" r="6" fill="#a7f06c"/>
+    <text x="22" y="11" fill="#a7f06c"
+          font-family="'Geist Mono', 'JetBrains Mono', 'Cascadia Code', 'SF Mono', Consolas, monospace"
+          font-size="18" letter-spacing="2">
+      BANGALORE · EST. 2021 · NOW HIRING 1,200+
+    </text>
+  </g>
+
+  <!-- Large brand logo (scaled-up favicon shape) on the right -->
+  <g transform="translate(840,150)">
+    <!-- steam wisps -->
+    <path d="M55 60 C 55 45, 70 40, 70 20 C 70 0, 55 -5, 55 -25"
+          stroke="#a7f06c" stroke-width="9" stroke-linecap="round" fill="none" opacity="0.45"/>
+    <path d="M140 60 C 140 40, 160 35, 160 10 C 160 -15, 140 -22, 140 -45"
+          stroke="#a7f06c" stroke-width="9" stroke-linecap="round" fill="none" opacity="0.9"/>
+    <path d="M225 60 C 225 45, 240 40, 240 20 C 240 0, 225 -5, 225 -25"
+          stroke="#a7f06c" stroke-width="9" stroke-linecap="round" fill="none" opacity="0.45"/>
+    <!-- pot body -->
+    <path d="M30 100 L 250 100 L 250 230 A 30 30 0 0 1 220 260 L 60 260 A 30 30 0 0 1 30 230 Z"
+          stroke="#a7f06c" stroke-width="10" fill="none" stroke-linejoin="round"/>
+    <line x1="10" y1="100" x2="270" y2="100" stroke="#a7f06c" stroke-width="10" stroke-linecap="round"/>
+    <circle cx="140" cy="170" r="6" fill="#a7f06c"/>
+  </g>
+
+  <!-- Headline + tagline (left column) -->
+  <g transform="translate(80,200)">
+    <text fill="#e8eaee"
+          font-family="'Geist', 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif"
+          font-size="84" font-weight="600" letter-spacing="-2.5" y="80">
+      ollasoftware
+    </text>
+    <text fill="#a7f06c"
+          font-family="'Geist Mono', 'JetBrains Mono', 'Cascadia Code', 'SF Mono', Consolas, monospace"
+          font-size="22" letter-spacing="3" y="130">
+      PIONEER AI SOFTWARE DEVELOPMENT COMPANY
+    </text>
+    <text fill="#e8eaee"
+          font-family="'Geist', 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif"
+          font-size="46" font-weight="500" letter-spacing="-1" y="200">
+      Out of <tspan fill="#a7f06c">Bangalore</tspan>, India.
+    </text>
+    <text fill="#7b828c"
+          font-family="'Geist', 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif"
+          font-size="26" y="250">
+      Owners of 40+ AI brands in production.
+    </text>
+  </g>
+
+  <!-- Bottom rule + URL strip -->
+  <rect x="80" y="500" width="1040" height="2" fill="url(#ruleAccent)"/>
+  <g transform="translate(80,550)">
+    <text fill="#7b828c"
+          font-family="'Geist Mono', 'JetBrains Mono', 'Cascadia Code', 'SF Mono', Consolas, monospace"
+          font-size="22" letter-spacing="1">
+      ollasoftware.com  ·  AEONITI · Crawlcrawl · Switchllm · Ollima · Super25.ai
+    </text>
+  </g>
+</svg>

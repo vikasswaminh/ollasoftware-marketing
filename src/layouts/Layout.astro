@@ -11,7 +11,7 @@ interface Props {
   jsonLd?: unknown[];
   /** Breadcrumb trail for BreadcrumbList schema. If omitted, no crumb schema. */
   breadcrumb?: Array<{ name: string; url: string }>;
-  /** Custom OG image URL; defaults to favicon. */
+  /** Custom OG image path (PNG); defaults to /og-image.png. */
   ogImage?: string;
 }
 
@@ -20,11 +20,12 @@ const {
   description = 'Pioneer AI software development company in India. Headquartered in Bangalore. Owners of 40+ AI brands in production. We build custom AI, software, AEO/SEO, social and performance marketing for clients worldwide.',
   jsonLd = [],
   breadcrumb,
-  ogImage = '/favicon.svg',
+  ogImage = '/og-image.png',
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 const ogImageAbs = new URL(ogImage, Astro.site).toString();
+const ogImageSquareAbs = new URL('/og-image-square.png', Astro.site).toString();
 
 // Always inject Organization + WebSite; add Breadcrumb if provided; then any
 // page-specific schemas the caller passed via `jsonLd`.
@@ -61,8 +62,23 @@ for (const x of jsonLd) allLd.push(x);
     <meta name="author" content="Ollasoftware" />
     <meta name="publisher" content="Ollasoftware" />
     <link rel="publisher" href="https://ollasoftware.com/" />
+    <meta name="theme-color" content="#0f1114" />
+    <meta name="application-name" content="Ollasoftware" />
 
-    <!-- Open Graph -->
+    <!-- Favicons: SVG for modern browsers, PNG fallbacks for everything else.
+         Order matters: browsers pick the first format they understand. -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
+    <link rel="icon" type="image/png" sizes="512x512" href="/android-chrome-512x512.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    <!-- Open Graph (Facebook / WhatsApp / Slack / Discord / Telegram / LinkedIn).
+         WhatsApp specifically requires PNG with absolute URL, declared width
+         and height, and an image under ~300 KB. og-image.png is 108 KB. -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
@@ -70,16 +86,28 @@ for (const x of jsonLd) allLd.push(x);
     <meta property="og:site_name" content="Ollasoftware" />
     <meta property="og:locale" content="en_IN" />
     <meta property="og:image" content={ogImageAbs} />
+    <meta property="og:image:secure_url" content={ogImageAbs} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Ollasoftware — pioneer AI software development company in India, headquartered in Bangalore" />
+    <!-- Second image (square) for clients that prefer 1:1 (iMessage, some
+         WhatsApp surfaces, Threads). -->
+    <meta property="og:image" content={ogImageSquareAbs} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1080" />
+    <meta property="og:image:height" content="1080" />
 
-    <!-- Twitter -->
+    <!-- Twitter / X -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@ollasoftware" />
+    <meta name="twitter:creator" content="@ollasoftware" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageAbs} />
+    <meta name="twitter:image:alt" content="Ollasoftware — pioneer AI software development company in India, headquartered in Bangalore" />
 
-    <!-- Performance: resource hints + favicon -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Performance: resource hints -->
     <link rel="dns-prefetch" href="//ollasoftware-marketing.pages.dev" />
 
     <!-- AEO crawler hints: where to find the long-form summary -->

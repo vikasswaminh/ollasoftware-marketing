@@ -1,0 +1,25 @@
+{
+  "name": "Ollasoftware",
+  "short_name": "Ollasoftware",
+  "description": "Pioneer AI software development company in India, headquartered in Bangalore. Owners of 40+ AI brands.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#08090b",
+  "theme_color": "#0f1114",
+  "lang": "en-IN",
+  "icons": [
+    {
+      "src": "/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
