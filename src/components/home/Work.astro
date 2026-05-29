@@ -17,12 +17,12 @@ const entries = [
     tag="06 · Recent ships"
     title={`Recent work, <span style="color:var(--o-mute)">last quarter.</span>`}
   >
-    <a slot="right" class="more mono" href="/work">all case studies →</a>
+    <a slot="right" class="more mono" href="/work/">all case studies →</a>
   </SectionHead>
 
   <div>
     {entries.map((e, i) => (
-      <a class:list={['row', { first: i === 0 }]} href="/work">
+      <a class:list={['row', { first: i === 0 }]} href="/work/">
         <span class="date mono">{e.date}</span>
         <span class="tag mono">{e.tag}</span>
         <div>

@@ -91,11 +91,11 @@ const pageLd: unknown[] = [
     sub={det.intro}
     breadcrumb={[
       { label: 'home', href: '/' },
-      { label: 'services', href: '/services' },
+      { label: 'services', href: '/services/' },
       { label: svc.name },
     ]}
   >
-    <Btn primary href="/contact">Start a project →</Btn>
+    <Btn primary href="/contact/">Start a project →</Btn>
     <Btn href="/contact/">Talk to us</Btn>
   </PageHero>
 
@@ -193,11 +193,11 @@ const pageLd: unknown[] = [
   </section>
 
   <section class="nextprev">
-    <a class="np" href={`/services/${prev!.slug}`} style={`--accent:${prev!.accent}`}>
+    <a class="np" href={`/services/${prev!.slug}/`} style={`--accent:${prev!.accent}`}>
       <span class="np-label mono">← Previous service</span>
       <span class="np-name">{prev!.name}</span>
     </a>
-    <a class="np right" href={`/services/${next!.slug}`} style={`--accent:${next!.accent}`}>
+    <a class="np right" href={`/services/${next!.slug}/`} style={`--accent:${next!.accent}`}>
       <span class="np-label mono">Next service →</span>
       <span class="np-name">{next!.name}</span>
     </a>
@@ -207,8 +207,8 @@ const pageLd: unknown[] = [
     <h2>Start with {svc.name}.</h2>
     <p class="mono">A 30-minute call. A written discovery doc in a week. Fixed-price SOW by day 10.</p>
     <div class="actions">
-      <Btn primary href="/contact">Start a project →</Btn>
-      <Btn href="/services">See all services</Btn>
+      <Btn primary href="/contact/">Start a project →</Btn>
+      <Btn href="/services/">See all services</Btn>
     </div>
   </section>
 </Layout>

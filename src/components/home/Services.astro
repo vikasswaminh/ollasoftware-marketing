@@ -7,12 +7,12 @@ import { services } from '../../lib/tokens';
     tag="03 · What we do"
     title="Six services. One senior team."
   >
-    <a slot="right" class="more mono" href="/services">compare all →</a>
+    <a slot="right" class="more mono" href="/services/">compare all →</a>
   </SectionHead>
 
   <div class="grid">
     {services.map(s => (
-      <a class="card" href={`/services/${s.slug}`} style={`--accent:${s.accent}`}>
+      <a class="card" href={`/services/${s.slug}/`} style={`--accent:${s.accent}`}>
         <div class="card-top">
           <div class="glyph" aria-hidden="true">{s.glyph}</div>
           <span class="chip mono">{s.chip}</span>

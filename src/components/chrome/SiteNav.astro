@@ -2,15 +2,17 @@
 import { o } from '../../lib/tokens';
 
 const nav: Array<[string, string]> = [
-  ['/services', 'Services'],
-  ['/work', 'Work'],
-  ['/jobs', 'Jobs'],
-  ['/about', 'About'],
+  ['/services/', 'Services'],
+  ['/work/', 'Work'],
+  ['/jobs/', 'Jobs'],
+  ['/about/', 'About'],
 ];
 
 const path = Astro.url.pathname;
+// With trailingSlash:'always', nav hrefs already end with '/'.
+// Active match: identical path, or current path is under this section.
 const isActive = (to: string) =>
-  to === path || (to !== '/' && path.startsWith(to + '/'));
+  to === path || path.startsWith(to);
 ---
 <header class="nav" id="site-nav">
   <div class="nav-left">
@@ -41,7 +43,7 @@ const isActive = (to: string) =>
       <span class="phone-dot" aria-hidden="true"></span>
       +91-9611027980
     </a>
-    <a href="/contact" class="cta mono">Contact us</a>
+    <a href="/contact/" class="cta mono">Contact us</a>
     <button
       type="button"
       class="nav-burger"

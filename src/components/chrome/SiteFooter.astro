@@ -2,10 +2,10 @@
 import { o, services } from '../../lib/tokens';
 
 const cols: Array<[string, Array<[string, string]>]> = [
-  ['Services', services.map(s => [s.name, `/services/${s.slug}`])],
-  ['Work',     [['Case studies', '/work'], ['Recent work', '/work'], ['Industries', '/work#industries'], ['Sample SOW', '/process#sow']]],
-  ['Company',  [['Process', '/process'], ['About', '/about'], ['Jobs · 1,200+', '/jobs'], ['Press', '/about#press']]],
-  ['Trust',    [['SOC 2', '/process#security'], ['GDPR / DPA', '/process#gdpr'], ['Master MSA', '/process#msa'], ['Security FAQ', '/process#bounty']]],
+  ['Services', services.map(s => [s.name, `/services/${s.slug}/`])],
+  ['Work',     [['Case studies', '/work/'], ['Recent work', '/work/'], ['Industries', '/work/#industries'], ['Sample SOW', '/process/#sow']]],
+  ['Company',  [['Process', '/process/'], ['About', '/about/'], ['Jobs · 1,200+', '/jobs/'], ['Press', '/about/#press']]],
+  ['Trust',    [['SOC 2', '/process/#security'], ['GDPR / DPA', '/process/#gdpr'], ['Master MSA', '/process/#msa'], ['Security FAQ', '/process/#bounty']]],
 ];
 
 const year = new Date().getFullYear();
