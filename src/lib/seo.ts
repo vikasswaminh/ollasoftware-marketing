@@ -21,7 +21,7 @@ export const organizationLd = {
   description: 'Pioneer AI software development company in India. Headquartered in Bangalore. Owners of 40+ AI brands in production. We build custom AI, software, AEO/SEO, social and performance marketing for clients worldwide.',
   slogan: 'Pioneer AI software development. Bangalore-headquartered. Built and shipped 40+ AI brands.',
   foundingDate: '2021',
-  numberOfEmployees: { '@type': 'QuantitativeValue', value: 18 },
+  numberOfEmployees: { '@type': 'QuantitativeValue', value: 18, unitText: 'core senior team' },
   areaServed: [
     { '@type': 'Country', name: 'India' },
     { '@type': 'Country', name: 'United States' },
