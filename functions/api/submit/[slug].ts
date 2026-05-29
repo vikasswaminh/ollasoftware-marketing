@@ -69,16 +69,28 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, params, env }
       const form = await request.formData();
       for (const [k, v] of form.entries()) {
         if (k === '_next') { nextRef = String(v); continue; }
-        // Drop honeypot field (`hp_` prefix). If a bot fills it, we
-        // 200-redirect like nothing happened but never forward.
-        if (k.startsWith('hp_') && String(v).length > 0) {
+        // Honeypot capture. form4dev's canonical field is `_gotcha` (per their
+        // OpenAPI spec — bots fill it, humans leave empty); we also accept
+        // any `hp_*` prefix for back-compat with our older form HTML.
+        const isHoneypot = k === '_gotcha' || k.startsWith('hp_');
+        if (isHoneypot && String(v).length > 0) {
+          // 200-redirect like a real submission, but never forward upstream.
           return Response.redirect(new URL(redirectTarget(formKind, true, nextRef), request.url).toString(), 303);
         }
+        if (isHoneypot) continue; // empty honeypot → drop the field
         payload[k] = String(v ?? '');
       }
     }
   } catch {
     return new Response('Malformed body.', { status: 400 });
+  }
+
+  // Set form4dev's `_replyto` magic field from the submitter's email so the
+  // notification email's Reply-To header points back to them — hitting Reply
+  // in Gmail goes straight to the lead/candidate, not back to info@.
+  const submitterEmail = payload.email;
+  if (submitterEmail && /@/.test(submitterEmail) && !payload._replyto) {
+    payload._replyto = submitterEmail;
   }
 
   // Forward to form4dev with the agent bearer.

@@ -12,7 +12,7 @@ const path = Astro.url.pathname;
 const isActive = (to: string) =>
   to === path || (to !== '/' && path.startsWith(to + '/'));
 ---
-<header class="nav">
+<header class="nav" id="site-nav">
   <div class="nav-left">
     <a href="/" class="brand" aria-label="Ollasoftware — home">
       <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden="true">
@@ -23,10 +23,16 @@ const isActive = (to: string) =>
       <span class="brand-name">ollasoftware</span>
       <span class="brand-est mono">est. 2021</span>
     </a>
-    <nav class="nav-links" aria-label="Primary">
+    <nav class="nav-links" id="nav-links" aria-label="Primary">
       {nav.map(([to, label]) => (
         <a href={to} class:list={['nav-link', { active: isActive(to) }]}>{label}</a>
       ))}
+      <!-- Mobile-only drawer extras: phone link is hidden in the top bar at
+           small widths, so we surface it inside the drawer instead. -->
+      <a href="tel:+919611027980" class="drawer-only phone-drawer mono">
+        <span class="phone-dot" aria-hidden="true"></span>
+        +91-9611027980
+      </a>
     </nav>
   </div>
 
@@ -36,8 +42,60 @@ const isActive = (to: string) =>
       +91-9611027980
     </a>
     <a href="/contact" class="cta mono">Contact us</a>
+    <button
+      type="button"
+      class="nav-burger"
+      aria-label="Open navigation menu"
+      aria-controls="nav-links"
+      aria-expanded="false"
+    >
+      <span class="burger-line" aria-hidden="true"></span>
+      <span class="burger-line" aria-hidden="true"></span>
+      <span class="burger-line" aria-hidden="true"></span>
+    </button>
   </div>
 </header>
+
+<script is:inline>
+  (() => {
+    const nav = document.getElementById('site-nav');
+    if (!nav) return;
+    const btn = nav.querySelector('.nav-burger');
+    if (!btn) return;
+
+    const setOpen = (open) => {
+      nav.classList.toggle('nav-open', open);
+      btn.setAttribute('aria-expanded', String(open));
+      btn.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+      // Stop background scroll while drawer is open on mobile.
+      document.documentElement.style.overflow = open ? 'hidden' : '';
+    };
+
+    btn.addEventListener('click', () => {
+      setOpen(!nav.classList.contains('nav-open'));
+    });
+
+    // Tap a link → close the drawer.
+    nav.querySelectorAll('.nav-links a').forEach((a) => {
+      a.addEventListener('click', () => setOpen(false));
+    });
+
+    // Esc closes.
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && nav.classList.contains('nav-open')) setOpen(false);
+    });
+
+    // Tap outside the nav closes it.
+    document.addEventListener('click', (e) => {
+      if (!nav.classList.contains('nav-open')) return;
+      if (e.target instanceof Element && !nav.contains(e.target)) setOpen(false);
+    });
+
+    // Viewport jumps back above the breakpoint → ensure drawer is closed.
+    const mq = window.matchMedia('(min-width: 901px)');
+    mq.addEventListener('change', (e) => { if (e.matches) setOpen(false); });
+  })();
+</script>
 
 <style>
   .nav {
@@ -55,7 +113,7 @@ const isActive = (to: string) =>
     z-index: 50;
   }
 
-  .nav-left { display: flex; align-items: center; gap: 40px; }
+  .nav-left { display: flex; align-items: center; gap: 40px; min-width: 0; }
 
   .brand {
     display: flex;
@@ -86,6 +144,8 @@ const isActive = (to: string) =>
     border-bottom-color: var(--o-accent);
   }
   .nav-link:hover { color: var(--o-ink); }
+
+  .drawer-only { display: none; }
 
   .nav-right { display: flex; align-items: center; gap: 10px; }
 
@@ -118,7 +178,7 @@ const isActive = (to: string) =>
     border: none;
     background: var(--o-accent);
     color: #0a0a0a;
-    padding: 6px 12px;
+    padding: 8px 14px;
     font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.2px;
@@ -129,13 +189,101 @@ const isActive = (to: string) =>
     align-items: center;
     gap: 8px;
     transition: filter .12s, transform .12s;
+    min-height: 36px;
   }
   .cta:hover { filter: brightness(1.08); }
 
+  /* Hamburger button — hidden on desktop. */
+  .nav-burger {
+    display: none;
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--o-line-hi);
+    background: transparent;
+    border-radius: var(--o-radius-sm);
+    cursor: pointer;
+    padding: 0;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    transition: border-color .14s, background .14s;
+  }
+  .nav-burger:hover { border-color: var(--o-accent); }
+  .burger-line {
+    width: 18px;
+    height: 1.5px;
+    background: var(--o-ink);
+    border-radius: 1px;
+    transition: transform .18s, opacity .14s;
+    transform-origin: center;
+  }
+  /* Burger → X when open */
+  .nav-open .burger-line:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .nav-open .burger-line:nth-child(2) { opacity: 0; }
+  .nav-open .burger-line:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  /* ─────────────────────────── Mobile drawer ─────────────────────────── */
   @media (max-width: 900px) {
-    .nav { padding: 0 24px; height: 56px; }
-    .nav-left { gap: 24px; }
-    .nav-links { display: none; }
+    .nav { padding: 0 20px; height: 56px; }
+    .nav-left { gap: 12px; }
+    .brand-est { display: none; }
     .phone { display: none; }
+
+    .nav-burger { display: inline-flex; }
+
+    .nav-links {
+      display: none;
+      position: fixed;
+      top: 56px;
+      left: 0;
+      right: 0;
+      max-height: calc(100dvh - 56px);
+      overflow-y: auto;
+      flex-direction: column;
+      gap: 0;
+      padding: 8px 20px 24px;
+      background: var(--o-bg);
+      border-bottom: 1px solid var(--o-line);
+      box-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.6);
+      z-index: 49;
+    }
+    .nav.nav-open .nav-links { display: flex; }
+    .nav-link {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--o-line);
+      font-size: 17px;
+      color: var(--o-ink);
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+    }
+    .nav-link.active { color: var(--o-accent); border-bottom-color: var(--o-accent); }
+
+    .drawer-only { display: flex; }
+    .phone-drawer {
+      margin-top: 14px;
+      padding: 14px 16px;
+      font-size: 14px;
+      color: var(--o-ink);
+      text-decoration: none;
+      background: var(--o-panel);
+      border: 1px solid var(--o-line-hi);
+      border-radius: var(--o-radius);
+      align-items: center;
+      gap: 10px;
+      min-height: 48px;
+      display: inline-flex;
+      align-self: stretch;
+    }
+    .phone-drawer:hover { color: var(--o-accent); border-color: var(--o-accent); }
+
+    .cta { padding: 8px 12px; font-size: 12px; }
+  }
+
+  @media (max-width: 380px) {
+    .nav { padding: 0 14px; }
+    .brand-name { font-size: 15px; }
+    .cta { padding: 7px 10px; font-size: 11.5px; }
   }
 </style>
