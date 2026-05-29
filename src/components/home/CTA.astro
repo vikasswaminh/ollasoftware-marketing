@@ -37,12 +37,14 @@ import Btn from '../primitives/Btn.astro';
 
   h2 {
     margin: 14px auto 18px;
-    font-size: 64px;
-    letter-spacing: -2px;
+    /* Fluid: 32px on tiny phones, 64px on desktop. */
+    font-size: clamp(32px, 6vw, 64px);
+    letter-spacing: clamp(-1px, -0.22vw, -2px);
     font-weight: 600;
     color: var(--o-ink);
-    line-height: 0.98;
+    line-height: 1.0;
     max-width: 740px;
+    overflow-wrap: break-word;
   }
   h2 .accent { color: var(--o-accent); }
 
@@ -56,7 +58,6 @@ import Btn from '../primitives/Btn.astro';
   .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
 
   @media (max-width: 700px) {
-    .cta { padding: 72px 24px; }
-    h2 { font-size: 40px; letter-spacing: -1.2px; }
+    .cta { padding: 56px 20px; }
   }
 </style>

@@ -35,11 +35,13 @@ const { tag, title, sub } = Astro.props;
 
   h2 {
     margin: 14px 0 8px;
-    font-size: 44px;
-    letter-spacing: -1.2px;
+    /* Fluid: 26px on tiny screens, 44px on desktop. */
+    font-size: clamp(26px, 4.5vw, 44px);
+    letter-spacing: clamp(-0.7px, -0.12vw, -1.2px);
     font-weight: 600;
     color: var(--o-ink);
-    line-height: 1.04;
+    line-height: 1.06;
+    overflow-wrap: break-word;
   }
   h2 :global(em) { font-style: normal; color: var(--o-accent); }
 
@@ -49,9 +51,5 @@ const { tag, title, sub } = Astro.props;
     line-height: 1.6;
     margin: 0;
     max-width: 540px;
-  }
-
-  @media (max-width: 900px) {
-    h2 { font-size: 32px; letter-spacing: -0.8px; }
   }
 </style>

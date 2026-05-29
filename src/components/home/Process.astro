@@ -43,11 +43,13 @@ const points: Array<[string, string, string]> = [
   .head { max-width: 880px; margin-bottom: 56px; }
   .head h2 {
     margin: 14px 0 8px;
-    font-size: 56px;
-    letter-spacing: -1.8px;
+    /* Fluid: 30px on tiny phones, 56px on desktop. */
+    font-size: clamp(30px, 5.4vw, 56px);
+    letter-spacing: clamp(-0.9px, -0.2vw, -1.8px);
     font-weight: 600;
     color: var(--o-ink);
-    line-height: 0.98;
+    line-height: 1.0;
+    overflow-wrap: break-word;
   }
   .head .sub {
     font-size: 14px;
@@ -70,11 +72,12 @@ const points: Array<[string, string, string]> = [
   .num { font-size: 13px; color: var(--o-accent); }
   .rule h3 {
     margin: 0;
-    font-size: 32px;
-    letter-spacing: -0.8px;
+    font-size: clamp(20px, 3.2vw, 32px);
+    letter-spacing: clamp(-0.5px, -0.1vw, -0.8px);
     font-weight: 500;
     color: var(--o-ink);
-    line-height: 1.1;
+    line-height: 1.12;
+    overflow-wrap: break-word;
   }
   .rule p {
     margin: 0;

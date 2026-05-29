@@ -64,17 +64,19 @@ const { eyebrow, title, sub, breadcrumb } = Astro.props;
 
   h1 {
     margin: 20px 0 22px;
-    font-size: 64px;
-    line-height: 0.98;
-    letter-spacing: -2.2px;
+    /* Fluid: 32px on tiny phones, 64px on desktop. */
+    font-size: clamp(32px, 6vw, 64px);
+    line-height: 1.0;
+    letter-spacing: clamp(-1px, -0.25vw, -2.2px);
     font-weight: 600;
     color: var(--o-ink);
     max-width: 880px;
+    overflow-wrap: break-word;
   }
 
   .sub {
-    font-size: 15px;
-    line-height: 1.7;
+    font-size: clamp(14px, 1.2vw, 15px);
+    line-height: 1.65;
     color: var(--o-mute);
     max-width: 620px;
     margin: 0;
@@ -88,7 +90,9 @@ const { eyebrow, title, sub, breadcrumb } = Astro.props;
   }
 
   @media (max-width: 900px) {
-    .hero { padding: 64px 24px 48px; }
-    h1 { font-size: 44px; letter-spacing: -1.4px; }
+    .hero { padding: 56px 20px 44px; }
+  }
+  @media (max-width: 500px) {
+    .hero { padding: 44px 18px 36px; }
   }
 </style>

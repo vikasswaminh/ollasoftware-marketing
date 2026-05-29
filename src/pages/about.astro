@@ -204,10 +204,12 @@ const team = [
   }
   .story-text h2 {
     margin: 0 0 16px;
-    font-size: 36px;
-    letter-spacing: -1px;
+    font-size: clamp(24px, 3.8vw, 36px);
+    letter-spacing: clamp(-0.6px, -0.12vw, -1px);
     font-weight: 600;
     color: var(--o-ink);
+    line-height: 1.08;
+    overflow-wrap: break-word;
   }
   .story-text p {
     margin: 0 0 16px;

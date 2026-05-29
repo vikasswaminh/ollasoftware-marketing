@@ -60,5 +60,23 @@ const heightStyle = typeof height === 'number' ? `${height}px` : height;
     color: var(--o-ink);
     background: var(--o-panel);
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Tighten code blocks on mobile so terminal + SOW excerpts fit
+     without aggressive horizontal scrolling. ~10px char glyph at 11px
+     font ⇒ ~36 chars fits in a 390px viewport's content column. */
+  @media (max-width: 700px) {
+    .code-head { height: 32px; padding: 0 12px; }
+    .title { font-size: 10px; }
+    .foot { font-size: 9px; }
+    .code {
+      padding: 14px 16px;
+      font-size: 11px;
+      line-height: 1.65;
+    }
+  }
+  @media (max-width: 420px) {
+    .code { padding: 12px 14px; font-size: 10.5px; }
   }
 </style>
