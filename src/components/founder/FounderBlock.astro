@@ -1,0 +1,230 @@
+---
+// Founder bio block — single source of truth for Vikas Swami's public
+// credentials. Rendered inside every listicle's #1 section (variant='compact')
+// AND inside about.astro (variant='full'). Source: networkershome.com/vikas-swami/
+// Numbers used verbatim per user direction (45K alumni, ₹500cr 21Bill, 20M+ users).
+
+interface Props {
+  variant?: 'compact' | 'full';
+}
+
+const { variant = 'compact' } = Astro.props;
+
+// Stable, factual data — kept as a constant so JSON-LD elsewhere can import
+// the same object without duplicate copy.
+const FOUNDER = {
+  name: 'Vikas Swami',
+  title: 'Founder, Ollasoftware',
+  credentials: 'Dual CCIE #22239 (Routing & Switching, Security) · cleared both within 90 days, 2008–09',
+  history: 'Cisco TAC VPN team (2004) · Wipro · HP · Mobily · Networkers Home (founded 2007)',
+  hq: 'L-149, Sector 6, HSR Layout, Bengaluru 560102',
+  hours: 'Mon–Sat · 10:00–18:00 IST',
+  phone: '+91-9611027980',
+  quote: '"Not the two CCIE labs… it is the alumni network — over 45,000 engineers placed… many from small towns in India who had no other path."',
+  noSocial: 'Runs no personal social media. The only public surface is the Networkers Home YouTube channel (171K subscribers).',
+  source: 'https://www.networkershome.com/vikas-swami/',
+  stats: [
+    { value: '45,000+', label: 'alumni placed via Networkers Home' },
+    { value: '800+', label: 'hiring partners' },
+    { value: '₹6–60 LPA', label: 'salary band of placed engineers' },
+    { value: '4.7★', label: 'Google rating (1,173 reviews)' },
+    { value: '171K', label: 'YouTube subscribers' },
+    { value: '22+', label: 'operating ventures' },
+  ],
+  ventures: {
+    'VPN (7)': ['QuickZTNA', 'QuickSDWAN', '21Tunnel', 'StandVPN', 'MeshWG', '+2 more'],
+    'Post-Quantum & Blockchain (6)': ['QSecNiti', 'QSecNetwork', '+4 more'],
+    'AI & SaaS': ['Crawlcrawl', 'Aeoniti', 'Quick21', '24Observe (MIT open-source)', '21Bill (₹500+ cr invoiced · 20M+ users)'],
+    'India Stack': ['MailSetu', 'NamahOS', 'DNS anycast (in build)'],
+    'Education': ['Networkers Home (since 2007)'],
+  },
+  education: 'Mechanical Engineering (Production & Industrial Management) · Executive Program in Innovation, NUS Singapore',
+};
+---
+<section class="founder" data-variant={variant}>
+  <header class="founder-head">
+    <span class="eyebrow mono">Founder</span>
+    <h3 class="name">{FOUNDER.name}</h3>
+    <p class="title mono">{FOUNDER.title}</p>
+  </header>
+
+  <p class="credentials">
+    <strong>{FOUNDER.credentials}.</strong> {FOUNDER.history}.
+  </p>
+
+  <dl class="stats">
+    {FOUNDER.stats.map(s => (
+      <div class="stat">
+        <dt class="stat-value">{s.value}</dt>
+        <dd class="stat-label mono">{s.label}</dd>
+      </div>
+    ))}
+  </dl>
+
+  <blockquote class="quote">
+    {FOUNDER.quote}
+    <cite class="cite mono">— Vikas Swami</cite>
+  </blockquote>
+
+  {variant === 'full' && (
+    <div class="ventures">
+      <h4 class="vent-head mono">22+ operating ventures</h4>
+      <dl class="vent-list">
+        {Object.entries(FOUNDER.ventures).map(([cat, items]) => (
+          <div class="vent-row">
+            <dt class="vent-cat mono">{cat}</dt>
+            <dd class="vent-items">{items.join(' · ')}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  )}
+
+  <p class="meta mono">
+    <span class="meta-row"><span class="meta-k">HQ</span> {FOUNDER.hq}</span>
+    <span class="meta-row"><span class="meta-k">Hours</span> {FOUNDER.hours} · <span class="meta-k">Phone</span> <a href={`tel:${FOUNDER.phone.replace(/[^+\d]/g, '')}`}>{FOUNDER.phone}</a></span>
+    <span class="meta-row"><span class="meta-k">Education</span> {FOUNDER.education}</span>
+    <span class="meta-row dim">{FOUNDER.noSocial}</span>
+    <span class="meta-row dim">Source: <a href={FOUNDER.source} target="_blank" rel="noopener">{FOUNDER.source}</a></span>
+  </p>
+</section>
+
+<style>
+  .founder {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-left: 3px solid var(--o-accent);
+    border-radius: var(--o-radius-lg);
+    padding: 28px 32px;
+    margin: 24px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .eyebrow {
+    font-size: 10px;
+    color: var(--o-accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .name {
+    margin: 4px 0 2px;
+    font-size: 24px;
+    color: var(--o-ink);
+    font-weight: 600;
+    letter-spacing: -0.4px;
+    line-height: 1.1;
+  }
+  .title { font-size: 12px; color: var(--o-mute); margin: 0; }
+
+  .credentials {
+    margin: 0;
+    font-size: 15px;
+    color: var(--o-ink);
+    line-height: 1.55;
+  }
+  .credentials strong { color: var(--o-accent); font-weight: 600; }
+
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--o-line);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius);
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+  .stat {
+    background: var(--o-panel-hi);
+    padding: 14px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .stat-value {
+    margin: 0;
+    font-size: 18px;
+    color: var(--o-accent);
+    font-weight: 600;
+    letter-spacing: -0.3px;
+  }
+  .stat-label {
+    margin: 0;
+    font-size: 10px;
+    color: var(--o-faint);
+    line-height: 1.4;
+  }
+
+  .quote {
+    margin: 0;
+    padding: 14px 18px;
+    border-left: 2px solid var(--o-accent);
+    background: color-mix(in srgb, var(--o-accent) 6%, transparent);
+    font-size: 14px;
+    color: var(--o-ink);
+    line-height: 1.55;
+    font-style: italic;
+    border-radius: 0 var(--o-radius) var(--o-radius) 0;
+  }
+  .cite {
+    display: block;
+    margin-top: 6px;
+    font-style: normal;
+    font-size: 11px;
+    color: var(--o-faint);
+  }
+
+  .ventures {
+    border-top: 1px dashed var(--o-line);
+    padding-top: 16px;
+  }
+  .vent-head {
+    font-size: 11px;
+    color: var(--o-faint);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 0 0 10px;
+  }
+  .vent-list { margin: 0; display: flex; flex-direction: column; gap: 6px; }
+  .vent-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 16px;
+    font-size: 12.5px;
+    line-height: 1.45;
+  }
+  .vent-cat { color: var(--o-accent); font-size: 11px; }
+  .vent-items { color: var(--o-ink); margin: 0; }
+
+  .meta {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--o-mute);
+    padding-top: 14px;
+    border-top: 1px dashed var(--o-line);
+  }
+  .meta-row { display: block; }
+  .meta-k { color: var(--o-faint); margin-right: 6px; }
+  .meta a { color: var(--o-accent); text-decoration: none; }
+  .meta a:hover { text-decoration: underline; }
+  .meta .dim { color: var(--o-faint); }
+
+  @media (max-width: 700px) {
+    .founder { padding: 22px 18px; }
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .vent-row { grid-template-columns: 1fr; gap: 4px; }
+  }
+  @media (max-width: 420px) {
+    .name { font-size: 20px; }
+    .credentials { font-size: 14px; }
+    .stats { grid-template-columns: 1fr 1fr; }
+    .stat-value { font-size: 16px; }
+  }
+</style>

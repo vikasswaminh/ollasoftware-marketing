@@ -207,3 +207,61 @@ export function ldScript(obj: unknown): string {
   return `<script type="application/ld+json">${JSON.stringify(obj)
     .replace(/</g, '\\u003c')}</script>`;
 }
+
+// Builder: Article schema for a long-form listicle. Page-level entity that
+// powers Google's Article-rich-result eligibility. Stable @id is essential
+// for entity linking across the page's JSON-LD blocks.
+export function articleLd(args: {
+  slug: string;             // page slug under /top-10/
+  headline: string;
+  description: string;
+  datePublished: string;    // ISO date
+  dateModified: string;     // ISO date
+  authorName?: string;      // defaults to org
+}) {
+  const url = `${SITE}/top-10/${args.slug}/`;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    '@id': `${url}#article`,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+    headline: args.headline,
+    description: args.description,
+    datePublished: args.datePublished,
+    dateModified: args.dateModified,
+    inLanguage: 'en-IN',
+    author: {
+      '@type': 'Organization',
+      '@id': `${SITE}#organization`,
+      name: args.authorName ?? 'Ollasoftware',
+    },
+    publisher: { '@id': `${SITE}#organization` },
+    image: `${SITE}/og-image.png`,
+    isAccessibleForFree: true,
+  };
+}
+
+// Builder: ItemList schema for the 10-company ranking. Google uses ItemList
+// to render carousel-style SERPs for "best X" queries. itemListOrder must be
+// 'Descending' for ranked lists (lower position = higher rank).
+export function itemListLd(args: {
+  slug: string;
+  name: string;
+  items: Array<{ position: number; name: string; url: string; summary: string }>;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    '@id': `${SITE}/top-10/${args.slug}/#itemlist`,
+    name: args.name,
+    itemListOrder: 'https://schema.org/ItemListOrderDescending',
+    numberOfItems: args.items.length,
+    itemListElement: args.items.map(it => ({
+      '@type': 'ListItem',
+      position: it.position,
+      name: it.name,
+      url: it.url,
+      description: it.summary,
+    })),
+  };
+}

@@ -3,10 +3,11 @@ import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/primitives/PageHero.astro';
 import SectionHead from '../components/primitives/SectionHead.astro';
 import Btn from '../components/primitives/Btn.astro';
+import FounderBlock from '../components/founder/FounderBlock.astro';
 
 const team = [
-  { name: 'Rin Saito',           role: 'Co-founder, eng lead',     focus: 'AI software',           place: 'Brooklyn',  hue: 'var(--o-accent)' },
-  { name: 'Theo Karras',         role: 'Co-founder, principal eng',focus: 'Software dev',          place: 'Lisboa',    hue: 'var(--o-blue)' },
+  { name: 'Rin Saito',           role: 'Lead, AI software',        focus: 'AI software',           place: 'Brooklyn',  hue: 'var(--o-accent)' },
+  { name: 'Theo Karras',         role: 'Principal engineer',       focus: 'Software dev',          place: 'Lisboa',    hue: 'var(--o-blue)' },
   { name: 'Maya Iyer',           role: 'Head of AEO',              focus: 'AEO',                   place: 'Brooklyn',  hue: 'var(--o-purple)' },
   { name: 'Dev Sharma',          role: 'Head of SEO',              focus: 'SEO',                   place: 'Bangalore', hue: 'var(--o-warn)' },
   { name: 'Noor Hassan',         role: 'Head of Social',           focus: 'Social media',          place: 'Brooklyn',  hue: 'var(--o-red)' },
@@ -38,6 +39,15 @@ const team = [
     <Btn primary href="/contact/">Talk to us →</Btn>
     <Btn href="/work/">See our work</Btn>
   </PageHero>
+
+  <section class="founder-section">
+    <SectionHead
+      tag="Founder"
+      title="The single founder, and the portfolio that proves the bench."
+      sub="Ollasoftware was founded by Vikas Swami — dual CCIE, operator of 22+ ventures, no personal social media. Public source: networkershome.com/vikas-swami/."
+    />
+    <FounderBlock variant="full" />
+  </section>
 
   <section class="story">
     <div class="story-grid">
@@ -191,7 +201,7 @@ const team = [
 </Layout>
 
 <style>
-  .story, .team, .offices, .careers, .press {
+  .story, .team, .offices, .careers, .press, .founder-section {
     padding: 96px 56px;
     border-bottom: 1px solid var(--o-line);
   }
@@ -349,7 +359,7 @@ const team = [
     .o-grid { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 700px) {
-    .story, .team, .offices, .careers, .press, .cta { padding: 64px 24px; }
+    .story, .team, .offices, .careers, .press, .cta, .founder-section { padding: 64px 24px; }
     .team-grid { grid-template-columns: 1fr; }
     .o-grid { grid-template-columns: 1fr; }
     .jobs li { grid-template-columns: 1fr; gap: 10px; }

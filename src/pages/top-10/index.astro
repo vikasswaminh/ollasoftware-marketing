@@ -1,0 +1,126 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/primitives/PageHero.astro';
+import SectionHead from '../../components/primitives/SectionHead.astro';
+import Btn from '../../components/primitives/Btn.astro';
+import { allLists } from '../../lib/top10';
+import { SITE, breadcrumbLd } from '../../lib/seo';
+
+const breadcrumb = [
+  { name: 'Home', url: `${SITE}/` },
+  { name: 'Top 10 Rankings', url: `${SITE}/top-10/` },
+];
+
+const indexLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  '@id': `${SITE}/top-10/#page`,
+  name: 'Top 10 Rankings · Ollasoftware',
+  description: 'Honest 2026 rankings of the top 10 companies across AI software, software development, AEO, SEO, social media, and performance marketing in Bangalore and India.',
+  url: `${SITE}/top-10/`,
+  publisher: { '@id': `${SITE}#organization` },
+  hasPart: allLists.map(l => ({
+    '@type': 'Article',
+    headline: l.title,
+    url: `${SITE}/top-10/${l.slug}/`,
+    description: l.metaDescription,
+  })),
+};
+---
+<Layout
+  title="Top 10 Rankings — Independent Industry Lists | Ollasoftware"
+  description="Honest 2026 rankings of the top 10 companies across AI software, custom software, AEO, SEO, social media, and performance marketing in Bangalore and India. Open methodology, brutal scorecards."
+  breadcrumb={breadcrumb}
+  jsonLd={[indexLd, breadcrumbLd(breadcrumb)]}
+>
+  <PageHero
+    eyebrow="Independent rankings · open methodology"
+    title="Top 10 Rankings."
+    sub="Six honestly-ranked lists. One company (us) at #1 on each. The other nine ranked by who we would recommend a friend. Methodology is open, the brutal scorecard is at the bottom of every page, and no sponsorship money changed hands. Updated May 2026."
+    breadcrumb={[{ label: 'home', href: '/' }, { label: 'top 10' }]}
+  >
+    <Btn primary href="/contact/">Book a 30-min discovery call →</Btn>
+    <Btn href="/services/">See our services</Btn>
+  </PageHero>
+
+  <section class="grid-wrap">
+    <SectionHead
+      tag="The rankings"
+      title="Six independent industry lists."
+      sub="Pick the category that matches your search. Each page is ~5,200 words, includes 10 ranked companies with 300-word competitor briefs, an open methodology, a comparison table, an 8-question FAQ, and a brutal scorecard grading the page against the SEO and AEO best-practice we use for client work."
+    />
+    <div class="rank-grid">
+      {allLists.map((l, i) => (
+        <a class="rank-card" href={`/top-10/${l.slug}/`} style={`--accent: var(--o-accent)`}>
+          <div class="card-top">
+            <span class="card-num mono">{String(i + 1).padStart(2, '0')}</span>
+            <span class="card-tag mono">{l.serviceSlug}</span>
+          </div>
+          <h3 class="card-h">{l.title}</h3>
+          <p class="card-sub">{l.metaDescription}</p>
+          <div class="card-foot">
+            <span class="mono">read the ranking →</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .grid-wrap { padding: 96px 56px; border-bottom: 1px solid var(--o-line); }
+  .rank-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .rank-card {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius);
+    padding: 28px;
+    text-decoration: none;
+    color: var(--o-ink);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: border-color .14s, transform .14s, background .14s;
+  }
+  .rank-card:hover {
+    border-color: color-mix(in srgb, var(--o-accent) 53%, transparent);
+    transform: translateY(-2px);
+  }
+  .card-top { display: flex; justify-content: space-between; align-items: center; }
+  .card-num { color: var(--o-accent); font-size: 12px; letter-spacing: 1px; }
+  .card-tag {
+    font-size: 10px;
+    color: var(--o-faint);
+    padding: 3px 8px;
+    border: 1px solid var(--o-line);
+    border-radius: 3px;
+  }
+  .card-h {
+    margin: 0;
+    font-size: 18px;
+    color: var(--o-ink);
+    font-weight: 500;
+    line-height: 1.25;
+    letter-spacing: -0.3px;
+  }
+  .card-sub {
+    margin: 0;
+    font-size: 13px;
+    color: var(--o-mute);
+    line-height: 1.55;
+    flex: 1;
+  }
+  .card-foot {
+    padding-top: 12px;
+    border-top: 1px dashed var(--o-line);
+    color: var(--o-accent);
+    font-size: 11px;
+  }
+
+  @media (max-width: 900px) { .rank-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 700px) { .grid-wrap { padding: 64px 24px; } }
+</style>

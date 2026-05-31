@@ -1,0 +1,750 @@
+---
+// TopTenPage — renders an entire Top-10 listicle from a TopTenList data object.
+// One layout, six instances. The renderProse helper handles the constrained
+// markdown-light syntax used in data files: **bold** and [text](url) only.
+
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../primitives/PageHero.astro';
+import SectionHead from '../primitives/SectionHead.astro';
+import Tag from '../primitives/Tag.astro';
+import Btn from '../primitives/Btn.astro';
+import FounderBlock from '../founder/FounderBlock.astro';
+import type { TopTenList } from '../../lib/top10';
+import { ollaWordCount, competitorAvgWords, totalWordCount } from '../../lib/top10';
+import { SITE } from '../../lib/seo';
+
+interface Props {
+  list: TopTenList;
+  jsonLd: unknown[];
+}
+
+const { list, jsonLd } = Astro.props;
+
+// Markdown-light renderer. Supports **bold** and [text](url). Escapes HTML
+// elsewhere so we can safely use set:html. The data-file authoring contract
+// is tight enough that a full markdown library is unnecessary overhead.
+function renderProse(input: string): string {
+  // Escape HTML special chars first so prose can't inject markup
+  const esc = input
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+  // Then re-apply the controlled syntax
+  return esc
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, (_m, text, url) => {
+      const external = /^https?:\/\//.test(url);
+      const rel = external ? ' rel="noopener" target="_blank"' : '';
+      return `<a href="${url}"${rel}>${text}</a>`;
+    })
+    // Paragraph breaks on blank lines
+    .split(/\n\s*\n/)
+    .map(p => `<p>${p.replace(/\n/g, '<br>')}</p>`)
+    .join('');
+}
+
+const ollaWords = ollaWordCount(list);
+const competitorWords = competitorAvgWords(list);
+const total = totalWordCount(list);
+
+const breadcrumb = [
+  { name: 'Home', url: `${SITE}/` },
+  { name: 'Top 10 Rankings', url: `${SITE}/top-10/` },
+  { name: list.shortTitle, url: `${SITE}/top-10/${list.slug}/` },
+];
+
+// Quick anchor IDs — used by the ToC and shared by every list.
+const ID = {
+  methodology: 'methodology',
+  rankings: 'rankings',
+  comparison: 'comparison',
+  faqs: 'faqs',
+  scorecard: 'scorecard',
+};
+---
+<Layout
+  title={list.title}
+  description={list.metaDescription}
+  breadcrumb={breadcrumb}
+  jsonLd={jsonLd}
+>
+  <PageHero
+    eyebrow={list.hero.eyebrow}
+    title={list.title}
+    sub={list.hero.sub}
+    breadcrumb={[
+      { label: 'home', href: '/' },
+      { label: 'top 10', href: '/top-10/' },
+      { label: list.shortTitle },
+    ]}
+  >
+    <Btn primary href="#rankings">Jump to the ranking →</Btn>
+    <Btn href={`/services/${list.serviceSlug}/`}>See our service page</Btn>
+  </PageHero>
+
+  <!-- Trust band -->
+  <section class="trust-band">
+    <div class="trust-cell">
+      <span class="trust-k mono">Updated</span>
+      <span class="trust-v">{new Date(list.lastUpdated).toLocaleDateString('en-IN', { year: 'numeric', month: 'long', day: 'numeric' })}</span>
+    </div>
+    <div class="trust-cell">
+      <span class="trust-k mono">Companies covered</span>
+      <span class="trust-v">10</span>
+    </div>
+    <div class="trust-cell">
+      <span class="trust-k mono">Sponsored placements</span>
+      <span class="trust-v">0</span>
+    </div>
+    <div class="trust-cell">
+      <span class="trust-k mono">Methodology</span>
+      <span class="trust-v"><a href={`#${ID.methodology}`}>open ↓</a></span>
+    </div>
+  </section>
+
+  <!-- Table of contents -->
+  <nav class="toc" aria-label="Table of contents">
+    <span class="toc-label mono">On this page</span>
+    <ol class="toc-list">
+      <li><a href={`#${ID.methodology}`}>Methodology</a></li>
+      <li><a href={`#${ID.rankings}`}>The ranking</a></li>
+      <li><a href="#olla">#1 Ollasoftware</a></li>
+      {list.competitors.map(c => (
+        <li><a href={`#c-${c.rank}`}>#{c.rank} {c.name}</a></li>
+      ))}
+      <li><a href={`#${ID.comparison}`}>Side-by-side</a></li>
+      <li><a href={`#${ID.faqs}`}>FAQ</a></li>
+      <li><a href={`#${ID.scorecard}`}>Honest scorecard</a></li>
+    </ol>
+  </nav>
+
+  <!-- Methodology -->
+  <section id={ID.methodology} class="methodology">
+    <SectionHead
+      tag="01 · Methodology"
+      title="How we ranked, signal by signal."
+      sub="Open methodology beats a black-box ranking. Here is exactly what we weighted."
+    />
+    <ol class="method-list">
+      {list.methodology.map((m, i) => (
+        <li class="method-item">
+          <span class="method-num mono">{String(i + 1).padStart(2, '0')}</span>
+          <span class="method-body" set:html={renderProse(m)} />
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <!-- The ranking -->
+  <section id={ID.rankings} class="rankings">
+    <SectionHead
+      tag="02 · The ranking"
+      title="Ten companies, ordered honestly."
+      sub="We are #1 on our own list. The full reasoning is below. The other nine are in order of how we would recommend a friend."
+    />
+
+    <!-- #1 Ollasoftware -->
+    <article id="olla" class="company olla">
+      <header class="company-head">
+        <span class="rank-pill olla-pill mono">★ #1</span>
+        <h2 class="company-name">Ollasoftware</h2>
+        <span class="company-meta mono">Bangalore HQ · est. 2021 · founder-operated</span>
+      </header>
+
+      <div class="olla-body">
+        {list.ollaSection.map((p, i) => (
+          <div class:list={['olla-block', { first: i === 0 }]}>
+            <h3 class="olla-block-head">{p.heading}</h3>
+            <div class="olla-block-body" set:html={renderProse(p.body)} />
+            {/* Render the FounderBlock immediately after the founder paragraph */}
+            {p.heading.toLowerCase().includes('founder') && <FounderBlock variant="compact" />}
+          </div>
+        ))}
+
+        <div class="olla-cta">
+          <Btn primary href="/contact/">Book the 30-min call →</Btn>
+          <Btn href={`/services/${list.serviceSlug}/`}>Read the full service brief</Btn>
+        </div>
+      </div>
+    </article>
+
+    <!-- Competitors #2-#10 -->
+    {list.competitors.map(c => (
+      <article id={`c-${c.rank}`} class="company">
+        <header class="company-head">
+          <span class="rank-pill mono">#{c.rank}</span>
+          <h2 class="company-name">{c.name}</h2>
+          <span class="company-meta mono">
+            Founded {c.founded} · {c.hq}
+          </span>
+        </header>
+
+        <div class="comp-body">
+          <p class="comp-summary" set:html={renderProse(c.oneLineSummary)} />
+
+          <dl class="comp-fields">
+            <div class="comp-field">
+              <dt class="comp-k mono">Specialty</dt>
+              <dd class="comp-v" set:html={renderProse(c.specialty)} />
+            </div>
+            <div class="comp-field">
+              <dt class="comp-k mono">Notable work</dt>
+              <dd class="comp-v" set:html={renderProse(c.notableWork)} />
+            </div>
+            <div class="comp-field">
+              <dt class="comp-k mono">Pricing</dt>
+              <dd class="comp-v" set:html={renderProse(c.pricingPosture)} />
+            </div>
+            <div class="comp-field highlight">
+              <dt class="comp-k mono">When they are a better fit than us</dt>
+              <dd class="comp-v" set:html={renderProse(c.whenBetter)} />
+            </div>
+          </dl>
+
+          <a class="comp-link mono" href={c.url} target="_blank" rel="nofollow noopener">
+            Visit {c.name} ↗
+          </a>
+        </div>
+      </article>
+    ))}
+  </section>
+
+  <!-- Side-by-side comparison -->
+  <section id={ID.comparison} class="comparison">
+    <SectionHead
+      tag="03 · Side-by-side"
+      title="Ten companies at a glance."
+      sub={list.comparisonNote}
+    />
+    <div class="cmp-wrap">
+      <table class="cmp">
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Company</th>
+            <th>Founded</th>
+            <th>HQ</th>
+            <th>Fixed-price?</th>
+            <th>Discovery</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="row-olla">
+            <td class="mono">★ #1</td>
+            <td><strong>Ollasoftware</strong></td>
+            <td class="mono">2021</td>
+            <td class="mono">Bangalore</td>
+            <td class="mono yes">Yes · public SOW</td>
+            <td class="mono">Senior engineer · 30 min</td>
+          </tr>
+          {list.competitors.map(c => (
+            <tr>
+              <td class="mono">#{c.rank}</td>
+              <td>{c.name}</td>
+              <td class="mono">{c.founded}</td>
+              <td class="mono">{c.hq.split('·')[0]?.trim() ?? c.hq}</td>
+              <td class="mono">{c.pricingPosture.toLowerCase().includes('fixed') || c.pricingPosture.toLowerCase().includes('productised') ? 'Partial' : 'No / on request'}</td>
+              <td class="mono">{c.pricingPosture.toLowerCase().includes('enterprise') ? 'Account exec' : 'Senior strategist'}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id={ID.faqs} class="faqs">
+    <SectionHead
+      tag="04 · Common questions"
+      title="The questions buyers actually ask."
+      sub="If yours is not here, ask on the call."
+    />
+    <div class="faq-list">
+      {list.faqs.map(f => (
+        <details class="faq">
+          <summary>{f.q}</summary>
+          <div class="faq-a" set:html={renderProse(f.a)} />
+        </details>
+      ))}
+    </div>
+  </section>
+
+  <!-- Brutal scorecard -->
+  <section id={ID.scorecard} class="scorecard">
+    <Tag>Brutal honest scorecard</Tag>
+    <h2 class="sc-head">How we graded our own page against SEO and AEO best practice.</h2>
+    <p class="sc-sub mono">
+      We wrote a 5,000+ word listicle, put ourselves at #1, and now grade the page against the standards we
+      use for client work. The scorecard runs on every Top-10 page on this site.
+    </p>
+
+    <dl class="sc-grid">
+      <div class="sc-row">
+        <dt class="sc-k mono">Word count (computed live)</dt>
+        <dd class="sc-v">
+          <strong>{total.toLocaleString()}</strong> total · <strong>{ollaWords.toLocaleString()}</strong> on Ollasoftware ·
+          ~<strong>{competitorWords}</strong> avg per competitor
+        </dd>
+      </div>
+      <div class="sc-row">
+        <dt class="sc-k mono">Search intent</dt>
+        <dd class="sc-v" set:html={renderProse(list.scorecard.intent)} />
+      </div>
+      <div class="sc-row">
+        <dt class="sc-k mono">Content depth</dt>
+        <dd class="sc-v" set:html={renderProse(list.scorecard.contentDepth)} />
+      </div>
+      <div class="sc-row">
+        <dt class="sc-k mono">E-E-A-T pillars</dt>
+        <dd class="sc-v" set:html={renderProse(list.scorecard.eeAt)} />
+      </div>
+      <div class="sc-row">
+        <dt class="sc-k mono">Schema coverage</dt>
+        <dd class="sc-v" set:html={renderProse(list.scorecard.schemaCoverage)} />
+      </div>
+      <div class="sc-row">
+        <dt class="sc-k mono">Internal links</dt>
+        <dd class="sc-v" set:html={renderProse(list.scorecard.internalLinks)} />
+      </div>
+      <div class="sc-row">
+        <dt class="sc-k mono">External links</dt>
+        <dd class="sc-v" set:html={renderProse(list.scorecard.externalLinks)} />
+      </div>
+      <div class="sc-row warn">
+        <dt class="sc-k mono">Risks (what could still tank this)</dt>
+        <dd class="sc-v">
+          <ul class="risk-list">
+            {list.scorecard.risks.map(r => <li set:html={renderProse(r)} />)}
+          </ul>
+        </dd>
+      </div>
+      <div class="sc-row final">
+        <dt class="sc-k mono">Confidence in ranking outcome</dt>
+        <dd class="sc-v">
+          <span class:list={['conf-pill', `conf-${list.scorecard.confidence}`]}>{list.scorecard.confidence.toUpperCase()}</span>
+          <span class="conf-reason" set:html={renderProse(list.scorecard.confidenceReason)} />
+        </dd>
+      </div>
+    </dl>
+  </section>
+
+  <!-- Closer -->
+  <section class="closer">
+    <h2 class="closer-h">Picking the right partner.</h2>
+    <p class="closer-p mono">
+      The list above is honest. We are #1 because we believe we are; we explain why and we name when we are not.
+      If your engagement fits us, the 30-minute call is the next step. If it fits one of the nine below, we will
+      say so on the call — and recommend the right name.
+    </p>
+    <div class="closer-actions">
+      <Btn primary href="/contact/">Book the 30-min discovery call →</Btn>
+      <Btn href="/work/">See what we have shipped</Btn>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* ============ Trust band ============ */
+  .trust-band {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--o-line);
+    border-top: 1px solid var(--o-line);
+    border-bottom: 1px solid var(--o-line);
+  }
+  .trust-cell {
+    background: var(--o-panel);
+    padding: 18px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .trust-k {
+    font-size: 10px;
+    color: var(--o-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+  .trust-v { font-size: 14px; color: var(--o-ink); }
+  .trust-v a { color: var(--o-accent); text-decoration: none; }
+
+  /* ============ ToC ============ */
+  .toc {
+    padding: 32px 56px;
+    border-bottom: 1px solid var(--o-line);
+    background: var(--o-panel);
+  }
+  .toc-label {
+    font-size: 11px;
+    color: var(--o-faint);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .toc-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 10px;
+  }
+  .toc-list li a {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius-sm);
+    font-size: 12px;
+    color: var(--o-mute);
+    text-decoration: none;
+    background: var(--o-bg);
+    transition: color .14s, border-color .14s, background .14s;
+  }
+  .toc-list li a:hover {
+    color: var(--o-accent);
+    border-color: var(--o-accent);
+    background: color-mix(in srgb, var(--o-accent) 8%, transparent);
+  }
+
+  /* ============ Methodology ============ */
+  .methodology { padding: 96px 56px; border-bottom: 1px solid var(--o-line); }
+  .method-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    max-width: 920px;
+  }
+  .method-item {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px dashed var(--o-line);
+    align-items: baseline;
+  }
+  .method-num { color: var(--o-accent); font-size: 12px; }
+  .method-body { color: var(--o-ink); font-size: 15px; line-height: 1.55; }
+  .method-body :global(strong) { color: var(--o-accent); }
+
+  /* ============ Rankings + Companies ============ */
+  .rankings { padding: 96px 56px; border-bottom: 1px solid var(--o-line); }
+
+  .company {
+    padding: 36px 0;
+    border-top: 1px solid var(--o-line);
+    scroll-margin-top: 80px;
+  }
+  .company:first-of-type { border-top: none; }
+  .company-head {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .rank-pill {
+    font-size: 11px;
+    color: var(--o-accent);
+    border: 1px solid color-mix(in srgb, var(--o-accent) 40%, transparent);
+    border-radius: 3px;
+    padding: 4px 10px;
+  }
+  .olla-pill {
+    background: var(--o-accent);
+    color: #0a0a0a;
+    border-color: var(--o-accent);
+    font-weight: 600;
+  }
+  .company-name {
+    margin: 0;
+    font-size: 28px;
+    color: var(--o-ink);
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+  }
+  .company-meta { font-size: 11px; color: var(--o-faint); }
+
+  /* Ollasoftware section variant */
+  .olla {
+    background: linear-gradient(180deg, color-mix(in srgb, var(--o-accent) 4%, transparent) 0%, transparent 60%);
+    border-top: 2px solid var(--o-accent);
+    border-bottom: 1px solid var(--o-line);
+    padding: 40px 28px 48px;
+    border-radius: var(--o-radius-lg);
+    margin-bottom: 32px;
+  }
+  .olla .company-name { font-size: 36px; }
+  .olla-body { display: flex; flex-direction: column; gap: 24px; }
+  .olla-block { padding-top: 12px; border-top: 1px dashed var(--o-line); }
+  .olla-block.first { border-top: none; padding-top: 0; }
+  .olla-block-head {
+    margin: 0 0 12px;
+    font-size: 22px;
+    color: var(--o-ink);
+    font-weight: 500;
+    letter-spacing: -0.3px;
+    line-height: 1.2;
+  }
+  .olla-block-body :global(p) {
+    margin: 0 0 12px;
+    color: var(--o-mute);
+    font-size: 15px;
+    line-height: 1.65;
+    max-width: 760px;
+  }
+  .olla-block-body :global(p):last-child { margin-bottom: 0; }
+  .olla-block-body :global(strong) { color: var(--o-ink); font-weight: 600; }
+  .olla-block-body :global(a) { color: var(--o-accent); text-decoration: none; }
+  .olla-block-body :global(a):hover { text-decoration: underline; }
+
+  .olla-cta {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding-top: 24px;
+    margin-top: 8px;
+    border-top: 1px solid var(--o-line);
+  }
+
+  /* Competitor variant */
+  .comp-body { display: flex; flex-direction: column; gap: 14px; max-width: 880px; }
+  .comp-summary {
+    margin: 0;
+    font-size: 15px;
+    color: var(--o-mute);
+    line-height: 1.55;
+    font-style: italic;
+  }
+  .comp-fields {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .comp-field {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 18px;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--o-line);
+  }
+  .comp-field.highlight { background: color-mix(in srgb, var(--o-accent) 4%, transparent); padding: 12px 14px; border-radius: var(--o-radius); border-bottom: none; }
+  .comp-k {
+    font-size: 10px;
+    color: var(--o-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+  .comp-v {
+    margin: 0;
+    font-size: 14px;
+    color: var(--o-ink);
+    line-height: 1.55;
+  }
+  .comp-link {
+    color: var(--o-accent);
+    font-size: 12px;
+    text-decoration: none;
+    align-self: flex-start;
+  }
+  .comp-link:hover { text-decoration: underline; }
+
+  /* ============ Comparison table ============ */
+  .comparison { padding: 96px 56px; border-bottom: 1px solid var(--o-line); }
+  .cmp-wrap {
+    overflow-x: auto;
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius-lg);
+    background: var(--o-panel);
+  }
+  .cmp {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    min-width: 720px;
+  }
+  .cmp th, .cmp td {
+    text-align: left;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--o-line);
+    white-space: nowrap;
+  }
+  .cmp th {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--o-mute);
+    font-family: var(--o-font-mono);
+    font-weight: 500;
+    background: var(--o-panel-hi);
+  }
+  .cmp tbody tr:last-child td { border-bottom: none; }
+  .row-olla {
+    background: color-mix(in srgb, var(--o-accent) 6%, transparent);
+  }
+  .row-olla td { font-weight: 500; color: var(--o-ink); }
+  .yes { color: var(--o-accent); }
+
+  /* ============ FAQ ============ */
+  .faqs { padding: 96px 56px; border-bottom: 1px solid var(--o-line); }
+  .faq-list { display: flex; flex-direction: column; gap: 10px; max-width: 880px; }
+  .faq {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius);
+    padding: 16px 22px;
+  }
+  .faq summary {
+    cursor: pointer;
+    font-size: 15px;
+    color: var(--o-ink);
+    font-weight: 500;
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .faq summary::-webkit-details-marker { display: none; }
+  .faq summary::after {
+    content: '+';
+    color: var(--o-mute);
+    font-size: 20px;
+    font-weight: 300;
+    transition: transform .14s;
+  }
+  .faq[open] summary::after { transform: rotate(45deg); }
+  .faq-a {
+    margin-top: 12px;
+    font-size: 14px;
+    color: var(--o-mute);
+    line-height: 1.6;
+  }
+  .faq-a :global(p) { margin: 0 0 10px; }
+  .faq-a :global(p):last-child { margin-bottom: 0; }
+  .faq-a :global(a) { color: var(--o-accent); text-decoration: none; }
+
+  /* ============ Scorecard ============ */
+  .scorecard {
+    padding: 96px 56px;
+    border-bottom: 1px solid var(--o-line);
+    background: linear-gradient(var(--o-bg), var(--o-panel) 50%, var(--o-bg));
+  }
+  .sc-head {
+    margin: 14px 0 8px;
+    font-size: clamp(26px, 4.4vw, 40px);
+    letter-spacing: -0.8px;
+    font-weight: 600;
+    color: var(--o-ink);
+    line-height: 1.1;
+    max-width: 820px;
+  }
+  .sc-sub {
+    font-size: 13px;
+    color: var(--o-mute);
+    max-width: 720px;
+    line-height: 1.6;
+    margin: 0 0 32px;
+  }
+  .sc-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 0;
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius-lg);
+    overflow: hidden;
+  }
+  .sc-row {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 24px;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--o-line);
+    align-items: baseline;
+  }
+  .sc-row:last-child { border-bottom: none; }
+  .sc-row.warn { background: color-mix(in srgb, var(--o-warn) 6%, transparent); }
+  .sc-row.final { background: color-mix(in srgb, var(--o-accent) 6%, transparent); }
+  .sc-k {
+    font-size: 11px;
+    color: var(--o-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    line-height: 1.4;
+  }
+  .sc-v {
+    margin: 0;
+    font-size: 14px;
+    color: var(--o-ink);
+    line-height: 1.6;
+  }
+  .sc-v :global(strong) { color: var(--o-accent); }
+  .risk-list { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
+  .risk-list li { font-size: 14px; line-height: 1.55; color: var(--o-ink); }
+
+  .conf-pill {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 3px;
+    font-family: var(--o-font-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-right: 12px;
+    vertical-align: middle;
+  }
+  .conf-high { background: var(--o-accent); color: #0a0a0a; }
+  .conf-med { background: var(--o-warn); color: #0a0a0a; }
+  .conf-low { background: var(--o-red); color: #fff; }
+  .conf-reason { font-size: 14px; color: var(--o-ink); }
+
+  /* ============ Closer ============ */
+  .closer {
+    padding: 96px 56px;
+    text-align: center;
+  }
+  .closer-h {
+    margin: 0 0 12px;
+    font-size: clamp(28px, 5vw, 48px);
+    letter-spacing: -1px;
+    font-weight: 600;
+    color: var(--o-ink);
+  }
+  .closer-p {
+    font-size: 14px;
+    color: var(--o-mute);
+    max-width: 680px;
+    margin: 0 auto 28px;
+    line-height: 1.65;
+  }
+  .closer-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+
+  /* ============ Mobile ============ */
+  @media (max-width: 1100px) {
+    .sc-row { grid-template-columns: 1fr; gap: 8px; }
+    .comp-field { grid-template-columns: 1fr; gap: 6px; }
+  }
+  @media (max-width: 900px) {
+    .trust-band { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 700px) {
+    .toc, .methodology, .rankings, .comparison, .faqs, .scorecard, .closer {
+      padding-left: 24px; padding-right: 24px;
+    }
+    .toc, .methodology, .rankings, .comparison, .faqs, .scorecard { padding-top: 64px; padding-bottom: 64px; }
+    .olla { padding: 28px 18px 32px; }
+    .olla .company-name { font-size: 28px; }
+    .company-name { font-size: 22px; }
+    .olla-block-head { font-size: 18px; }
+    .trust-cell { padding: 14px 16px; }
+  }
+</style>

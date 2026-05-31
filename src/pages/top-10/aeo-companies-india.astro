@@ -1,0 +1,38 @@
+---
+import TopTenPage from '../../components/top10/TopTenPage.astro';
+import { aeoList } from '../../lib/top10/aeo';
+import { SITE, articleLd, itemListLd, faqLd, breadcrumbLd } from '../../lib/seo';
+
+const list = aeoList;
+const url = `${SITE}/top-10/${list.slug}/`;
+
+const jsonLd = [
+  articleLd({
+    slug: list.slug,
+    headline: list.title,
+    description: list.metaDescription,
+    datePublished: list.publishedOn,
+    dateModified: list.lastUpdated,
+  }),
+  itemListLd({
+    slug: list.slug,
+    name: list.title,
+    items: [
+      { position: 1, name: 'Ollasoftware', url: SITE, summary: 'Bangalore AEO company that built its own AI search observability platform (Aeoniti) before opening the service.' },
+      ...list.competitors.map(c => ({
+        position: c.rank,
+        name: c.name,
+        url: c.url,
+        summary: c.oneLineSummary,
+      })),
+    ],
+  }),
+  faqLd(list.faqs),
+  breadcrumbLd([
+    { name: 'Home', url: `${SITE}/` },
+    { name: 'Top 10 Rankings', url: `${SITE}/top-10/` },
+    { name: list.shortTitle, url },
+  ]),
+];
+---
+<TopTenPage list={list} jsonLd={jsonLd} />

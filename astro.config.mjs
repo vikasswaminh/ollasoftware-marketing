@@ -34,12 +34,23 @@ export default defineConfig({
         'https://ollasoftware.com/jobs/',
         'https://ollasoftware.com/apply/',
         'https://ollasoftware.com/contact/',
+        // Top-10 listicles — high-intent commercial queries, content-deep pages.
+        'https://ollasoftware.com/top-10/',
+        'https://ollasoftware.com/top-10/ai-software-development-companies-bangalore/',
+        'https://ollasoftware.com/top-10/software-development-companies-bangalore/',
+        'https://ollasoftware.com/top-10/aeo-companies-india/',
+        'https://ollasoftware.com/top-10/seo-agencies-bangalore/',
+        'https://ollasoftware.com/top-10/social-media-marketing-agencies-bangalore/',
+        'https://ollasoftware.com/top-10/performance-marketing-agencies-bangalore/',
       ],
       serialize(item) {
-        // Higher priority for home + services + jobs (high-intent pages).
+        // Higher priority for home + services + jobs + top-10 (high-intent pages).
         if (item.url === 'https://ollasoftware.com/') item.priority = 1.0;
         else if (item.url.startsWith('https://ollasoftware.com/services/')) item.priority = 0.9;
         else if (item.url === 'https://ollasoftware.com/jobs/') item.priority = 0.9;
+        else if (item.url.startsWith('https://ollasoftware.com/top-10/') &&
+                 item.url !== 'https://ollasoftware.com/top-10/') item.priority = 0.85;
+        else if (item.url === 'https://ollasoftware.com/top-10/') item.priority = 0.8;
         else if (item.url === 'https://ollasoftware.com/apply/') item.priority = 0.8;
         else if (item.url === 'https://ollasoftware.com/contact/') item.priority = 0.8;
         return item;

@@ -7,6 +7,7 @@ import Code from '../primitives/Code.astro';
 import { services, type Service } from '../../lib/tokens';
 import { serviceDetails, type ServiceDetail } from '../../lib/service-details';
 import { serviceLd, faqLd, SITE } from '../../lib/seo';
+import { listForService } from '../../lib/top10';
 
 interface Props {
   slug: string;
@@ -21,6 +22,9 @@ if (!svc || !det) throw new Error(`Unknown service: ${slug}`);
 const idx = services.findIndex(s => s.slug === slug);
 const prev = services[(idx - 1 + services.length) % services.length];
 const next = services[(idx + 1) % services.length];
+
+// Matching Top-10 listicle for this service (one per service).
+const listicle = listForService(slug);
 
 // SEO copy — geo-targeted titles + descriptions per service. Bangalore +
 // India keywords woven in without keyword-stuffing.
@@ -191,6 +195,22 @@ const pageLd: unknown[] = [
       ))}
     </div>
   </section>
+
+  {listicle && (
+    <section class="ranking-cta">
+      <div class="rc-inner">
+        <span class="rc-eyebrow mono">Independent ranking</span>
+        <h2 class="rc-h">Where we sit in the {svc.name} market.</h2>
+        <p class="rc-p">
+          We rank our own work alongside nine real competitors in our public {listicle.shortTitle} list.
+          Methodology open, brutal scorecard at the bottom, no sponsorship money changed hands.
+        </p>
+        <a class="rc-cta mono" href={`/top-10/${listicle.slug}/`}>
+          Read the {listicle.shortTitle} ranking →
+        </a>
+      </div>
+    </section>
+  )}
 
   <section class="nextprev">
     <a class="np" href={`/services/${prev!.slug}/`} style={`--accent:${prev!.accent}`}>
@@ -371,6 +391,51 @@ const pageLd: unknown[] = [
     line-height: 1.6;
   }
 
+  .ranking-cta {
+    padding: 64px 56px;
+    border-bottom: 1px solid var(--o-line);
+    background: linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--o-accent) 6%, transparent) 100%);
+  }
+  .rc-inner {
+    max-width: 720px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .rc-eyebrow {
+    font-size: 11px;
+    color: var(--o-accent);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .rc-h {
+    margin: 0;
+    font-size: clamp(24px, 4vw, 36px);
+    letter-spacing: -0.6px;
+    font-weight: 600;
+    color: var(--o-ink);
+    line-height: 1.15;
+  }
+  .rc-p {
+    margin: 0;
+    font-size: 15px;
+    color: var(--o-mute);
+    line-height: 1.6;
+  }
+  .rc-cta {
+    align-self: flex-start;
+    margin-top: 8px;
+    padding: 10px 16px;
+    background: var(--o-accent);
+    color: #0a0a0a;
+    text-decoration: none;
+    border-radius: var(--o-radius-sm);
+    font-size: 13px;
+    font-weight: 500;
+    transition: filter .14s;
+  }
+  .rc-cta:hover { filter: brightness(1.08); }
+
   .nextprev {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -422,7 +487,7 @@ const pageLd: unknown[] = [
     .meta-cell:nth-child(1), .meta-cell:nth-child(2) { border-bottom: 1px solid var(--o-line); }
   }
   @media (max-width: 700px) {
-    .features, .phases, .sample-sow, .not-for-us, .faqs, .cta { padding: 64px 24px; }
+    .features, .phases, .sample-sow, .not-for-us, .faqs, .cta, .ranking-cta { padding: 48px 24px; }
     .features .grid { grid-template-columns: 1fr; }
     .phase { grid-template-columns: 1fr; gap: 8px; }
     .nextprev { grid-template-columns: 1fr; }

@@ -1,0 +1,38 @@
+---
+import TopTenPage from '../../components/top10/TopTenPage.astro';
+import { socialMediaList } from '../../lib/top10/social-media';
+import { SITE, articleLd, itemListLd, faqLd, breadcrumbLd } from '../../lib/seo';
+
+const list = socialMediaList;
+const url = `${SITE}/top-10/${list.slug}/`;
+
+const jsonLd = [
+  articleLd({
+    slug: list.slug,
+    headline: list.title,
+    description: list.metaDescription,
+    datePublished: list.publishedOn,
+    dateModified: list.lastUpdated,
+  }),
+  itemListLd({
+    slug: list.slug,
+    name: list.title,
+    items: [
+      { position: 1, name: 'Ollasoftware', url: SITE, summary: 'Bangalore B2B founder-led social specialist running editorial, short-form video, and DM ops as one practice with attribution to pipeline.' },
+      ...list.competitors.map(c => ({
+        position: c.rank,
+        name: c.name,
+        url: c.url,
+        summary: c.oneLineSummary,
+      })),
+    ],
+  }),
+  faqLd(list.faqs),
+  breadcrumbLd([
+    { name: 'Home', url: `${SITE}/` },
+    { name: 'Top 10 Rankings', url: `${SITE}/top-10/` },
+    { name: list.shortTitle, url },
+  ]),
+];
+---
+<TopTenPage list={list} jsonLd={jsonLd} />

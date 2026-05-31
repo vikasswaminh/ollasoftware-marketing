@@ -1,8 +1,19 @@
 ---
 import { o, services } from '../../lib/tokens';
 
+// Short labels for footer-column tightness; full titles live on each page.
+const rankingLinks: Array<[string, string]> = [
+  ['AI Software · BLR', '/top-10/ai-software-development-companies-bangalore/'],
+  ['Software Dev · BLR', '/top-10/software-development-companies-bangalore/'],
+  ['AEO · India', '/top-10/aeo-companies-india/'],
+  ['SEO · BLR', '/top-10/seo-agencies-bangalore/'],
+  ['Social · BLR', '/top-10/social-media-marketing-agencies-bangalore/'],
+  ['Performance · BLR', '/top-10/performance-marketing-agencies-bangalore/'],
+];
+
 const cols: Array<[string, Array<[string, string]>]> = [
   ['Services', services.map(s => [s.name, `/services/${s.slug}/`])],
+  ['Top 10 Rankings', rankingLinks],
   ['Work',     [['Case studies', '/work/'], ['Recent work', '/work/'], ['Industries', '/work/#industries'], ['Sample SOW', '/process/#sow']]],
   ['Company',  [['Process', '/process/'], ['About', '/about/'], ['Jobs · 1,200+', '/jobs/'], ['Press', '/about/#press']]],
   ['Trust',    [['SOC 2', '/process/#security'], ['GDPR / DPA', '/process/#gdpr'], ['Master MSA', '/process/#msa'], ['Security FAQ', '/process/#bounty']]],
@@ -64,8 +75,9 @@ const year = new Date().getFullYear();
 
   .grid {
     display: grid;
-    grid-template-columns: 1.4fr repeat(4, 1fr);
-    gap: 40px;
+    /* 5 link columns + brand column. Slightly narrower brand col to make room. */
+    grid-template-columns: 1.3fr repeat(5, 1fr);
+    gap: 32px;
     margin-bottom: 56px;
   }
 
