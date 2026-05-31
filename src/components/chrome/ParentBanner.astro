@@ -1,0 +1,102 @@
+---
+// Parent-company attribution band. Sits above SiteNav, scrolls away on first
+// interaction. White surface deliberately contrasts the dark site so the
+// attribution lands as a trust signal rather than getting lost in chrome.
+// Source: https://www.networkershome.com/
+---
+<aside class="parent-banner" role="complementary" aria-label="Parent company">
+  <a class="pb-link" href="https://www.networkershome.com/" target="_blank" rel="noopener">
+    <span class="pb-badge" aria-hidden="true">NH</span>
+    <span class="pb-text">
+      <span class="pb-prefix">We are part of the</span>
+      <strong class="pb-name">NETWORKERS&nbsp;HOME</strong>
+      <span class="pb-suffix">Group</span>
+    </span>
+    <span class="pb-arrow" aria-hidden="true">↗</span>
+  </a>
+</aside>
+
+<style>
+  .parent-banner {
+    background: #ffffff;
+    color: #0a0a0a;
+    border-bottom: 1px solid #e5e7eb;
+    /* Subtle inner shadow keeps the white band feeling intentional against
+       the dark page beneath it rather than like a render glitch. */
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+    width: 100%;
+  }
+
+  .pb-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 8px 24px;
+    text-decoration: none;
+    color: inherit;
+    font-family: var(--o-font-sans);
+    font-size: 12px;
+    line-height: 1.2;
+    letter-spacing: 0.1px;
+    transition: background .14s;
+  }
+  .pb-link:hover {
+    background: #f8f9fb;
+  }
+  .pb-link:hover .pb-arrow {
+    transform: translate(2px, -2px);
+  }
+
+  .pb-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    background: #0a0a0a;
+    color: #ffffff;
+    font-family: var(--o-font-mono);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+  }
+
+  .pb-text {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 6px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .pb-prefix {
+    color: #4b5563;
+    font-weight: 400;
+  }
+  .pb-name {
+    color: #0a0a0a;
+    font-weight: 900;
+    letter-spacing: 0.4px;
+    font-size: 11px;
+  }
+  .pb-suffix {
+    color: #4b5563;
+    font-weight: 400;
+  }
+
+  .pb-arrow {
+    color: #4b5563;
+    font-size: 11px;
+    transition: transform .14s;
+    flex-shrink: 0;
+  }
+
+  @media (max-width: 500px) {
+    .pb-link { padding: 8px 14px; gap: 8px; font-size: 10px; }
+    .pb-badge { width: 18px; height: 18px; font-size: 8px; }
+    .pb-name { font-size: 10px; }
+    .pb-prefix { display: none; }
+  }
+</style>

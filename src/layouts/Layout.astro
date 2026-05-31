@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import ParentBanner from '../components/chrome/ParentBanner.astro';
 import SiteNav from '../components/chrome/SiteNav.astro';
 import SiteFooter from '../components/chrome/SiteFooter.astro';
 import { organizationLd, websiteLd, breadcrumbLd, ldScript } from '../lib/seo';
@@ -120,6 +121,7 @@ for (const x of jsonLd) allLd.push(x);
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
+    <ParentBanner />
     <SiteNav />
     <main id="main">
       <slot />
