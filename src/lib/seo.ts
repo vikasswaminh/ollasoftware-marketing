@@ -22,6 +22,19 @@ export const organizationLd = {
   slogan: 'Pioneer AI software development. Bangalore-headquartered. Built and shipped 40+ AI brands.',
   foundingDate: '2021',
   numberOfEmployees: { '@type': 'QuantitativeValue', value: 18, unitText: 'core senior team' },
+  // Parent organization — surfaces the Networkers Home Group relationship to
+  // search engines + AI engines. Matches the visual ParentBanner on every page.
+  // Founded 2007; 45,000+ alumni placed; HSR Layout, Bengaluru. The @id is
+  // stable so future references to the same parent dedupe to one entity.
+  parentOrganization: {
+    '@type': ['Organization', 'EducationalOrganization'],
+    '@id': 'https://www.networkershome.com/#organization',
+    name: 'Networkers Home',
+    url: 'https://www.networkershome.com/',
+    foundingDate: '2007',
+    description: 'Networking and cybersecurity training institute headquartered in HSR Layout, Bengaluru. 45,000+ alumni placed across 800+ hiring partners.',
+    sameAs: ['https://www.networkershome.com/vikas-swami/'],
+  },
   areaServed: [
     { '@type': 'Country', name: 'India' },
     { '@type': 'Country', name: 'United States' },
