@@ -367,7 +367,7 @@ const ID = {
     text-transform: uppercase;
     letter-spacing: 0.6px;
   }
-  .trust-v { font-size: 14px; color: var(--o-ink); }
+  .trust-v { font-size: 12px; color: var(--o-ink); }
   .trust-v a { color: var(--o-accent); text-decoration: none; }
 
   /* ============ ToC ============ */
@@ -377,7 +377,7 @@ const ID = {
     background: var(--o-panel);
   }
   .toc-label {
-    font-size: 11px;
+    font-size: 9px;
     color: var(--o-faint);
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -397,7 +397,7 @@ const ID = {
     padding: 5px 10px;
     border: 1px solid var(--o-line);
     border-radius: var(--o-radius-sm);
-    font-size: 12px;
+    font-size: 10px;
     color: var(--o-mute);
     text-decoration: none;
     background: var(--o-bg);
@@ -428,8 +428,8 @@ const ID = {
     border-bottom: 1px dashed var(--o-line);
     align-items: baseline;
   }
-  .method-num { color: var(--o-accent); font-size: 12px; }
-  .method-body { color: var(--o-ink); font-size: 15px; line-height: 1.55; }
+  .method-num { color: var(--o-accent); font-size: 10px; }
+  .method-body { color: var(--o-ink); font-size: 13px; line-height: 1.55; }
   .method-body :global(strong) { color: var(--o-accent); }
 
   /* ============ Rankings + Companies ============ */
@@ -449,7 +449,7 @@ const ID = {
     flex-wrap: wrap;
   }
   .rank-pill {
-    font-size: 11px;
+    font-size: 9px;
     color: var(--o-accent);
     border: 1px solid color-mix(in srgb, var(--o-accent) 40%, transparent);
     border-radius: 3px;
@@ -463,13 +463,13 @@ const ID = {
   }
   .company-name {
     margin: 0;
-    font-size: 28px;
+    font-size: 26px;
     color: var(--o-ink);
     font-weight: 600;
     letter-spacing: -0.5px;
     line-height: 1.1;
   }
-  .company-meta { font-size: 11px; color: var(--o-faint); }
+  .company-meta { font-size: 9px; color: var(--o-faint); }
 
   /* Ollasoftware section variant */
   .olla {
@@ -480,13 +480,13 @@ const ID = {
     border-radius: var(--o-radius-lg);
     margin-bottom: 32px;
   }
-  .olla .company-name { font-size: 36px; }
+  .olla .company-name { font-size: 34px; }
   .olla-body { display: flex; flex-direction: column; gap: 24px; }
   .olla-block { padding-top: 12px; border-top: 1px dashed var(--o-line); }
   .olla-block.first { border-top: none; padding-top: 0; }
   .olla-block-head {
     margin: 0 0 12px;
-    font-size: 22px;
+    font-size: 20px;
     color: var(--o-ink);
     font-weight: 500;
     letter-spacing: -0.3px;
@@ -495,7 +495,7 @@ const ID = {
   .olla-block-body :global(p) {
     margin: 0 0 12px;
     color: var(--o-mute);
-    font-size: 15px;
+    font-size: 13px;
     line-height: 1.65;
     max-width: 760px;
   }
@@ -517,7 +517,7 @@ const ID = {
   .comp-body { display: flex; flex-direction: column; gap: 14px; max-width: 880px; }
   .comp-summary {
     margin: 0;
-    font-size: 15px;
+    font-size: 13px;
     color: var(--o-mute);
     line-height: 1.55;
     font-style: italic;
@@ -544,13 +544,13 @@ const ID = {
   }
   .comp-v {
     margin: 0;
-    font-size: 14px;
+    font-size: 12px;
     color: var(--o-ink);
     line-height: 1.55;
   }
   .comp-link {
     color: var(--o-accent);
-    font-size: 12px;
+    font-size: 10px;
     text-decoration: none;
     align-self: flex-start;
   }
@@ -567,7 +567,7 @@ const ID = {
   .cmp {
     width: 100%;
     border-collapse: collapse;
-    font-size: 13px;
+    font-size: 11px;
     min-width: 720px;
   }
   .cmp th, .cmp td {
@@ -577,7 +577,7 @@ const ID = {
     white-space: nowrap;
   }
   .cmp th {
-    font-size: 11px;
+    font-size: 9px;
     text-transform: uppercase;
     letter-spacing: 0.5px;
     color: var(--o-mute);
@@ -603,7 +603,7 @@ const ID = {
   }
   .faq summary {
     cursor: pointer;
-    font-size: 15px;
+    font-size: 13px;
     color: var(--o-ink);
     font-weight: 500;
     list-style: none;
@@ -616,14 +616,14 @@ const ID = {
   .faq summary::after {
     content: '+';
     color: var(--o-mute);
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 300;
     transition: transform .14s;
   }
   .faq[open] summary::after { transform: rotate(45deg); }
   .faq-a {
     margin-top: 12px;
-    font-size: 14px;
+    font-size: 12px;
     color: var(--o-mute);
     line-height: 1.6;
   }
@@ -639,7 +639,7 @@ const ID = {
   }
   .sc-head {
     margin: 14px 0 8px;
-    font-size: clamp(26px, 4.4vw, 40px);
+    font-size: clamp(24px, 4.4vw, 38px);
     letter-spacing: -0.8px;
     font-weight: 600;
     color: var(--o-ink);
@@ -647,7 +647,7 @@ const ID = {
     max-width: 820px;
   }
   .sc-sub {
-    font-size: 13px;
+    font-size: 11px;
     color: var(--o-mute);
     max-width: 720px;
     line-height: 1.6;
@@ -675,7 +675,7 @@ const ID = {
   .sc-row.warn { background: color-mix(in srgb, var(--o-warn) 6%, transparent); }
   .sc-row.final { background: color-mix(in srgb, var(--o-accent) 6%, transparent); }
   .sc-k {
-    font-size: 11px;
+    font-size: 9px;
     color: var(--o-faint);
     text-transform: uppercase;
     letter-spacing: 0.6px;
@@ -683,20 +683,20 @@ const ID = {
   }
   .sc-v {
     margin: 0;
-    font-size: 14px;
+    font-size: 12px;
     color: var(--o-ink);
     line-height: 1.6;
   }
   .sc-v :global(strong) { color: var(--o-accent); }
   .risk-list { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
-  .risk-list li { font-size: 14px; line-height: 1.55; color: var(--o-ink); }
+  .risk-list li { font-size: 12px; line-height: 1.55; color: var(--o-ink); }
 
   .conf-pill {
     display: inline-block;
     padding: 4px 12px;
     border-radius: 3px;
     font-family: var(--o-font-mono);
-    font-size: 11px;
+    font-size: 9px;
     font-weight: 600;
     letter-spacing: 1px;
     margin-right: 12px;
@@ -705,7 +705,7 @@ const ID = {
   .conf-high { background: var(--o-accent); color: #0a0a0a; }
   .conf-med { background: var(--o-warn); color: #0a0a0a; }
   .conf-low { background: var(--o-red); color: #fff; }
-  .conf-reason { font-size: 14px; color: var(--o-ink); }
+  .conf-reason { font-size: 12px; color: var(--o-ink); }
 
   /* ============ Closer ============ */
   .closer {
@@ -714,13 +714,13 @@ const ID = {
   }
   .closer-h {
     margin: 0 0 12px;
-    font-size: clamp(28px, 5vw, 48px);
+    font-size: clamp(26px, 5vw, 46px);
     letter-spacing: -1px;
     font-weight: 600;
     color: var(--o-ink);
   }
   .closer-p {
-    font-size: 14px;
+    font-size: 12px;
     color: var(--o-mute);
     max-width: 680px;
     margin: 0 auto 28px;
@@ -742,9 +742,9 @@ const ID = {
     }
     .toc, .methodology, .rankings, .comparison, .faqs, .scorecard { padding-top: 64px; padding-bottom: 64px; }
     .olla { padding: 28px 18px 32px; }
-    .olla .company-name { font-size: 28px; }
-    .company-name { font-size: 22px; }
-    .olla-block-head { font-size: 18px; }
+    .olla .company-name { font-size: 26px; }
+    .company-name { font-size: 20px; }
+    .olla-block-head { font-size: 16px; }
     .trust-cell { padding: 14px 16px; }
   }
 </style>

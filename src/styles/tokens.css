@@ -29,6 +29,6 @@
   --o-radius-lg: 8px;
 
   /* fonts */
-  --o-font-sans: 'Geist Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --o-font-sans: 'Lato', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --o-font-mono: 'Geist Mono', ui-monospace, 'JetBrains Mono', monospace;
 }

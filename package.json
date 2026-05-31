@@ -13,7 +13,7 @@
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
     "@fontsource/geist-mono": "^5.1.0",
-    "@fontsource/geist-sans": "^5.1.0",
+    "@fontsource/lato": "^5.1.0",
     "astro": "^5.0.0"
   }
 }

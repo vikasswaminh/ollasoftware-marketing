@@ -50,7 +50,7 @@ const { eyebrow, title, sub, breadcrumb } = Astro.props;
   .inner { position: relative; }
 
   .crumbs {
-    font-size: 12px;
+    font-size: 10px;
     color: var(--o-mute);
     display: flex;
     align-items: center;
@@ -65,7 +65,7 @@ const { eyebrow, title, sub, breadcrumb } = Astro.props;
   h1 {
     margin: 20px 0 22px;
     /* Fluid: 32px on tiny phones, 64px on desktop. */
-    font-size: clamp(32px, 6vw, 64px);
+    font-size: clamp(30px, 6vw, 62px);
     line-height: 1.0;
     letter-spacing: clamp(-1px, -0.25vw, -2.2px);
     font-weight: 600;
@@ -75,7 +75,7 @@ const { eyebrow, title, sub, breadcrumb } = Astro.props;
   }
 
   .sub {
-    font-size: clamp(14px, 1.2vw, 15px);
+    font-size: clamp(12px, 1.2vw, 13px);
     line-height: 1.65;
     color: var(--o-mute);
     max-width: 620px;

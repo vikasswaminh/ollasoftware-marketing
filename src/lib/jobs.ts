@@ -62,15 +62,15 @@ export const hiringOverview = {
 export const jobs: readonly Job[] = [
   make({
     id: 0,
-    title: 'MBA Fresher — AI Strategy & Product',
+    title: 'MBA Fresher — AI Strategy, Sales & Distribution (Class of 2026)',
     category: 'mba-fresher',
     openings: '8–12 (Class of 2026)',
-    location: 'Bangalore · Hybrid · 3 office, 2 remote',
+    location: 'Bangalore · Work From Office · 5 days/week',
     employmentType: 'Full-time',
-    experience: 'Final-year MBA / PGP · 0 years industry experience required',
-    compensation: 'Top-of-market · discussed on the call · plus ESOPs on conversion',
-    summary: 'The most ambitious AI strategy role for fresh MBAs in India. You will not write market-sizing decks. You will ship AI products that go live across the Ollasoftware portfolio — AEONITI, Crawlcrawl, Ollima, Switchllm — and report numbers in the Monday investor review the following week. Direct founder line. No middle-management layer. Day-1 ownership of an AI product roadmap on one founder company, mentored by Vikas and senior PMs. Fast-track to Senior AI PM in 24 months. Eligible institutes: IIM A/B/C/L/K/I/S/U/T, ISB, XLRI, FMS Delhi, SPJIMR, MDI Gurgaon, IIT-DoMS.',
-    skills: ['Eval-driven PRDs', 'Claude Projects', 'Notion AI', 'Linear AI', 'Mixpanel / Amplitude', 'OpenAPI 3.1 literacy', 'OKR methodology', 'North-Star metrics'],
+    experience: 'Final-year MBA / PGP graduating in 2026 · IIM A/B/C/L/K/I/Shillong/Udaipur/Trichy · ISB · XLRI · FMS · SPJIMR · MDI · IIT-DOMS',
+    compensation: '₹6.8 – ₹8.5 LPA + ESOP track · perf incentive after 6mo',
+    summary: 'Help scale one of the AI businesses within the Ollasoftware ecosystem — AEONITI, Crawlcrawl, Ollima, or Switchllm. This is not a product role. The products exist. You help them reach more customers, build distribution channels, and grow revenue from day one.',
+    skills: ['Claude Projects', 'Notion AI', 'ChatGPT', 'CRM / sales automation', 'Mixpanel / Amplitude', 'RevOps', 'OKRs', 'North-Star metrics', 'Spreadsheet analysis'],
     featured: true,
   }),
   make({

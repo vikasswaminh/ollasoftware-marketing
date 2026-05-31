@@ -1,11 +1,10 @@
 /* Global stylesheet — reset, typography, link/scrollbar styling.
    Port of the inline <style> block in legacy ollasoftware.html. */
 
-@import '@fontsource/geist-sans/300.css';
-@import '@fontsource/geist-sans/400.css';
-@import '@fontsource/geist-sans/500.css';
-@import '@fontsource/geist-sans/600.css';
-@import '@fontsource/geist-sans/700.css';
+@import '@fontsource/lato/300.css';
+@import '@fontsource/lato/400.css';
+@import '@fontsource/lato/700.css';
+@import '@fontsource/lato/900.css';
 @import '@fontsource/geist-mono/400.css';
 @import '@fontsource/geist-mono/500.css';
 
