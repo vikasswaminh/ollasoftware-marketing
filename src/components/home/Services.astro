@@ -58,16 +58,18 @@ import { services } from '../../lib/tokens';
     background: var(--o-panel);
     border: 1px solid var(--o-line);
     border-radius: var(--o-radius);
+    box-shadow: var(--o-shadow-card);
     padding: 24px;
     display: flex;
     flex-direction: column;
     gap: 18px;
     text-decoration: none;
     color: var(--o-ink);
-    transition: border-color .14s, transform .14s;
+    transition: border-color .14s, transform .14s, box-shadow .14s;
   }
   .card:hover {
     border-color: color-mix(in srgb, var(--accent) 53%, transparent);
+    box-shadow: var(--o-shadow-deep);
     transform: translateY(-2px);
   }
 
@@ -81,7 +83,7 @@ import { services } from '../../lib/tokens';
     width: 44px;
     height: 44px;
     border-radius: var(--o-radius);
-    background: #000;
+    background: var(--o-bg);
     border: 1px solid var(--accent);
     display: flex;
     align-items: center;

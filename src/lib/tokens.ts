@@ -2,24 +2,37 @@
 // expressions (e.g. inline SVG strokes, conditional styles). Keep in lockstep
 // with tokens.css.
 
+// Light theme (form4dev port, 2026-06-01). 1:1 mirror of tokens.css.
+// Per-service decorative accents are Tailwind-600 weights so they read
+// cleanly on white backgrounds.
 export const o = {
-  bg:        '#08090b',
-  panel:     '#0f1114',
-  panelHi:   '#15181d',
-  line:      '#1c2026',
-  lineHi:    '#2a3038',
+  bg:        '#ffffff',
+  panel:     '#fafafa',
+  panelHi:   '#f4f4f5',
+  line:      '#e5e5e7',
+  lineHi:    '#ddddde',
 
-  ink:       '#e8eaee',
-  mute:      '#7b828c',
-  faint:     '#4a5159',
+  // net-new surface tokens
+  bgSunken:    '#f4f4f5',
+  bgDeep:      '#ebebed',
+  lineWhisper: '#f0f0f1',
 
-  accent:    '#a7f06c',
-  accentDim: '#3a5224',
-  warn:      '#ffb04a',
-  red:       '#ff5d5d',
-  blue:      '#7cb7ff',
-  purple:    '#c79bff',
-  teal:      '#6dd6b8',
+  ink:       '#0a0a0a',
+  mute:      '#52525b',
+  faint:     '#8a8a93',
+
+  accent:    '#0066ff',
+  accent2:   '#0052cc',
+  accentDim: '#e7efff',
+  accentInk: '#ffffff',
+
+  // per-service decorative accents (Tailwind-600)
+  warn:      '#ea580c',
+  red:       '#dc2626',
+  blue:      '#2563eb',
+  purple:    '#7c3aed',
+  teal:      '#0d9488',
+  green:     '#16a34a',   // AI Software identity — was o.accent (lime)
 } as const;
 
 // Six services × six accents — single source of truth for service color/glyph
@@ -41,7 +54,7 @@ export const services: readonly Service[] = [
     name:   'AI Software Development',
     tag:    'agents, copilots, RAG',
     glyph:  '▲',
-    accent: o.accent,
+    accent: o.green,   // distinct from primary CTA blue; was o.accent (lime on dark)
     chip:   '4–16 wks',
     blurb:  'We design, build, and ship custom AI products end-to-end. Agents, copilots, RAG, internal automations — in your repo, on your stack, with evals you can actually defend.',
     bullets: ['Discovery → demo in 14 days', 'Built in your codebase', 'Eval-driven, not vibes-driven', 'You own everything, day one'],

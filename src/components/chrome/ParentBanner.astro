@@ -18,12 +18,12 @@
 
 <style>
   .parent-banner {
-    background: #ffffff;
-    color: #0a0a0a;
-    border-bottom: 1px solid #e5e7eb;
-    /* Subtle inner shadow keeps the white band feeling intentional against
-       the dark page beneath it rather than like a render glitch. */
-    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+    /* Sunken band on the light theme — slightly recessed against the white
+       page so the attribution reads as an intentional band, not a render
+       glitch. Was pure white on the dark theme; flipped to bg-sunken now. */
+    background: var(--o-bg-sunken);
+    color: var(--o-ink);
+    border-bottom: 1px solid var(--o-line);
     width: 100%;
   }
 
@@ -42,7 +42,7 @@
     transition: background .14s;
   }
   .pb-link:hover {
-    background: #f8f9fb;
+    background: var(--o-bg-deep);
   }
   .pb-link:hover .pb-arrow {
     transform: translate(2px, -2px);
@@ -55,8 +55,8 @@
     width: 22px;
     height: 22px;
     border-radius: 4px;
-    background: #0a0a0a;
-    color: #ffffff;
+    background: var(--o-ink);
+    color: var(--o-bg);
     font-family: var(--o-font-mono);
     font-size: 9px;
     font-weight: 700;
@@ -72,22 +72,22 @@
     justify-content: center;
   }
   .pb-prefix {
-    color: #4b5563;
+    color: var(--o-mute);
     font-weight: 400;
   }
   .pb-name {
-    color: #0a0a0a;
+    color: var(--o-ink);
     font-weight: 900;
     letter-spacing: 0.4px;
     font-size: 11px;
   }
   .pb-suffix {
-    color: #4b5563;
+    color: var(--o-mute);
     font-weight: 400;
   }
 
   .pb-arrow {
-    color: #4b5563;
+    color: var(--o-mute);
     font-size: 11px;
     transition: transform .14s;
     flex-shrink: 0;

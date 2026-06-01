@@ -34,8 +34,9 @@ const extra = href ? { href } : { type };
   .btn.primary {
     border: none;
     background: var(--o-accent);
-    color: #0a0a0a;
+    color: var(--o-accent-ink);
   }
+  .btn.primary:hover { background: var(--o-accent-2); filter: none; }
   .btn.outline {
     border: 1px solid var(--o-line-hi);
     background: transparent;

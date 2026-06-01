@@ -1,34 +1,52 @@
-/* Design tokens — ported 1:1 from the legacy site/shared.jsx `o` palette,
-   plus one new accent (--o-teal) to give all six services a unique color. */
+/* Design tokens — light theme ported from form4dev.com (2026-06-01).
+   Token names preserved for component compatibility; only values changed.
+   Net-new tokens added below the existing surface to support shadows and
+   the recessed/sunken bands the light surface relies on for hierarchy. */
 
 :root {
-  /* surfaces */
-  --o-bg:        #08090b;
-  --o-panel:     #0f1114;
-  --o-panel-hi:  #15181d;
-  --o-line:      #1c2026;
-  --o-line-hi:   #2a3038;
+  /* surfaces (white-stack, 4 tiers lightest → deepest) */
+  --o-bg:        #ffffff;   /* page background */
+  --o-panel:     #fafafa;   /* elevated panels — cards, footer band */
+  --o-panel-hi:  #f4f4f5;   /* nav surface on scroll, table heads */
+  --o-line:      #e5e5e7;   /* default border */
+  --o-line-hi:   #ddddde;   /* stronger border on emphasis */
 
-  /* text */
-  --o-ink:       #e8eaee;
-  --o-mute:      #7b828c;
-  --o-faint:     #4a5159;
+  /* net-new surface tokens (form4dev parity) */
+  --o-bg-sunken:    #f4f4f5;   /* recessed section bands (e.g. ParentBanner) */
+  --o-bg-deep:      #ebebed;   /* deepest neutral — comparison row alternates */
+  --o-line-whisper: #f0f0f1;   /* internal divider inside cards */
 
-  /* accents */
-  --o-accent:    #a7f06c;
-  --o-accent-dim:#3a5224;
-  --o-warn:      #ffb04a;
-  --o-red:       #ff5d5d;
-  --o-blue:      #7cb7ff;
-  --o-purple:    #c79bff;
-  --o-teal:      #6dd6b8;
+  /* text (dark-on-light, 3 weights) */
+  --o-ink:    #0a0a0a;   /* primary text + headings */
+  --o-mute:   #52525b;   /* secondary text */
+  --o-faint:  #8a8a93;   /* tertiary text + metadata */
+
+  /* primary accent — form4dev blue */
+  --o-accent:     #0066ff;   /* primary CTA bg + links */
+  --o-accent-2:   #0052cc;   /* hover / pressed */
+  --o-accent-dim: #e7efff;   /* accent-tinted bg (badges, soft highlights) */
+  --o-accent-ink: #ffffff;   /* text on accent surfaces — was hardcoded #0a0a0a */
+
+  /* per-service decorative accents — Tailwind-600 weights for white-bg readability.
+     Each used by ONE service identifier (Services.astro, service-page hue, etc.). */
+  --o-warn:   #ea580c;   /* orange-600  — SEO service identity (was #ffb04a) */
+  --o-red:    #dc2626;   /* red-600     — Social service identity (was #ff5d5d) */
+  --o-blue:   #2563eb;   /* blue-600    — Software dev service identity (was #7cb7ff) */
+  --o-purple: #7c3aed;   /* violet-600  — AEO service identity (was #c79bff) */
+  --o-teal:   #0d9488;   /* teal-600    — Performance Marketing identity (was #6dd6b8) */
+  --o-ok:     #16a34a;   /* green-600   — AI Software identity + success state */
+  --o-err:    #dc2626;   /* red-600     — error semantic */
+
+  /* shadows — form4dev spec verbatim */
+  --o-shadow-card: 0 1px 0 rgba(10, 10, 10, .04);
+  --o-shadow-deep: 0 24px 48px -16px rgba(10, 10, 10, .18);
 
   /* radii / typography scale used in multiple places */
   --o-radius-sm: 4px;
   --o-radius:    6px;
   --o-radius-lg: 8px;
 
-  /* fonts */
+  /* fonts — keeping Lato (user decision; recent install) */
   --o-font-sans: 'Lato', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --o-font-mono: 'Geist Mono', ui-monospace, 'JetBrains Mono', monospace;
 }

@@ -23,12 +23,14 @@ const heightStyle = typeof height === 'number' ? `${height}px` : height;
 </div>
 
 <style>
+  /* Code blocks stay dark on the light theme — canonical "code chrome on
+     light page" pattern. Form4dev does the same with --code-bg #0a0a0a. */
   .code-card {
-    background: var(--o-panel);
-    border: 1px solid var(--o-line);
+    background: #0a0a0a;
+    border: 1px solid #14171b;
     border-radius: var(--o-radius-lg);
     overflow: hidden;
-    box-shadow: 0 30px 80px -20px rgba(0,0,0,0.6);
+    box-shadow: var(--o-shadow-deep);
   }
 
   .code-head {
@@ -37,8 +39,8 @@ const heightStyle = typeof height === 'number' ? `${height}px` : height;
     align-items: center;
     gap: 10px;
     padding: 0 14px;
-    border-bottom: 1px solid var(--o-line);
-    background: var(--o-panel-hi);
+    border-bottom: 1px solid #14171b;
+    background: #141414;
   }
   .dots { display: flex; gap: 6px; }
   .dots span {
@@ -48,17 +50,17 @@ const heightStyle = typeof height === 'number' ? `${height}px` : height;
     background: #3a3a3a;
     display: inline-block;
   }
-  .title { font-size: 9px; color: var(--o-mute); margin-left: 6px; }
+  .title { font-size: 9px; color: #a1a1aa; margin-left: 6px; }
   .spacer { flex: 1; }
-  .foot { font-size: 10px; color: var(--o-faint); }
+  .foot { font-size: 10px; color: #71717a; }
 
   .code {
     margin: 0;
     padding: 20px 22px;
     font-size: 10.5px;
     line-height: 1.75;
-    color: var(--o-ink);
-    background: var(--o-panel);
+    color: #e6e6e9;
+    background: #0a0a0a;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
