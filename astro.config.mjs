@@ -1,9 +1,24 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import cloudflare from '@astrojs/cloudflare';
 
 // https://docs.astro.build/en/reference/configuration-reference/
+//
+// Hybrid mode (2026-06-03):
+//   output: 'server' + adapter = SSR-by-default with per-route opt-in to
+//   prerender. Every existing .astro page route declares
+//   `export const prerender = true;` so the site keeps shipping as static
+//   HTML to the edge cache. Future routes can opt into SSR by setting
+//   `export const prerender = false;` — no architectural change needed.
+//
+// CF Pages routing precedence (preserved):
+//   1. Static asset in dist/   →  served by CF Pages directly
+//   2. Pages Function          →  functions/api/submit/[slug].ts handles forms
+//   3. Worker fallback         →  Astro-emitted _worker.js handles SSR routes
 export default defineConfig({
   site: 'https://ollasoftware.com',
+  output: 'server',
+  adapter: cloudflare(),
   trailingSlash: 'always',
   compressHTML: true,
   prefetch: {

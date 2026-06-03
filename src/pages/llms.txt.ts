@@ -2,6 +2,9 @@
 // Goal: give answer-engine crawlers a clean, citation-friendly markdown map of
 // the site they can quote and link to without scraping HTML.
 
+// Hybrid mode: prerender to static .txt file at build time.
+export const prerender = true;
+
 import type { APIRoute } from 'astro';
 import { services } from '../lib/tokens';
 import { clients } from '../lib/clients';

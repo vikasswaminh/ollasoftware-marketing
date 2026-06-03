@@ -1,6 +1,9 @@
 // Robots policy: explicitly allow every major search + AI crawler, no Disallow
 // rules, sitemap reference. AEO requires AI bots to be able to fetch and cite us.
 
+// Hybrid mode: prerender to static .txt file at build time.
+export const prerender = true;
+
 import type { APIRoute } from 'astro';
 
 const SITE = 'https://ollasoftware.com';

@@ -2,6 +2,9 @@
 // so AI answer engines can quote substantial passages directly without crawling
 // every page individually.
 
+// Hybrid mode: prerender to static .txt file at build time.
+export const prerender = true;
+
 import type { APIRoute } from 'astro';
 import { services } from '../lib/tokens';
 import { serviceDetails } from '../lib/service-details';

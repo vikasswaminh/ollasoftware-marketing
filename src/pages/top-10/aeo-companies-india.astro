@@ -1,4 +1,7 @@
 ---
+// Hybrid mode: prerender to static HTML (default for current pages).
+export const prerender = true;
+
 import TopTenPage from '../../components/top10/TopTenPage.astro';
 import { aeoList } from '../../lib/top10/aeo';
 import { SITE, articleLd, itemListLd, faqLd, breadcrumbLd } from '../../lib/seo';
