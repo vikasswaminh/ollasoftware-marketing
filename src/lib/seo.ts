@@ -134,9 +134,11 @@ export const organizationLd = {
     'https://linkedin.com/company/ollasoftware',
     'https://twitter.com/ollasoftware',
   ],
-  // Subsidiary / owned-brand link graph — surfaces our 40+ AI brands to the
-  // knowledge-graph layer of search and AI engines.
-  subOrganization: clients.slice(0, 24).map(c => ({
+  // Subsidiary / owned-brand link graph — surfaces our full portfolio
+  // (currently 49 brands, reconciled 2026-06-23 against live CF zones) to
+  // the knowledge-graph layer of search and AI engines. No slice: every
+  // brand is part of the entity graph so engines can dedupe references.
+  subOrganization: clients.map(c => ({
     '@type': 'Organization',
     name: c.name,
     url: `https://${c.domain}`,

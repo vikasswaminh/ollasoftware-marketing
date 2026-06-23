@@ -1,6 +1,11 @@
 // Portfolio of brands we own and operate. Mirrors the CF zone list (minus the
-// founder's personal domain and the duplicate ccTLDs). Categorised for the
-// home Clients grid; each entry knows its sector + accent for color treatment.
+// founder's personal domain, the duplicate ccTLDs, ollasoftware.com itself,
+// and the parent training brand which is linked separately as
+// parentOrganization in seo.ts).
+//
+// Reconciled 2026-06-23 against the live CF zone list (53 zones). Within
+// each category, brands prefixed with "olla*" lead — they are the canonical
+// Ollasoftware-owned product family.
 
 export type ClientCategory = 'ai' | 'api' | 'security' | 'saas' | 'training';
 
@@ -20,15 +25,19 @@ export const categoryMeta: Record<ClientCategory, { label: string; accentVar: st
 };
 
 export const clients: readonly Client[] = [
-  // ── AI & ML (16) ──────────────────────────────────────────────
-  { name: 'Aeoniti',       domain: 'aeoniti.com',       category: 'ai', blurb: 'Answer-engine optimisation platform' },
-  { name: 'Crawlcrawl',    domain: 'crawlcrawl.com',    category: 'ai', blurb: 'AI-grade web crawler for AEO' },
-  { name: 'Switchllm',     domain: 'switchllm.com',     category: 'ai', blurb: 'LLM router with cost & latency gates' },
+  // ── AI & ML (18) ──────────────────────────────────────────────
+  // Olla-prefixed family first.
   { name: 'Ollima',        domain: 'ollima.com',        category: 'ai', blurb: 'AI workspace for ops teams' },
   { name: 'Ollagraph',     domain: 'ollagraph.com',     category: 'ai', blurb: 'Knowledge graphs for agents' },
   { name: 'Ollabear',      domain: 'ollabear.com',      category: 'ai', blurb: 'Agent runtime + observability' },
   { name: 'Ollanode',      domain: 'ollanode.com',      category: 'ai', blurb: 'Self-hosted inference orchestration' },
   { name: 'OllaDNS',       domain: 'olladns.com',       category: 'ai', blurb: 'AI-aware DNS for distributed agents' },
+  { name: 'Ollasuper',     domain: 'ollasuper.com',     category: 'ai', blurb: 'Supervisor for autonomous agent fleets' },
+  { name: 'Ollawrite',     domain: 'ollawrite.com',     category: 'ai', blurb: 'AI writing assistant with grounded citations' },
+  // The rest of the AI family.
+  { name: 'Aeoniti',       domain: 'aeoniti.com',       category: 'ai', blurb: 'Answer-engine optimisation platform' },
+  { name: 'Crawlcrawl',    domain: 'crawlcrawl.com',    category: 'ai', blurb: 'AI-grade web crawler for AEO' },
+  { name: 'Switchllm',     domain: 'switchllm.com',     category: 'ai', blurb: 'LLM router with cost & latency gates' },
   { name: 'Memfog',        domain: 'memfog.com',        category: 'ai', blurb: 'Agent memory store + recall API' },
   { name: 'NAC4AI',        domain: 'nac4ai.com',        category: 'ai', blurb: 'Network access control for AI agents' },
   { name: 'Browserfog',    domain: 'browserfog.com',    category: 'ai', blurb: 'Headless browser for AI workflows' },
@@ -38,7 +47,11 @@ export const clients: readonly Client[] = [
   { name: 'Qcrawl',        domain: 'qcrawl.com',        category: 'ai', blurb: 'Distributed crawl scheduler' },
   { name: 'Downdownalert', domain: 'downdownalert.com', category: 'ai', blurb: 'AI-summarised incident alerting' },
 
-  // ── APIs & dev tools (10) ─────────────────────────────────────
+  // ── APIs & dev tools (13) ─────────────────────────────────────
+  // Olla-prefixed family first.
+  { name: 'Ollastack',     domain: 'ollastack.com',     category: 'api', blurb: 'Pre-built stacks for production AI apps' },
+  { name: 'Ollasync',      domain: 'ollasync.com',      category: 'api', blurb: 'Cross-platform data sync for agents' },
+  // The rest.
   { name: 'api4api',       domain: 'api4api.com',       category: 'api', blurb: 'Universal API gateway' },
   { name: 'api4form',      domain: 'api4form.com',      category: 'api', blurb: 'Forms-as-an-API service' },
   { name: 'api4mind',      domain: 'api4mind.com',      category: 'api', blurb: 'Mind-mapping API for AI agents' },
@@ -49,15 +62,21 @@ export const clients: readonly Client[] = [
   { name: 'freefreecv',    domain: 'freefreecv.com',    category: 'api', blurb: 'Free CV / résumé builder + API' },
   { name: '21pdf',         domain: '21pdf.com',         category: 'api', blurb: 'HTML → PDF rendering service' },
   { name: 'Mailsetu',      domain: 'mailsetu.com',      category: 'api', blurb: 'Transactional SMTP infrastructure' },
+  { name: 'Whatping',      domain: 'whatping.com',      category: 'api', blurb: 'Status & uptime monitoring for endpoints' },
 
-  // ── Security & networking (7) ─────────────────────────────────
-  { name: '21tunnel',      domain: '21tunnel.com',      category: 'security', blurb: 'Tunneling-as-a-service' },
-  { name: 'StandVPN',      domain: 'standvpn.com',      category: 'security', blurb: 'Consumer + business VPN' },
-  { name: 'Meshwg',        domain: 'meshwg.com',        category: 'security', blurb: 'WireGuard mesh networking' },
-  { name: 'QSec Network',  domain: 'qsecnetwork.com',   category: 'security', blurb: 'Post-quantum secure networking' },
-  { name: 'Quick ZTNA',    domain: 'quickztna.com',     category: 'security', blurb: 'Zero-trust network access' },
-  { name: 'Quick SD-WAN',  domain: 'quicksdwan.com',    category: 'security', blurb: 'SD-WAN for distributed teams' },
-  { name: 'Namahos',       domain: 'namahos.com',       category: 'security', blurb: 'Identity-aware infrastructure' },
+  // ── Security & networking (10) ────────────────────────────────
+  // Olla-prefixed family first.
+  { name: 'Ollavpn',          domain: 'ollavpn.com',          category: 'security', blurb: 'Quantum-safe consumer VPN' },
+  // The rest.
+  { name: '21tunnel',         domain: '21tunnel.com',         category: 'security', blurb: 'Tunneling-as-a-service' },
+  { name: 'StandVPN',         domain: 'standvpn.com',         category: 'security', blurb: 'Consumer + business VPN' },
+  { name: 'Meshwg',           domain: 'meshwg.com',           category: 'security', blurb: 'WireGuard mesh networking' },
+  { name: 'QSec Network',     domain: 'qsecnetwork.com',      category: 'security', blurb: 'Post-quantum secure networking' },
+  { name: 'Quick ZTNA',       domain: 'quickztna.com',        category: 'security', blurb: 'Zero-trust network access' },
+  { name: 'Quick SD-WAN',     domain: 'quicksdwan.com',       category: 'security', blurb: 'SD-WAN for distributed teams' },
+  { name: 'Namahos',          domain: 'namahos.com',          category: 'security', blurb: 'Identity-aware infrastructure' },
+  { name: 'Freevpn4usa',      domain: 'freevpn4usa.com',      category: 'security', blurb: 'Free VPN for US-based users' },
+  { name: 'Lifetimefreevpn',  domain: 'lifetimefreevpn.com',  category: 'security', blurb: 'Forever-free consumer VPN' },
 
   // ── Consumer & SaaS (5) ───────────────────────────────────────
   { name: 'Startupniti',   domain: 'startupniti.com',   category: 'saas', blurb: 'Newsroom for the Indian startup ecosystem' },
