@@ -8,10 +8,12 @@ import type { BlogPost } from './types';
 import { ollimaPost } from './ollima';
 import { ollagraphPost } from './ollagraph';
 import { ollabearPost } from './ollabear';
+import { ollanodePost } from './ollanode';
 
 export type { BlogPost, BlogSection, BlogSubsection, BlogFAQ } from './types';
 
 export const allPosts: readonly BlogPost[] = [
+  ollanodePost,
   ollabearPost,
   ollagraphPost,
   ollimaPost,
