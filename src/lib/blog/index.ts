@@ -6,10 +6,12 @@
 
 import type { BlogPost } from './types';
 import { ollimaPost } from './ollima';
+import { ollagraphPost } from './ollagraph';
 
 export type { BlogPost, BlogSection, BlogSubsection, BlogFAQ } from './types';
 
 export const allPosts: readonly BlogPost[] = [
+  ollagraphPost,
   ollimaPost,
 ] as const;
 

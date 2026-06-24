@@ -30,7 +30,7 @@ export const clients: readonly Client[] = [
   { name: 'Ollima',        domain: 'ollima.com',        category: 'ai', blurb: 'AI workspace for ops teams' },
   { name: 'Ollagraph',     domain: 'ollagraph.com',     category: 'ai', blurb: 'Knowledge graphs for agents' },
   { name: 'Ollabear',      domain: 'ollabear.com',      category: 'ai', blurb: 'Agent runtime + observability' },
-  { name: 'Ollanode',      domain: 'ollanode.com',      category: 'ai', blurb: 'Self-hosted inference orchestration' },
+  { name: 'Ollanode',      domain: 'ollanode.com',      category: 'ai', blurb: 'Managed video infrastructure and CDN for AI apps' },
   { name: 'OllaDNS',       domain: 'olladns.com',       category: 'ai', blurb: 'AI-aware DNS for distributed agents' },
   { name: 'Ollasuper',     domain: 'ollasuper.com',     category: 'ai', blurb: 'Supervisor for autonomous agent fleets' },
   { name: 'Ollawrite',     domain: 'ollawrite.com',     category: 'ai', blurb: 'AI writing assistant with grounded citations' },

@@ -60,6 +60,7 @@ export default defineConfig({
         // Brand deep-dive blog — one 5,000-word piece per olla brand.
         'https://ollasoftware.com/blog/',
         'https://ollasoftware.com/blog/ollima/',
+        'https://ollasoftware.com/blog/ollagraph/',
       ],
       serialize(item) {
         // Higher priority for home + services + jobs + top-10 (high-intent pages).
