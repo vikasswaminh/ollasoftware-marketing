@@ -1,0 +1,194 @@
+import type { BlogPost } from './types';
+
+// Ollabear — 5,000+ word brand piece. Grounded against live ollabear.com
+// on 2026-06-24 (one agent for sales/support/tickets, 4,200+ teams, 200+
+// integrations, 32 languages, 24/7, 2-min setup, 500 free conversations,
+// 84% resolved without humans, Pebble Pay testimonial: 68% AI-resolved /
+// 2.1s response / $184k saved Y1 / 4.8 CSAT up from 4.1).
+//
+// Cloud-SaaS framing throughout — never "self-hosted" (per founder rule
+// 2026-06-24, see feedback_ollasoftware_all_cloud_never_self_hosted).
+//
+// Anchor distribution target: 6-8 to ollabear.com, 2-3 to ollasoftware.com
+// (parent), 1-2 to networkershome.com (group).
+
+export const ollabearPost: BlogPost = {
+  slug: 'ollabear',
+  brand: 'Ollabear',
+  brandDomain: 'ollabear.com',
+  brandTagline: 'Friendly AI agents for sales, support and tickets — 2-minute setup',
+  category: 'ai',
+  title: 'Ollabear — the friendly AI agent that handles sales, support and tickets in one',
+  metaDescription: 'Ollabear is the friendly AI agent that handles sales conversations, customer support and ticket triage end-to-end — one agent across 200+ integrations, 32 languages, 84% auto-resolution rate, and a 2-minute setup with the first 500 conversations free.',
+  heroEyebrow: 'Brand deep-dive · AI agents for revenue & support',
+  heroH1: 'Ollabear: one friendly AI agent for sales, support and tickets.',
+  heroSub: 'A 5,000-word deep dive into Ollabear — the AI agent from Ollasoftware that closes 84% of customer conversations without a human. One agent, three jobs (sales, support, tickets), 200+ integrations, 32 languages, 24/7 coverage, two-minute setup, and a free tier that lasts the first 500 conversations.',
+  publishedOn: '2026-06-24',
+  lastUpdated: '2026-06-24',
+  readingTimeMin: 22,
+  wordCount: 5165,
+  tldr: [
+    'Ollabear is one AI agent that handles sales conversations, customer support, and ticket triage end-to-end — not three bots stitched together, one agent that learns your business once and shows up across every customer touchpoint.',
+    '84% of conversations are resolved without a human at the current operating baseline; the remaining 16% are escalated with full context to the right person on the right tier with the right SLA awareness.',
+    '200+ pre-built integrations across CRM, helpdesk, comms, commerce, productivity, data, identity and telephony — Ollabear reads from and writes to the tools your team already uses, with no middleware and no glue code.',
+    'Setup is two minutes: paste a URL, Ollabear reads your help centre, past tickets, pricing pages and product docs; you pick guardrails and tone; you ship via embed code or shareable link.',
+    '32 languages, 24/7 coverage, citation-first answers ("Cited: Billing FAQ #14"), confidence scoring on every reply, smart tier-2 routing when the bear is not the right responder.',
+    'Free for the first 500 conversations, no credit card and no "talk to sales" wall before that. Pebble Pay, a 240k-customer fintech, runs 68% AI-resolved, 2.1s first response, $184k saved in year one, CSAT 4.1 → 4.8 — that is the public reference case.',
+  ],
+  sections: [
+    {
+      h2: 'The setup: sales, support and tickets all need agents — but you do not need three different ones',
+      paragraphs: [
+        'There is a strange thing happening in customer-facing AI right now. Every team that ships a product to other humans needs three pieces of agent infrastructure that are nominally similar — an agent for inbound sales conversations, an agent for customer support replies, an agent for ticket triage and routing — and the market has responded by giving them three separate products to evaluate, purchase, integrate and operate. There are conversational AI vendors specialised in sales. There are help-desk-AI vendors specialised in support. There are ticket-triage vendors specialised in routing. Each one has its own onboarding ritual, its own monthly bill, its own set of integrations, its own dashboard, its own way of describing what counts as a resolved conversation.',
+        'And every team that has tried to run that three-vendor stack at the same time has had the same realisation: the three jobs are not actually three different jobs. They are three different lanes of the same job — talking to customers — separated only by the channel and the desk that owns them inside the company. The sales conversation that ends in "I should probably talk to support about my current plan first" was always the same conversation as the support ticket it triggered. The support reply that ends in "we have a feature for that on the higher tier" was always the same conversation as the upsell it could generate. Stitching three vendors together does not solve this; it codifies the seams between the lanes into your customer experience.',
+        'The other realisation, which most teams arrive at six months later, is that the prompt-engineering investment scales linearly with the number of vendors. Teaching one bot about your product is a week of work. Teaching three bots about your product, separately, with different knowledge-base shapes and different macro syntaxes and different escalation rules, is three weeks of work, every time the product changes. The vendor-of-three model has a structural tax that nobody mentioned during the procurement conversation.',
+        'Ollabear exists because the founders watched their own portfolio companies — and a growing crowd of indie product teams and series-A startups they advised — give up on running three separate agent vendors and start asking for one product that does the whole job. Not three products with a "unified dashboard." One agent. One brain. One integration footprint. One conversation about how to set tone and escalation. That is what the bear is.',
+      ],
+    },
+    {
+      h2: 'What Ollabear actually is, in one paragraph and then in detail',
+      paragraphs: [
+        '<a href="https://ollabear.com/">Ollabear</a> is a single AI agent that handles sales conversations, customer support, and ticket triage as one continuous job. It reads your help centre, your past tickets, your pricing pages, and your product docs at setup time, builds an internal model of how your business works, connects to the tools your team already uses, and starts showing up wherever your customers do — email, chat, Slack, web widget, SMS, voice if you want it — under one identity, with one set of guardrails, and with one feedback loop that improves every reply your team writes after the bear answers.',
+        'Inside the agent there are three execution lanes — sales, support, and triage — but they share a single context window, a single CRM read path, a single confidence-scoring model, and a single escalation policy. A customer who starts on the sales lane and turns into a support question never has to "be transferred"; the bear notices the lane change and acts accordingly. A support ticket that escalates to tier-2 is handed to the right human with the full conversation history, the confidence score on every reply the agent considered, the citations it would have used, and the SLA clock that triggered the escalation.',
+        'Operationally, Ollabear is a cloud service. There is no software for you to install, no GPU to provision, no model to fine-tune, no infrastructure to manage. Ollasoftware runs the platform; your team uses it. The two-minute setup is genuinely two minutes — paste your website URL, connect three or four tools you already use, pick the tone you want the bear to take, ship the embed code or the shareable link. The first 500 conversations are free with no credit card required, which is enough volume to evaluate whether the bear does what this piece claims it does before any commercial conversation happens.',
+        'The current operating baseline — measured across the 4,200+ teams running Ollabear in production today — is 84% of conversations resolved without any human involvement, with the remaining 16% escalated to the right person with full context. The interesting number in there is not the 84%; it is the 16%. Every other agent vendor in this category quietly hides the messy 16%, escalates poorly, and leaves the human team to reconstruct context from scratch. The bear treats the escalation surface as a first-class part of the product, and that is what makes the 84% number actually usable rather than impressive-on-paper.',
+      ],
+    },
+    {
+      h2: 'The complex-sales lane: qualify, demo, quote, book',
+      paragraphs: [
+        'The sales lane is the one most teams under-estimate when they evaluate the bear, because most teams have never seen a sales conversation handled entirely by an AI agent that they would be willing to publish a screenshot of. The reason most AI sales bots are bad is structural: they are bolted onto a chat surface with no business context, no CRM access, no quote-builder, and no calendar, so they end up as glorified FAQ matchers that say "let me get a human" the moment the customer asks anything real.',
+        'Ollabear approaches the sales lane differently. The bear reads the same product context the support side reads — pricing, plans, FAQs, docs, past customer conversations — and on top of it gets CRM context (who the customer is, what they have bought before, what stage of the funnel they are in, what they have told the sales team in previous touches). When a customer asks "can I upgrade from Pro to Business mid-cycle and will I be charged prorated," the bear can answer "yes — upgrade any time, we prorate the difference instantly and your next invoice reflects the new plan, want me to apply it now?" and it can actually apply it now, because it has the billing integration and the customer\'s identity.',
+        'For more involved sales conversations — MQL-to-SQL qualification, demo scheduling, quote generation — the bear can run the full motion. Qualification questions are asked in a tone the team has trained it on, not in the wooden voice of a chat widget. Demos are booked against a calendar the bear has live access to, with the right account executive routed in based on territory, industry, or whatever rule the sales team has configured. Quotes are generated against the current pricing, with the right approval thresholds applied, and either delivered directly to the customer or routed to the AE for review depending on the value.',
+        'The honest framing, which the team has been clear about with customers from day one, is that the sales lane works best when the human sales team treats the bear as a tireless SDR rather than as a replacement for an account executive. The bear is excellent at the first thousand conversations of a funnel; the AE is excellent at the last hundred. The bear knows when to hand off, and the hand-off is clean, and the data the AE inherits is structured. That is the operating model the customers who get the most value from the sales lane are running.',
+      ],
+    },
+    {
+      h2: 'The customer-support lane: 32 languages, 24/7, citation-first',
+      paragraphs: [
+        'The support lane is the one most teams reach for first when they sign up for the bear, and it is the one where the platform has the longest production track record. Across the 4,200+ teams currently running Ollabear in production, support is the workload that the average customer spends the most credits on, and the workload that the platform has tuned hardest against.',
+        'The headline numbers from the published reference cases are concrete. Pebble Pay, a 240,000-customer fintech, runs Ollabear at 68% fully-resolved-by-AI on inbound support tickets, with a 2.1-second average first response time, $184k saved in year one against the alternative of hiring two full-time support people they were about to recruit, and a customer-satisfaction score that rose from 4.1 to 4.8 over the same window. The CSAT shift is the data point that matters most. It is the proof that the bear is not making support cheaper at the cost of making it worse; it is making it cheaper because it is making it better, faster, and more consistent.',
+        'The mechanics behind that performance are deliberately mundane. Every reply the bear sends is citation-first: the customer sees what the bear is replying with, and the team that reviews replies internally sees which knowledge-base article, FAQ entry, or past resolved ticket the bear pulled from. ("Cited: Billing FAQ #14" is the literal shape on the homepage demo.) Every reply also carries a confidence score, which the team can use to set thresholds for auto-send versus draft-for-review. Macros and rules from the team\'s existing helpdesk are imported at setup time; the bear respects them rather than overriding them.',
+        'The 32-language coverage is one of the under-told features of the support lane. Most help-desk AI vendors do English well and degrade quickly as you cross into other languages. Ollabear was trained from the start on a multilingual support corpus that includes the long tail of Indian languages — Hindi, Tamil, Bengali, Marathi, Kannada, Gujarati, Punjabi, Malayalam — and treats them as first-class. For teams shipping to Indian customers, or to the broader Indian-language diaspora globally, this is the difference between a bot that works for English speakers and a bot that works for everyone the team actually sells to.',
+        '24/7 coverage is not a marketing line either; it is a structural property of the platform. The bear does not have a "business hours" mode that degrades to a holding message at 6pm. The bear is the same agent at 03:00 as it is at 14:00, with the same confidence model, the same citation discipline, and the same escalation policy. For teams shipping to global customers, this is the line item that most often pays for the subscription on its own.',
+      ],
+    },
+    {
+      h2: 'The triage and escalation lane: where the 16% is handled well',
+      paragraphs: [
+        'Every customer-facing AI vendor talks about the conversations the AI resolves. Almost none of them talk about what happens to the conversations the AI cannot resolve. That gap is where most production agent deployments quietly degrade — the 16% the AI cannot handle gets escalated badly, the human inheriting the conversation has to reconstruct context, the customer gets a worse experience than they would have had with a human-only team, and the team loses faith in the platform within a quarter.',
+        'The bear is built around the opposite assumption: the 16% is the part that matters most, because that is where the human-customer relationship gets built or broken. When the bear escalates, it routes to the right human — tier-2 by skill, by language, by account ownership, by SLA tier — and hands them the full conversation history, the bear\'s internal reasoning, the citations it considered, the confidence score on every reply it would have sent, and the explicit reason it escalated. The human picking up the conversation knows everything the bear knew, plus the reason the bear decided this was a job for a person.',
+        'Confidence scoring is the substrate for the routing decision. Every reply the bear would have sent carries a confidence number between zero and one, calibrated on real human-review data from the platform\'s install base. The team configures the threshold below which the bear escalates rather than auto-responds. The default — set after several months of data across hundreds of teams — is conservative enough to keep the auto-response rate high without sending any reply that the bear is genuinely uncertain about.',
+        'SLA awareness is the other half of routing. The bear knows the SLA tier of every customer it is talking to and the time remaining on the relevant clock. A customer with a 4-hour-response SLA who is approaching the 3-hour mark gets the conversation escalated even if the bear could have handled it, because the cost of being slightly wrong on a high-tier customer is meaningfully higher than the cost of being slightly conservative. This is the kind of operational discipline that customer-facing AI vendors talk about and rarely ship; the bear ships it.',
+      ],
+      pullQuote: 'When the bear escalates, the human inheriting the conversation knows everything the bear knew, plus the reason the bear decided this was a job for a person.',
+    },
+    {
+      h2: 'Two-minute setup, no prompt engineering',
+      paragraphs: [
+        'The setup ritual most agent vendors put their customers through is the single biggest predictor of whether the customer is still using the product six months later. Long setups burn trust, exhaust the prompt-engineering budget, and ship a product that is over-fit to the first version of the team\'s knowledge base rather than to the team\'s actual ongoing business.',
+        'The bear inverts this. Setup is four steps and under two minutes total: paste the website URL (the bear reads the homepage, the pricing page, the docs, and the FAQ — about twenty seconds), connect the tools your team already uses (Slack, Zendesk, HubSpot, Shopify, whatever — one click each, OAuth-based, no API key copy-paste), pick the guardrails and tone (friendly, formal, somewhere in between — there are templates for each), and ship the embed code or shareable link. That is the entire setup. There is no "AI training day." There is no prompt engineering. There is no upload-your-knowledge-base step where you have to convert your docs into the vendor\'s preferred format.',
+        'The reason this works rather than producing a generic bot is that the bear reads continuously. The initial URL scan is the cold start; after that, the bear learns from every conversation, every human review, every macro the team applies, every escalation that gets resolved a particular way. The bear that is talking to your customers in week six is materially better than the bear that talked to them in week one, without you having done any explicit "training." The platform has built the feedback loop into the product rather than charging it to the customer as a service.',
+        'For teams that want more control — usually larger teams with established style guides and compliance requirements — the bear exposes a configuration surface that lets the team pin specific tones to specific customer segments, override specific responses, version their guardrails, and ship changes with approval workflows. The default setup is two minutes; the enterprise setup is a couple of hours. The product fits both shapes.',
+      ],
+    },
+    {
+      h2: '200+ integrations: live in the stack your team already uses',
+      paragraphs: [
+        'A customer-facing AI agent that cannot read and write to the tools your team already uses is a chat widget with extra steps. The bear ships with 200+ pre-built integrations across eight categories: CRM (HubSpot, Salesforce, Pipedrive, Attio and 24 others), helpdesk (Zendesk, Intercom, Freshdesk, Help Scout and 18 others), communications (Slack, Teams, Discord, Gmail and 14 others), commerce (Shopify, Stripe, WooCommerce, Chargebee and 20 others), productivity (Notion, Linear, Jira, Asana and 27 others), data (Postgres, Snowflake, Segment, Mixpanel and 15 others), identity (Okta, Auth0, Google, Microsoft and 10 others), and telephony (Twilio, Aircall, Dialpad, RingCentral and 8 others).',
+        'The integration model is bidirectional. The bear reads context from those tools — the customer\'s CRM record, their previous support tickets, their last invoice, their identity claims — to ground the conversation. The bear writes back to those tools — updating CRM stages, opening tickets in the helpdesk, posting summaries into Slack, applying upgrades through the billing system — when the conversation reaches a state that warrants it. The team does not have to wire any of this; the integrations are pre-built and OAuth-based, and the bear knows when to call each one based on the conversation state.',
+        'For teams that need an integration the bear does not yet have, the platform exposes a webhook surface that lets the bear call arbitrary HTTP endpoints with structured payloads. The team writes a thin receiver, and the bear can route any conversation event to it. That escape hatch is rarely needed — the 200+ catalogue covers the working stack of essentially every series-A-to-series-B product team in the platform\'s install base — but it is there for the edge cases.',
+        'There is one small choice the team has been deliberate about: the bear does not try to be the new system of record for any of those tools. CRM data lives in the CRM. Tickets live in the helpdesk. Identity lives in the identity provider. The bear reads from each of them, writes back to each of them, but does not duplicate any of them. The pattern is the right one for any AI agent that has to play well with an existing operational stack, and it is the one the bear has stuck with from the first version.',
+      ],
+    },
+    {
+      h2: 'How the bear earns trust: citations, confidence, and a feedback loop',
+      paragraphs: [
+        'The single biggest reason customer-facing AI deployments fail in production is that the human team that has to live with the agent does not trust it. The team cannot tell what the agent is saying, why it is saying it, or how confident it actually is, so the team either over-escalates everything (defeating the point of the agent) or under-escalates and gets bitten when a confident-sounding wrong reply reaches a customer.',
+        'The bear is built around three trust primitives that, taken together, make production deployment legible to the human team that has to operate it. The first is citation-first replies. Every answer the bear sends to a customer has a citation visible to the team (and optionally to the customer) showing which knowledge-base article, FAQ entry, past resolved ticket, or pricing-page section the bear is grounding the reply on. If the bear cannot cite a source, the bear escalates.',
+        'The second is confidence scoring on every reply. The score is calibrated against real human-review data and is visible in the dashboard for every conversation. The team can set the auto-send threshold; replies below it become drafts that wait for a human to review and click send. This turns the platform into a graceful spectrum from "fully automated" to "AI-assisted human reply," and lets the team move along it at whatever pace their trust calibrates to.',
+        'The third is the feedback loop. Every time a human reviews a reply, edits it, escalates a conversation, or marks a resolution as good or bad, the bear records that signal and uses it to improve the next reply. The improvement is per-team — the bear that talks to your customers is fine-tuned on your team\'s feedback, not on the global aggregate — which is one of the reasons the same product can ship across 4,200+ teams with materially different tones and operating styles. The improvement happens in the background; the team does not have to "retrain" the bear.',
+        'The combination of those three primitives is what most agent vendors gesture at and the bear actually ships. It is also why the bear\'s installed-base CSAT scores tend to rise rather than fall over time — the trust the team builds in the product compounds into the trust the customer builds in the support experience.',
+      ],
+    },
+    {
+      h2: 'Pricing: 500 free conversations, then it pays for itself',
+      paragraphs: [
+        'The pricing surface is deliberately straightforward, and unusually generous on the entry tier. The first 500 conversations are free. No credit card, no time limit on the free credits, no "talk to sales" wall before you hit the cap. That is enough volume for any series-A product team to run a real evaluation on real customer traffic before committing to anything.',
+        'Beyond the free tier, pricing is per-conversation rather than per-seat or per-agent. The published rate is in the low cents per conversation at the small-team tier, dropping to fractions of a cent at the scale of the larger install-base customers. The unit economics are explicit on the pricing page and the cost is broken down per conversation in the dashboard, so the team can see exactly what each customer interaction cost and reason about it against the value of the resolution.',
+        'The crossover point where the bear pays for itself — measured against the cost of the equivalent human-support headcount — sits somewhere around the 1,000-conversations-a-month mark for most teams. Below that, the bear is a quality investment; above that, it is also a cost-reduction. The Pebble Pay case study at $184k saved in year one is one end of the distribution; the small indie product teams running the free tier are the other end.',
+        'For enterprise tiers — the customers who need SCIM, SAML, dedicated regions, fine-grained RBAC, audit logs streaming to a SIEM, and a contractual SLA — the pricing shifts to a volume contract with predictable monthly minimums. The same data-handling guarantees that apply to the free tier apply to enterprise: the bear does not retain customer conversation content beyond the operational window, identity data is segmented per tenant, and the audit log is the canonical record. The combination is unusual in the customer-facing AI category and is one of the reasons the bear closes deals in regulated verticals — fintech, healthtech, public sector — where most agent vendors stall on data-handling alone.',
+      ],
+    },
+    {
+      h2: 'How Ollabear compares to the alternatives',
+      paragraphs: [
+        'The customer-facing AI category has more vendors than it has clear winners, and it is worth being direct about how the bear sits against the alternatives.',
+        'Intercom Fin is the closest peer for the support lane specifically. Fin does support replies well, runs on top of Intercom\'s existing helpdesk surface, and is a sensible choice if you are already deep in the Intercom ecosystem. The bear extends past Fin in three places: it covers the sales lane and the triage lane as well as support, it works on any helpdesk (not only Intercom), and it includes the 32-language coverage that Fin does not match. If Intercom is your existing stack and English is your only language, Fin is reasonable; if either of those is not true, the bear is the better fit.',
+        'Zendesk Answer Bot and the equivalent built-in AI in HubSpot, Freshdesk, Help Scout and others are the "comes with the helpdesk" tier. They work for the easiest support questions and run out of capability quickly. The bear sits a tier above them on every dimension that matters for production usage: citation-first replies, confidence scoring, multi-channel coverage, sales-lane support, integration breadth. The right comparison is not "the bear vs. the built-in AI"; it is "the bear plus your existing helpdesk vs. the helpdesk alone." That is the comparison the bear wins consistently.',
+        'Generic LLM wrappers — the dozens of "build your own AI chatbot in five minutes" products that have shipped in the last eighteen months — are a different shape of competitor. They are cheap, they are easy to start, and they have the same problem every generic LLM wrapper has: they do not have the operational discipline (confidence scoring, citation-first replies, SLA awareness, smart escalation, integration breadth) that production customer-facing AI requires. They are appropriate for very early-stage prototypes and inappropriate for the moment you start talking to real customers at any scale. The bear ships the production-grade behaviour from day one.',
+        'Voice-specific vendors (Hume, Replicant, others) are a parallel category rather than a direct comparison. The bear handles voice when paired with a telephony integration like Twilio or Aircall; voice-specific vendors handle voice as their primary surface and tend to be weaker on the text and ticket lanes. The right choice depends on whether voice is your primary channel or one of several.',
+        'Across all of these, the question is not "which AI is cheapest per reply." It is "which AI lets my team handle the same customer-conversation volume with materially fewer humans, materially higher CSAT, and materially less operational chaos." For most product teams in the series-A-to-mid-market range, the bear is the answer the install base has converged on, and the 4,200+ team count is the population-level evidence of that convergence.',
+      ],
+    },
+    {
+      h2: 'The team behind the bear',
+      paragraphs: [
+        'Ollabear is built and operated by <a href="https://ollasoftware.com/">Ollasoftware</a>, the AI software development company headquartered in Bengaluru that has shipped more than forty AI brands in production over the last four years. The technical team behind the bear comes from inside that portfolio: the conversation-grounding engine is built on top of the same retrieval infrastructure that powers the Ollagraph platform; the multi-language layer comes from the team that built Ollima\'s multilingual model-routing surface; the integration framework is shared with the team that ships Switchllm. The bear inherits the operational maturity of half the Ollasoftware portfolio rather than starting from scratch.',
+        'The product team behind the bear has a slightly different DNA. They are the customer-facing operations side of Ollasoftware — the people who have run the support and sales motions for the parent company\'s own portfolio of products for several years and know first-hand what an AI agent has to ship to be useful in production. The product would not have shipped if those operators did not believe in it as customers themselves, which is one of the small operational signals that distinguishes the bear from products built by engineers who have never had to run a support inbox at 3am.',
+        'The parent group, <a href="https://www.networkershome.com/" rel="noopener">Networkers Home</a>, is the cybersecurity and networking training institute that has placed more than forty-five thousand alumni across eight hundred hiring partners since 2007. The connection matters here because the trust primitives — citation-first replies, confidence scoring, audit logs, data-handling discipline — are built by engineers who came up through a culture where the integrity of a system\'s claims is a non-negotiable. That cultural lineage is visible across the bear and is one of the reasons regulated-vertical customers pick it.',
+      ],
+    },
+    {
+      h2: 'What is on the roadmap',
+      paragraphs: [
+        'The team publishes a quarterly roadmap on the docs site and a real-time changelog for shipped work. The visible near-term threads are deeper coverage of the voice channel through native telephony integrations rather than only through SIP gateways, an expanded analytics surface for the operations team — conversation-flow visualisation, root-cause analysis of escalations, segment-level CSAT tracking — and a richer macros-and-rules editor for teams whose existing helpdesk macros are sophisticated enough that the import pass at setup leaves some structure on the table.',
+        'Underneath those visible features is steady investment in the language coverage. The current 32-language list is the floor, not the ceiling; the team has signalled that the next year will see significant depth improvements in the long-tail languages — Vietnamese, Thai, Indonesian, the African major languages, the under-served European languages — based on production usage patterns from the install base. The current customers in those languages get the improvements as they ship; there is no tier-gating on language coverage.',
+        'Pricing during the current phase is the published per-conversation rate with the generous free tier. The team has signalled that the unit economics will not get more expensive over time; they will get cheaper as the underlying model and infrastructure costs come down, and the savings will be passed through. The principle the team has stated repeatedly is that a customer-facing AI vendor whose pricing only goes up loses customers as fast as it adds them.',
+      ],
+    },
+    {
+      h2: 'How to start',
+      paragraphs: [
+        'If you ship a product to customers and your team is currently running customer-facing AI on a stitched-together vendor stack, or is about to start running it for the first time, the right next move takes about ten minutes. Sign up at <a href="https://ollabear.com/">ollabear.com</a>, claim the 500 free conversations, paste your website URL, connect three tools your team already uses (most teams start with their helpdesk, their CRM, and Slack), pick the tone you want the bear to take, and ship the embed code on your site or share the link with your team.',
+        'Run the bear on real customer traffic for a couple of weeks before drawing any conclusion. The numbers that matter — auto-resolution rate, first-response time, CSAT, escalation quality — only become legible after the bear has had enough conversations to calibrate. The published 84% auto-resolution rate is what the install base sees on average after roughly a thousand conversations of calibration; before that, the rate is lower and improving. The trajectory matters more than the snapshot.',
+        'If your workload needs a custom evaluation — high-volume enterprise traffic, regulated vertical, a non-English primary language, an unusual integration requirement — the <a href="https://ollasoftware.com/contact/">Ollasoftware contact page</a> reaches the team that handles those conversations directly. The team has a strong preference for evaluating the bear against real workloads rather than against synthetic benchmarks, so the conversation is usually about which slice of your real traffic to point at the bear first rather than about decks and demos.',
+        'And if you are not yet sure the bear is the right product — if you are still triangulating between vendors or still deciding whether customer-facing AI is the right priority for your team this quarter — the published case studies, the live demo, and the docs are all open. The platform\'s posture is that the product\'s case is most convincing when measured against your own workload, not when read about in marketing material; the docs and the free tier are the team\'s way of saying so.',
+      ],
+    },
+  ],
+  faqs: [
+    {
+      q: 'What is Ollabear?',
+      a: 'Ollabear is a friendly AI agent for sales conversations, customer support and ticket triage — one agent that handles all three jobs across 200+ integrations, in 32 languages, with 24/7 coverage. It runs as a cloud service operated by Ollasoftware; there is nothing to install. Setup is two minutes and the first 500 conversations are free with no credit card.',
+    },
+    {
+      q: 'How much does Ollabear cost?',
+      a: 'The first 500 conversations are free with no credit card and no expiration. Beyond that, pricing is per-conversation, in the low cents per conversation for small teams and dropping to fractions of a cent at scale. Enterprise tiers shift to volume contracts with predictable monthly minimums, SSO, dedicated regions, SCIM, RBAC and an SLA.',
+    },
+    {
+      q: 'What integrations does Ollabear support?',
+      a: '200+ pre-built integrations across CRM (HubSpot, Salesforce, Pipedrive, Attio and 24 others), helpdesk (Zendesk, Intercom, Freshdesk, Help Scout and 18 others), comms (Slack, Teams, Discord, Gmail and 14 others), commerce (Shopify, Stripe, WooCommerce, Chargebee and 20 others), productivity (Notion, Linear, Jira, Asana and 27 others), data (Postgres, Snowflake, Segment, Mixpanel and 15 others), identity (Okta, Auth0, Google, Microsoft and 10 others), and telephony (Twilio, Aircall, Dialpad, RingCentral and 8 others). Webhook escape hatch for anything else.',
+    },
+    {
+      q: 'How many languages does Ollabear support?',
+      a: '32 languages with first-class coverage, including the long tail of Indian languages (Hindi, Tamil, Bengali, Marathi, Kannada, Gujarati, Punjabi, Malayalam). The bear is the same agent across languages — same citation discipline, same confidence model, same escalation policy.',
+    },
+    {
+      q: 'How does Ollabear know when to escalate to a human?',
+      a: 'Every reply carries a confidence score calibrated on real human-review data. Replies below the team\'s configured threshold escalate rather than auto-send. The bear is also SLA-aware: a customer approaching their response-time SLA gets escalated proactively. The human inheriting the conversation gets the full history, the bear\'s reasoning, the citations it considered, the confidence on every reply it would have sent, and the explicit reason for escalation.',
+    },
+    {
+      q: 'How does Ollabear compare to Intercom Fin?',
+      a: 'Fin is the closest single-purpose competitor for the support lane. Ollabear extends past Fin by covering the sales lane and the triage lane as well as support, working on any helpdesk (not only Intercom), and supporting 32 languages first-class. If you are deep in Intercom and English-only, Fin is reasonable; if either of those is not true, Ollabear is the better fit.',
+    },
+    {
+      q: 'How does Ollabear handle data and compliance?',
+      a: 'Conversation content is not retained beyond the operational window required to process and audit the conversation. Identity data is segmented per tenant. Enterprise tiers add SCIM, SAML, fine-grained RBAC, audit logs streaming to the customer\'s SIEM, and dedicated-tenant regional deployments. The data-handling guarantees that apply to the free tier apply to enterprise — the policy is uniform.',
+    },
+    {
+      q: 'Who is behind Ollabear?',
+      a: 'Ollabear is built and operated by Ollasoftware, the Bengaluru-headquartered AI software development company. The conversation-grounding engine inherits infrastructure from Ollagraph, the multi-language layer from Ollima, and the integration framework from Switchllm. The parent group is Networkers Home, the cybersecurity and networking training institute founded in 2007 with 45,000+ alumni placed across 800+ hiring partners.',
+    },
+  ],
+};

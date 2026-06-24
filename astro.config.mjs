@@ -61,6 +61,7 @@ export default defineConfig({
         'https://ollasoftware.com/blog/',
         'https://ollasoftware.com/blog/ollima/',
         'https://ollasoftware.com/blog/ollagraph/',
+        'https://ollasoftware.com/blog/ollabear/',
       ],
       serialize(item) {
         // Higher priority for home + services + jobs + top-10 (high-intent pages).
