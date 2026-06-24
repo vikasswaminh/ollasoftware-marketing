@@ -1,0 +1,302 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../primitives/PageHero.astro';
+import Btn from '../primitives/Btn.astro';
+import Tag from '../primitives/Tag.astro';
+import type { BlogPost } from '../../lib/blog';
+
+interface Props {
+  post: BlogPost;
+  jsonLd: unknown[];
+}
+
+const { post, jsonLd } = Astro.props;
+
+const brandUrl = `https://${post.brandDomain}/`;
+---
+<Layout
+  title={post.title}
+  description={post.metaDescription}
+  breadcrumb={[
+    { name: 'Home', url: 'https://ollasoftware.com/' },
+    { name: 'Blog', url: 'https://ollasoftware.com/blog/' },
+    { name: post.brand, url: `https://ollasoftware.com/blog/${post.slug}/` },
+  ]}
+  jsonLd={jsonLd}
+>
+  <PageHero
+    eyebrow={post.heroEyebrow}
+    title={post.heroH1}
+    sub={post.heroSub}
+    breadcrumb={[
+      { label: 'home', href: '/' },
+      { label: 'blog', href: '/blog/' },
+      { label: post.brand },
+    ]}
+  >
+    <Btn primary href={brandUrl}>Visit {post.brand} →</Btn>
+    <Btn href="/contact/">Talk to Ollasoftware</Btn>
+  </PageHero>
+
+  <article class="post">
+    <header class="meta">
+      <div class="meta-row">
+        <span class="meta-item mono">
+          <span class="dim">Published</span> {post.publishedOn}
+        </span>
+        <span class="meta-item mono">
+          <span class="dim">Updated</span> {post.lastUpdated}
+        </span>
+        <span class="meta-item mono">
+          <span class="dim">Read</span> {post.readingTimeMin} min
+        </span>
+        <span class="meta-item mono">
+          <span class="dim">Words</span> ~{post.wordCount.toLocaleString()}
+        </span>
+        <Tag>{post.brand} · {post.brandDomain}</Tag>
+      </div>
+    </header>
+
+    <aside class="tldr" aria-label="Summary">
+      <div class="tldr-head mono">tl;dr — the whole post in six bullets</div>
+      <ul>
+        {post.tldr.map(b => <li>{b}</li>)}
+      </ul>
+    </aside>
+
+    {post.sections.map((sec, i) => (
+      <section class="sec" id={`s${i + 1}`}>
+        <h2><span class="hash mono">#</span>{sec.h2}</h2>
+        {sec.paragraphs.map(p => <p set:html={p} />)}
+        {sec.subsections && sec.subsections.map(ss => (
+          <div class="sub">
+            <h3>{ss.h3}</h3>
+            {ss.paragraphs.map(p => <p set:html={p} />)}
+          </div>
+        ))}
+        {sec.pullQuote && (
+          <blockquote class="pull">
+            <span class="pull-mark mono">“</span>
+            <span class="pull-text">{sec.pullQuote}</span>
+          </blockquote>
+        )}
+      </section>
+    ))}
+
+    <section class="sec faqs" id="faqs">
+      <h2><span class="hash mono">#</span>FAQs about {post.brand}</h2>
+      {post.faqs.map((f, i) => (
+        <div class="faq">
+          <h3>{i + 1}. {f.q}</h3>
+          <p>{f.a}</p>
+        </div>
+      ))}
+    </section>
+
+    <aside class="cta-card">
+      <div class="cta-head">
+        <Tag>Visit the product</Tag>
+        <h2>Ready to try {post.brand}?</h2>
+        <p class="mono">{post.brandTagline}</p>
+      </div>
+      <div class="cta-actions">
+        <Btn primary href={brandUrl}>Go to {post.brandDomain} →</Btn>
+        <Btn href="/contact/">Talk to the {post.brand} team</Btn>
+      </div>
+      <p class="parent mono">
+        {post.brand} is built and operated by
+        <a href="https://ollasoftware.com/">Ollasoftware</a>,
+        the AI software development company headquartered in Bengaluru.
+        Ollasoftware is part of the
+        <a href="https://www.networkershome.com/" rel="noopener">Networkers Home</a>
+        group — a cybersecurity and networking training institute since 2007 with 45,000+ alumni placed.
+      </p>
+    </aside>
+  </article>
+</Layout>
+
+<style>
+  .post {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 64px 24px 96px;
+  }
+
+  .meta {
+    border-bottom: 1px solid var(--o-line);
+    padding-bottom: 22px;
+    margin-bottom: 36px;
+  }
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    align-items: center;
+  }
+  .meta-item {
+    font-size: 11px;
+    color: var(--o-ink);
+  }
+  .meta-item .dim {
+    color: var(--o-faint);
+    margin-right: 4px;
+  }
+
+  .tldr {
+    background: var(--o-bg-sunken);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius);
+    padding: 24px 28px;
+    margin: 0 0 56px;
+  }
+  .tldr-head {
+    font-size: 10px;
+    color: var(--o-accent);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .tldr ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 10px;
+  }
+  .tldr li {
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--o-ink);
+    padding-left: 22px;
+    position: relative;
+  }
+  .tldr li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--o-accent);
+    font-family: var(--o-font-mono);
+    font-size: 12px;
+  }
+
+  .sec { margin: 0 0 56px; }
+  .sec h2 {
+    font-size: clamp(22px, 3.2vw, 30px);
+    line-height: 1.18;
+    letter-spacing: -0.5px;
+    font-weight: 600;
+    margin: 0 0 20px;
+    color: var(--o-ink);
+  }
+  .sec .hash {
+    color: var(--o-accent);
+    font-size: 0.7em;
+    margin-right: 10px;
+    font-weight: 400;
+  }
+  .sec p {
+    font-size: 15px;
+    line-height: 1.75;
+    color: var(--o-ink);
+    margin: 0 0 18px;
+  }
+  .sec p :global(a) {
+    color: var(--o-accent);
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1px;
+  }
+
+  .sub {
+    margin: 28px 0 24px;
+    padding-left: 18px;
+    border-left: 2px solid var(--o-line);
+  }
+  .sub h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0 0 12px;
+    color: var(--o-ink);
+  }
+
+  .pull {
+    margin: 32px 0;
+    padding: 24px 28px;
+    border-left: 3px solid var(--o-accent);
+    background: var(--o-bg-sunken);
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--o-ink);
+    font-weight: 500;
+  }
+  .pull-mark {
+    color: var(--o-accent);
+    font-size: 28px;
+    margin-right: 6px;
+    line-height: 1;
+  }
+
+  .faqs h2 { margin-top: 64px; }
+  .faq {
+    margin-bottom: 26px;
+    padding-bottom: 22px;
+    border-bottom: 1px dashed var(--o-line);
+  }
+  .faq:last-child { border-bottom: 0; }
+  .faq h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 10px;
+    color: var(--o-ink);
+  }
+  .faq p {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--o-mute);
+    margin: 0;
+  }
+
+  .cta-card {
+    margin-top: 56px;
+    padding: 36px;
+    background: var(--o-bg-sunken);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius);
+    display: grid;
+    gap: 20px;
+  }
+  .cta-head h2 {
+    margin: 14px 0 8px;
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--o-ink);
+  }
+  .cta-head p {
+    margin: 0;
+    font-size: 12px;
+    color: var(--o-mute);
+  }
+  .cta-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .parent {
+    margin: 0;
+    padding-top: 18px;
+    border-top: 1px solid var(--o-line);
+    font-size: 11px;
+    line-height: 1.65;
+    color: var(--o-mute);
+  }
+  .parent a {
+    color: var(--o-ink);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  @media (max-width: 700px) {
+    .post { padding: 44px 18px 64px; }
+    .tldr, .cta-card { padding: 22px; }
+    .sec h2 { font-size: 22px; }
+  }
+</style>

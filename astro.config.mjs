@@ -57,6 +57,9 @@ export default defineConfig({
         'https://ollasoftware.com/top-10/seo-agencies-bangalore/',
         'https://ollasoftware.com/top-10/social-media-marketing-agencies-bangalore/',
         'https://ollasoftware.com/top-10/performance-marketing-agencies-bangalore/',
+        // Brand deep-dive blog — one 5,000-word piece per olla brand.
+        'https://ollasoftware.com/blog/',
+        'https://ollasoftware.com/blog/ollima/',
       ],
       serialize(item) {
         // Higher priority for home + services + jobs + top-10 (high-intent pages).
@@ -68,6 +71,9 @@ export default defineConfig({
         else if (item.url === 'https://ollasoftware.com/top-10/') item.priority = 0.8;
         else if (item.url === 'https://ollasoftware.com/apply/') item.priority = 0.8;
         else if (item.url === 'https://ollasoftware.com/contact/') item.priority = 0.8;
+        else if (item.url === 'https://ollasoftware.com/blog/') item.priority = 0.85;
+        else if (item.url.startsWith('https://ollasoftware.com/blog/') &&
+                 item.url !== 'https://ollasoftware.com/blog/') item.priority = 0.8;
         return item;
       },
     }),

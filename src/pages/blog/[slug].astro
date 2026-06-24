@@ -1,0 +1,71 @@
+---
+// Hybrid mode: prerender to static HTML. Each registered BlogPost slug
+// becomes a static .html under dist/blog/<slug>/index.html at build time.
+export const prerender = true;
+
+import BlogPostPage from '../../components/blog/BlogPostPage.astro';
+import { allPosts } from '../../lib/blog';
+import { SITE, articleLd, faqLd, breadcrumbLd } from '../../lib/seo';
+
+export async function getStaticPaths() {
+  return allPosts.map(p => ({ params: { slug: p.slug }, props: { post: p } }));
+}
+
+const { post } = Astro.props;
+
+const url = `${SITE}/blog/${post.slug}/`;
+
+// Use the existing articleLd helper but point @id at /blog/<slug>/ instead
+// of the default /top-10/<slug>/. We override the URL by passing the slug
+// through as-is, then the rest of the schema is correct.
+const article = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  '@id': `${url}#article`,
+  mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+  headline: post.title,
+  description: post.metaDescription,
+  datePublished: post.publishedOn,
+  dateModified: post.lastUpdated,
+  inLanguage: 'en-IN',
+  author: {
+    '@type': 'Organization',
+    '@id': `${SITE}#organization`,
+    name: 'Ollasoftware',
+  },
+  publisher: { '@id': `${SITE}#organization` },
+  image: `${SITE}/og-image.png`,
+  isAccessibleForFree: true,
+  wordCount: post.wordCount,
+  // about: the brand the article is about — surfaces the brand → article
+  // relationship to entity-aware search engines.
+  about: {
+    '@type': 'Organization',
+    name: post.brand,
+    url: `https://${post.brandDomain}/`,
+  },
+  mentions: [
+    {
+      '@type': 'Organization',
+      '@id': `${SITE}#organization`,
+      name: 'Ollasoftware',
+    },
+    {
+      '@type': 'Organization',
+      name: post.brand,
+      url: `https://${post.brandDomain}/`,
+    },
+  ],
+};
+
+const jsonLd = [
+  article,
+  faqLd(post.faqs),
+  breadcrumbLd([
+    { name: 'Home', url: `${SITE}/` },
+    { name: 'Blog', url: `${SITE}/blog/` },
+    { name: post.brand, url },
+  ]),
+];
+---
+<BlogPostPage post={post} jsonLd={jsonLd} />

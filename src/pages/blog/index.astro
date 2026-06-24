@@ -1,0 +1,137 @@
+---
+export const prerender = true;
+
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/primitives/PageHero.astro';
+import SectionHead from '../../components/primitives/SectionHead.astro';
+import Btn from '../../components/primitives/Btn.astro';
+import { allPosts } from '../../lib/blog';
+import { SITE, breadcrumbLd } from '../../lib/seo';
+
+const breadcrumb = [
+  { name: 'Home', url: `${SITE}/` },
+  { name: 'Blog', url: `${SITE}/blog/` },
+];
+
+const blogLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Blog',
+  '@id': `${SITE}/blog/#blog`,
+  name: 'Ollasoftware Brand Deep-Dives',
+  description: 'Long-form, 5,000-word pieces on every AI brand in the Ollasoftware portfolio. Honest, technical, no fluff.',
+  url: `${SITE}/blog/`,
+  publisher: { '@id': `${SITE}#organization` },
+  blogPost: allPosts.map(p => ({
+    '@type': 'BlogPosting',
+    headline: p.title,
+    url: `${SITE}/blog/${p.slug}/`,
+    description: p.metaDescription,
+    datePublished: p.publishedOn,
+    dateModified: p.lastUpdated,
+  })),
+};
+---
+<Layout
+  title="Brand Deep-Dives — Ollasoftware Blog"
+  description="Long-form 5,000-word brand deep-dives on every Olla product — Ollima, Ollagraph, Ollabear, Ollanode, OllaDNS and more. Honest, technical, useful."
+  breadcrumb={breadcrumb}
+  jsonLd={[blogLd, breadcrumbLd(breadcrumb)]}
+>
+  <PageHero
+    eyebrow="Brand deep-dives · 5,000 words each"
+    title="The Ollasoftware blog."
+    sub="One 5,000-word piece per AI brand we own and operate. Built for the developer who wants to know exactly what each product does, who it is for, and how it compares — before they commit a single line of code."
+    breadcrumb={[{ label: 'home', href: '/' }, { label: 'blog' }]}
+  >
+    <Btn primary href="/contact/">Talk to Ollasoftware →</Btn>
+    <Btn href="/work/">See our work</Btn>
+  </PageHero>
+
+  <section class="grid-wrap">
+    <SectionHead
+      tag="The pieces"
+      title="One piece per brand. Updated as we ship."
+      sub="Every brand in the Ollasoftware portfolio gets one long-form deep-dive — what it does, who it is for, how it compares, and what is on the roadmap. The aim is a piece you can read once and have a complete mental model of the product. New pieces ship every 1–2 weeks."
+    />
+    <div class="post-grid">
+      {allPosts.map((p, i) => (
+        <a class="post-card" href={`/blog/${p.slug}/`}>
+          <div class="card-top">
+            <span class="card-num mono">{String(i + 1).padStart(2, '0')}</span>
+            <span class="card-tag mono">{p.brandDomain}</span>
+          </div>
+          <h3 class="card-h">{p.brand}</h3>
+          <p class="card-tagline">{p.brandTagline}</p>
+          <p class="card-sub">{p.metaDescription}</p>
+          <div class="card-foot">
+            <span class="mono">read the {p.wordCount.toLocaleString()}-word piece →</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .grid-wrap { padding: 96px 56px; border-bottom: 1px solid var(--o-line); }
+  .post-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  .post-card {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius);
+    padding: 28px;
+    text-decoration: none;
+    color: var(--o-ink);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: border-color .14s, transform .14s;
+  }
+  .post-card:hover {
+    border-color: color-mix(in srgb, var(--o-accent) 53%, transparent);
+    transform: translateY(-2px);
+  }
+  .card-top { display: flex; justify-content: space-between; align-items: center; }
+  .card-num { color: var(--o-accent); font-size: 10px; letter-spacing: 1px; }
+  .card-tag {
+    font-size: 10px;
+    color: var(--o-faint);
+    padding: 3px 8px;
+    border: 1px solid var(--o-line);
+    border-radius: 3px;
+  }
+  .card-h {
+    margin: 0;
+    font-size: 22px;
+    color: var(--o-ink);
+    font-weight: 600;
+    line-height: 1.15;
+    letter-spacing: -0.4px;
+  }
+  .card-tagline {
+    margin: -4px 0 0;
+    font-size: 12px;
+    color: var(--o-accent);
+    line-height: 1.45;
+  }
+  .card-sub {
+    margin: 0;
+    font-size: 12px;
+    color: var(--o-mute);
+    line-height: 1.6;
+    flex: 1;
+  }
+  .card-foot {
+    padding-top: 12px;
+    border-top: 1px dashed var(--o-line);
+    color: var(--o-accent);
+    font-size: 10px;
+  }
+
+  @media (max-width: 900px) { .post-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 700px) { .grid-wrap { padding: 64px 24px; } }
+</style>
