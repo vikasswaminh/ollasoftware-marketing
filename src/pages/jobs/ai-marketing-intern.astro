@@ -1,0 +1,645 @@
+---
+// Hybrid mode: prerender to static HTML.
+export const prerender = true;
+
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/primitives/PageHero.astro';
+import SectionHead from '../../components/primitives/SectionHead.astro';
+import Btn from '../../components/primitives/Btn.astro';
+import Tag from '../../components/primitives/Tag.astro';
+import { jobs } from '../../lib/jobs';
+import { SITE, breadcrumbLd } from '../../lib/seo';
+
+// Endpoint slug for form4dev (Ollasoftware — Job Application).
+const FORM_SLUG = 'h_c7vkls0hxcgduz';
+
+const job = jobs.find(j => j.slug === 'ai-marketing-intern')!;
+const url = `${SITE}/jobs/ai-marketing-intern/`;
+
+// JobPosting JSON-LD with explicit validThrough = 5 Jul 2026 deadline.
+const datePosted = '2026-06-24';
+const validThrough = '2026-07-05';
+
+const jobPostingLd = {
+  '@context': 'https://schema.org',
+  '@type': 'JobPosting',
+  '@id': `${url}#jobposting`,
+  title: 'AI Marketing Intern',
+  description: 'Six-month remote internship at Ollasoftware. Write SEO and AEO-grade blogs, build social media content for LinkedIn, Instagram, YouTube, Quora, Reddit and Facebook, and run day-to-day marketing intelligence work across the Ollasoftware brand portfolio. ₹10,000 per month stipend. Top performers convert to in-office full-time at ₹20,000 base plus up to ₹15,000 incentives per month after six months.',
+  datePosted,
+  validThrough,
+  employmentType: ['INTERN', 'PART_TIME'],
+  hiringOrganization: { '@id': `${SITE}#organization` },
+  jobLocationType: 'TELECOMMUTE',
+  applicantLocationRequirements: { '@type': 'Country', name: 'India' },
+  totalJobOpenings: 300,
+  baseSalary: {
+    '@type': 'MonetaryAmount',
+    currency: 'INR',
+    value: {
+      '@type': 'QuantitativeValue',
+      value: 10000,
+      unitText: 'MONTH',
+    },
+  },
+  industry: 'AI Software / Digital Marketing',
+  experienceRequirements: {
+    '@type': 'OccupationalExperienceRequirements',
+    monthsOfExperience: 0,
+  },
+  educationRequirements: 'No prior experience required — freshers welcome.',
+  skills: [
+    'Blog writing', 'SEO research', 'AEO awareness', 'Social media content',
+    'LinkedIn', 'Instagram', 'YouTube', 'Quora', 'Reddit', 'Facebook',
+    'AI writing tools',
+  ].join(', '),
+  url,
+  directApply: true,
+};
+
+const breadcrumb = [
+  { name: 'Home', url: `${SITE}/` },
+  { name: 'Jobs', url: `${SITE}/jobs/` },
+  { name: 'AI Marketing Intern', url },
+];
+---
+<Layout
+  title="AI Marketing Intern (Work from Home, ₹10k stipend · 6 months) | Ollasoftware"
+  description="6-month remote AI Marketing internship at Ollasoftware. ₹10,000/month stipend. Write SEO + AEO blogs, build social content for LinkedIn / Instagram / YouTube / Quora / Reddit / Facebook. 300 openings. Freshers welcome. Top performers convert to in-office FT at ₹20–35k/month. Apply by 5 July 2026."
+  breadcrumb={breadcrumb}
+  jsonLd={[jobPostingLd, breadcrumbLd(breadcrumb)]}
+>
+  <PageHero
+    eyebrow="Internship · Work from home · 300 openings"
+    title="AI Marketing Intern (WFH, ₹10k/mo)."
+    sub="Six-month, fully remote internship. Write SEO + AEO blogs, build social content across LinkedIn / Instagram / YouTube / Quora / Reddit / Facebook, and run day-to-day marketing intelligence work for the Ollasoftware brand portfolio. Freshers welcome — no prior experience required. Top performers convert to in-office full-time at ₹20–35k/month. Apply by 5 July 2026."
+    breadcrumb={[
+      { label: 'home', href: '/' },
+      { label: 'jobs', href: '/jobs/' },
+      { label: 'ai marketing intern' },
+    ]}
+  >
+    <Btn primary href="#apply">Apply now →</Btn>
+    <Btn href="/jobs/">← All open roles</Btn>
+  </PageHero>
+
+  <section class="key-facts">
+    <div class="facts-grid">
+      <div class="fact">
+        <div class="fact-h mono">Stipend</div>
+        <div class="fact-v">₹10,000<span class="fact-unit">/month</span></div>
+      </div>
+      <div class="fact">
+        <div class="fact-h mono">Duration</div>
+        <div class="fact-v">6<span class="fact-unit">months</span></div>
+      </div>
+      <div class="fact">
+        <div class="fact-h mono">Work model</div>
+        <div class="fact-v">WFH<span class="fact-unit">India</span></div>
+      </div>
+      <div class="fact">
+        <div class="fact-h mono">Openings</div>
+        <div class="fact-v">300<span class="fact-unit">slots</span></div>
+      </div>
+      <div class="fact">
+        <div class="fact-h mono">FT conversion</div>
+        <div class="fact-v">₹20–35k<span class="fact-unit">/month after 6m</span></div>
+      </div>
+      <div class="fact">
+        <div class="fact-h mono">Deadline</div>
+        <div class="fact-v">5 Jul<span class="fact-unit">2026</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="jd">
+    <div class="jd-inner">
+      <div class="block">
+        <SectionHead
+          tag="The role"
+          title="What you'll actually do, day to day."
+          sub="This is a real internship with real production work — not a fetch-coffee role. You'll ship marketing artifacts that 40+ Ollasoftware brands depend on for SEO, AEO and social distribution."
+        />
+        <ul class="bullets">
+          <li><span class="arr">›</span><div><strong>Write blogs.</strong> Long-form, SEO-optimised, AEO-aware. 1,500–5,000 word pieces grounded in real brand or industry research. You'll work from briefs and ship 2–4 published posts per week.</div></li>
+          <li><span class="arr">›</span><div><strong>Build SEO + AEO intelligence.</strong> Keyword research, SERP analysis, competitor scans, AI-citation audits. Apply what you learn — instrument the brand's content for both Google and answer engines (ChatGPT, Claude, Perplexity, Gemini).</div></li>
+          <li><span class="arr">›</span><div><strong>Build social media content.</strong> Original posts, threads, carousels, short-form video scripts, reply hooks. Tailored to each platform's voice.</div></li>
+          <li><span class="arr">›</span><div><strong>Post on assigned platforms.</strong> LinkedIn, Instagram, YouTube, Quora, Reddit, Facebook. You own the publishing calendar for your assigned brands and own the metrics that come with it.</div></li>
+          <li><span class="arr">›</span><div><strong>Other day-to-day assignments.</strong> Newsletter drafts, landing-page copy, internal research briefs, comparison tables, social listening summaries — whatever the marketing team needs that week.</div></li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <SectionHead
+          tag="Who you are"
+          title="You are a fresher with the right curiosity."
+          sub="We hire for hunger and clear writing, not credentials. No prior marketing experience required."
+        />
+        <ul class="bullets">
+          <li><span class="arr">›</span><div>Fresher — student, recent graduate, or anyone breaking into marketing. No degree-school filter, no experience filter.</div></li>
+          <li><span class="arr">›</span><div>You can write a clear, grammatical English paragraph without an AI tool's help — and you know how to use AI tools to make your writing 10× better, faster.</div></li>
+          <li><span class="arr">›</span><div>You spend time on at least three of these platforms personally: LinkedIn, Instagram, YouTube, Quora, Reddit, Facebook. You know how they actually feel.</div></li>
+          <li><span class="arr">›</span><div>You can take feedback fast, ship a revision the same day, and move on. The bar at Ollasoftware is high; the bar for shipping speed is higher.</div></li>
+          <li><span class="arr">›</span><div>You are reachable on chat 6 days a week between 10 IST and 18 IST. WFH does not mean WFH-on-your-own-schedule for the internship period.</div></li>
+        </ul>
+      </div>
+
+      <div class="block">
+        <SectionHead
+          tag="6-month structure"
+          title="What the internship actually looks like."
+        />
+        <ol class="phases">
+          <li class="phase">
+            <div class="phase-num mono">Month 1</div>
+            <div class="phase-body">
+              <div class="phase-h">Onboarding + first published artifacts.</div>
+              <p>You'll be assigned 1–3 brands from the Ollasoftware portfolio. By end of week 2 you publish your first blog. By end of month 1 you've shipped two blogs and twenty social posts.</p>
+            </div>
+          </li>
+          <li class="phase">
+            <div class="phase-num mono">Month 2–3</div>
+            <div class="phase-body">
+              <div class="phase-h">Ownership of the brand calendar.</div>
+              <p>You own your assigned brands' content calendar across all six platforms. SEO/AEO intelligence becomes a weekly deliverable. Measurable traffic and engagement targets are set.</p>
+            </div>
+          </li>
+          <li class="phase">
+            <div class="phase-num mono">Month 4–5</div>
+            <div class="phase-body">
+              <div class="phase-h">Multi-brand work + cross-functional reach.</div>
+              <p>Your scope expands. You'll work with engineering, design, and sales teams on landing pages, launches, and campaigns. Top performers start being identified for the FT conversion track.</p>
+            </div>
+          </li>
+          <li class="phase">
+            <div class="phase-num mono">Month 6</div>
+            <div class="phase-body">
+              <div class="phase-h">Performance review + FT conversion decision.</div>
+              <p>Honest, written review against the metrics you've been tracking since month 2. Top performers receive an in-office full-time offer at ₹20,000 base + up to ₹15,000 incentives per month (₹20–35k/mo).</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="block">
+        <SectionHead
+          tag="Compensation"
+          title="₹10k/month during the internship. ₹20–35k/month after, for the best."
+        />
+        <div class="comp-grid">
+          <div class="comp-card">
+            <div class="comp-tag mono">During internship</div>
+            <div class="comp-amount">₹10,000<span class="comp-unit">/month</span></div>
+            <p>Stipend paid monthly. 6-month duration. Fully remote — no office attendance required.</p>
+          </div>
+          <div class="comp-card highlighted">
+            <div class="comp-tag mono">After internship (top performers)</div>
+            <div class="comp-amount">₹20,000<span class="comp-unit">+ up to ₹15,000 incentives</span></div>
+            <p>Full-time, in-office role in Bangalore. ₹20k floor + up to ₹15k variable based on monthly performance — total potential ₹35k/month. Only the best performers from the 300-intern cohort are converted.</p>
+          </div>
+        </div>
+        <p class="comp-note mono">No grade-school filter. No college filter. The only filter is the work you ship in 6 months.</p>
+      </div>
+
+      <div class="block">
+        <SectionHead
+          tag="How to apply"
+          title="Fill the form. We read every application."
+          sub="Applications close 5 July 2026. We respond to every applicant within 7 business days of the deadline."
+        />
+        <ol class="apply-loop">
+          <li><span class="loop-num mono">01</span> Fill the form below — name, contact, a short writing sample, and a link to anything you've already published or written.</li>
+          <li><span class="loop-num mono">02</span> 15-minute conversational screen with the marketing lead.</li>
+          <li><span class="loop-num mono">03</span> One paid trial assignment — a blog brief you complete and submit. We pay ₹1,000 for the trial regardless of outcome.</li>
+          <li><span class="loop-num mono">04</span> Offer letter for the 300 selected interns. Onboarding within 2 weeks.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="apply-grid" id="apply">
+    <div class="grid">
+      <div id="banner-ok" class="banner success" role="status" hidden>
+        <span class="banner-h mono">Application received.</span>
+        <span class="banner-p">Thanks — your application is in. We read every one. If you're selected for the next round, you'll hear from <a href="mailto:info@ollasoftware.com">info@ollasoftware.com</a> within 7 business days of the 5 July 2026 deadline.</span>
+      </div>
+      <div id="banner-err" class="banner error" role="alert" hidden>
+        <span class="banner-h mono">Something went wrong on our side.</span>
+        <span class="banner-p">Please try again, or email your application directly to <a href="mailto:info@ollasoftware.com">info@ollasoftware.com</a> with "AI Marketing Intern" in the subject line.</span>
+      </div>
+
+      <form class="form" method="POST" action={`/api/submit/${FORM_SLUG}`}>
+        <input type="hidden" name="_next" value="/jobs/ai-marketing-intern/" />
+        <input type="hidden" name="role" value="AI Marketing Intern" />
+        <input type="text" name="_gotcha" tabindex="-1" autocomplete="off" class="sr-only" aria-hidden="true" />
+
+        <h3 class="form-title">Apply for the AI Marketing Internship</h3>
+        <p class="form-sub mono">Fields marked required must be filled. We read every application from a real human.</p>
+
+        <div class="row">
+          <label>
+            <span class="lbl mono">Full name</span>
+            <input type="text" name="full_name" placeholder="Maya Chen" required />
+          </label>
+          <label>
+            <span class="lbl mono">Email</span>
+            <input type="email" name="email" placeholder="you@personal.com" required />
+          </label>
+        </div>
+        <div class="row">
+          <label>
+            <span class="lbl mono">Phone (with country code)</span>
+            <input type="tel" name="phone" placeholder="+91-XXXXXXXXXX" required />
+          </label>
+          <label>
+            <span class="lbl mono">Your city</span>
+            <input type="text" name="city" placeholder="Bengaluru / Mumbai / Delhi / ..." required />
+          </label>
+        </div>
+        <div class="row">
+          <label>
+            <span class="lbl mono">College / institute (current or most recent)</span>
+            <input type="text" name="institute" placeholder="St. Stephens · BA English · 2026" required />
+          </label>
+          <label>
+            <span class="lbl mono">Year of graduation</span>
+            <input type="text" name="grad_year" placeholder="2026 / 2025 / etc." required />
+          </label>
+        </div>
+
+        <label class="full">
+          <span class="lbl mono">Which of these platforms do you use personally? (tick all that apply)</span>
+          <div class="check-grid">
+            <label class="check"><input type="checkbox" name="platforms" value="LinkedIn"> LinkedIn</label>
+            <label class="check"><input type="checkbox" name="platforms" value="Instagram"> Instagram</label>
+            <label class="check"><input type="checkbox" name="platforms" value="YouTube"> YouTube</label>
+            <label class="check"><input type="checkbox" name="platforms" value="Quora"> Quora</label>
+            <label class="check"><input type="checkbox" name="platforms" value="Reddit"> Reddit</label>
+            <label class="check"><input type="checkbox" name="platforms" value="Facebook"> Facebook</label>
+          </div>
+        </label>
+
+        <label class="full">
+          <span class="lbl mono">Have you written anything online before? (paste links — blog posts, threads, YouTube videos, Reddit/Quora answers — anything published)</span>
+          <textarea
+            name="published_work"
+            placeholder="One link per line. If nothing published yet, write &quot;Nothing published yet — but I write [type of thing] regularly.&quot;"
+            rows="4"
+            required
+          ></textarea>
+        </label>
+
+        <label class="full">
+          <span class="lbl mono">Which AI tools do you use regularly?</span>
+          <input type="text" name="ai_tools" placeholder="ChatGPT, Claude, Gemini, Perplexity, Notion AI — whatever you actually use" required />
+        </label>
+
+        <label class="full">
+          <span class="lbl mono">Why do you want to do marketing at Ollasoftware? (50–150 words)</span>
+          <textarea
+            name="cover_note"
+            placeholder="Be specific. Don't write a generic cover letter. Tell us what about Ollasoftware caught your attention, what you want to learn in 6 months, and what you'd be most excited to ship."
+            rows="6"
+            required
+          ></textarea>
+        </label>
+
+        <label class="full">
+          <span class="lbl mono">200-word writing sample — anything you like</span>
+          <textarea
+            name="writing_sample"
+            placeholder="A topic you care about, an opinion you've thought about, a product review, a how-to — anything ~200 words written by you. We read this carefully."
+            rows="8"
+            required
+          ></textarea>
+        </label>
+
+        <div class="actions">
+          <button class="primary mono" type="submit">Submit application →</button>
+          <span class="actions-note mono">Deadline: 5 July 2026 · We respond to every applicant.</span>
+        </div>
+      </form>
+    </div>
+  </section>
+</Layout>
+
+<script is:inline>
+  (() => {
+    const p = new URLSearchParams(location.search);
+    if (p.get('ok')  === '1') {
+      document.getElementById('banner-ok')?.removeAttribute('hidden');
+      document.querySelector('.apply-grid')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    if (p.get('err') === '1') {
+      document.getElementById('banner-err')?.removeAttribute('hidden');
+      document.querySelector('.apply-grid')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  })();
+</script>
+
+<style>
+  /* ─────────────── Key facts strip ─────────────── */
+  .key-facts {
+    padding: 36px 56px;
+    border-bottom: 1px solid var(--o-line);
+    background: var(--o-bg-sunken);
+  }
+  .facts-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 24px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .fact { display: flex; flex-direction: column; gap: 6px; }
+  .fact-h {
+    font-size: 9px;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    color: var(--o-faint);
+  }
+  .fact-v {
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--o-ink);
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+  .fact-unit {
+    display: block;
+    font-size: 10px;
+    color: var(--o-mute);
+    font-weight: 400;
+    margin-top: 2px;
+    letter-spacing: 0;
+  }
+
+  /* ─────────────── JD body ─────────────── */
+  .jd { padding: 72px 56px; border-bottom: 1px solid var(--o-line); }
+  .jd-inner {
+    max-width: 880px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 72px;
+  }
+  .block { display: flex; flex-direction: column; gap: 22px; }
+
+  .bullets { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 16px; }
+  .bullets li {
+    display: flex;
+    gap: 14px;
+    font-size: 14px;
+    color: var(--o-ink);
+    line-height: 1.65;
+  }
+  .bullets strong { font-weight: 600; color: var(--o-ink); }
+  .arr {
+    color: var(--o-accent);
+    flex-shrink: 0;
+    font-family: var(--o-font-mono);
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  /* Phase timeline */
+  .phases {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .phase {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+    padding: 20px 24px;
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius);
+    border-left: 3px solid var(--o-accent);
+  }
+  .phase-num {
+    font-size: 11px;
+    color: var(--o-accent);
+    letter-spacing: 0.5px;
+    padding-top: 2px;
+  }
+  .phase-h {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--o-ink);
+    margin-bottom: 6px;
+  }
+  .phase-body p {
+    margin: 0;
+    font-size: 13px;
+    color: var(--o-mute);
+    line-height: 1.6;
+  }
+
+  /* Compensation grid */
+  .comp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+  .comp-card {
+    padding: 28px;
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .comp-card.highlighted {
+    border-color: color-mix(in srgb, var(--o-accent) 50%, var(--o-line));
+    background: color-mix(in srgb, var(--o-accent) 6%, var(--o-panel));
+  }
+  .comp-tag {
+    font-size: 10px;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--o-accent);
+  }
+  .comp-amount {
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--o-ink);
+    line-height: 1.1;
+    letter-spacing: -0.6px;
+  }
+  .comp-unit {
+    display: block;
+    font-size: 12px;
+    color: var(--o-mute);
+    font-weight: 400;
+    margin-top: 4px;
+  }
+  .comp-card p {
+    margin: 0;
+    font-size: 12px;
+    color: var(--o-mute);
+    line-height: 1.6;
+  }
+  .comp-note {
+    text-align: center;
+    font-size: 11px;
+    color: var(--o-mute);
+    padding-top: 4px;
+  }
+
+  .apply-loop {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .apply-loop li {
+    display: flex;
+    gap: 14px;
+    font-size: 13px;
+    color: var(--o-ink);
+    line-height: 1.6;
+  }
+  .loop-num { color: var(--o-accent); font-size: 11px; width: 26px; flex-shrink: 0; padding-top: 3px; }
+
+  /* ─────────────── Form ─────────────── */
+  .apply-grid { padding: 72px 56px 120px; }
+  .grid { max-width: 880px; margin: 0 auto; }
+
+  .banner {
+    padding: 16px 22px;
+    border-radius: var(--o-radius);
+    border: 1px solid var(--o-line);
+    background: var(--o-panel);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 24px;
+  }
+  .banner.success { border-left: 3px solid var(--o-accent); }
+  .banner.error   { border-left: 3px solid var(--o-red); }
+  .banner-h {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--o-ink);
+  }
+  .banner-p { font-size: 12px; color: var(--o-mute); line-height: 1.55; }
+  .banner a { color: var(--o-accent); }
+
+  .form {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius-lg);
+    padding: 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+  .form-title {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--o-ink);
+    letter-spacing: -0.3px;
+  }
+  .form-sub {
+    margin: -16px 0 4px;
+    font-size: 11px;
+    color: var(--o-mute);
+  }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
+  label { display: flex; flex-direction: column; gap: 8px; }
+  .full { width: 100%; }
+  .lbl {
+    font-size: 9px;
+    color: var(--o-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+  }
+  input[type="text"], input[type="email"], input[type="tel"], input[type="url"], select, textarea {
+    background: var(--o-bg);
+    border: 1px solid var(--o-line);
+    color: var(--o-ink);
+    border-radius: var(--o-radius-sm);
+    padding: 12px 14px;
+    font-size: 12px;
+    font-family: var(--o-font-sans);
+    outline: none;
+    transition: border-color .14s;
+  }
+  input:focus, select:focus, textarea:focus { border-color: var(--o-accent); }
+  textarea { resize: vertical; min-height: 100px; line-height: 1.5; }
+
+  .check-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 14px;
+    background: var(--o-bg);
+    border: 1px solid var(--o-line);
+    border-radius: var(--o-radius-sm);
+  }
+  .check {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--o-ink);
+    cursor: pointer;
+  }
+  .check input { width: 16px; height: 16px; margin: 0; padding: 0; flex-shrink: 0; }
+
+  .actions { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 6px; }
+  .primary {
+    border: none;
+    background: var(--o-accent);
+    color: var(--o-accent-ink);
+    padding: 12px 22px;
+    border-radius: var(--o-radius-sm);
+    font-size: 11px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: filter .14s;
+  }
+  .primary:hover { filter: brightness(1.08); }
+  .actions-note { font-size: 9px; color: var(--o-faint); }
+
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  /* ─────────────── Responsive ─────────────── */
+  @media (max-width: 900px) {
+    .facts-grid { grid-template-columns: repeat(3, 1fr); }
+    .comp-grid { grid-template-columns: 1fr; }
+    .check-grid { grid-template-columns: repeat(2, 1fr); }
+    .phase { grid-template-columns: 1fr; gap: 8px; }
+  }
+  @media (max-width: 700px) {
+    .key-facts { padding: 28px 20px; }
+    .facts-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+    .jd { padding: 56px 20px; }
+    .jd-inner { gap: 56px; }
+    .apply-grid { padding: 48px 20px 80px; }
+    .form { padding: 24px; }
+    .row { grid-template-columns: 1fr; }
+    .check-grid { grid-template-columns: 1fr; }
+  }
+</style>

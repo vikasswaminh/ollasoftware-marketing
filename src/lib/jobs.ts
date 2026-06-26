@@ -281,4 +281,18 @@ export const jobs: readonly Job[] = [
     summary: '6-month internship with full access to Claude, Gemini, and Antigravity tooling. Real production work on founder-owned products. Performance-based conversion to full-time at the end.',
     skills: ['All AI tools required by role', 'Production-quality work', 'Founder-product exposure'],
   }),
+
+  make({
+    id: 18,
+    title: 'AI Marketing Intern',
+    category: 'internship',
+    openings: '300',
+    location: 'Work from home · India',
+    employmentType: 'Internship',
+    experience: 'Freshers · no prior experience required',
+    compensation: '₹10,000/month stipend · 6 months · top performers convert to in-office FT at ₹20k base + up to ₹15k incentives',
+    summary: 'Write SEO and AEO-grade blogs, build social content for LinkedIn / Instagram / YouTube / Quora / Reddit / Facebook, and ship marketing intelligence work across the Ollasoftware brand portfolio. 6-month remote internship; top performers convert to in-office full-time at ₹20k base plus up to ₹15k incentives per month. Applications close 5 July 2026.',
+    skills: ['Blog writing', 'SEO research', 'AEO awareness', 'Social media content', 'LinkedIn', 'Instagram', 'YouTube', 'Quora', 'Reddit', 'Facebook', 'AI writing tools'],
+    featured: true,
+  }),
 ];

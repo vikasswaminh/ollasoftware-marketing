@@ -181,7 +181,7 @@ const itemListLd = {
               </div>
 
               <div class="job-foot">
-                <a href={`/apply/?role=${j.slug}`} class="apply mono">Apply for {j.title} →</a>
+                <a href={j.slug === 'ai-marketing-intern' ? `/jobs/${j.slug}/` : `/apply/?role=${j.slug}`} class="apply mono">{j.slug === 'ai-marketing-intern' ? `View role & apply for ${j.title} →` : `Apply for ${j.title} →`}</a>
                 <a href={`#${j.slug}`} class="permalink mono" aria-label="Permalink">#</a>
               </div>
             </article>

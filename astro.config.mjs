@@ -47,6 +47,7 @@ export default defineConfig({
         'https://ollasoftware.com/process/',
         'https://ollasoftware.com/about/',
         'https://ollasoftware.com/jobs/',
+        'https://ollasoftware.com/jobs/ai-marketing-intern/',
         'https://ollasoftware.com/apply/',
         'https://ollasoftware.com/contact/',
         // Top-10 listicles — high-intent commercial queries, content-deep pages.
