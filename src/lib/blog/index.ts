@@ -9,10 +9,12 @@ import { ollimaPost } from './ollima';
 import { ollagraphPost } from './ollagraph';
 import { ollabearPost } from './ollabear';
 import { ollanodePost } from './ollanode';
+import { olladnsPost } from './olladns';
 
 export type { BlogPost, BlogSection, BlogSubsection, BlogFAQ } from './types';
 
 export const allPosts: readonly BlogPost[] = [
+  olladnsPost,
   ollanodePost,
   ollabearPost,
   ollagraphPost,
