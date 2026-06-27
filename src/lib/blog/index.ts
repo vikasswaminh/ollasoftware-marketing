@@ -11,10 +11,16 @@ import { ollabearPost } from './ollabear';
 import { ollanodePost } from './ollanode';
 import { olladnsPost } from './olladns';
 import { twentyfourobservePost } from './twentyfourobserve';
+import { ollasuperPost } from './ollasuper';
+import { ollastackPost } from './ollastack';
+import { ollasyncPost } from './ollasync';
 
 export type { BlogPost, BlogSection, BlogSubsection, BlogFAQ } from './types';
 
 export const allPosts: readonly BlogPost[] = [
+  ollasyncPost,
+  ollastackPost,
+  ollasuperPost,
   twentyfourobservePost,
   olladnsPost,
   ollanodePost,

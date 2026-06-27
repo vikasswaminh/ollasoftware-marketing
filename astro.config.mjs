@@ -66,6 +66,9 @@ export default defineConfig({
         'https://ollasoftware.com/blog/ollanode/',
         'https://ollasoftware.com/blog/olladns/',
         'https://ollasoftware.com/blog/24observe/',
+        'https://ollasoftware.com/blog/ollasuper/',
+        'https://ollasoftware.com/blog/ollastack/',
+        'https://ollasoftware.com/blog/ollasync/',
       ],
       serialize(item) {
         // Higher priority for home + services + jobs + top-10 (high-intent pages).
