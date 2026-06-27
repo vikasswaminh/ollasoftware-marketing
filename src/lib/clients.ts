@@ -40,7 +40,7 @@ export const clients: readonly Client[] = [
   { name: 'Switchllm',     domain: 'switchllm.com',     category: 'ai', blurb: 'LLM router with cost & latency gates' },
   { name: 'Memfog',        domain: 'memfog.com',        category: 'ai', blurb: 'Agent memory store + recall API' },
   { name: 'NAC4AI',        domain: 'nac4ai.com',        category: 'ai', blurb: 'Network access control for AI agents' },
-  { name: 'Browserfog',    domain: 'browserfog.com',    category: 'ai', blurb: 'Headless browser for AI workflows' },
+  { name: 'browserfog',    domain: 'browserfog.com',    category: 'ai', blurb: 'Private web memory with end-to-end encryption' },
   { name: 'Super25.ai',    domain: 'super25.ai',        category: 'ai', blurb: 'Frontier-model evaluation harness' },
   { name: '24observe',     domain: '24observe.com',     category: 'ai', blurb: 'Always-on AI uptime & eval monitor' },
   { name: 'Hitcli',        domain: 'hitcli.com',        category: 'ai', blurb: 'AI-native command-line companion' },

@@ -14,10 +14,18 @@ import { twentyfourobservePost } from './twentyfourobserve';
 import { ollasuperPost } from './ollasuper';
 import { ollastackPost } from './ollastack';
 import { ollasyncPost } from './ollasync';
+import { aeonitiPost } from './aeoniti';
+import { crawlcrawlPost } from './crawlcrawl';
+import { memfogPost } from './memfog';
+import { browserfogPost } from './browserfog';
 
 export type { BlogPost, BlogSection, BlogSubsection, BlogFAQ } from './types';
 
 export const allPosts: readonly BlogPost[] = [
+  browserfogPost,
+  memfogPost,
+  crawlcrawlPost,
+  aeonitiPost,
   ollasyncPost,
   ollastackPost,
   ollasuperPost,
