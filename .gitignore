@@ -28,3 +28,4 @@ Thumbs.db
 .cf-*.tmp
 .cf-*.tmp.json
 *.html.tmp
+.ollastack-*.tmp.json
