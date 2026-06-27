@@ -23,9 +23,12 @@ export const prerender = false;
 const ALLOWED_SLUGS: Record<string, string> = {
   'ygyv78cz1cbofy-q': 'contact',
   'h_c7vkls0hxcgduz': 'job-application',
+  'du19zvyys6uf04sr': 'ai-marketing-intern',
 };
 
-const FORM4DEV = 'https://login.form4dev.com';
+// Ollastack (formerly form4dev) — same backend, rebranded URL. The login.form4dev.com
+// host still works as a 301 alias, but we point at the canonical name.
+const FORM4DEV = 'https://login.ollastack.com';
 
 function redirectTarget(formKind: string, ok: boolean, ref: string | null): string {
   // Honour an explicit `_next` redirect target if it points back at our own
@@ -33,6 +36,7 @@ function redirectTarget(formKind: string, ok: boolean, ref: string | null): stri
   if (ref && ref.startsWith('/') && !ref.startsWith('//')) {
     return ref + (ref.includes('?') ? '&' : '?') + (ok ? 'ok=1' : 'err=1');
   }
+  if (formKind === 'ai-marketing-intern') return ok ? '/jobs/ai-marketing-intern/?ok=1' : '/jobs/ai-marketing-intern/?err=1';
   if (formKind === 'contact')         return ok ? '/contact/?ok=1' : '/contact/?err=1';
   if (formKind === 'job-application') return ok ? '/apply/?ok=1'   : '/apply/?err=1';
   return ok ? '/?ok=1' : '/?err=1';
@@ -64,6 +68,9 @@ export const POST: APIRoute = async ({ request, params, locals }) => {
       nextRef = typeof j._next === 'string' ? j._next : null;
     } else {
       const form = await request.formData();
+      // Multi-value form fields (e.g. a group of checkboxes named "platforms")
+      // produce repeated keys. Naive assignment loses every value but the last;
+      // we comma-join repeats so all selections survive into the upstream payload.
       for (const [k, v] of form.entries()) {
         if (k === '_next') { nextRef = String(v); continue; }
         const isHoneypot = k === '_gotcha' || k.startsWith('hp_');
@@ -72,7 +79,8 @@ export const POST: APIRoute = async ({ request, params, locals }) => {
           return Response.redirect(new URL(redirectTarget(formKind, true, nextRef), request.url).toString(), 303);
         }
         if (isHoneypot) continue;
-        payload[k] = String(v ?? '');
+        const sv = String(v ?? '');
+        payload[k] = k in payload && payload[k] !== '' ? `${payload[k]}, ${sv}` : sv;
       }
     }
   } catch {

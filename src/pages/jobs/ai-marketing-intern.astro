@@ -10,8 +10,12 @@ import Tag from '../../components/primitives/Tag.astro';
 import { jobs } from '../../lib/jobs';
 import { SITE, breadcrumbLd } from '../../lib/seo';
 
-// Endpoint slug for form4dev (Ollasoftware — Job Application).
-const FORM_SLUG = 'h_c7vkls0hxcgduz';
+// Endpoint slug for Ollastack form "Ollasoftware — AI Marketing Intern".
+// Dedicated form with the intern field schema (platforms, grad_year, writing_sample…)
+// — separate from the general /apply/ form which uses 'h_c7vkls0hxcgduz'.
+// Recipients: fatheema@networkershome.com, vikas@ollasoftware.com,
+// fatheema@ollasoftware.com. Subject: "[AI Marketing Intern] {{full_name}} — {{city}}".
+const FORM_SLUG = 'du19zvyys6uf04sr';
 
 const job = jobs.find(j => j.slug === 'ai-marketing-intern')!;
 const url = `${SITE}/jobs/ai-marketing-intern/`;
