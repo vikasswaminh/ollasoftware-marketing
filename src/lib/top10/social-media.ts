@@ -14,7 +14,7 @@ export const socialMediaList: TopTenList = {
     'social media agency HSR Layout',
     'B2B SaaS social India',
   ],
-  lastUpdated: '2026-05-30',
+  lastUpdated: '2026-06-29',
   publishedOn: '2026-05-30',
   hero: {
     eyebrow: 'Independent ranking · updated May 2026',

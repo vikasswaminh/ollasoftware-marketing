@@ -14,7 +14,7 @@ export const aeoList: TopTenList = {
     'be cited in ChatGPT India',
     'Perplexity citation services Bangalore',
   ],
-  lastUpdated: '2026-05-30',
+  lastUpdated: '2026-06-29',
   publishedOn: '2026-05-30',
   hero: {
     eyebrow: 'Independent ranking · updated May 2026 · honest disclosure',
