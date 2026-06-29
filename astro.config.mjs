@@ -73,6 +73,11 @@ export default defineConfig({
         'https://ollasoftware.com/blog/crawlcrawl/',
         'https://ollasoftware.com/blog/memfog/',
         'https://ollasoftware.com/blog/browserfog/',
+        'https://ollasoftware.com/blog/ollavpn/',
+        'https://ollasoftware.com/blog/quickztna/',
+        'https://ollasoftware.com/blog/meshwg/',
+        'https://ollasoftware.com/blog/quicksdwan/',
+        'https://ollasoftware.com/blog/freefreecv/',
       ],
       serialize(item) {
         // Higher priority for home + services + jobs + top-10 (high-intent pages).

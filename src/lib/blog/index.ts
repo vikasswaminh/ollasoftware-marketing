@@ -18,10 +18,20 @@ import { aeonitiPost } from './aeoniti';
 import { crawlcrawlPost } from './crawlcrawl';
 import { memfogPost } from './memfog';
 import { browserfogPost } from './browserfog';
+import { ollavpnPost } from './ollavpn';
+import { quickztnaPost } from './quickztna';
+import { meshwgPost } from './meshwg';
+import { quicksdwanPost } from './quicksdwan';
+import { freefreecvPost } from './freefreecv';
 
 export type { BlogPost, BlogSection, BlogSubsection, BlogFAQ } from './types';
 
 export const allPosts: readonly BlogPost[] = [
+  freefreecvPost,
+  quicksdwanPost,
+  meshwgPost,
+  quickztnaPost,
+  ollavpnPost,
   browserfogPost,
   memfogPost,
   crawlcrawlPost,
