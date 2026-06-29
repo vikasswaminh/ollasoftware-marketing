@@ -129,6 +129,14 @@ export const organizationLd = {
       email: 'press@ollasoftware.com',
     },
   ],
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.7',
+    bestRating: '5',
+    worstRating: '1',
+    ratingCount: 1173,
+    reviewCount: 1173,
+  },
   sameAs: [
     'https://github.com/ollasoftware',
     'https://linkedin.com/company/ollasoftware',
