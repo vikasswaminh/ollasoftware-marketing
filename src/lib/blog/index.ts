@@ -5,6 +5,9 @@
 // exports a BlogPost, import it here, and prepend it to allPosts.
 
 import type { BlogPost } from './types';
+import { networkershomePost } from './networkershome';
+import { nhprepPost } from './nhprep';
+import { twentyonetunnelPost } from './twentyonetunnel';
 import { ollimaPost } from './ollima';
 import { ollagraphPost } from './ollagraph';
 import { ollabearPost } from './ollabear';
@@ -27,6 +30,9 @@ import { freefreecvPost } from './freefreecv';
 export type { BlogPost, BlogSection, BlogSubsection, BlogFAQ } from './types';
 
 export const allPosts: readonly BlogPost[] = [
+  networkershomePost,
+  nhprepPost,
+  twentyonetunnelPost,
   freefreecvPost,
   quicksdwanPost,
   meshwgPost,

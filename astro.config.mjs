@@ -78,6 +78,9 @@ export default defineConfig({
         'https://ollasoftware.com/blog/meshwg/',
         'https://ollasoftware.com/blog/quicksdwan/',
         'https://ollasoftware.com/blog/freefreecv/',
+        'https://ollasoftware.com/blog/21tunnel/',
+        'https://ollasoftware.com/blog/nhprep/',
+        'https://ollasoftware.com/blog/networkershome/',
       ],
       serialize(item) {
         // Higher priority for home + services + jobs + top-10 (high-intent pages).
