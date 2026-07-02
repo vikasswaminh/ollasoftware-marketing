@@ -3,7 +3,7 @@
 // and the parent training brand which is linked separately as
 // parentOrganization in seo.ts).
 //
-// Reconciled 2026-06-23 against the live CF zone list (53 zones). Within
+// Reconciled 2026-07-02 against the live CF zone list (54 zones). Within
 // each category, brands prefixed with "olla*" lead — they are the canonical
 // Ollasoftware-owned product family.
 
@@ -47,10 +47,11 @@ export const clients: readonly Client[] = [
   { name: 'Qcrawl',        domain: 'qcrawl.com',        category: 'ai', blurb: 'Distributed crawl scheduler' },
   { name: 'Downdownalert', domain: 'downdownalert.com', category: 'ai', blurb: 'AI-summarised incident alerting' },
 
-  // ── APIs & dev tools (13) ─────────────────────────────────────
+  // ── APIs & dev tools (14) ─────────────────────────────────────
   // Olla-prefixed family first.
   { name: 'Ollastack',     domain: 'ollastack.com',     category: 'api', blurb: 'Pre-built stacks for production AI apps' },
   { name: 'Ollasync',      domain: 'ollasync.com',      category: 'api', blurb: 'Cross-platform data sync for agents' },
+  { name: 'Ollalink',      domain: 'ollalink.com',      category: 'api', blurb: 'Smart link management and short-URL platform' },
   // The rest.
   { name: 'api4api',       domain: 'api4api.com',       category: 'api', blurb: 'Universal API gateway' },
   { name: 'api4form',      domain: 'api4form.com',      category: 'api', blurb: 'Forms-as-an-API service' },
