@@ -24,10 +24,16 @@
 /robots.txt
   Cache-Control: public, max-age=3600
 
-# HTML pages: ensure edge cache revalidates immediately on deploy
+# HTML pages: ensure edge cache revalidates immediately on deploy globally across all Cloudflare POPs
 /blog/*
-  Cache-Control: public, max-age=0, must-revalidate, s-maxage=0
+  Cache-Control: public, max-age=0, must-revalidate
+  CDN-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+  Cloudflare-CDN-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 /blog/
-  Cache-Control: public, max-age=0, must-revalidate, s-maxage=0
+  Cache-Control: public, max-age=0, must-revalidate
+  CDN-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+  Cloudflare-CDN-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
 /*
   Cache-Control: public, max-age=0, must-revalidate
+  CDN-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
+  Cloudflare-CDN-Cache-Control: no-cache, no-store, max-age=0, must-revalidate
