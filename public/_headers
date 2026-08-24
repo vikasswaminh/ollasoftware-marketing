@@ -23,3 +23,11 @@
   Cache-Control: public, max-age=3600
 /robots.txt
   Cache-Control: public, max-age=3600
+
+# HTML pages: ensure edge cache revalidates immediately on deploy
+/blog/*
+  Cache-Control: public, max-age=0, must-revalidate, s-maxage=0
+/blog/
+  Cache-Control: public, max-age=0, must-revalidate, s-maxage=0
+/*
+  Cache-Control: public, max-age=0, must-revalidate
