@@ -53,6 +53,16 @@ for (const x of jsonLd) allLd.push(x);
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
 
+    <!-- Cache Invalidation: Instruct all browsers and proxies to always revalidate HTML -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <script is:inline>
+      window.addEventListener('pageshow', function(e) {
+        if (e.persisted) window.location.reload();
+      });
+    </script>
+
     <!-- Crawl policy mirrors robots.txt; per-page meta makes intent explicit. -->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="googlebot" content="index, follow, max-image-preview:large" />
