@@ -1,0 +1,443 @@
+---
+const {
+  items = [
+    {
+      image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1200&q=80',
+      label: 'Intake agent for a 4M-customer bank',
+      tag: 'AI-SOFTWARE · 86% PRECISION · 5 WEEKS',
+      desc: 'Triages support tickets, drafts replies, and routes escalations with 86% precision.',
+      link: '/work/'
+    },
+    {
+      image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80',
+      label: 'Doubled organic pipeline for a fintech',
+      tag: 'SEO / AEO · +2.1X LEADS · 90 DAYS',
+      desc: 'New cluster strategy + technical debt cleanup + 60-page content sprint. +14 top-10 keywords.',
+      link: '/work/'
+    },
+    {
+      image: 'https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?auto=format&fit=crop&w=1200&q=80',
+      label: 'Founder-led playbook for Series B SaaS',
+      tag: 'SOCIAL · 2.4M IMPRESSIONS · 38% MOM',
+      desc: 'Weekly LinkedIn + X cadence, short-form video. 18 inbound enterprise convos.',
+      link: '/work/'
+    },
+    {
+      image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=1200&q=80',
+      label: 'CAC down 38% in 6 weeks',
+      tag: 'PERF · CAC $68 → $42 · 6.8 LTV/CAC',
+      desc: 'Rebuilt Meta + Google funnels, new LPs in our stack, real attribution.',
+      link: '/work/'
+    }
+  ],
+  defaultIndex = 1,
+  accentColor = '#1D6AF3',
+  overlayColor = '#060010',
+  textColor = '#ffffff',
+  height = 340,
+  gap = 10,
+  radius = 14,
+  orientation = 'horizontal',
+  showLabels = true,
+  className = ''
+} = Astro.props;
+
+const vertical = orientation === 'vertical';
+const count = items.length;
+
+const safeDefaultIndex = Math.min(
+  Math.max(defaultIndex, 0),
+  Math.max(count - 1, 0)
+);
+---
+
+<div
+  class:list={[
+    'accordion-gallery',
+    { 'accordion-gallery--vertical': vertical },
+    className
+  ]}
+  style={`
+    --ag-accent: ${accentColor};
+    --ag-overlay: ${overlayColor};
+    --ag-text: ${textColor};
+    --ag-gap: ${gap}px;
+    --ag-radius: ${radius}px;
+    height: ${vertical ? Math.round(height * 1.6) : height}px;
+  `}
+  data-default-index={safeDefaultIndex}
+  role="list"
+  aria-label="Image accordion gallery"
+>
+  {
+    items.map((item, i) => {
+      const isActive = i === safeDefaultIndex;
+      const Tag = item.link ? 'a' : 'div';
+
+      return (
+        <Tag
+          class:list={[
+            'ag-panel',
+            { 'ag-panel--active': isActive }
+          ]}
+          href={item.link || undefined}
+          data-index={i}
+          data-active={isActive}
+          style={`border-radius: ${radius}px; flex-grow: ${isActive ? 3.5 : 1};`}
+          role="listitem"
+          tabindex="0"
+          aria-current={isActive ? 'true' : undefined}
+          aria-label={item.label}
+        >
+          <span class="ag-panel__frame">
+            <span class="ag-panel__media">
+              <img
+                src={item.image}
+                alt={item.alt || item.label || ''}
+                draggable="false"
+              />
+            </span>
+
+            <span
+              class="ag-panel__overlay"
+              aria-hidden="true"
+            ></span>
+          </span>
+
+          {
+            showLabels && (
+              <span class="ag-panel__label" aria-hidden="true">
+                <span class="ag-panel__bar"></span>
+
+                <div class="ag-panel__content">
+                  {item.tag && <span class="ag-panel__tag">{item.tag}</span>}
+                  <span class="ag-panel__text">
+                    {item.label}
+                  </span>
+                  {item.desc && <p class="ag-panel__desc">{item.desc}</p>}
+                </div>
+              </span>
+            )
+          }
+        </Tag>
+      );
+    })
+  }
+</div>
+
+<style>
+  .accordion-gallery {
+    --ag-accent: #1D6AF3;
+    --ag-overlay: #060010;
+    --ag-text: #ffffff;
+    --ag-gap: 10px;
+    --ag-radius: 14px;
+
+    display: flex;
+    flex-direction: row;
+    gap: var(--ag-gap);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .accordion-gallery--vertical {
+    flex-direction: column;
+  }
+
+  .ag-panel {
+    position: relative;
+    flex: 1 1 0;
+    flex-grow: 1;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+
+    border-radius: var(--ag-radius);
+    cursor: pointer;
+    display: block;
+    text-decoration: none;
+    outline: none;
+
+    background: #0a0713;
+    box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.7);
+
+    transition: flex-grow 0.45s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s ease, border-color 0.25s ease, box-shadow 0.3s ease;
+    will-change: flex-grow, transform;
+    -webkit-tap-highlight-color: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .ag-panel--active {
+    flex: 3.5 1 0 !important;
+    flex-grow: 3.5 !important;
+    border-color: rgba(29, 106, 243, 0.55);
+    box-shadow: 0 12px 36px -12px rgba(29, 106, 243, 0.35), 0 0 0 1px rgba(29, 106, 243, 0.35);
+  }
+
+  .ag-panel:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+  }
+
+  /* ── Dynamic Hover Fluid Expansion ── */
+  @media (hover: hover) {
+    .accordion-gallery:hover .ag-panel {
+      flex-grow: 1 !important;
+      border-color: rgba(255, 255, 255, 0.12);
+      box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.7);
+    }
+    .accordion-gallery:hover .ag-panel:hover {
+      flex-grow: 3.5 !important;
+      border-color: rgba(29, 106, 243, 0.6) !important;
+      box-shadow: 0 12px 36px -12px rgba(29, 106, 243, 0.4), 0 0 0 1px rgba(29, 106, 243, 0.4) !important;
+    }
+    .accordion-gallery:hover .ag-panel:hover .ag-panel__bar,
+    .accordion-gallery:hover .ag-panel:hover .ag-panel__tag,
+    .accordion-gallery:hover .ag-panel:hover .ag-panel__text,
+    .accordion-gallery:hover .ag-panel:hover .ag-panel__desc {
+      opacity: 1 !important;
+      transform: translateX(0) !important;
+    }
+    .accordion-gallery:hover .ag-panel:not(:hover) .ag-panel__bar,
+    .accordion-gallery:hover .ag-panel:not(:hover) .ag-panel__tag,
+    .accordion-gallery:hover .ag-panel:not(:hover) .ag-panel__text,
+    .accordion-gallery:hover .ag-panel:not(:hover) .ag-panel__desc {
+      opacity: 0 !important;
+      transform: translateX(-10px) !important;
+    }
+  }
+
+  .ag-panel__frame {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: inherit;
+  }
+
+  .ag-panel__media {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    min-width: 500px;
+    height: 100%;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+  }
+
+  .ag-panel__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  .ag-panel__overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(6, 0, 16, 0.15) 0%,
+        rgba(6, 0, 16, 0.45) 45%,
+        rgba(6, 0, 16, 0.92) 100%
+      );
+    transition: background 0.4s ease;
+  }
+
+  .ag-panel--active .ag-panel__overlay,
+  .ag-panel:hover .ag-panel__overlay {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(6, 0, 16, 0.05) 0%,
+        rgba(6, 0, 16, 0.35) 40%,
+        rgba(6, 0, 16, 0.88) 100%
+      );
+  }
+
+  .ag-panel__label {
+    position: absolute;
+    left: 18px;
+    bottom: 18px;
+    right: 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .ag-panel__bar {
+    flex: 0 0 auto;
+    width: 3.5px;
+    height: 28px;
+    border-radius: 4px;
+    background: var(--ag-accent);
+    opacity: 0;
+    margin-top: 3px;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    transform: translateX(-8px);
+    box-shadow: 0 0 12px color-mix(in srgb, var(--ag-accent) 70%, transparent);
+  }
+
+  .ag-panel--active .ag-panel__bar {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .ag-panel__content {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+
+  .ag-panel__tag {
+    font-family: 'Inter', sans-serif;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ag-accent);
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.35s ease 0.05s, transform 0.35s ease 0.05s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .ag-panel--active .ag-panel__tag {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .ag-panel__text {
+    color: var(--ag-text);
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: clamp(0.95rem, 1.35vw, 1.25rem);
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.35s ease 0.08s, transform 0.35s ease 0.08s;
+    text-shadow: 0 2px 14px rgba(0, 0, 0, 0.7);
+  }
+
+  .ag-panel--active .ag-panel__text {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .ag-panel__desc {
+    color: #cbd5e1;
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    line-height: 1.35;
+    margin: 0;
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: opacity 0.35s ease 0.12s, transform 0.35s ease 0.12s;
+    max-width: 440px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+  }
+
+  .ag-panel--active .ag-panel__desc {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  @media (max-width: 768px) {
+    .accordion-gallery {
+      flex-direction: column;
+      height: auto !important;
+    }
+
+    .ag-panel {
+      min-height: 120px;
+      height: 140px;
+      flex: 1 1 auto !important;
+    }
+
+    .ag-panel--active {
+      min-height: 180px;
+      height: 200px;
+    }
+
+    .ag-panel__media {
+      min-width: 100%;
+      width: 100%;
+      height: 100%;
+    }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    function initAccordionGalleries() {
+      const galleries = document.querySelectorAll('.accordion-gallery');
+
+      galleries.forEach((root) => {
+        const panels = Array.from(root.querySelectorAll('.ag-panel'));
+        if (!panels.length) return;
+
+        const count = panels.length;
+        let activeIndex = Number(root.dataset.defaultIndex || 0);
+
+        function setActive(index) {
+          if (index < 0 || index >= count) return;
+          activeIndex = index;
+
+          panels.forEach((panel, i) => {
+            const isActive = i === activeIndex;
+            panel.classList.toggle('ag-panel--active', isActive);
+            panel.setAttribute('aria-current', isActive ? 'true' : 'false');
+            panel.style.flexGrow = isActive ? '3.5' : '1';
+          });
+        }
+
+        panels.forEach((panel, index) => {
+          panel.addEventListener('mouseenter', () => setActive(index));
+          panel.addEventListener('pointerenter', () => setActive(index));
+          panel.addEventListener('focus', () => setActive(index));
+          panel.addEventListener('click', (e) => {
+            if (index !== activeIndex) {
+              e.preventDefault();
+              setActive(index);
+            }
+          });
+
+          panel.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+              e.preventDefault();
+              const next = (index + 1) % count;
+              setActive(next);
+              panels[next]?.focus();
+            } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+              e.preventDefault();
+              const prev = (index - 1 + count) % count;
+              setActive(prev);
+              panels[prev]?.focus();
+            }
+          });
+        });
+
+        // Ensure default active state is set
+        setActive(activeIndex);
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initAccordionGalleries);
+    } else {
+      initAccordionGalleries();
+    }
+  })();
+</script>

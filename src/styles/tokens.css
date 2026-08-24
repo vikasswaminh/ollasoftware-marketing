@@ -1,52 +1,110 @@
-/* Design tokens — light theme ported from form4dev.com (2026-06-01).
-   Token names preserved for component compatibility; only values changed.
-   Net-new tokens added below the existing surface to support shadows and
-   the recessed/sunken bands the light surface relies on for hierarchy. */
-
 :root {
-  /* surfaces (white-stack, 4 tiers lightest → deepest) */
-  --o-bg:        #ffffff;   /* page background */
-  --o-panel:     #fafafa;   /* elevated panels — cards, footer band */
-  --o-panel-hi:  #f4f4f5;   /* nav surface on scroll, table heads */
-  --o-line:      #e5e5e7;   /* default border */
-  --o-line-hi:   #ddddde;   /* stronger border on emphasis */
+  --radius: 0.625rem;
+  --background: oklch(0.985 0.005 85);
+  --foreground: oklch(0.145 0.015 260);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.145 0.015 260);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0.015 260);
+  --primary: oklch(0.55 0.22 255);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.96 0.005 85);
+  --secondary-foreground: oklch(0.205 0.015 260);
+  --muted: oklch(0.96 0.005 85);
+  --muted-foreground: oklch(0.5 0.02 260);
+  --accent: oklch(0.55 0.22 255);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.9 0.008 85);
+  --input: oklch(0.9 0.008 85);
+  --ring: oklch(0.55 0.22 255);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: oklch(0.205 0 0);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
 
-  /* net-new surface tokens (form4dev parity) */
-  --o-bg-sunken:    #f4f4f5;   /* recessed section bands (e.g. ParentBanner) */
-  --o-bg-deep:      #ebebed;   /* deepest neutral — comparison row alternates */
-  --o-line-whisper: #f0f0f1;   /* internal divider inside cards */
+  /* Olla Brand Tokens - Light */
+  --o-bg:           #faf9f6;
+  --o-bg-sunken:    #f3eee8;
+  --o-bg-deep:      #f0eae1;
+  --o-panel:        #ffffff;
+  --o-panel-hi:     #ffffff;
+  --o-line:         rgba(20, 30, 50, 0.09);
+  --o-line-hi:      rgba(20, 30, 50, 0.16);
+  --o-line-whisper: rgba(20, 30, 50, 0.04);
+  --o-ink:          #0f172a;
+  --o-mute:         #475569;
+  --o-faint:        #94a3b8;
+  --o-accent:       #216BFF;
+  --o-accent-2:     #1769FF;
+  --o-accent-dim:   rgba(33, 107, 255, 0.08);
+  --o-accent-ink:   #ffffff;
 
-  /* text (dark-on-light, 3 weights) */
-  --o-ink:    #0a0a0a;   /* primary text + headings */
-  --o-mute:   #52525b;   /* secondary text */
-  --o-faint:  #8a8a93;   /* tertiary text + metadata */
+  --o-radius-sm: 6px;
+  --o-radius:    10px;
+  --o-radius-lg: 14px;
 
-  /* primary accent — form4dev blue */
-  --o-accent:     #0066ff;   /* primary CTA bg + links */
-  --o-accent-2:   #0052cc;   /* hover / pressed */
-  --o-accent-dim: #e7efff;   /* accent-tinted bg (badges, soft highlights) */
-  --o-accent-ink: #ffffff;   /* text on accent surfaces — was hardcoded #0a0a0a */
-
-  /* per-service decorative accents — Tailwind-600 weights for white-bg readability.
-     Each used by ONE service identifier (Services.astro, service-page hue, etc.). */
-  --o-warn:   #ea580c;   /* orange-600  — SEO service identity (was #ffb04a) */
-  --o-red:    #dc2626;   /* red-600     — Social service identity (was #ff5d5d) */
-  --o-blue:   #2563eb;   /* blue-600    — Software dev service identity (was #7cb7ff) */
-  --o-purple: #7c3aed;   /* violet-600  — AEO service identity (was #c79bff) */
-  --o-teal:   #0d9488;   /* teal-600    — Performance Marketing identity (was #6dd6b8) */
-  --o-ok:     #16a34a;   /* green-600   — AI Software identity + success state */
-  --o-err:    #dc2626;   /* red-600     — error semantic */
-
-  /* shadows — form4dev spec verbatim */
-  --o-shadow-card: 0 1px 0 rgba(10, 10, 10, .04);
-  --o-shadow-deep: 0 24px 48px -16px rgba(10, 10, 10, .18);
-
-  /* radii / typography scale used in multiple places */
-  --o-radius-sm: 4px;
-  --o-radius:    6px;
-  --o-radius-lg: 8px;
-
-  /* fonts — keeping Lato (user decision; recent install) */
-  --o-font-sans: 'Lato', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --o-font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --o-font-mono: 'Geist Mono', ui-monospace, 'JetBrains Mono', monospace;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   PREMIUM OBSIDIAN SAPPHIRE DARK THEME
+   Deep cosmic midnight tones with luminous cyan-sapphire luminescence
+══════════════════════════════════════════════════════════════════════ */
+html[data-theme="dark"], .dark {
+  --background: #060913;
+  --foreground: #F8FAFC;
+  --card: #0c1326;
+  --card-foreground: #F8FAFC;
+  --popover: #0c1326;
+  --popover-foreground: #F8FAFC;
+  --primary: #38BDF8;
+  --primary-foreground: #060913;
+  --secondary: #111c38;
+  --secondary-foreground: #F8FAFC;
+  --muted: #111c38;
+  --muted-foreground: #94A3B8;
+  --accent: #216BFF;
+  --accent-foreground: #ffffff;
+  --destructive: #f87171;
+  --border: rgba(56, 189, 248, 0.14);
+  --input: rgba(56, 189, 248, 0.18);
+  --ring: #38BDF8;
+
+  --chart-1: #38BDF8;
+  --chart-2: #216BFF;
+  --chart-3: #818CF8;
+  --chart-4: #34D399;
+  --chart-5: #F472B6;
+
+  /* Olla Brand Tokens - Midnight Obsidian Sapphire */
+  --o-bg:           #060913;   /* Pure deep midnight void with cosmic undertone */
+  --o-bg-sunken:    #090E1F;   /* Sunken secondary section backdrop */
+  --o-bg-deep:      #04060D;   /* Darkest obsidian contrast layer */
+  --o-panel:        #0D152C;   /* Frosted sapphire card surface */
+  --o-panel-hi:     #131F3F;   /* Elevated hover card surface */
+  --o-line:         rgba(56, 189, 248, 0.14);  /* Subtle cyan-tinted glass border */
+  --o-line-hi:      rgba(56, 189, 248, 0.32);  /* Luminous border on focus/active */
+  --o-line-whisper: rgba(255, 255, 255, 0.05);
+
+  --o-ink:          #F8FAFC;   /* Crisp diamond white */
+  --o-mute:         #94A3B8;   /* Cool moonlight silver */
+  --o-faint:        #64748B;   /* Muted technical gray */
+
+  --o-accent:       #38BDF8;   /* Vivid electric cyan */
+  --o-accent-2:     #216BFF;   /* Deep sapphire blue */
+  --o-accent-dim:   rgba(56, 189, 248, 0.12); /* Soft radiant glow tint */
+  --o-accent-ink:   #060913;
+
+  color-scheme: dark;
 }

@@ -2,200 +2,697 @@
 import SectionHead from '../primitives/SectionHead.astro';
 import { clients, categoryMeta, type ClientCategory } from '../../lib/clients';
 
-// Group by category, preserve declaration order within each.
-const groups: Array<{ category: ClientCategory; items: typeof clients[number][] }> = [];
-for (const c of clients) {
-  let g = groups.find(x => x.category === c.category);
-  if (!g) { g = { category: c.category, items: [] }; groups.push(g); }
-  g.items.push(c);
-}
-
 const total = clients.length;
+
+// Filter categories
+const categories: Array<{ id: string; label: string; count: number }> = [
+  { id: 'all', label: `All Brands (${total})`, count: total },
+  { id: 'ai', label: `AI & ML (${clients.filter(c => c.category === 'ai').length})`, count: clients.filter(c => c.category === 'ai').length },
+  { id: 'api', label: `APIs & dev tools (${clients.filter(c => c.category === 'api').length})`, count: clients.filter(c => c.category === 'api').length },
+  { id: 'security', label: `Security & networking (${clients.filter(c => c.category === 'security').length})`, count: clients.filter(c => c.category === 'security').length },
+  { id: 'saas', label: `Consumer & SaaS (${clients.filter(c => c.category === 'saas').length})`, count: clients.filter(c => c.category === 'saas').length },
+  { id: 'training', label: `Training & education (${clients.filter(c => c.category === 'training').length})`, count: clients.filter(c => c.category === 'training').length },
+];
+
+// Helper to format title vertically with ampersand
+const formatVerticalTitle = (label: string) => {
+  const parts = label.split('&');
+  if (parts.length === 2) {
+    return { first: parts[0].trim(), amp: '&', second: parts[1].trim() };
+  }
+  return { first: label, amp: '', second: '' };
+};
+
+const categoryTitles: Record<string, { first: string; amp: string; second: string }> = {
+  all: { first: 'ALL', amp: '', second: 'BRANDS' },
+  ai: { first: 'AI', amp: '&', second: 'ML' },
+  api: { first: 'APIS', amp: '&', second: 'DEV TOOLS' },
+  security: { first: 'SECURITY', amp: '&', second: 'NETWORKING' },
+  saas: { first: 'CONSUMER', amp: '&', second: 'SAAS' },
+  training: { first: 'TRAINING', amp: '&', second: 'EDUCATION' },
+};
 ---
-<section class="clients-section">
-  <SectionHead
-    tag="01 · Our clients"
-    title={`${total}+ AI brands run on Ollasoftware.`}
-    sub="Every name here ships in production. Every one was built, hardened, and grown by the same senior team you'd be hiring."
-  >
-    <a slot="right" class="more mono" href="/work/">recent ships →</a>
-  </SectionHead>
 
-  <div class="legend">
-    {Object.entries(categoryMeta).map(([key, meta]) => (
-      <span class="legend-item mono" style={`--accent:${meta.accentVar}`}>
-        <span class="dot" aria-hidden="true"></span>{meta.label}
-      </span>
-    ))}
-  </div>
+<section class="clients-section" id="our-clients">
+  <!-- Shared page-container: max-width 1280px with equal left/right margins -->
+  <div class="page-container">
 
-  <div class="groups">
-    {groups.map(g => (
-      <div class="group">
-        <div class="group-head" style={`--accent:${categoryMeta[g.category].accentVar}`}>
-          <span class="g-label mono">{categoryMeta[g.category].label}</span>
-          <span class="g-count mono">{g.items.length}</span>
+    <!-- Left-aligned Section Header -->
+    <div class="section-head-wrap">
+      <SectionHead
+        tag="01 · Our clients"
+        title={`${total}+ AI brands run on Ollasoftware.`}
+        sub="Every name here ships in production. Every one was built, hardened, and grown by the same senior team you'd be hiring."
+      />
+    </div>
+
+    <!-- STRIPE-STYLE 2-COLUMN MAIN GRID -->
+    <div class="split-container">
+      <!-- LEFT COLUMN: Sticky Category Info & Heading & Vertical Filter List -->
+      <div class="left-sticky-col">
+        <div class="sticky-content">
+          <span class="category-count mono" id="active-brand-count">{total} BRANDS</span>
+          <h2 class="editorial-heading" id="sticky-category-title">
+            <span id="heading-first">ALL</span>
+            <span class="ampersand" id="heading-amp" style="display: none;">&amp;</span>
+            <span id="heading-second">BRANDS</span>
+          </h2>
+
+          <!-- Vertical Category Filter Buttons -->
+          <div class="vertical-filter-nav" id="client-filter-bar" role="tablist" aria-label="Filter products by category">
+            {categories.map((cat, idx) => (
+              <button
+                type="button"
+                class={`v-filter-btn ${idx === 0 ? 'active' : ''}`}
+                data-category-filter={cat.id}
+                role="tab"
+                aria-selected={idx === 0 ? "true" : "false"}
+                aria-pressed={idx === 0 ? "true" : "false"}
+              >
+                <span class="v-label">{cat.label.replace(/\s*\(\d+\)/, '')}</span>
+                <span class="v-count mono">({cat.count})</span>
+              </button>
+            ))}
+          </div>
         </div>
-        <div class="grid">
-          {g.items.map(c => (
+      </div>
+
+      <!-- RIGHT COLUMN: 3-in-one-line Product Cards Grid -->
+      <div class="right-scroll-col">
+        <div class="cards-grid" id="product-cards-grid">
+          {clients.map((item) => (
             <a
-              class="cell"
-              href={`https://${c.domain}`}
+              href={`https://${item.domain}`}
               target="_blank"
-              rel="noopener"
-              style={`--accent:${categoryMeta[g.category].accentVar}`}
+              rel="noopener noreferrer"
+              class={`product-card card-cat-${item.category}`}
+              data-product-category={item.category}
             >
-              <span class="cell-name">{c.name}</span>
-              <span class="cell-blurb">{c.blurb}</span>
-              <span class="cell-domain mono">{c.domain} ↗</span>
+              <div class="card-top">
+                <div class="card-title-row">
+                  <h3 class="product-title">{item.name}</h3>
+                  <span class={`cat-pill cat-pill-${item.category}`}>
+                    {item.category === 'ai' ? 'AI' : item.category === 'api' ? 'API' : item.category === 'security' ? 'Security' : item.category === 'saas' ? 'SaaS' : 'Training'}
+                  </span>
+                </div>
+                <p class="product-blurb">{item.blurb}</p>
+              </div>
+              <div class="card-bottom">
+                <span class="product-domain mono">
+                  {item.domain} <span class="arrow">↗</span>
+                </span>
+              </div>
             </a>
           ))}
         </div>
       </div>
-    ))}
-  </div>
+    </div>
 
-  <div class="footnote mono">
-    Plus a handful of external clients we can't name here.
-    <a href="/work/">See engagements we can show →</a>
-  </div>
+    <div class="footnote">
+      Plus a handful of external clients we can't name here.
+      <a href="/work/">See engagements we can show →</a>
+    </div>
+
+  </div><!-- /page-container -->
 </section>
 
+<script is:inline>
+  (() => {
+    const filterBar = document.getElementById('client-filter-bar');
+    const cardsGrid = document.getElementById('product-cards-grid');
+    const countEl = document.getElementById('active-brand-count');
+    const headingFirst = document.getElementById('heading-first');
+    const headingAmp = document.getElementById('heading-amp');
+    const headingSecond = document.getElementById('heading-second');
+
+    if (!filterBar || !cardsGrid) return;
+
+    const filterBtns = Array.from(filterBar.querySelectorAll('[data-category-filter]'));
+    const cards = Array.from(cardsGrid.querySelectorAll('[data-product-category]'));
+
+    const categoryTitlesMap = {
+      all: { first: 'ALL', amp: '', second: 'BRANDS' },
+      ai: { first: 'AI', amp: '&', second: 'ML' },
+      api: { first: 'APIS', amp: '&', second: 'DEV TOOLS' },
+      security: { first: 'SECURITY', amp: '&', second: 'NETWORKING' },
+      saas: { first: 'CONSUMER', amp: '&', second: 'SAAS' },
+      training: { first: 'TRAINING', amp: '&', second: 'EDUCATION' },
+    };
+
+    filterBtns.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const category = btn.getAttribute('data-category-filter');
+        if (!category) return;
+
+        // Remember section position to avoid disorienting viewport jump
+        const sectionEl = document.getElementById('our-clients');
+        const sectionTop = sectionEl ? sectionEl.getBoundingClientRect().top + window.pageYOffset : 0;
+        const currentScroll = window.pageYOffset;
+
+        // Update active button states
+        filterBtns.forEach((b) => {
+          const isActive = b === btn;
+          b.classList.toggle('active', isActive);
+          b.setAttribute('aria-selected', String(isActive));
+          b.setAttribute('aria-pressed', String(isActive));
+        });
+
+        // Filter product cards in grid
+        let visibleCount = 0;
+        cards.forEach((card) => {
+          const cardCat = card.getAttribute('data-product-category');
+          const isVisible = category === 'all' || cardCat === category;
+
+          if (isVisible) {
+            card.removeAttribute('hidden');
+            card.style.display = 'flex';
+            visibleCount++;
+          } else {
+            card.setAttribute('hidden', '');
+            card.style.display = 'none';
+          }
+        });
+
+        // Update sticky title & brand count
+        if (countEl) countEl.textContent = `${visibleCount} BRANDS`;
+
+        const titleInfo = categoryTitlesMap[category] || categoryTitlesMap.all;
+        if (headingFirst) headingFirst.textContent = titleInfo.first;
+        if (headingSecond) headingSecond.textContent = titleInfo.second;
+
+        if (headingAmp) {
+          if (titleInfo.amp) {
+            headingAmp.style.display = 'inline-block';
+            headingAmp.textContent = titleInfo.amp;
+          } else {
+            headingAmp.style.display = 'none';
+          }
+        }
+
+        // Scroll directly to start from the first card onward
+        if (cardsGrid) {
+          const navHeight = 64;
+          const gridTop = cardsGrid.getBoundingClientRect().top + window.pageYOffset;
+          window.scrollTo({
+            top: gridTop - navHeight - 16,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  })();
+</script>
+
 <style>
+  /* ─── SECTION SHELL ─── */
   .clients-section {
-    padding: 110px 56px;
-    border-bottom: 1px solid var(--o-line);
+    padding: 64px 48px 76px;
+    background: #f7f4ef;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   }
 
-  .more {
-    color: var(--o-accent);
-    font-size: 10px;
-    text-decoration: none;
+  :global(html[data-theme="dark"]) .clients-section {
+    background: #060913 !important;
+    border-top: 1px solid rgba(56, 189, 248, 0.12) !important;
+    border-bottom: 1px solid rgba(56, 189, 248, 0.12) !important;
   }
 
-  .legend {
+  /*
+   * SHARED PAGE CONTAINER (Stripe Layout Philosophy)
+   * Centered page container with equal left and right margins.
+   * Max width 1280px for a clean, strong horizontal rhythm.
+   */
+  .page-container {
+    max-width: 1280px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+  }
+
+  /* ─── CENTER-ALIGNED SECTION HEADER ─── */
+  .section-head-wrap {
+    margin-bottom: 24px;
     display: flex;
-    gap: 24px;
-    flex-wrap: wrap;
-    padding: 14px 18px;
-    background: var(--o-panel);
-    border: 1px solid var(--o-line);
-    border-radius: var(--o-radius);
-    margin-bottom: 28px;
+    justify-content: center;
+    text-align: center;
   }
-  .legend-item {
-    font-size: 9px;
-    color: var(--o-mute);
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+  .section-head-wrap :global(.section-head) {
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 0;
   }
-  .legend-item .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 2px;
-    background: var(--accent);
-  }
-
-  .groups {
+  .section-head-wrap :global(.text) {
     display: flex;
     flex-direction: column;
-    gap: 28px;
+    align-items: center;
+    text-align: center;
+  }
+  .section-head-wrap :global(.sub) {
+    margin: 0 auto;
+    text-align: center;
+  }
+  .section-head-wrap :global(h2) {
+    font-size: clamp(30px, 4.8vw, 48px);
+    letter-spacing: -1.2px;
+    margin: 8px 0 10px;
+    text-align: center;
   }
 
-  .group {
-    background: var(--o-panel);
-    border: 1px solid var(--o-line);
-    border-radius: var(--o-radius-lg);
-    overflow: hidden;
+  /* ─── MAIN 2-COLUMN GRID (Stripe 260px / 1fr balance) ─── */
+  .split-container {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 40px;
+    align-items: start;
+    position: relative;
+    width: 100%;
+    margin-top: 8px;
   }
 
-  .group-head {
+  /* ─── LEFT: Sticky category info & heading & vertical filter list (VERTICALLY & HORIZONTALLY CENTERED) ─── */
+  .left-sticky-col {
+    position: sticky;
+    top: 80px;
+    height: calc(100vh - 100px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding-top: 0;
+    text-align: center;
+  }
+  .sticky-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+  }
+  .category-count {
+    font-family: "Inter", sans-serif;
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--o-mute);
+    letter-spacing: 1.5px;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+  .editorial-heading {
+    font-family: 'Inter', sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: clamp(1.8rem, 2.5vw, 2.6rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--o-ink);
+    margin: 0 0 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-transform: uppercase;
+    width: 100%;
+  }
+  .editorial-heading span {
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    max-width: 100%;
+    text-align: center;
+  }
+  .editorial-heading .ampersand {
+    font-style: italic;
+    color: #d9381e;
+    padding-left: 0;
+    line-height: 0.85;
+    text-align: center;
+    display: block;
+  }
+
+  /* ─── VERTICAL CATEGORY FILTER BOX ─── */
+  .vertical-filter-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-radius: 14px;
+    padding: 8px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
+    box-sizing: border-box;
+  }
+
+  :global(html[data-theme="dark"]) .vertical-filter-nav {
+    background: #0D152C;
+    border-color: rgba(56, 189, 248, 0.14);
+    box-shadow: 0 4px 20px rgba(0, 4, 18, 0.4);
+  }
+
+  .v-filter-btn {
+    border: 1px solid transparent;
+    background: transparent;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 13.5px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    outline: none;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 14px 22px;
-    border-bottom: 1px solid var(--o-line);
-    background: var(--o-panel-hi);
+    width: 100%;
+    text-align: left;
+    box-sizing: border-box;
   }
-  .g-label {
-    font-size: 9px;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 1px;
+  :global(html[data-theme="dark"]) .v-filter-btn {
+    color: #94a3b8;
   }
-  .g-count {
-    font-size: 9px;
-    color: var(--o-faint);
+  .v-filter-btn:hover {
+    background: rgba(0, 0, 0, 0.04);
+    color: #0f172a;
+  }
+  :global(html[data-theme="dark"]) .v-filter-btn:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: #ffffff;
+  }
+  .v-filter-btn.active {
+    background: rgba(29, 106, 243, 0.08);
+    color: #1D6AF3;
+    font-weight: 700;
+    border-color: rgba(29, 106, 243, 0.25);
+  }
+  :global(html[data-theme="dark"]) .v-filter-btn.active {
+    background: rgba(29, 106, 243, 0.18);
+    color: #60a5fa;
+    border-color: rgba(96, 165, 250, 0.35);
+  }
+  .v-label {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: left;
+  }
+  .v-count {
+    font-size: 11px;
+    opacity: 0.75;
+    margin-left: 8px;
   }
 
-  .grid {
+  /* ─── RIGHT: Product Cards 3-in-one-line Grid ─── */
+  .right-scroll-col {
+    min-width: 0;
+    width: 100%;
+    min-height: 520px;
+  }
+  .cards-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    background: var(--o-line);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    width: 100%;
+    min-height: 480px;
+    align-content: start;
   }
 
-  .cell {
-    background: var(--o-panel);
-    padding: 18px 20px;
+  /* ─── REFINED CARD DESIGN WITH DISTINCT CATEGORY LIGHT COLORS ─── */
+  .product-card {
+    background: #ffffff;
+    border: 1px solid rgba(20, 30, 50, 0.10);
+    border-radius: 14px;
+    padding: 20px 18px;
+    min-height: 155px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    justify-content: space-between;
     text-decoration: none;
     color: inherit;
-    transition: background .14s, border-color .14s;
-    border-left: 2px solid transparent;
-  }
-  .cell:hover {
-    background: var(--o-panel-hi);
-    border-left-color: var(--accent);
-  }
-  .cell-name {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--o-ink);
-    letter-spacing: -0.3px;
-  }
-  .cell-blurb {
-    font-size: 10px;
-    color: var(--o-mute);
-    line-height: 1.45;
-    flex: 1;
-  }
-  .cell-domain {
-    font-size: 10px;
-    color: var(--o-faint);
-    letter-spacing: 0.3px;
-  }
-  .cell:hover .cell-domain {
-    color: var(--accent);
+    transition:
+      border-color 220ms ease,
+      box-shadow   220ms ease,
+      transform    220ms cubic-bezier(0.16,1,0.3,1);
+    box-sizing: border-box;
   }
 
+  /* 1. AI & ML — Light Electric Blue / Sky tint */
+  .product-card.card-cat-ai {
+    background: #f8fbff;
+    border-color: rgba(33, 107, 255, 0.18);
+  }
+  .product-card.card-cat-ai:hover {
+    border-color: #216bff;
+    box-shadow: 0 10px 24px rgba(33, 107, 255, 0.12);
+  }
+
+  /* 2. APIs & Dev Tools — Light Purple / Indigo tint */
+  .product-card.card-cat-api {
+    background: #faf8ff;
+    border-color: rgba(124, 58, 237, 0.18);
+  }
+  .product-card.card-cat-api:hover {
+    border-color: #7c3aed;
+    box-shadow: 0 10px 24px rgba(124, 58, 237, 0.12);
+  }
+
+  /* 3. Security & Networking — Light Crimson / Warm Coral tint */
+  .product-card.card-cat-security {
+    background: #fff8f6;
+    border-color: rgba(217, 56, 30, 0.18);
+  }
+  .product-card.card-cat-security:hover {
+    border-color: #d9381e;
+    box-shadow: 0 10px 24px rgba(217, 56, 30, 0.12);
+  }
+
+  /* 4. Consumer & SaaS — Light Mint / Emerald tint */
+  .product-card.card-cat-saas {
+    background: #f4fbf7;
+    border-color: rgba(16, 185, 129, 0.22);
+  }
+  .product-card.card-cat-saas:hover {
+    border-color: #10b981;
+    box-shadow: 0 10px 24px rgba(16, 185, 129, 0.12);
+  }
+
+  /* 5. Training & Education — Light Amber / Warm Gold tint */
+  .product-card.card-cat-training {
+    background: #fffbf2;
+    border-color: rgba(217, 119, 6, 0.22);
+  }
+  .product-card.card-cat-training:hover {
+    border-color: #d97706;
+    box-shadow: 0 10px 24px rgba(217, 119, 6, 0.12);
+  }
+
+  /* Dark mode variants */
+  :global(html[data-theme="dark"]) .product-card {
+    background: #0D152C !important;
+    border-color: rgba(255, 255, 255, 0.10) !important;
+  }
+  :global(html[data-theme="dark"]) .product-card.card-cat-ai {
+    background: rgba(33, 107, 255, 0.08) !important;
+    border-color: rgba(56, 189, 248, 0.25) !important;
+  }
+  :global(html[data-theme="dark"]) .product-card.card-cat-api {
+    background: rgba(139, 92, 246, 0.08) !important;
+    border-color: rgba(167, 139, 250, 0.25) !important;
+  }
+  :global(html[data-theme="dark"]) .product-card.card-cat-security {
+    background: rgba(239, 68, 68, 0.08) !important;
+    border-color: rgba(248, 113, 113, 0.25) !important;
+  }
+  :global(html[data-theme="dark"]) .product-card.card-cat-saas {
+    background: rgba(16, 185, 129, 0.08) !important;
+    border-color: rgba(52, 211, 153, 0.25) !important;
+  }
+  :global(html[data-theme="dark"]) .product-card.card-cat-training {
+    background: rgba(245, 158, 11, 0.08) !important;
+    border-color: rgba(251, 191, 36, 0.25) !important;
+  }
+
+  .product-card:hover {
+    transform: translateY(-2px);
+  }
+
+  .card-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+
+  .product-title {
+    font-family: 'Inter', sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.15;
+    color: #0f172a;
+    margin: 0;
+    transition: color 200ms ease;
+  }
+
+  :global(html[data-theme="dark"]) .product-title {
+    color: #f8fafc;
+  }
+
+  /* Distinct category pills */
+  .cat-pill {
+    font-family: var(--o-font-mono, monospace);
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 2px 7px;
+    border-radius: 6px;
+    flex-shrink: 0;
+  }
+  .cat-pill-ai {
+    background: rgba(33, 107, 255, 0.12);
+    color: #1769ff;
+  }
+  .cat-pill-api {
+    background: rgba(124, 58, 237, 0.12);
+    color: #7c3aed;
+  }
+  .cat-pill-security {
+    background: rgba(217, 56, 30, 0.12);
+    color: #d9381e;
+  }
+  .cat-pill-saas {
+    background: rgba(16, 185, 129, 0.14);
+    color: #059669;
+  }
+  .cat-pill-training {
+    background: rgba(217, 119, 6, 0.14);
+    color: #b45309;
+  }
+
+  :global(html[data-theme="dark"]) .cat-pill-ai { color: #60a5fa; background: rgba(33, 107, 255, 0.25); }
+  :global(html[data-theme="dark"]) .cat-pill-api { color: #c084fc; background: rgba(139, 92, 246, 0.25); }
+  :global(html[data-theme="dark"]) .cat-pill-security { color: #f87171; background: rgba(239, 68, 68, 0.25); }
+  :global(html[data-theme="dark"]) .cat-pill-saas { color: #4ade80; background: rgba(16, 185, 129, 0.25); }
+  :global(html[data-theme="dark"]) .cat-pill-training { color: #fbbf24; background: rgba(245, 158, 11, 0.25); }
+
+  .product-card:hover .product-title { color: #1769ff; }
+  :global(html[data-theme="dark"]) .product-card:hover .product-title { color: #38bdf8; }
+
+  .product-blurb {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-size: 12px;
+    line-height: 1.45;
+    color: #64748b;
+    margin: 0;
+  }
+
+  :global(html[data-theme="dark"]) .product-blurb {
+    color: #94a3b8;
+  }
+
+  .card-bottom {
+    margin-top: 16px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(0, 0, 0, 0.08);
+  }
+
+  :global(html[data-theme="dark"]) .card-bottom {
+    border-top-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .product-domain {
+    font-family: var(--o-font-mono);
+    font-size: 11px;
+    color: #64748b;
+    letter-spacing: 0.2px;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: color 200ms ease;
+  }
+  :global(html[data-theme="dark"]) .product-domain {
+    color: #94a3b8;
+  }
+
+  .product-domain .arrow {
+    display: inline-block;
+    transition: transform 200ms ease;
+  }
+  .product-card:hover .product-domain { color: #1769ff; }
+  :global(html[data-theme="dark"]) .product-card:hover .product-domain { color: #38bdf8; }
+  .product-card:hover .product-domain .arrow { transform: translate(3px,-2px); }
+
+  /* ─── FOOTNOTE ─── */
   .footnote {
-    margin-top: 28px;
-    font-size: 10px;
-    color: var(--o-mute);
-    text-align: center;
+    margin-top: 48px;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 13.5px;
+    color: #64748b;
+    text-align: left;
   }
   .footnote a {
-    color: var(--o-accent);
+    color: #d9381e;
+    font-weight: 600;
     text-decoration: none;
     margin-left: 6px;
   }
   .footnote a:hover { text-decoration: underline; }
 
-  @media (max-width: 1100px) {
-    .grid { grid-template-columns: repeat(3, 1fr); }
+  /* ─── RESPONSIVE (Stripe-style fluid layout) ─── */
+  @media (max-width: 1024px) {
+    .clients-section { padding: 90px 32px; }
+    .split-container {
+      grid-template-columns: 250px 1fr;
+      gap: 44px;
+    }
+    .editorial-heading {
+      font-size: clamp(1.8rem, 2.6vw, 2.8rem);
+    }
   }
-  @media (max-width: 800px) {
-    .grid { grid-template-columns: repeat(2, 1fr); }
-  }
-  @media (max-width: 500px) {
-    .clients-section { padding: 64px 24px; }
-    .grid { grid-template-columns: 1fr; }
-    .legend { gap: 12px; }
+
+  @media (max-width: 768px) {
+    .clients-section { padding: 64px 20px; }
+    .split-container {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+    .left-sticky-col {
+      position: relative;
+      top: 0;
+    }
+    .sticky-content {
+      align-items: flex-start;
+      text-align: left;
+    }
+    .editorial-heading {
+      font-size: 2.4rem;
+      flex-direction: row;
+      gap: 10px;
+      align-items: baseline;
+    }
+    .cards-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .product-card {
+      padding: 24px;
+    }
   }
 </style>
+
+

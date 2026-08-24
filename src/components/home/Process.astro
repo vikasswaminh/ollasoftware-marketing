@@ -1,100 +1,409 @@
 ---
-import Tag from '../primitives/Tag.astro';
-import Btn from '../primitives/Btn.astro';
-
-const points: Array<[string, string, string]> = [
-  ['I.',   'Ship working software, weekly.',
-    'A demo that runs in your repo on Friday beats a deck on Monday. Every sprint — code or campaign — ends with something you can click, read, or watch.'],
-  ['II.',  'Tight scope. Honest price.',
-    'We over-scope our discovery, then under-scope our build. If we miss, the change order is on us, not on you. No retainers you can\'t cancel.'],
-  ['III.', 'You own everything.',
-    'Code MIT-licensed to you, day one. Content, briefs, ad accounts, audience data — all in your name. The day you stop calling, you take everything with you.'],
+const rules = [
+  {
+    num: '01.',
+    roman: 'I.',
+    title: 'Ship working software, weekly.',
+    desc: 'A demo that runs in your repo on Friday beats a deck on Monday. Every sprint — code or campaign — ends with something you can click, read, or watch.'
+  },
+  {
+    num: '02.',
+    roman: 'II.',
+    title: 'Tight scope. Honest price.',
+    desc: 'We over-scope our discovery, then under-scope our build. If we miss, the change order is on us, not on you. No retainers you can\'t cancel.'
+  },
+  {
+    num: '03.',
+    roman: 'III.',
+    title: 'You own everything.',
+    desc: 'Code MIT-licensed to you, day one. Content, briefs, ad accounts, audience data — all in your name. The day you stop calling, you take everything with you.'
+  }
 ];
 ---
-<section class="process">
-  <div class="head">
-    <Tag>04 · How we work</Tag>
-    <h2>Three rules every engagement runs on.</h2>
-    <p class="sub mono">A preview. The full version is in the process doc.</p>
-  </div>
 
-  <ol class="rules">
-    {points.map(([n, head, body], i) => (
-      <li class:list={['rule', { first: i === 0 }]}>
-        <span class="num mono">{n}</span>
-        <h3>{head}</h3>
-        <p>{body}</p>
-      </li>
-    ))}
-  </ol>
+<section class="process-rules-section" id="how-we-work-rules">
+  <div class="process-rules-container">
 
-  <div class="more-wrap">
-    <Btn href="/process/">Read the rest →</Btn>
+    <!-- ── LEFT SIDE: HEADING & DETAILS ── -->
+    <div class="rules-left-col">
+      <span class="rules-badge mono">04 · HOW WE WORK</span>
+      <h2 class="rules-main-title">
+        Three rules every engagement runs on.
+      </h2>
+      <p class="rules-sub-text">
+        A preview. The full version is in the process doc.
+      </p>
+      <div class="rules-cta-wrap">
+        <a href="/process/" class="rules-action-btn mono">
+          <span>Read the full process</span>
+          <span class="rules-arrow">→</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- ── RIGHT SIDE: HOVER-EXPANDABLE RULES ACCORDION ── -->
+    <div class="rules-right-col">
+      <div class="rules-accordion-list" id="rules-accordion-container">
+        {rules.map((rule, idx) => (
+          <div
+            class={`rule-accordion-item ${idx === 0 ? 'active' : ''}`}
+            data-rule-index={idx}
+          >
+            <div class="rule-header-row">
+              <span class="rule-index-num mono">{rule.num}</span>
+              <h3 class="rule-item-title">{rule.title}</h3>
+            </div>
+            <div class="rule-expandable-content">
+              <p class="rule-desc-paragraph">{rule.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
   </div>
 </section>
 
+<script is:inline>
+  (() => {
+    const setupAccordion = () => {
+      const container = document.getElementById('rules-accordion-container');
+      if (!container) return;
+
+      const items = Array.from(container.querySelectorAll('.rule-accordion-item'));
+
+      const setActive = (targetItem) => {
+        items.forEach((item) => {
+          if (item === targetItem) {
+            item.classList.add('active');
+          } else {
+            item.classList.remove('active');
+          }
+        });
+      };
+
+      items.forEach((item) => {
+        // Hover to reveal
+        item.addEventListener('mouseenter', () => {
+          setActive(item);
+        });
+
+        // Click / touch to reveal
+        item.addEventListener('click', () => {
+          setActive(item);
+        });
+      });
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setupAccordion);
+    } else {
+      setupAccordion();
+    }
+  })();
+</script>
+
 <style>
-  .process {
-    padding: 120px 56px;
-    border-bottom: 1px solid var(--o-line);
-    background: linear-gradient(var(--o-bg), var(--o-panel) 50%, var(--o-bg));
+  /* ═══════════════════════════════════════════
+     04 · HOW WE WORK (RULES SECTION)
+  ═══════════════════════════════════════════ */
+  .process-rules-section {
+    padding: 40px 32px 28px;
+    background: #ebe5dc !important;
+    border-top: 1px solid rgba(217, 56, 30, 0.12);
+    border-bottom: 1px solid rgba(217, 56, 30, 0.12);
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    position: relative;
   }
 
-  .head { max-width: 880px; margin-bottom: 56px; }
-  .head h2 {
-    margin: 14px 0 8px;
-    /* Fluid: 30px on tiny phones, 56px on desktop. */
-    font-size: clamp(28px, 5.4vw, 54px);
-    letter-spacing: clamp(-0.9px, -0.2vw, -1.8px);
-    font-weight: 600;
-    color: var(--o-ink);
-    line-height: 1.0;
-    overflow-wrap: break-word;
-  }
-  .head .sub {
-    font-size: 12px;
-    color: var(--o-mute);
-    max-width: 540px;
-    line-height: 1.6;
-    margin: 12px 0 0;
+  :global(html[data-theme="dark"]) .process-rules-section {
+    background: #060913 !important;
+    border-color: rgba(56, 189, 248, 0.12);
   }
 
-  .rules { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
-  .rule {
+  .process-rules-container {
+    max-width: 1280px;
+    width: 100%;
+    margin: 0 auto;
     display: grid;
-    grid-template-columns: 80px 1fr 1.4fr;
-    gap: 32px;
-    padding: 32px 0;
-    border-bottom: 1px solid var(--o-line);
-    align-items: baseline;
+    grid-template-columns: 42% 1fr;
+    gap: 40px;
+    align-items: start;
   }
-  .rule.first { border-top: 1px solid var(--o-line); }
-  .num { font-size: 11px; color: var(--o-accent); }
-  .rule h3 {
-    margin: 0;
-    font-size: clamp(18px, 3.2vw, 30px);
-    letter-spacing: clamp(-0.5px, -0.1vw, -0.8px);
-    font-weight: 500;
-    color: var(--o-ink);
-    line-height: 1.12;
-    overflow-wrap: break-word;
+
+  /* ── LEFT COLUMN ── */
+  .rules-left-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    padding-right: 12px;
+    padding-top: 0;
   }
-  .rule p {
-    margin: 0;
+
+  .rules-badge {
+    font-size: 11px;
+    color: #d9381e;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 14px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0;
+    border: none;
+    background: transparent;
+    font-weight: 700;
+  }
+
+  :global(html[data-theme="dark"]) .rules-badge {
+    background: transparent;
+    color: #ff6b4a;
+    border: none;
+  }
+
+  .rules-main-title {
+    font-family: 'Inter', sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: clamp(30px, 4.2vw, 48px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.035em;
+    color: #0f172a;
+    margin: 0 0 16px 0;
+  }
+
+  :global(html[data-theme="dark"]) .rules-main-title {
+    color: #F5F7FB;
+  }
+
+  .rules-sub-text {
+    font-family: 'Inter', sans-serif;
     font-size: 14px;
-    color: var(--o-mute);
     line-height: 1.55;
+    color: #64748b;
+    margin: 0 0 24px 0;
+    max-width: 440px;
   }
 
-  .more-wrap { margin-top: 36px; display: flex; justify-content: flex-end; }
+  :global(html[data-theme="dark"]) .rules-sub-text {
+    color: #94a3b8;
+  }
 
+  .rules-cta-wrap {
+    margin-top: 4px;
+  }
+
+  .rules-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12.5px;
+    font-weight: 700;
+    color: #0f172a;
+    text-decoration: none;
+    padding: 9px 18px;
+    border-radius: 8px;
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transition: all 0.2s ease;
+  }
+
+  .rules-action-btn:hover {
+    background: #0f172a;
+    color: #ffffff;
+    border-color: #0f172a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  }
+
+  :global(html[data-theme="dark"]) .rules-action-btn {
+    background: #0e1526;
+    border-color: rgba(255, 255, 255, 0.12);
+    color: #F5F7FB;
+  }
+
+  :global(html[data-theme="dark"]) .rules-action-btn:hover {
+    background: #d9381e;
+    border-color: #d9381e;
+    color: #ffffff;
+  }
+
+  .rules-arrow {
+    transition: transform 0.2s ease;
+  }
+
+  .rules-action-btn:hover .rules-arrow {
+    transform: translateX(4px);
+  }
+
+  /* ── RIGHT COLUMN (HOVER ACCORDION) ── */
+  .rules-right-col {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    min-height: auto;
+  }
+
+  .rules-accordion-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .rule-accordion-item {
+    background: #ffffff;
+    border: 1px solid rgba(20, 30, 50, 0.10);
+    border-radius: 16px;
+    padding: 22px 28px;
+    cursor: pointer;
+    transition: border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.25s ease;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+  }
+
+  :global(html[data-theme="dark"]) .rule-accordion-item {
+    background: #0D152C;
+    border-color: rgba(56, 189, 248, 0.14);
+    box-shadow: 0 4px 20px rgba(0, 4, 18, 0.35);
+  }
+
+  .rule-accordion-item:hover {
+    border-color: rgba(23, 105, 255, 0.4);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+  }
+
+  :global(html[data-theme="dark"]) .rule-accordion-item:hover {
+    border-color: rgba(56, 189, 248, 0.4);
+  }
+
+  .rule-accordion-item.active {
+    background: #ffffff;
+    border-color: #216BFF;
+    box-shadow: 0 8px 26px rgba(33, 107, 255, 0.12);
+  }
+
+  :global(html[data-theme="dark"]) .rule-accordion-item.active {
+    background: #131F3F;
+    border-color: #38BDF8;
+    box-shadow: 0 8px 30px rgba(56, 189, 248, 0.18);
+  }
+
+  /* Header Row inside Item */
+  .rule-header-row {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+  }
+
+  .rule-index-num {
+    font-size: 14px;
+    font-weight: 700;
+    color: #64748b;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+    transition: color 0.2s ease;
+  }
+
+  .rule-accordion-item.active .rule-index-num,
+  .rule-accordion-item:hover .rule-index-num {
+    color: #d9381e;
+  }
+
+  :global(html[data-theme="dark"]) .rule-accordion-item.active .rule-index-num,
+  :global(html[data-theme="dark"]) .rule-accordion-item:hover .rule-index-num {
+    color: #ff985d;
+  }
+
+  .rule-item-title {
+    font-family: 'Inter', sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: clamp(17px, 2vw, 22px);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    color: #0f172a;
+    margin: 0;
+    transition: color 0.2s ease;
+  }
+
+  :global(html[data-theme="dark"]) .rule-item-title {
+    color: #F5F7FB;
+  }
+
+  .rule-accordion-item.active .rule-item-title {
+    color: #0f172a;
+  }
+
+  :global(html[data-theme="dark"]) .rule-accordion-item.active .rule-item-title {
+    color: #ffffff;
+  }
+
+  /* Expandable Content using smooth CSS Grid (0fr -> 1fr) */
+  .rule-expandable-content {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s cubic-bezier(0.16, 1, 0.3, 1), margin-top 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    margin-top: 0;
+    padding-left: 36px;
+  }
+
+  .rule-accordion-item.active .rule-expandable-content {
+    grid-template-rows: 1fr;
+    margin-top: 14px;
+  }
+
+  .rule-desc-paragraph {
+    overflow: hidden;
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: #475569;
+    margin: 0;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .rule-accordion-item.active .rule-desc-paragraph {
+    opacity: 1;
+  }
+
+  :global(html[data-theme="dark"]) .rule-desc-paragraph {
+    color: #94a3b8;
+  }
+
+  /* Responsive Breakdown */
   @media (max-width: 900px) {
-    .head h2 { font-size: 34px; letter-spacing: -1px; }
-    .rule { grid-template-columns: 40px 1fr; gap: 16px; }
-    .rule p { grid-column: 2; }
-    .rule h3 { font-size: 22px; }
-  }
-  @media (max-width: 700px) {
-    .process { padding: 64px 24px; }
+    .process-rules-container {
+      grid-template-columns: 1fr;
+      gap: 36px;
+    }
+    .rules-left-col {
+      padding-right: 0;
+      align-items: center;
+      text-align: center;
+    }
+    .rules-sub-text {
+      text-align: center;
+    }
+    .rules-accordion-list {
+      gap: 12px;
+    }
+    .rule-accordion-item {
+      padding: 18px 20px;
+    }
+    .rule-expandable-content {
+      padding-left: 0;
+    }
   }
 </style>

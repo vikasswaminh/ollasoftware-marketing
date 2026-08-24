@@ -1,0 +1,131 @@
+:root {
+  --white: hsl(0, 0%, 100%);
+  --blue-primary: rgba(23, 105, 255, 1);
+  --blue-glow: rgba(23, 105, 255, 0.25);
+  --blue-border: rgba(23, 105, 255, 0.8);
+  --border-color: rgba(20, 30, 50, 0.12);
+  --background-card: #ffffff;
+}
+
+:global(html[data-theme="dark"]) {
+  --border-color: rgba(255, 255, 255, 0.1);
+  --background-card: #0e1526;
+}
+
+.magic-bento-root {
+  width: 100%;
+  position: relative;
+}
+
+/* ---------------------------------
+   BORDER GLOW
+--------------------------------- */
+.magic-bento-card--border-glow::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  background:
+    radial-gradient(
+      var(--glow-radius, 280px) circle
+        at var(--glow-x, 50%)
+        var(--glow-y, 50%),
+      color-mix(
+        in srgb,
+        var(--glow-color, rgb(23, 105, 255))
+          calc(
+            var(--glow-intensity, 0) *
+              90%
+          ),
+        transparent
+      )
+        0%,
+      color-mix(
+        in srgb,
+        var(--glow-color, rgb(23, 105, 255))
+          calc(
+            var(--glow-intensity, 0) *
+              45%
+          ),
+        transparent
+      )
+        35%,
+      transparent 70%
+    );
+  border-radius: inherit;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 1;
+  z-index: 2;
+}
+
+/* ---------------------------------
+   PARTICLES (STARS)
+--------------------------------- */
+.particle-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.particle::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: rgba(23, 105, 255, 0.35);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+/* ---------------------------------
+   CLICK RIPPLE
+--------------------------------- */
+.magic-bento-ripple {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1000;
+  transform: scale(0);
+}
+
+/* ---------------------------------
+   GLOBAL SPOTLIGHT
+--------------------------------- */
+.global-spotlight {
+  position: fixed;
+  width: 600px;
+  height: 600px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99 !important;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: screen;
+  will-change: transform, opacity;
+  filter: blur(14px);
+}
+
+/* ---------------------------------
+   REDUCED MOTION
+--------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  .global-spotlight,
+  .particle {
+    display: none !important;
+  }
+}

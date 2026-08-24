@@ -12,36 +12,71 @@ const cls = ['btn', primary ? 'primary' : 'outline', `size-${size}`];
 const Tag = href ? 'a' : 'button';
 const extra = href ? { href } : { type };
 ---
-<Tag class:list={[...cls, 'mono']} aria-label={ariaLabel} {...extra}>
+<Tag class:list={[...cls]} aria-label={ariaLabel} {...extra}>
   <slot />
 </Tag>
 
 <style>
   .btn {
+    position: relative;
+    overflow: hidden;
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    font-weight: 500;
-    letter-spacing: 0.2px;
+    justify-content: center;
+    gap: 10px;
+    font-family: var(--o-font-sans, 'Inter', system-ui, -apple-system, sans-serif);
+    font-weight: 600;
+    letter-spacing: -0.01em;
     cursor: pointer;
     text-decoration: none;
-    border-radius: var(--o-radius-sm);
-    transition: filter .14s, transform .12s, background .14s;
+    border-radius: 100px;
+    transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
   }
-  .btn.size-sm { padding: 7px 12px; font-size: 10px; min-height: 32px; }
-  .btn.size-md { padding: 11px 18px; font-size: 11px; min-height: 44px; }
+
+  /* GitHub Shine effect sheen gradient on hover */
+  .btn::before {
+    content: "";
+    position: absolute;
+    top: -4rem;
+    right: 0;
+    width: 2.5rem;
+    height: 10rem;
+    transform: translateX(4rem) rotate(20deg);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+    transition: transform 700ms ease;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .btn:hover::before {
+    transform: translateX(-14rem) rotate(20deg);
+  }
+
+  .btn.size-sm { padding: 8px 18px; font-size: 13px; min-height: 38px; border-radius: 100px; }
+  .btn.size-md { padding: 12px 26px; font-size: 15px; min-height: 48px; border-radius: 100px; }
 
   .btn.primary {
     border: none;
-    background: var(--o-accent);
-    color: var(--o-accent-ink);
+    background: #1D6AF3;
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(29, 106, 243, 0.28);
   }
-  .btn.primary:hover { background: var(--o-accent-2); filter: none; }
+  .btn.primary:hover {
+    background: #1557D0;
+    box-shadow: 0 6px 20px rgba(29, 106, 243, 0.38);
+    transform: translateY(-1px);
+    filter: none;
+  }
   .btn.outline {
     border: 1px solid var(--o-line-hi);
     background: transparent;
     color: var(--o-ink);
+    border-radius: 100px;
   }
-  .btn:hover { filter: brightness(1.08); }
+  .btn.outline:hover {
+    border-color: rgba(0, 0, 0, 0.25);
+    background: rgba(0, 0, 0, 0.03);
+    transform: translateY(-1px);
+  }
   .btn:active { transform: translateY(1px); }
 </style>

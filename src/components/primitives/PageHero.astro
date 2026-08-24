@@ -38,14 +38,7 @@ const { eyebrow, title, sub, breadcrumb } = Astro.props;
     overflow: hidden;
   }
   .grid-bg {
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(var(--o-line) 1px, transparent 1px);
-    background-size: 24px 24px;
-    -webkit-mask-image: radial-gradient(ellipse 60% 50% at 30% 30%, #000 30%, transparent 100%);
-            mask-image: radial-gradient(ellipse 60% 50% at 30% 30%, #000 30%, transparent 100%);
-    opacity: 0.5;
-    pointer-events: none;
+    display: none !important;
   }
   .inner { position: relative; }
 

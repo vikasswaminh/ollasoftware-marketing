@@ -6,7 +6,21 @@ import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/primitives/PageHero.astro';
 import SectionHead from '../components/primitives/SectionHead.astro';
 import Btn from '../components/primitives/Btn.astro';
+import CountUp from "@astroanimate/core/CountUp";
 import { services } from '../lib/tokens';
+
+function parseMetric(str: string) {
+  if (str.includes('→')) return null;
+  const match = str.match(/^([+$#\-]?)\s*([\d,]+(?:\.\d+)?)\s*(%|×|M|k|s|wks|mo|d)?$/);
+  if (!match) return null;
+  const prefix = match[1] || '';
+  const numStr = match[2].replace(/,/g, '');
+  const num = parseFloat(numStr);
+  if (isNaN(num)) return null;
+  const decimals = numStr.includes('.') ? numStr.split('.')[1].length : 0;
+  const suffix = match[3] || '';
+  return { value: num, prefix, suffix, decimals };
+}
 
 const entries = [
   { date: '2026.05.18', svc: 'ai-software',           title: 'Intake agent for a 4M-customer bank',
@@ -81,12 +95,30 @@ const byService = Object.fromEntries(
           <h2>{e.title}</h2>
           <p class="body">{e.body}</p>
           <dl class="metrics">
-            {e.metrics.map(([num, label]) => (
-              <div class="metric">
-                <dt class="num">{num}</dt>
-                <dd class="label mono">{label}</dd>
-              </div>
-            ))}
+            {e.metrics.map(([num, label]) => {
+              const p = parseMetric(num);
+              return (
+                <div class="metric">
+                  <dt class="num">
+                    {p ? (
+                      <CountUp
+                        value={p.value}
+                        prefix={p.prefix}
+                        suffix={p.suffix}
+                        decimals={p.decimals}
+                        duration={2000}
+                        enhance={true}
+                        fontSize="inherit"
+                        textColor="inherit"
+                      />
+                    ) : (
+                      num
+                    )}
+                  </dt>
+                  <dd class="label mono">{label}</dd>
+                </div>
+              );
+            })}
           </dl>
         </article>
       );

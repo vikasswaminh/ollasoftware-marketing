@@ -4,7 +4,7 @@
 // attribution lands as a trust signal rather than getting lost in chrome.
 // Source: https://www.networkershome.com/
 ---
-<aside class="parent-banner" role="complementary" aria-label="Parent company">
+<aside class="parent-banner" id="parent-banner" role="complementary" aria-label="Parent company">
   <a class="pb-link" href="https://www.networkershome.com/" target="_blank" rel="noopener">
     <span class="pb-badge" aria-hidden="true">NH</span>
     <span class="pb-text">
@@ -18,32 +18,36 @@
 
 <style>
   .parent-banner {
-    /* Sunken band on the light theme — slightly recessed against the white
-       page so the attribution reads as an intentional band, not a render
-       glitch. Was pure white on the dark theme; flipped to bg-sunken now. */
-    background: var(--o-bg-sunken);
-    color: var(--o-ink);
-    border-bottom: 1px solid var(--o-line);
+    background: #08090d;
+    color: #ffffff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     width: 100%;
+    min-height: 28px;
+    position: relative;
+    z-index: 101;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .pb-link {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
-    padding: 8px 24px;
+    gap: 8px;
+    padding: 4px 16px;
     text-decoration: none;
-    color: inherit;
-    font-family: var(--o-font-sans);
-    font-size: 12px;
+    color: #ffffff;
+    font-family: var(--o-font-sans, 'Inter', system-ui, -apple-system, sans-serif);
+    font-size: 11.5px;
     line-height: 1.2;
-    letter-spacing: 0.1px;
-    transition: background .14s;
+    transition: background 0.15s ease;
   }
+
   .pb-link:hover {
-    background: var(--o-bg-deep);
+    background: rgba(255, 255, 255, 0.04);
   }
+
   .pb-link:hover .pb-arrow {
     transform: translate(2px, -2px);
   }
@@ -52,51 +56,53 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 22px;
-    height: 22px;
+    width: 18px;
+    height: 18px;
     border-radius: 4px;
-    background: var(--o-ink);
-    color: var(--o-bg);
-    font-family: var(--o-font-mono);
-    font-size: 9px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
+    background: #ffffff;
+    color: #000000;
+    font-family: var(--o-font-sans, 'Inter', system-ui, -apple-system, sans-serif);
+    font-size: 9.5px;
+    font-weight: 800;
+    letter-spacing: 0.2px;
     flex-shrink: 0;
   }
 
   .pb-text {
     display: inline-flex;
-    align-items: baseline;
-    gap: 6px;
+    align-items: center;
+    gap: 5px;
     flex-wrap: wrap;
     justify-content: center;
   }
+
   .pb-prefix {
-    color: var(--o-mute);
+    color: #a1a1aa;
     font-weight: 400;
   }
+
   .pb-name {
-    color: var(--o-ink);
-    font-weight: 900;
+    color: #ffffff;
+    font-weight: 700;
     letter-spacing: 0.4px;
-    font-size: 11px;
+    font-size: 11.5px;
   }
+
   .pb-suffix {
-    color: var(--o-mute);
+    color: #a1a1aa;
     font-weight: 400;
   }
 
   .pb-arrow {
-    color: var(--o-mute);
-    font-size: 11px;
-    transition: transform .14s;
+    color: #a1a1aa;
+    font-size: 11.5px;
+    transition: transform 0.15s ease;
     flex-shrink: 0;
   }
 
   @media (max-width: 500px) {
-    .pb-link { padding: 8px 14px; gap: 8px; font-size: 10px; }
-    .pb-badge { width: 18px; height: 18px; font-size: 8px; }
+    .pb-link { padding: 4px 10px; gap: 6px; font-size: 10px; }
+    .pb-badge { width: 16px; height: 16px; font-size: 8.5px; }
     .pb-name { font-size: 10px; }
-    .pb-prefix { display: none; }
   }
 </style>

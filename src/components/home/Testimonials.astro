@@ -4,95 +4,343 @@ import SectionHead from '../primitives/SectionHead.astro';
 const quotes = [
   {
     body: 'They embedded with us for six weeks, shipped a real intake agent, and trained two of our engineers to own it. The thing has been in production for nine months with no calls back to them.',
-    name: 'Priya Iyer', role: 'VP Engineering', co: 'Helio Bank', handle: '@priyai',
+    name: 'Priya Iyer',
+    role: 'VP Engineering',
+    co: 'Helio Bank',
+    handle: '@priyai',
+    avatar: 'P',
   },
   {
     body: 'Organic was flat for three quarters. They rebuilt our cluster strategy, fixed the technical debt no one wanted to touch, and doubled qualified pipeline from search in 90 days.',
-    name: 'Marco Pellegrini', role: 'Head of Growth', co: 'Pelago', handle: '@marcop',
+    name: 'Marco Pellegrini',
+    role: 'Head of Growth',
+    co: 'Pelago',
+    handle: '@marcop',
+    avatar: 'M',
   },
   {
     body: 'We had three other shops pitch the rebuild. Olla was the only one who showed up to discovery with a working prototype. Their senior bench shows up to every standup.',
-    name: 'Anika Devarajan', role: 'CTO', co: 'Forma Health', handle: '@anikadev',
+    name: 'Anika Devarajan',
+    role: 'CTO',
+    co: 'Forma Health',
+    handle: '@anikadev',
+    avatar: 'A',
   },
   {
     body: 'I do not normally hire agencies for paid. They cut our CAC by 38% in six weeks and reported in pipeline, not in Ads Manager screenshots. Their LPs are nicer than ours.',
-    name: 'Theo Karras', role: 'CMO', co: 'Sundial', handle: '@theok',
+    name: 'Theo Karras',
+    role: 'CMO',
+    co: 'Sundial',
+    handle: '@theok',
+    avatar: 'T',
   },
 ];
+
+// Duplicate list for seamless infinite loop
+const carouselItems = [...quotes, ...quotes];
 ---
-<section class="quotes">
-  <SectionHead
-    tag="05 · From the room"
-    title="Clients who hired a product company, on purpose."
-  />
-  <div class="grid">
-    {quotes.map(q => (
-      <article class="card">
-        <span class="quote-mark mono" aria-hidden="true">"</span>
-        <p>{q.body}</p>
-        <div class="who">
-          <div class="avatar" aria-hidden="true">{q.name[0]}</div>
-          <div class="meta">
-            <span class="name">{q.name}</span>
-            <span class="role mono">{q.role}, {q.co} · {q.handle}</span>
+
+<section class="testimonial-section" id="from-the-room">
+  <div class="centered-head">
+    <SectionHead
+      tag="05 · From the room"
+      title="Clients who hired a product company, on purpose."
+      sub="Real feedback from the tech leaders, founders, and VPs running OllaSoftware in production."
+    />
+  </div>
+
+  <!-- AUTOMATIC INFINITE MARQUEE CAROUSEL (LEFT TO RIGHT) -->
+  <div class="carousel-wrapper">
+    <div class="carousel-track">
+      {carouselItems.map((q) => (
+        <article class="testimonial-card">
+          <p class="quote-text">“{q.body}”</p>
+          <div class="who">
+            <div class="avatar" aria-hidden="true">{q.avatar}</div>
+            <div class="meta">
+              <span class="name">{q.name}</span>
+              <span class="role">{q.role}, {q.co} · {q.handle}</span>
+            </div>
           </div>
-        </div>
-      </article>
-    ))}
+        </article>
+      ))}
+    </div>
   </div>
 </section>
 
 <style>
-  .quotes {
-    padding: 110px 56px;
-    border-bottom: 1px solid var(--o-line);
+  .testimonial-section {
+    padding: 56px 0 68px !important;
+    background: #f4efe9 !important;
+    border-top: 1px solid rgba(217, 56, 30, 0.12) !important;
+    border-bottom: 1px solid rgba(217, 56, 30, 0.12) !important;
+    color: #111827 !important;
+    display: block !important;
+    overflow: hidden !important;
   }
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .card {
-    background: var(--o-panel);
-    border: 1px solid var(--o-line);
-    border-radius: var(--o-radius);
-    padding: 28px;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-  }
-  .quote-mark {
-    font-size: 22px;
-    color: var(--o-accent);
-    line-height: 0.5;
-  }
-  .card p {
-    margin: 0;
-    font-size: 15px;
-    line-height: 1.5;
-    color: var(--o-ink);
-    letter-spacing: -0.2px;
-  }
-  .who {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-top: auto;
-    padding-top: 14px;
-    border-top: 1px solid var(--o-line);
-  }
-  .avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 16px;
-    background: var(--o-line-hi);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--o-ink);
-    font-size: 11px;
-    font-weight: 600;
-  }
-  .meta { display: flex; flex-direction: column; }
-  .name { font-size: 11px; color: var(--o-ink); font-weight: 500; }
-  .role { font-size: 9px; color: var(--o-mute); }
 
-  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
-  @media (max-width: 700px) { .quotes { padding: 64px 24px; } }
+  :global(html[data-theme="dark"]) .testimonial-section {
+    background: #090e1a !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
+  }
+
+  .centered-head {
+    display: flex !important;
+    justify-content: center !important;
+    text-align: center !important;
+    margin-bottom: 24px !important;
+    padding: 0 24px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .centered-head :global(.section-head) {
+    justify-content: center !important;
+    margin-bottom: 0 !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  .centered-head :global(.text) {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  .centered-head :global(.sub) {
+    margin: 0 auto !important;
+    font-family: "Inter", sans-serif !important;
+    font-size: 14px !important;
+    color: #64748b !important;
+    max-width: 620px !important;
+    text-align: center !important;
+  }
+
+  :global(html[data-theme="dark"]) .centered-head :global(.sub) {
+    color: #94A3B8 !important;
+  }
+
+  .centered-head :global(h2) {
+    font-family: "Inter", sans-serif !important;
+    font-optical-sizing: auto !important;
+    font-style: normal !important;
+    color: #0f172a !important;
+    font-size: clamp(28px, 4.4vw, 48px) !important;
+    letter-spacing: -1.2px !important;
+    margin: 10px 0 8px !important;
+    text-align: center !important;
+  }
+
+  :global(html[data-theme="dark"]) .centered-head :global(h2) {
+    color: #F8FAFC !important;
+  }
+
+  .centered-head :global(.tag) {
+    font-family: "Inter", sans-serif !important;
+    color: #216BFF !important;
+  }
+
+  :global(html[data-theme="dark"]) .centered-head :global(.tag) {
+    color: #38BDF8 !important;
+  }
+
+  /* AUTOMATIC LEFT TO RIGHT MARQUEE WRAPPER */
+  .carousel-wrapper {
+    width: 100% !important;
+    overflow: hidden !important;
+    display: flex !important;
+    position: relative !important;
+    padding: 16px 0 !important;
+  }
+
+  /* SOFT FADE & BLUR GRADIENT EDGES */
+  .carousel-wrapper::before,
+  .carousel-wrapper::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important;
+    bottom: 0 !important;
+    width: 180px !important;
+    z-index: 5 !important;
+    pointer-events: none !important;
+  }
+
+  .carousel-wrapper::before {
+    left: 0 !important;
+    background: linear-gradient(to right, #f4efe9 15%, rgba(244, 239, 233, 0.8) 45%, rgba(244, 239, 233, 0) 100%) !important;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    mask-image: linear-gradient(to right, black, transparent);
+    -webkit-mask-image: linear-gradient(to right, black, transparent);
+  }
+
+  .carousel-wrapper::after {
+    right: 0 !important;
+    background: linear-gradient(to left, #f4efe9 15%, rgba(244, 239, 233, 0.8) 45%, rgba(244, 239, 233, 0) 100%) !important;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    mask-image: linear-gradient(to left, black, transparent);
+    -webkit-mask-image: linear-gradient(to left, black, transparent);
+  }
+
+  :global(html[data-theme="dark"]) .carousel-wrapper::before {
+    background: linear-gradient(to right, #090e1a 15%, rgba(9, 14, 26, 0.8) 45%, rgba(9, 14, 26, 0) 100%) !important;
+  }
+
+  :global(html[data-theme="dark"]) .carousel-wrapper::after {
+    background: linear-gradient(to left, #090e1a 15%, rgba(9, 14, 26, 0.8) 45%, rgba(9, 14, 26, 0) 100%) !important;
+  }
+
+  .carousel-track {
+    display: flex !important;
+    flex-direction: row !important;
+    gap: 32px !important;
+    width: max-content !important;
+    animation: marqueeLeftToRight 28s linear infinite !important;
+  }
+
+  .carousel-track:hover {
+    animation-play-state: paused !important;
+  }
+
+  /* KEYFRAMES FOR CONTINUOUS AUTOMATIC MOVEMENT FROM LEFT TO RIGHT */
+  @keyframes marqueeLeftToRight {
+    0% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
+
+  /* EDITORIAL CARD STYLING */
+  .testimonial-card {
+    background: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+    border-radius: 20px !important;
+    padding: 40px 36px !important;
+    width: 480px !important;
+    min-height: 260px !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    gap: 28px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04) !important;
+    transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease !important;
+    box-sizing: border-box !important;
+  }
+
+  .testimonial-card:hover {
+    border-color: rgba(23, 105, 255, 0.4) !important;
+    transform: translateY(-4px) !important;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  .quote-text {
+    margin: 0 !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 16px !important;
+    line-height: 1.65 !important;
+    color: #111827 !important;
+    letter-spacing: -0.2px !important;
+    font-weight: 400 !important;
+  }
+
+  .who {
+    display: flex !important;
+    align-items: center !important;
+    gap: 14px !important;
+    padding-top: 20px !important;
+    border-top: 1px dashed #e5e7eb !important;
+    margin-top: auto !important;
+  }
+
+  .avatar {
+    width: 44px !important;
+    height: 44px !important;
+    border-radius: 50% !important;
+    background: #1769FF !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #ffffff !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    box-shadow: 0 4px 12px rgba(23, 105, 255, 0.25) !important;
+    flex-shrink: 0 !important;
+  }
+
+  .meta {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 3px !important;
+  }
+
+  .name {
+    font-size: 15px !important;
+    color: #111827 !important;
+    font-weight: 600 !important;
+  }
+
+  .role {
+    font-family: var(--o-font-mono, monospace) !important;
+    font-size: 12px !important;
+    color: #6b7280 !important;
+  }
+
+  :global(html[data-theme="dark"]) .testimonial-card {
+    background: #0D152C !important;
+    border-color: rgba(56, 189, 248, 0.14) !important;
+    box-shadow: 0 10px 30px rgba(0, 4, 18, 0.45) !important;
+  }
+
+  :global(html[data-theme="dark"]) .testimonial-card:hover {
+    border-color: #38BDF8 !important;
+    box-shadow: 0 14px 38px rgba(56, 189, 248, 0.18) !important;
+  }
+
+  :global(html[data-theme="dark"]) .quote-text {
+    color: #F8FAFC !important;
+  }
+
+  :global(html[data-theme="dark"]) .who {
+    border-top-color: rgba(56, 189, 248, 0.15) !important;
+  }
+
+  :global(html[data-theme="dark"]) .name {
+    color: #F8FAFC !important;
+  }
+
+  :global(html[data-theme="dark"]) .role {
+    color: #94A3B8 !important;
+  }
+
+  :global(html[data-theme="dark"]) .testimonial-section {
+    background: #090E1F !important;
+    border-color: rgba(56, 189, 248, 0.12) !important;
+  }
+
+  :global(html[data-theme="dark"]) .carousel-wrapper::before {
+    background: linear-gradient(to right, #090E1F 0%, rgba(9, 14, 31, 0) 100%) !important;
+  }
+
+  :global(html[data-theme="dark"]) .carousel-wrapper::after {
+    background: linear-gradient(to left, #090E1F 0%, rgba(9, 14, 31, 0) 100%) !important;
+  }
+
+  @media (max-width: 767px) {
+    .testimonial-section {
+      padding: 72px 0 !important;
+    }
+    .testimonial-card {
+      width: 320px !important;
+      padding: 28px 24px !important;
+    }
+    .quote-text {
+      font-size: 14px !important;
+    }
+  }
 </style>

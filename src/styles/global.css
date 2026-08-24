@@ -1,61 +1,311 @@
-/* Global stylesheet — reset, typography, link/scrollbar styling.
-   Port of the inline <style> block in legacy ollasoftware.html. */
-
-@import '@fontsource/lato/300.css';
-@import '@fontsource/lato/400.css';
-@import '@fontsource/lato/700.css';
-@import '@fontsource/lato/900.css';
-@import '@fontsource/geist-mono/400.css';
-@import '@fontsource/geist-mono/500.css';
+/* ══════════════════════════════════════════════════════════════════════
+   GLOBAL STYLES & LUXURY OBSIDIAN SAPPHIRE DARK THEME
+══════════════════════════════════════════════════════════════════════ */
 
 @import './tokens.css';
 
-*, *::before, *::after { box-sizing: border-box; }
+/* ── Uniform Site-Wide Container (Clean side gutters matching screenshot) ── */
+.site-container,
+.hero-container,
+.nav-container,
+.services-zoom-container,
+.process-rules-container,
+.work-container,
+.asymmetric-bento-grid,
+.page-container {
+  max-width: 1200px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
 
-html, body {
-  margin: 0;
-  padding: 0;
-  background: var(--o-bg);
-  color: var(--o-ink);
+/* Base resets & smooth transitions */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
+  margin: 0;
+  padding: 0;
   font-family: var(--o-font-sans);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+  background-color: var(--o-bg);
+  color: var(--o-ink);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.mono {
-  font-family: var(--o-font-mono);
-  font-feature-settings: 'ss01';
-}
-
-a { color: inherit; }
-
-/* hover affordances */
-nav a:hover { color: var(--o-ink) !important; }
-button.mono:hover, a.mono:hover { filter: brightness(1.08); }
-
-/* scrollbar */
-::-webkit-scrollbar { width: 10px; height: 10px; }
-::-webkit-scrollbar-track { background: var(--o-bg); }
-::-webkit-scrollbar-thumb { background: var(--o-line-hi); border-radius: 5px; }
-::-webkit-scrollbar-thumb:hover { background: #3a4048; }
-
-/* form normalisation */
-input, button, textarea, select {
-  font: inherit;
-  color: inherit;
-}
-
-/* utility: visually-hidden but accessible */
+/* Visually Hidden Utility */
 .sr-only {
   position: absolute;
-  width: 1px; height: 1px;
-  padding: 0; margin: -1px;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
 }
+
+/* ─────────────────────────────────────────────
+   OBSIDIAN SAPPHIRE LUXURY DARK MODE
+   Toggled by [data-theme="dark"] on <html>
+───────────────────────────────────────────── */
+html[data-theme="dark"] {
+  --o-bg:           #060913;
+  --o-bg-sunken:    #090E1F;
+  --o-bg-deep:      #04060D;
+  --o-panel:        #0D152C;
+  --o-panel-hi:     #131F3F;
+  --o-line:         rgba(56, 189, 248, 0.14);
+  --o-line-hi:      rgba(56, 189, 248, 0.35);
+  --o-line-whisper: rgba(255, 255, 255, 0.05);
+
+  --o-ink:          #F8FAFC;
+  --o-mute:         #94A3B8;
+  --o-faint:        #64748B;
+
+  --o-accent:       #38BDF8;
+  --o-accent-2:     #216BFF;
+  --o-accent-dim:   rgba(56, 189, 248, 0.12);
+  --o-accent-ink:   #060913;
+
+  color-scheme: dark;
+}
+
+html[data-theme="dark"] body {
+  background: #060913 !important;
+  color: #F8FAFC !important;
+}
+
+/* Universal Typography & Headings in Dark Mode */
+html[data-theme="dark"] h1,
+html[data-theme="dark"] h2,
+html[data-theme="dark"] h3,
+html[data-theme="dark"] h4,
+html[data-theme="dark"] .section-head h2,
+html[data-theme="dark"] .centered-head h2,
+html[data-theme="dark"] .editorial-heading {
+  color: #F8FAFC !important;
+}
+
+html[data-theme="dark"] p.sub,
+html[data-theme="dark"] .section-head .sub,
+html[data-theme="dark"] .centered-head .sub,
+html[data-theme="dark"] .text .sub {
+  color: #94A3B8 !important;
+}
+
+/* Top Announcement Banner */
+html[data-theme="dark"] .announcement-bar,
+html[data-theme="dark"] .top-banner {
+  background: #04060D !important;
+  border-bottom: 1px solid rgba(56, 189, 248, 0.12) !important;
+  color: #cbd5e1 !important;
+}
+
+/* Header & Sticky Nav in Dark Mode */
+html[data-theme="dark"] #site-nav {
+  background: rgba(6, 9, 19, 0.85) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border-bottom: 1px solid rgba(56, 189, 248, 0.12) !important;
+}
+
+html[data-theme="dark"] .nav-link {
+  color: #94A3B8 !important;
+}
+
+html[data-theme="dark"] .nav-link:hover,
+html[data-theme="dark"] .nav-link.active {
+  color: #38BDF8 !important;
+}
+
+/* Bento Section Dark Mode */
+html[data-theme="dark"] .bento {
+  background: #080D1A !important;
+  border-color: rgba(56, 189, 248, 0.12) !important;
+}
+
+html[data-theme="dark"] .bento-card {
+  background: #0D152C !important;
+  border-color: rgba(56, 189, 248, 0.14) !important;
+  box-shadow: 0 8px 28px rgba(0, 4, 18, 0.5) !important;
+}
+
+html[data-theme="dark"] .bento-card:hover {
+  border-color: #38BDF8 !important;
+  box-shadow: 0 12px 36px rgba(56, 189, 248, 0.15) !important;
+}
+
+html[data-theme="dark"] .lead-text,
+html[data-theme="dark"] .sow-lead,
+html[data-theme="dark"] .metric-num {
+  color: #F8FAFC !important;
+}
+
+html[data-theme="dark"] .sow-lead .dim,
+html[data-theme="dark"] .metric-label,
+html[data-theme="dark"] .track-sub {
+  color: #94A3B8 !important;
+}
+
+/* Clients Section Dark Mode */
+html[data-theme="dark"] .clients-section {
+  background: #060913 !important;
+}
+
+html[data-theme="dark"] .editorial-heading,
+html[data-theme="dark"] .product-title {
+  color: #F8FAFC !important;
+}
+
+html[data-theme="dark"] .product-blurb,
+html[data-theme="dark"] .product-domain,
+html[data-theme="dark"] .category-count {
+  color: #94A3B8 !important;
+}
+
+html[data-theme="dark"] .product-card {
+  background: #0D152C !important;
+  border-color: rgba(56, 189, 248, 0.14) !important;
+}
+
+html[data-theme="dark"] .product-card:hover {
+  border-color: #38BDF8 !important;
+  box-shadow: 0 10px 30px rgba(56, 189, 248, 0.14) !important;
+}
+
+/* Services 03 Section Dark Mode */
+html[data-theme="dark"] .services-zoom-section {
+  background: #090E1F !important;
+  border-color: rgba(56, 189, 248, 0.12) !important;
+}
+
+html[data-theme="dark"] .zoom-service-card {
+  background: #0D152C !important;
+  border-color: rgba(56, 189, 248, 0.14) !important;
+  box-shadow: 0 8px 30px rgba(0, 4, 18, 0.45) !important;
+}
+
+html[data-theme="dark"] .zoom-service-card:hover {
+  border-color: #38BDF8 !important;
+  box-shadow: 0 12px 36px rgba(56, 189, 248, 0.18) !important;
+}
+
+/* Process 04 Section Dark Mode */
+html[data-theme="dark"] .process-rules-section {
+  background: #060913 !important;
+  border-color: rgba(56, 189, 248, 0.12) !important;
+}
+
+html[data-theme="dark"] .rule-accordion-item {
+  background: #0D152C !important;
+  border-color: rgba(56, 189, 248, 0.14) !important;
+}
+
+/* Testimonials 05 Section Dark Mode */
+html[data-theme="dark"] .testimonials-section,
+html[data-theme="dark"] .room-section {
+  background: #090E1F !important;
+  border-color: rgba(56, 189, 248, 0.12) !important;
+}
+
+html[data-theme="dark"] .testimonial-card,
+html[data-theme="dark"] .room-card {
+  background: #0D152C !important;
+  border-color: rgba(56, 189, 248, 0.14) !important;
+}
+
+/* CTA Section Dark Mode */
+html[data-theme="dark"] .cta-section {
+  background: #060913 !important;
+}
+
+html[data-theme="dark"] .headline {
+  color: #F8FAFC !important;
+}
+
+html[data-theme="dark"] .supporting {
+  color: #94A3B8 !important;
+}
+
+html[data-theme="dark"] .btn-secondary {
+  background: #0D152C !important;
+  border-color: rgba(56, 189, 248, 0.2) !important;
+  color: #F8FAFC !important;
+}
+
+html[data-theme="dark"] .btn-secondary:hover {
+  border-color: #38BDF8 !important;
+  color: #38BDF8 !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   GLOBAL SCROLL-TRIGGERED FADE-IN WITH BLUR ANIMATION SYSTEM
+   Matches @astroanimate/core/FadeInText style across all site elements
+══════════════════════════════════════════════════════════════════════ */
+.scroll-reveal-item,
+[data-animate="fade-in"],
+.bento-card,
+.rule-accordion-item,
+.testimonial-card,
+.work-card,
+.feature-card,
+.gallery-slide-card,
+.blog-card,
+.job-card,
+.client-logo-item {
+  opacity: 0;
+  filter: blur(8px);
+  transform: translateY(28px);
+  transition:
+    opacity 0.75s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.75s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: opacity, filter, transform;
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.scroll-reveal-item.is-revealed,
+[data-animate="fade-in"].is-revealed,
+.bento-card.is-revealed,
+.rule-accordion-item.is-revealed,
+.testimonial-card.is-revealed,
+.work-card.is-revealed,
+.feature-card.is-revealed,
+.gallery-slide-card.is-revealed,
+.blog-card.is-revealed,
+.job-card.is-revealed,
+.client-logo-item.is-revealed {
+  opacity: 1 !important;
+  filter: blur(0px) !important;
+  transform: translateY(0) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal-item,
+  [data-animate="fade-in"],
+  .bento-card,
+  .rule-accordion-item,
+  .testimonial-card,
+  .work-card,
+  .feature-card,
+  .gallery-slide-card,
+  .blog-card,
+  .job-card,
+  .client-logo-item {
+    opacity: 1 !important;
+    filter: none !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+

@@ -1,131 +1,141 @@
 ---
-import Tag from '../primitives/Tag.astro';
-import Btn from '../primitives/Btn.astro';
-import Code from '../primitives/Code.astro';
-import { o } from '../../lib/tokens';
----
-<section class="hero">
-  <div class="grid-bg" aria-hidden="true"></div>
+import '../../styles/hero.css';
+import FadeInText from "@astroanimate/core/FadeInText";
 
-  <div class="hero-grid">
-    <div class="copy">
-      <Tag>Bangalore · est. 2021 · Now booking Q3 2026</Tag>
-      <h1>
-        Pioneer AI<br />
-        <span class="accent">software</span>{' '}
-        <span class="dim">company</span><br />
-        out of India.
-      </h1>
-      <p class="sub mono">
-        Ollasoftware is the pioneer AI software development company in India,
-        <span class="ink">headquartered in Bangalore</span>. Owners of 40+ AI
-        brands in production — Aeoniti, Crawlcrawl, Switchllm, Ollima,
-        Super25.ai and more. We build the same caliber of product for clients
-        worldwide, in your repo, on your stack.
-      </p>
-      <div class="actions">
-        <Btn primary href="/contact/">Contact us →</Btn>
-        <Btn href="/services/">See what we ship</Btn>
-      </div>
-      <div class="trust mono">
-        <span>Discovery in 5 days</span><span class="dot">·</span>
-        <span>SOC 2 Type II</span><span class="dot">·</span>
-        <span>You own the code</span><span class="dot">·</span>
-        <span>SOW signed in a week</span>
-      </div>
+interface Props {
+  eyebrow?: string;
+  titleAccent?: string;
+  title?: string;
+  titleSuffix?: string;
+  description?: string;
+  showLogo?: boolean;
+}
+
+const {
+  eyebrow = 'BANGALORE · EST. 2021 · NOW BOOKING Q3 2026',
+  titleAccent = 'Pioneer',
+  title = 'AI software company',
+  titleSuffix = 'out of India.',
+  description = 'Ollasoftware is the pioneer AI software development company in India, <strong class="hl-sub">headquartered in Bangalore</strong>. Owners of 40+ AI brands in production — Aeoniti, Crawlcrawl, Switchllm, Ollima, Super25.ai and more. We build the same caliber of product for clients worldwide, in your repo, on your stack.',
+  showLogo = true,
+} = Astro.props;
+
+const trustItems = [
+  'Discovery in 5 days',
+  'SOC 2 Type II',
+  'You own the code',
+  'SOW signed in a week'
+];
+---
+
+<section class="hero-section" id="hero">
+  <!-- Subtle center radial glow for contrast -->
+  <div class="hero-radial-glow" aria-hidden="true"></div>
+
+  <div class="hero-container">
+    <!-- LEFT COLUMN: Content aligned to left -->
+    <div class="hero-left-content">
+      <!-- 1. Top Metadata Tag -->
+      <FadeInText duration={0.6} yOffset={15}>
+        <div class="hero-meta-tag">
+          <span>{eyebrow}</span>
+        </div>
+      </FadeInText>
+
+      <!-- 2. Main 3-Line Headline -->
+      <FadeInText duration={0.8} yOffset={25}>
+        <h1 class="hero-headline">
+          <span class="hl-pioneer">{titleAccent}</span>
+          <span class="hl-main">{title}</span><br />
+          <span class="hl-subtext">{titleSuffix.replace(/\.$/, '')}<span class="hl-dot">.</span></span>
+        </h1>
+      </FadeInText>
+
+      <!-- 3. Description Paragraph -->
+      <FadeInText enhance={true} duration={0.8} yOffset={30}>
+        <p class="hero-desc" set:html={description} />
+      </FadeInText>
+
+      <!-- 4. CTA Action Buttons -->
+      <FadeInText enhance={true} duration={0.8} delay={0.1} yOffset={25}>
+        <div class="hero-actions">
+          <a href="/contact/" class="hero-btn primary">
+            <span>Contact us →</span>
+          </a>
+          <a href="/services/" class="hero-btn secondary">
+            <span>See what we ship</span>
+          </a>
+        </div>
+      </FadeInText>
+
+      <!-- 5. Trust / Proof Badge Pill -->
+      <FadeInText enhance={true} duration={0.8} delay={0.2} yOffset={20}>
+        <div class="hero-proof-pill">
+          <div class="proof-pill-content">
+            {trustItems.map((item, index) => (
+              <span class="proof-item">
+                <span class="proof-check-circle">✓</span>
+                <span>{item}</span>
+                {index < trustItems.length - 1 && <span class="proof-dot-separator">·</span>}
+              </span>
+            ))}
+          </div>
+        </div>
+      </FadeInText>
     </div>
 
-    <Code title="~/engagements — multi-pod · live status" foot="● live">
-<Fragment set:html={`> olla status --week 22
-
-<span style="color:${o.mute}">[mon 09:02] ai-software · acme-fintech · pod=phoenix · sprint 03
-[mon 09:02] seo        · helio-bank   · pod=cobalt  · month 04
-[mon 09:02] social     · pelago       · pod=ember   · month 02
-</span><span style="color:${o.accent}">✓ </span>build       · 6 PRs merged into acme/intake-agent
-<span style="color:${o.accent}">✓ </span>rankings    · helio-bank +14 keywords in top-10 this week
-<span style="color:${o.accent}">✓ </span>reach       · pelago · 2.4M impressions · 38% MoM
-<span style="color:${o.warn}">! </span><span style="color:${o.warn}">decision    · acme · eval threshold 0.84  (needs sign-off)</span>
-<span style="color:${o.mute}">           › approved by @priya (VP eng) · 09:14
-</span><span style="color:${o.accent}">✓ </span>deploy      · staging green · 92% eval pass · $0.04/run
-<span style="color:${o.accent}">✓ </span>cac         · pelago paid social · $42 · ↓ 18% MoM
-<span style="color:${o.mute}">
-[fri 16:30] weekly demos · video + loom in shared drive
-[fri 16:30] handoff notes → confluence/eng/intake-agent
-</span>> _<span style="color:${o.accent}">▍</span>`} />
-    </Code>
+    <!-- RIGHT COLUMN: New Ollasoftware Building Emblem (Light & Dark, Static & Sharp) -->
+    {showLogo && (
+      <FadeInText enhance={true} duration={0.8} delay={0.15} yOffset={20} blur="0px">
+        <div class="hero-right-visual">
+          <div class="hero-3d-logo-wrapper" id="hero-static-logo">
+            <img
+              src="/logo-building-light.png"
+              alt="Ollasoftware Building Emblem"
+              class="hero-3d-logo-img hero-logo-light"
+              loading="eager"
+              decoding="async"
+            />
+            <img
+              src="/logo-building-dark.png"
+              alt="Ollasoftware Building Emblem"
+              class="hero-3d-logo-img hero-logo-dark"
+              loading="eager"
+              decoding="async"
+            />
+          </div>
+        </div>
+      </FadeInText>
+    )}
   </div>
 </section>
 
-<style>
-  .hero {
-    padding: 120px 56px 100px;
-    border-bottom: 1px solid var(--o-line);
-    position: relative;
-    overflow: hidden;
-  }
-  .grid-bg {
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(var(--o-line) 1px, transparent 1px);
-    background-size: 24px 24px;
-    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 30%, transparent 100%);
-            mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, #000 30%, transparent 100%);
-    opacity: 0.6;
-    pointer-events: none;
+<script>
+  import { gsap } from 'gsap';
+
+  function initHeroAnimations() {
+    const hero = document.getElementById('hero');
+    if (!hero) return;
+
+    const items = hero.querySelectorAll('.hero-animate-item');
+    if (items.length) {
+      gsap.fromTo(
+        items,
+        { y: 16, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 0.65,
+          stagger: 0.08,
+          ease: 'power3.out'
+        }
+      );
+    }
   }
 
-  .hero-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
-    position: relative;
-    align-items: center;
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHeroAnimations);
+  } else {
+    initHeroAnimations();
   }
-
-  h1 {
-    margin: 20px 0 24px;
-    /* Fluid typography: 42px on tiny screens, 84px on desktop. */
-    font-size: clamp(40px, 8vw, 82px);
-    line-height: 0.96;
-    letter-spacing: clamp(-1.6px, -0.4vw, -3px);
-    font-weight: 600;
-    color: var(--o-ink);
-    overflow-wrap: break-word;
-  }
-  h1 .accent { color: var(--o-accent); }
-  h1 .dim { color: var(--o-mute); font-weight: 400; }
-
-  .sub {
-    font-size: 13px;
-    line-height: 1.7;
-    color: var(--o-mute);
-    max-width: 520px;
-    margin: 0 0 32px;
-  }
-  .sub .ink { color: var(--o-ink); }
-
-  .actions {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 32px;
-    flex-wrap: wrap;
-  }
-
-  .trust {
-    display: flex;
-    gap: 12px;
-    font-size: 9px;
-    color: var(--o-faint);
-    flex-wrap: wrap;
-  }
-  .trust .dot { opacity: 0.6; }
-
-  @media (max-width: 1100px) {
-    .hero-grid { grid-template-columns: 1fr; gap: 48px; }
-  }
-  @media (max-width: 700px) {
-    .hero { padding: 56px 20px 48px; }
-    .sub { font-size: 12px; line-height: 1.65; }
-    .actions { gap: 8px; }
-  }
-</style>
+</script>

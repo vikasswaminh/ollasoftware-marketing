@@ -1,85 +1,610 @@
 ---
-import SectionHead from '../primitives/SectionHead.astro';
+import CountUp from "@astroanimate/core/CountUp";
 
-const entries = [
-  { date: '2026.05.18', tag: 'ai-software', title: 'Intake agent for a 4M-customer bank',
-    body: 'Triages support tickets, drafts replies, and routes escalations. Shipped in 5 weeks. 86% precision on the gold set.' },
-  { date: '2026.05.11', tag: 'seo / aeo',   title: 'Doubled organic pipeline for a fintech',
-    body: 'New cluster strategy + technical debt cleanup + 60-page content sprint. +14 keywords in top-10, +2.1× qualified leads from search.' },
-  { date: '2026.05.04', tag: 'social',      title: 'Founder-led playbook for a Series B SaaS',
-    body: 'Weekly LinkedIn + X cadence, short-form video. 2.4M impressions, 38% MoM follower growth, 18 inbound enterprise convos.' },
-  { date: '2026.04.28', tag: 'perf',        title: 'CAC down 38% in 6 weeks',
-    body: 'Rebuilt Meta + Google funnels, new LPs in our stack, real attribution. CAC $68 → $42, LTV/CAC 4.1 → 6.8.' },
+const caseStudies = [
+  {
+    date: '2026.05.18',
+    category: 'ai-software',
+    title: 'Intake agent for a 4M-customer bank',
+    desc: 'Triages support tickets, drafts replies, and routes escalations. Shipped in 5 weeks. 86% precision on the gold set.',
+    link: '/work/'
+  },
+  {
+    date: '2026.05.11',
+    category: 'seo / aeo',
+    title: 'Doubled organic pipeline for a fintech',
+    desc: 'New cluster strategy + technical debt cleanup + 60-page content sprint. +14 keywords in top-10, +2.1× qualified leads from search.',
+    link: '/work/'
+  },
+  {
+    date: '2026.05.04',
+    category: 'social',
+    title: 'Founder-led playbook for a Series B SaaS',
+    desc: 'Weekly LinkedIn + X cadence, short-form video. 2.4M impressions, 38% MoM follower growth, 18 inbound enterprise convos.',
+    link: '/work/'
+  },
+  {
+    date: '2026.04.28',
+    category: 'perf',
+    title: 'CAC down 38% in 6 weeks',
+    desc: 'Rebuilt Meta + Google funnels, new LPs in our stack, real attribution. CAC $68 → $42, LTV/CAC 4.1 → 6.8.',
+    link: '/work/'
+  }
 ];
 ---
-<section class="work">
-  <SectionHead
-    tag="06 · Recent ships"
-    title={`Recent work, <span style="color:var(--o-mute)">last quarter.</span>`}
-  >
-    <a slot="right" class="more mono" href="/work/">all case studies →</a>
-  </SectionHead>
 
-  <div>
-    {entries.map((e, i) => (
-      <a class:list={['row', { first: i === 0 }]} href="/work/">
-        <span class="date mono">{e.date}</span>
-        <span class="tag mono">{e.tag}</span>
-        <div>
-          <div class="title">{e.title}</div>
-          <div class="body">{e.body}</div>
+<section class="work-section" id="recent-ships">
+  <div class="work-container">
+
+    <!-- Header with "all case studies →" link -->
+    <div class="work-header-wrap">
+      <span class="work-badge mono">06 · RECENT SHIPS</span>
+      <div class="work-title-row">
+        <h2 class="work-main-title">Recent work, last quarter.</h2>
+        <a href="/work/" class="all-cases-link mono">all case studies →</a>
+      </div>
+      <p class="work-sub-text">Four production deployments shipped with full observability and handoff notes.</p>
+    </div>
+
+    <!-- EXACT BENTO 4-BOX LAYOUT MATCHING SCREENSHOT -->
+    <div class="exact-bento-layout">
+      
+      <!-- BOX 1: LEFT LARGE DARK CARD -->
+      <a href={caseStudies[0].link} class="bento-box box-dark-featured">
+        <div class="dark-card-content">
+          <div class="green-quote-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="#00E5A3">
+              <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+            </svg>
+          </div>
+          <p class="dark-quote-text">“{caseStudies[0].desc}”</p>
         </div>
-        <span class="arrow">→</span>
+
+        <div class="dark-footer-row">
+          <div class="dark-avatar-wrap">
+            <img src="/olla-icon.png" alt="Ollasoftware" class="dark-avatar-icon" width="22" height="22" />
+          </div>
+          <div class="dark-meta">
+            <span class="dark-name">{caseStudies[0].title}</span>
+            <span class="dark-sub mono">{caseStudies[0].date} · {caseStudies[0].category}</span>
+          </div>
+          <span class="card-arrow-link">→</span>
+        </div>
       </a>
-    ))}
-  </div>
+
+      <!-- RIGHT SIDE: 3 LIGHT BOXES -->
+      <div class="bento-right-group">
+
+        <!-- TOP ROW (BOX 2 & BOX 3) -->
+        <div class="bento-top-row">
+
+          <!-- BOX 2: TOP LEFT -->
+          <a href={caseStudies[1].link} class="bento-box box-stat-card">
+            <div class="stat-main-headline">
+              <span class="stat-highlight">
+                <CountUp value={2.1} decimals={1} suffix="×" duration={2000} enhance={true} fontSize="inherit" textColor="inherit" />
+              </span>
+              <span class="card-category-pill mono">{caseStudies[1].category}</span>
+            </div>
+            <h3 class="stat-card-title">{caseStudies[1].title}</h3>
+            <p class="stat-card-desc">{caseStudies[1].desc}</p>
+            <div class="stat-card-foot mono">
+              <span>{caseStudies[1].date}</span>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+          <!-- BOX 3: TOP RIGHT -->
+          <a href={caseStudies[2].link} class="bento-box box-stat-card">
+            <div class="stat-main-headline">
+              <div class="stat-num-wrap">
+                <span class="arrow-indicator">↑</span>
+                <span class="stat-highlight">
+                  <CountUp value={38} suffix="%" duration={2000} enhance={true} fontSize="inherit" textColor="inherit" />
+                </span>
+              </div>
+              <span class="card-category-pill mono">{caseStudies[2].category}</span>
+            </div>
+            <h3 class="stat-card-title">{caseStudies[2].title}</h3>
+            <p class="stat-card-desc">{caseStudies[2].desc}</p>
+            <div class="stat-card-foot mono">
+              <span>{caseStudies[2].date}</span>
+              <span class="arrow">→</span>
+            </div>
+          </a>
+
+        </div>
+
+        <!-- BOX 4: BOTTOM WIDE CARD WITH HORIZONTAL STRIPED GRADIENT -->
+        <a href={caseStudies[3].link} class="bento-box box-wide-stat">
+          <div class="wide-left-content">
+            <div class="stat-main-headline">
+              <span class="stat-highlight">
+                <CountUp value={38} prefix="-" suffix="%" duration={2000} enhance={true} fontSize="inherit" textColor="inherit" />
+              </span>
+              <span class="card-category-pill mono">{caseStudies[3].category}</span>
+            </div>
+            <h3 class="stat-card-title">{caseStudies[3].title}</h3>
+            <p class="stat-card-desc">{caseStudies[3].desc}</p>
+            <div class="stat-card-foot mono">
+              <span>{caseStudies[3].date}</span>
+              <span class="arrow">→</span>
+            </div>
+          </div>
+
+          <!-- Exact Green-Cyan Gradient Graphic Bars -->
+          <div class="wide-striped-graphic" aria-hidden="true">
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </a>
+
+      </div>
+
+    </div>
 </section>
 
 <style>
-  .work { padding: 110px 56px; border-bottom: 1px solid var(--o-line); }
+  .work-section {
+    width: 100%;
+    padding: 32px 20px 38px;
+    box-sizing: border-box;
+    background: #ebe5dc !important;
+    border-top: 1px solid rgba(217, 56, 30, 0.12);
+    border-bottom: 1px solid rgba(217, 56, 30, 0.12);
+    display: flex;
+    justify-content: center;
+  }
 
-  .more { color: var(--o-accent); font-size: 10px; text-decoration: none; }
+  :global(html[data-theme="dark"]) .work-section {
+    background: #060913 !important;
+    border-color: rgba(56, 189, 248, 0.12);
+  }
 
-  .row {
-    display: grid;
-    grid-template-columns: 140px 110px 1fr 40px;
-    gap: 24px;
-    padding: 22px 0;
+  .work-container {
+    width: 100%;
+    max-width: 980px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Header */
+  .work-header-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .work-badge {
+    font-size: 10px;
+    color: #1769FF;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    margin-bottom: 6px;
+    display: inline-flex;
+    align-items: center;
+    padding: 0;
+    border: none;
+    background: transparent;
+    font-weight: 700;
+  }
+
+  :global(html[data-theme="dark"]) .work-badge {
+    background: transparent;
+    color: #60a5fa;
+    border: none;
+  }
+
+  .work-title-row {
+    display: flex;
     align-items: baseline;
-    border-bottom: 1px solid var(--o-line);
-    text-decoration: none;
-    color: inherit;
-    transition: background .14s;
+    justify-content: space-between;
+    width: 100%;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-bottom: 3px;
   }
-  .row.first { border-top: 1px solid var(--o-line); }
-  .row:hover { background: var(--o-panel); }
 
-  .date { font-size: 10px; color: var(--o-faint); }
-  .tag {
-    font-size: 9px;
-    color: var(--o-accent);
-    padding: 2px 8px;
-    border: 1px solid color-mix(in srgb, var(--o-accent) 40%, transparent);
-    border-radius: 3px;
-    justify-self: start;
+  .work-main-title {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: clamp(22px, 2.8vw, 30px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    color: #0f172a;
+    margin: 0;
   }
-  .title {
-    font-size: 16px;
-    color: var(--o-ink);
+
+  :global(html[data-theme="dark"]) .work-main-title {
+    color: #F5F7FB;
+  }
+
+  .all-cases-link {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: #1769FF;
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(23, 105, 255, 0.4);
+    padding-bottom: 1px;
+    transition: all 0.2s ease;
+  }
+
+  .all-cases-link:hover {
+    color: #0052cc;
+    border-bottom-color: #0052cc;
+  }
+
+  :global(html[data-theme="dark"]) .all-cases-link {
+    color: #60a5fa;
+    border-bottom-color: rgba(96, 165, 250, 0.4);
+  }
+
+  .work-sub-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    line-height: 1.35;
+    color: #64748b;
+    margin: 0;
+  }
+
+  :global(html[data-theme="dark"]) .work-sub-text {
+    color: #94a3b8;
+  }
+
+  /* ══════════════════════════════════════════════════
+     COMPACT BENTO 4-BOX LAYOUT
+     Left 46% (Box 1) | Right 54% (Box 2, 3, 4)
+  ══════════════════════════════════════════════════ */
+  .exact-bento-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.05fr;
+    gap: 10px;
+    width: 100%;
+    align-items: stretch;
+  }
+
+  .bento-box {
+    text-decoration: none !important;
+    border-radius: 10px;
+    box-sizing: border-box;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .bento-box:hover {
+    transform: translateY(-2px);
+  }
+
+  /* ── 1. BOX 1: LEFT LARGE DARK CARD (Deep Navy, Matches Brand) ── */
+  .box-dark-featured {
+    background: #0d121f !important;
+    color: #ffffff !important;
+    padding: 18px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  .box-dark-featured:hover {
+    border-color: rgba(0, 229, 163, 0.4);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.14);
+  }
+
+  .green-quote-icon {
+    margin-bottom: 8px;
+  }
+
+  .dark-quote-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 13.5px;
+    line-height: 1.45;
+    color: #f1f5f9 !important;
+    letter-spacing: -0.01em;
     font-weight: 500;
-    letter-spacing: -0.2px;
+    margin: 0;
+    text-decoration: none !important;
+  }
+
+  .dark-footer-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .dark-avatar-wrap {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .dark-avatar-icon {
+    width: 17px;
+    height: 17px;
+    object-fit: contain;
+  }
+
+  .dark-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    flex-grow: 1;
+  }
+
+  .dark-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffffff !important;
+  }
+
+  .dark-sub {
+    font-size: 9.5px;
+    color: #94a3b8 !important;
+  }
+
+  .card-arrow-link {
+    font-size: 13px;
+    color: #00E5A3;
+    transition: transform 0.2s ease;
+  }
+
+  .box-dark-featured:hover .card-arrow-link {
+    transform: translateX(3px);
+  }
+
+  /* ── RIGHT GROUP (BOX 2, 3, 4) ── */
+  .bento-right-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 100%;
+  }
+
+  .bento-top-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  /* ── 2. BOX 2 & BOX 3: STAT CARDS (Crisp Clean White with subtle warm border) ── */
+  .box-stat-card {
+    background: #ffffff !important;
+    border: 1px solid rgba(20, 30, 50, 0.08);
+    padding: 12px 14px;
+    color: #0f172a !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  }
+
+  .box-stat-card:hover {
+    border-color: #1769FF;
+    box-shadow: 0 4px 14px rgba(23, 105, 255, 0.08);
+  }
+
+  :global(html[data-theme="dark"]) .box-stat-card {
+    background: #0D152C !important;
+    border-color: rgba(56, 189, 248, 0.14);
+    color: #ffffff !important;
+    box-shadow: 0 3px 12px rgba(0, 4, 18, 0.3);
+  }
+
+  :global(html[data-theme="dark"]) .box-stat-card:hover {
+    border-color: #38BDF8;
+    box-shadow: 0 6px 18px rgba(56, 189, 248, 0.15);
+  }
+
+  .stat-main-headline {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
     margin-bottom: 4px;
   }
-  .body { font-size: 12px; color: var(--o-mute); line-height: 1.5; }
-  .arrow { color: var(--o-faint); text-align: right; }
 
-  @media (max-width: 900px) {
-    .row { grid-template-columns: 100px 1fr 24px; }
-    .tag { display: none; }
+  .stat-num-wrap {
+    display: flex;
+    align-items: center;
+    gap: 3px;
   }
-  @media (max-width: 700px) {
-    .work { padding: 64px 24px; }
-    .row { grid-template-columns: 1fr 24px; gap: 12px; }
-    .date { display: none; }
+
+  .stat-highlight {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.035em;
+    line-height: 1;
+    color: #0f172a !important;
+  }
+
+  :global(html[data-theme="dark"]) .stat-highlight {
+    color: #ffffff !important;
+  }
+
+  .arrow-indicator {
+    font-size: 14px;
+    font-weight: 800;
+    color: #0f172a;
+    line-height: 1;
+  }
+
+  :global(html[data-theme="dark"]) .arrow-indicator {
+    color: #38BDF8;
+  }
+
+  .card-category-pill {
+    font-size: 8.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 2px 7px;
+    border-radius: 100px;
+    background: rgba(23, 105, 255, 0.08);
+    color: #1769FF !important;
+    border: 1px solid rgba(23, 105, 255, 0.2);
+    display: inline-flex;
+    align-items: center;
+  }
+
+  :global(html[data-theme="dark"]) .card-category-pill {
+    background: rgba(56, 189, 248, 0.12);
+    color: #38BDF8 !important;
+    border-color: rgba(56, 189, 248, 0.25);
+  }
+
+  .stat-card-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.25;
+    color: #0f172a !important;
+    margin: 2px 0 3px 0;
+    text-decoration: none !important;
+  }
+
+  :global(html[data-theme="dark"]) .stat-card-title {
+    color: #f1f5f9 !important;
+  }
+
+  .stat-card-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 10.5px;
+    line-height: 1.35;
+    color: #64748b !important;
+    margin: 0;
+    text-decoration: none !important;
+  }
+
+  :global(html[data-theme="dark"]) .stat-card-desc {
+    color: #94a3b8 !important;
+  }
+
+  .stat-card-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 9.5px;
+    font-weight: 600;
+    color: #94a3b8 !important;
+    margin-top: 8px;
+    padding-top: 6px;
+    border-top: 1px dashed rgba(0, 0, 0, 0.06);
+    text-decoration: none !important;
+  }
+
+  :global(html[data-theme="dark"]) .stat-card-foot {
+    border-top-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .box-stat-card:hover .stat-card-foot {
+    color: #1769FF !important;
+  }
+  :global(html[data-theme="dark"]) .box-stat-card:hover .stat-card-foot {
+    color: #38BDF8 !important;
+  }
+
+  /* ── 3. BOX 4: BOTTOM WIDE STAT CARD ── */
+  .box-wide-stat {
+    background: #ffffff !important;
+    border: 1px solid rgba(20, 30, 50, 0.08);
+    padding: 12px 16px;
+    color: #0f172a !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    flex-grow: 1;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .box-wide-stat:hover {
+    border-color: #1769FF;
+    box-shadow: 0 4px 14px rgba(23, 105, 255, 0.08);
+  }
+
+  :global(html[data-theme="dark"]) .box-wide-stat {
+    background: #0D152C !important;
+    border-color: rgba(56, 189, 248, 0.14);
+    color: #ffffff !important;
+    box-shadow: 0 3px 12px rgba(0, 4, 18, 0.3);
+  }
+
+  :global(html[data-theme="dark"]) .box-wide-stat:hover {
+    border-color: #38BDF8;
+    box-shadow: 0 6px 18px rgba(56, 189, 248, 0.15);
+  }
+
+  .wide-left-content {
+    max-width: 50%;
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+    position: relative;
+  }
+
+  .wide-striped-graphic {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 52%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 4px 0;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .wide-striped-graphic span {
+    display: block;
+    height: 3.5px;
+    width: 100%;
+    background: linear-gradient(90deg, rgba(0, 255, 163, 0) 0%, rgba(0, 255, 163, 0.45) 25%, rgba(0, 255, 163, 1) 100%);
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+    box-shadow: 0 0 6px rgba(0, 255, 163, 0.15);
+  }
+
+  /* Responsive */
+  @media (max-width: 960px) {
+    .exact-bento-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 600px) {
+    .bento-top-row {
+      grid-template-columns: 1fr;
+    }
+    .box-wide-stat {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .wide-left-content {
+      max-width: 100%;
+    }
+    .wide-striped-graphic {
+      width: 100%;
+      height: 32px;
+    }
+    .work-section {
+      padding: 28px 14px 34px;
+    }
   }
 </style>

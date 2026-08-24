@@ -14,6 +14,8 @@ interface Props {
   breadcrumb?: Array<{ name: string; url: string }>;
   /** Custom OG image path (PNG); defaults to /og-image.png. */
   ogImage?: string;
+  /** Hide top layout nav if embedded inside page hero */
+  hideNav?: boolean;
 }
 
 const {
@@ -22,6 +24,7 @@ const {
   jsonLd = [],
   breadcrumb,
   ogImage = '/og-image.png',
+  hideNav = false,
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
@@ -39,6 +42,11 @@ for (const x of jsonLd) allLd.push(x);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Google Fonts: Inter with optical-sizing (opsz), Newsreader, Cormorant Garamond, JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Primary SEO -->
     <title>{title}</title>
@@ -116,21 +124,125 @@ for (const x of jsonLd) allLd.push(x);
     <link rel="alternate" type="text/markdown" title="LLM index (full)" href="/llms-full.txt" />
     <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
 
+    <!-- Instant Theme Detection Script -->
+    <script is:inline>
+      (() => {
+        try {
+          const saved = localStorage.getItem('olla-theme');
+          if (saved === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+          } else if (saved === 'light') {
+            document.documentElement.removeAttribute('data-theme');
+          } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.setAttribute('data-theme', 'dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+
     <!-- Structured data: Organization + WebSite + optional Breadcrumb + per-page schemas -->
     {allLd.map(ld => <Fragment set:html={ldScript(ld)} />)}
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <ParentBanner />
-    <SiteNav />
+    <div class="site-header-sticky">
+      {!hideNav && <SiteNav />}
+    </div>
     <main id="main">
       <slot />
     </main>
     <SiteFooter />
+
+    <!-- Universal Blur Fade-In Scroll-Trigger Engine -->
+    <script is:inline>
+      (() => {
+        if (typeof window === 'undefined') return;
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          document.querySelectorAll('.scroll-reveal-item, [data-animate="fade-in"], .bento-card, .rule-accordion-item, .testimonial-card, .work-card, .feature-card, .gallery-slide-card, .blog-card, .job-card, .client-logo-item').forEach(el => {
+            el.classList.add('is-revealed');
+          });
+          return;
+        }
+
+        const selector = '.scroll-reveal-item, [data-animate="fade-in"], .bento-card, .rule-accordion-item, .testimonial-card, .work-card, .feature-card, .gallery-slide-card, .blog-card, .job-card, .client-logo-item';
+
+        function initScrollReveals() {
+          const elements = document.querySelectorAll(selector);
+          if (!elements.length) return;
+
+          // Stagger sibling items inside parent containers
+          const parents = new Set();
+          elements.forEach(el => {
+            if (el.parentElement) parents.add(el.parentElement);
+          });
+
+          parents.forEach(parent => {
+            const siblings = parent.querySelectorAll(selector);
+            siblings.forEach((el, index) => {
+              if (!el.style.getPropertyValue('--reveal-delay')) {
+                el.style.setProperty('--reveal-delay', `${(index % 4) * 90}ms`);
+              }
+            });
+          });
+
+          if (!('IntersectionObserver' in window)) {
+            elements.forEach(el => el.classList.add('is-revealed'));
+            return;
+          }
+
+          const observer = new IntersectionObserver(
+            (entries) => {
+              entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                  entry.target.classList.add('is-revealed');
+                  observer.unobserve(entry.target);
+                }
+              });
+            },
+            { threshold: 0.08, rootMargin: '0px 0px -40px 0px' }
+          );
+
+          elements.forEach((el) => {
+            if (el.getBoundingClientRect().top < window.innerHeight - 30) {
+              el.classList.add('is-revealed');
+            } else {
+              observer.observe(el);
+            }
+          });
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', initScrollReveals);
+        } else {
+          initScrollReveals();
+        }
+
+        // Safety net to ensure no element stays hidden
+        setTimeout(() => {
+          document.querySelectorAll(selector).forEach(el => {
+            if (!el.classList.contains('is-revealed')) {
+              const rect = el.getBoundingClientRect();
+              if (rect.top < window.innerHeight) {
+                el.classList.add('is-revealed');
+              }
+            }
+          });
+        }, 1200);
+      })();
+    </script>
   </body>
 </html>
 
 <style is:global>
+  .site-header-sticky {
+    position: sticky !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    z-index: 1000 !important;
+  }
   .skip-link {
     position: absolute;
     left: -9999px;

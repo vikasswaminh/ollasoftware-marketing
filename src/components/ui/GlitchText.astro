@@ -1,0 +1,146 @@
+---
+interface Props {
+  speed?: number;
+  enableShadows?: boolean;
+  enableOnHover?: boolean;
+  className?: string;
+  bgColor?: string;
+  textColor?: string;
+}
+
+const {
+  speed = 1,
+  enableShadows = true,
+  enableOnHover = true,
+  className = '',
+  bgColor = 'transparent',
+  textColor = 'inherit',
+} = Astro.props;
+
+const slotContent = await Astro.slots.render('default');
+const plainText = slotContent.replace(/<[^>]*>?/gm, '').trim();
+
+const redDur   = (2.4 / speed).toFixed(2);
+const cyanDur  = (1.8 / speed).toFixed(2);
+
+const cssVars = `--g-red-dur:${redDur}s;--g-cyan-dur:${cyanDur}s;--g-bg:${bgColor};--g-color:${textColor}`;
+const hoverClass = enableOnHover ? 'enable-on-hover' : '';
+---
+
+<span
+  class={`glitch ${hoverClass} ${className}`}
+  style={cssVars}
+  data-text={plainText}
+>
+  <slot />
+</span>
+
+<style>
+  /* ─── base ─── */
+  .glitch {
+    position: relative;
+    display: inline-block;
+    color: var(--g-color, inherit);
+    user-select: none;
+    cursor: pointer;
+    isolation: isolate;
+  }
+
+  /* ─── shared pseudo layer ─── */
+  .glitch::before,
+  .glitch::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    font: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+    white-space: nowrap;
+    overflow: hidden;
+    background: var(--g-bg, transparent);
+    pointer-events: none;
+    /* hidden by default */
+    clip-path: inset(0 0 100% 0);
+  }
+
+  /* ─── RED channel (::before) — offset right ─── */
+  .glitch::before {
+    color: #FF0000;
+    z-index: 1;
+  }
+
+  /* ─── CYAN channel (::after) — offset left ─── */
+  .glitch::after {
+    color: #00FFFF;
+    z-index: 2;
+  }
+
+  /* ═══════════════════════════════
+     ALWAYS-ON mode
+  ═══════════════════════════════ */
+  .glitch:not(.enable-on-hover)::before {
+    animation: glitch-red var(--g-red-dur, 2.4s) infinite step-start;
+  }
+  .glitch:not(.enable-on-hover)::after {
+    animation: glitch-cyan var(--g-cyan-dur, 1.8s) infinite step-start;
+  }
+
+  /* ═══════════════════════════════
+     HOVER-ONLY mode
+  ═══════════════════════════════ */
+  .glitch.enable-on-hover::before,
+  .glitch.enable-on-hover::after {
+    animation: none;
+    clip-path: inset(0 0 100% 0);
+  }
+
+  .glitch.enable-on-hover:hover::before {
+    animation: glitch-red var(--g-red-dur, 2.4s) infinite step-start;
+  }
+  .glitch.enable-on-hover:hover::after {
+    animation: glitch-cyan var(--g-cyan-dur, 1.8s) infinite step-start;
+  }
+
+  /* ═══════════════════════════════
+     RED channel keyframes
+     72% idle → 18% burst → back to idle
+  ═══════════════════════════════ */
+  @keyframes glitch-red {
+    0%   { clip-path: inset(0 0 100% 0); transform: translateX(4px) translateY(-1px); }
+    72%  { clip-path: inset(0 0 100% 0); transform: translateX(4px) translateY(-1px); }
+
+    73%  { clip-path: inset(4%  0 92% 0); transform: translateX(5px)  translateY(-1px); }
+    75%  { clip-path: inset(22% 0 70% 0); transform: translateX(-4px) translateY(-1px); }
+    77%  { clip-path: inset(38% 0 52% 0); transform: translateX(6px)  translateY(-1px); }
+    79%  { clip-path: inset(55% 0 38% 0); transform: translateX(-5px) translateY(-1px); }
+    81%  { clip-path: inset(68% 0 18% 0); transform: translateX(3px)  translateY(-1px); }
+    83%  { clip-path: inset(12% 0 82% 0); transform: translateX(-6px) translateY(-1px); }
+    85%  { clip-path: inset(48% 0 44% 0); transform: translateX(5px)  translateY(-1px); }
+    87%  { clip-path: inset(75% 0 10% 0); transform: translateX(-3px) translateY(-1px); }
+    89%  { clip-path: inset(30% 0 60% 0); transform: translateX(4px)  translateY(-1px); }
+
+    91%  { clip-path: inset(0 0 100% 0); transform: translateX(4px) translateY(-1px); }
+    100% { clip-path: inset(0 0 100% 0); transform: translateX(4px) translateY(-1px); }
+  }
+
+  /* ═══════════════════════════════
+     CYAN channel keyframes
+     68% idle → 16% burst → back to idle
+  ═══════════════════════════════ */
+  @keyframes glitch-cyan {
+    0%   { clip-path: inset(0 0 100% 0); transform: translateX(-4px) translateY(1px); }
+    68%  { clip-path: inset(0 0 100% 0); transform: translateX(-4px) translateY(1px); }
+
+    69%  { clip-path: inset(8%  0 88% 0); transform: translateX(-6px) translateY(1px); }
+    71%  { clip-path: inset(28% 0 62% 0); transform: translateX(4px)  translateY(1px); }
+    73%  { clip-path: inset(45% 0 48% 0); transform: translateX(-5px) translateY(1px); }
+    75%  { clip-path: inset(62% 0 30% 0); transform: translateX(6px)  translateY(1px); }
+    77%  { clip-path: inset(18% 0 76% 0); transform: translateX(-4px) translateY(1px); }
+    79%  { clip-path: inset(52% 0 40% 0); transform: translateX(5px)  translateY(1px); }
+    81%  { clip-path: inset(78% 0 14% 0); transform: translateX(-6px) translateY(1px); }
+    83%  { clip-path: inset(35% 0 58% 0); transform: translateX(3px)  translateY(1px); }
+
+    85%  { clip-path: inset(0 0 100% 0); transform: translateX(-4px) translateY(1px); }
+    100% { clip-path: inset(0 0 100% 0); transform: translateX(-4px) translateY(1px); }
+  }
+</style>

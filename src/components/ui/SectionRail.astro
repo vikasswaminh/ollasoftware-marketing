@@ -1,0 +1,274 @@
+---
+/**
+ * SectionRail.astro
+ * Minimal Hover-Popout Right-side Navigation Indicator for OllaSoftware.
+ * 
+ * - DEFAULT STATE: Only small horizontal dashes visible fixed on far right. No vertical line. No text labels.
+ * - HOVER INTERACTION: Hovering over an individual indicator reveals ONLY that specific label popping out to the LEFT.
+ * - ACTIVE STATE: OllaSoftware Blue (#1769FF) indicator (32px width with subtle glow).
+ */
+interface SectionItem {
+  id: string;
+  label: string;
+}
+
+const sections: SectionItem[] = [
+  { id: 'our-clients', label: '01 · OUR CLIENTS' },
+  { id: 'how-we-work', label: '02 · HOW WE WORK' },
+  { id: 'what-we-do', label: '03 · WHAT WE DO' },
+  { id: 'how-we-work-rules', label: '04 · HOW WE WORK' },
+  { id: 'from-the-room', label: '05 · FROM THE ROOM' },
+  { id: 'recent-ships', label: '06 · RECENT SHIPS' },
+  { id: 'ready-when-you-are', label: 'READY WHEN YOU ARE' },
+];
+---
+
+<aside class="section-rail" id="section-rail-root" aria-label="Page section navigation">
+  {sections.map((sec, idx) => (
+    <a
+      href={`#${sec.id}`}
+      class={`rail-item ${idx === 0 ? 'active' : ''}`}
+      data-section={sec.id}
+      aria-label={`Scroll to ${sec.label}`}
+    >
+      <span class="rail-label">{sec.label}</span>
+      <span class="rail-indicator" aria-hidden="true"></span>
+    </a>
+  ))}
+</aside>
+
+<script is:inline>
+  (() => {
+    if (typeof window === 'undefined') return;
+
+    const root = document.getElementById('section-rail-root');
+    if (!root) return;
+
+    const items = Array.from(root.querySelectorAll('.rail-item'));
+    const targetIds = items.map(el => el.getAttribute('data-section')).filter(Boolean);
+
+    let touchTimeout = null;
+
+    items.forEach((item) => {
+      item.addEventListener('click', (e) => {
+        const targetId = item.getAttribute('data-section');
+        if (targetId) {
+          e.preventDefault();
+          const targetEl = document.getElementById(targetId);
+
+          if (targetEl) {
+            const headerOffset = 64;
+            const elementPosition = targetEl.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }
+
+          if (window.matchMedia('(hover: none)').matches) {
+            if (touchTimeout) clearTimeout(touchTimeout);
+            items.forEach(i => i.classList.remove('touch-active'));
+            item.classList.add('touch-active');
+            touchTimeout = setTimeout(() => {
+              item.classList.remove('touch-active');
+            }, 1200);
+          }
+        }
+      });
+    });
+
+    let activeId = targetIds[0];
+
+    const setActive = (id) => {
+      if (!id || activeId === id) return;
+      activeId = id;
+
+      items.forEach(item => {
+        const isMatch = item.getAttribute('data-section') === id;
+        if (isMatch) {
+          item.classList.add('active');
+          item.setAttribute('aria-current', 'true');
+        } else {
+          item.classList.remove('active');
+          item.removeAttribute('aria-current');
+        }
+      });
+    };
+
+    // Precision focal-point active section detector
+    const updateActiveSection = () => {
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop;
+      const windowHeight = window.innerHeight;
+      const focalY = scrollY + windowHeight * 0.40;
+
+      // Handle top of page
+      if (scrollY < 100) {
+        setActive(targetIds[0]);
+        return;
+      }
+
+      // Handle bottom of page
+      if (scrollY + windowHeight >= document.documentElement.scrollHeight - 60) {
+        setActive(targetIds[targetIds.length - 1]);
+        return;
+      }
+
+      let currentActive = null;
+      for (let i = 0; i < targetIds.length; i++) {
+        const el = document.getElementById(targetIds[i]);
+        if (el) {
+          const top = el.offsetTop;
+          const height = el.offsetHeight;
+          if (focalY >= top && focalY < top + height) {
+            currentActive = targetIds[i];
+            break;
+          }
+        }
+      }
+
+      if (currentActive) {
+        setActive(currentActive);
+      }
+    };
+
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateActiveSection();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
+
+    window.addEventListener('resize', updateActiveSection, { passive: true });
+    updateActiveSection();
+  })();
+</script>
+
+<style>
+  .section-rail {
+    position: fixed !important;
+    right: 12px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    z-index: 99999 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    align-items: flex-end !important;
+    pointer-events: auto !important;
+  }
+
+  .rail-item {
+    position: relative !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    min-height: 28px !important;
+    min-width: 44px !important;
+    text-decoration: none !important;
+    cursor: pointer !important;
+    outline: none !important;
+  }
+
+  /* STRICT DEFAULT HIDE FOR LABELS */
+  .section-rail .rail-label {
+    position: absolute !important;
+    right: 38px !important;
+    top: 50% !important;
+    font-family: var(--o-font-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace) !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.12em !important;
+    text-transform: uppercase !important;
+    color: #111827 !important;
+    white-space: nowrap !important;
+    opacity: 0 !important;
+    visibility: hidden !important;
+    transform: translate(12px, -50%) !important;
+    transition: opacity 280ms cubic-bezier(0.22, 1, 0.36, 1), transform 280ms cubic-bezier(0.22, 1, 0.36, 1), color 280ms ease !important;
+    pointer-events: none !important;
+  }
+
+  .section-rail .rail-indicator {
+    display: block !important;
+    width: 18px !important;
+    height: 4px !important;
+    border-radius: 999px !important;
+    background: rgba(120, 120, 120, 0.45) !important;
+    transition:
+      width 300ms cubic-bezier(0.22, 1, 0.36, 1),
+      height 300ms cubic-bezier(0.22, 1, 0.36, 1),
+      background-color 300ms ease,
+      box-shadow 300ms ease !important;
+    flex-shrink: 0 !important;
+  }
+
+  .section-rail .rail-item.active .rail-indicator {
+    width: 32px !important;
+    height: 5px !important;
+    background: #1769FF !important;
+    box-shadow: 0 0 12px rgba(23, 105, 255, 0.25) !important;
+  }
+
+  .section-rail .rail-item.active .rail-label {
+    color: #1769FF !important;
+    font-weight: 600 !important;
+  }
+
+  /* HOVER ONLY REVEAL */
+  .section-rail .rail-item:hover .rail-label,
+  .section-rail .rail-item.touch-active .rail-label {
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translate(0, -50%) !important;
+  }
+
+  .section-rail .rail-item:hover .rail-indicator {
+    background: rgba(40, 40, 40, 0.75) !important;
+    width: 24px !important;
+  }
+
+  .section-rail .rail-item.active:hover .rail-indicator {
+    background: #1769FF !important;
+    width: 36px !important;
+  }
+
+  @media (max-width: 768px) {
+    .section-rail {
+      right: 10px !important;
+      gap: 10px !important;
+    }
+
+    .rail-item {
+      min-height: 24px !important;
+      min-width: 36px !important;
+    }
+
+    .section-rail .rail-indicator {
+      width: 14px !important;
+      height: 3px !important;
+    }
+
+    .section-rail .rail-item.active .rail-indicator {
+      width: 25px !important;
+      height: 4px !important;
+    }
+
+    .section-rail .rail-label {
+      right: 34px !important;
+      font-size: 10px !important;
+      padding: 3px 7px !important;
+      background: rgba(255, 255, 255, 0.94) !important;
+      border-radius: 4px !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    }
+  }
+</style>
+
+
+
