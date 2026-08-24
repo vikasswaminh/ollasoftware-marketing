@@ -1015,89 +1015,101 @@ const featuredPost = enhancedPosts[0];
 
   .featured-title {
     margin: 0 !important;
-    font-size: 20px !important;
-    font-weight: 700 !important;
+    font-size: clamp(22px, 2.5vw, 30px) !important;
+    line-height: 1.22 !important;
+    letter-spacing: -0.6px !important;
+    font-weight: 800 !important;
     color: var(--o-ink) !important;
-    line-height: 1.25 !important;
-    letter-spacing: -0.4px !important;
-    position: relative !important;
     z-index: 2 !important;
+    max-width: 90% !important;
   }
 
   .featured-desc {
     margin: 0 !important;
-    font-size: 13px !important;
-    line-height: 1.55 !important;
+    font-size: 14px !important;
+    line-height: 1.65 !important;
     color: var(--o-mute) !important;
-    max-width: 90% !important;
-    position: relative !important;
     z-index: 2 !important;
+    max-width: 82% !important;
   }
 
-  .featured-foot {
+  .featured-card-foot {
     display: flex !important;
     align-items: center !important;
     justify-content: space-between !important;
-    padding-top: 12px !important;
-    margin-top: 2px !important;
-    border-top: 1px dashed var(--o-line) !important;
-    font-size: 11.5px !important;
-    position: relative !important;
+    padding-top: 16px !important;
+    margin-top: 6px !important;
+    border-top: 1px solid var(--o-line) !important;
     z-index: 2 !important;
   }
 
-  .meta-read-time {
-    color: var(--o-faint) !important;
+  .read-time-tag {
+    font-size: 11.5px !important;
+    color: var(--o-mute) !important;
   }
 
-  .meta-read-link {
-    color: #216BFF !important;
-    font-weight: 600 !important;
-    transition: transform .15s ease !important;
+  .featured-read-link {
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #1D6AF3 !important;
+    transition: transform .2s ease !important;
   }
 
-  .featured-hero-card:hover .meta-read-link {
-    transform: translateX(3px) !important;
+  .featured-hero-card:hover .featured-read-link {
+    transform: translateX(4px) !important;
   }
 
-  /* 3-Column Clean Cards Grid in the Middle */
+  /* 3-Column Clean Post Cards Grid */
   .post-grid-3col {
     display: grid !important;
-    grid-template-columns: repeat(3, 1fr) !important;
-    gap: 18px !important;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)) !important;
+    gap: 20px !important;
   }
 
   .clean-post-card {
     background: var(--o-panel, #ffffff) !important;
     border: 1px solid var(--o-line) !important;
     border-radius: 14px !important;
-    padding: 20px !important;
-    text-decoration: none !important;
-    color: var(--o-ink) !important;
+    padding: 22px 20px 18px !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: space-between !important;
-    gap: 12px !important;
-    transition: all .2s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    position: relative !important;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02) !important;
+    text-decoration: none !important;
+    color: inherit !important;
+    transition: all .22s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.02) !important;
+    box-sizing: border-box !important;
+    min-height: 260px !important;
   }
 
   .clean-post-card:hover {
     border-color: #216BFF !important;
+    box-shadow: 0 12px 30px rgba(33, 107, 255, 0.1) !important;
     transform: translateY(-3px) !important;
-    box-shadow: 0 12px 32px rgba(33, 107, 255, 0.12) !important;
   }
 
   .card-top-row {
     display: flex !important;
-    justify-content: space-between !important;
     align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .category-pill-brand {
+    font-size: 10.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.4px !important;
+    padding: 3px 9px !important;
+    background: #1D6AF3 !important;
+    color: #ffffff !important;
+    border-radius: 5px !important;
+    text-transform: capitalize !important;
   }
 
   .card-domain-tag {
-    font-size: 10px !important;
-    color: var(--o-faint) !important;
+    font-size: 11px !important;
+    color: var(--o-mute) !important;
   }
 
   .card-content-area {
@@ -1109,8 +1121,8 @@ const featuredPost = enhancedPosts[0];
 
   .card-clean-title {
     margin: 0 !important;
-    font-size: 17px !important;
-    font-weight: 700 !important;
+    font-size: 18px !important;
+    font-weight: 800 !important;
     color: var(--o-ink) !important;
     line-height: 1.25 !important;
     letter-spacing: -0.3px !important;
@@ -1118,14 +1130,18 @@ const featuredPost = enhancedPosts[0];
 
   .card-clean-tagline {
     margin: 0 !important;
-    font-size: 11.5px !important;
+    font-size: 12.5px !important;
+    line-height: 1.45 !important;
     color: #216BFF !important;
     font-weight: 600 !important;
-    line-height: 1.4 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
   }
 
   .card-clean-desc {
-    margin: 2px 0 0 !important;
+    margin: 4px 0 0 !important;
     font-size: 12px !important;
     line-height: 1.55 !important;
     color: var(--o-mute) !important;
@@ -1136,37 +1152,43 @@ const featuredPost = enhancedPosts[0];
   }
 
   .card-clean-foot {
-    padding-top: 10px !important;
-    border-top: 1px dashed var(--o-line) !important;
     display: flex !important;
-    justify-content: space-between !important;
     align-items: center !important;
-    font-size: 11px !important;
+    justify-content: space-between !important;
+    padding-top: 14px !important;
+    margin-top: 16px !important;
+    border-top: 1px dashed var(--o-line) !important;
   }
 
   .card-read-time {
-    color: var(--o-faint) !important;
+    font-size: 11px !important;
+    color: var(--o-mute) !important;
   }
 
   .card-clean-cta {
-    color: #216BFF !important;
-    font-weight: 600 !important;
-    transition: transform .15s ease !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: #1D6AF3 !important;
+    transition: transform .2s ease !important;
   }
 
   .clean-post-card:hover .card-clean-cta {
     transform: translateX(3px) !important;
   }
 
+  /* No Results Fallback */
   .no-results {
     text-align: center !important;
-    padding: 60px 20px !important;
+    padding: 64px 24px !important;
+    background: var(--o-panel, #ffffff) !important;
+    border: 1px solid var(--o-line) !important;
+    border-radius: 14px !important;
     color: var(--o-mute) !important;
   }
 
   .reset-filter-btn {
-    margin-top: 14px !important;
-    background: #216BFF !important;
+    margin-top: 12px !important;
+    background: #1D6AF3 !important;
     color: #ffffff !important;
     border: none !important;
     padding: 8px 18px !important;
@@ -1176,25 +1198,31 @@ const featuredPost = enhancedPosts[0];
   }
 
   /* Responsive Breakpoints */
-  @media (max-width: 1400px) {
+  @media (max-width: 1440px) {
     .blog-main-layout {
-      grid-template-columns: 210px 1fr 210px !important;
+      grid-template-columns: 210px minmax(0, 1fr) 210px !important;
       gap: 20px !important;
       padding: 32px 18px 80px !important;
     }
   }
 
-  @media (max-width: 1140px) {
+  @media (max-width: 1180px) {
     .blog-main-layout {
-      grid-template-columns: 220px 1fr !important;
-      gap: 24px !important;
+      grid-template-columns: 195px minmax(0, 1fr) 195px !important;
+      gap: 16px !important;
+      padding: 28px 14px 70px !important;
     }
-    .about-sidebar {
-      display: none !important;
+    .founder-sticky-box,
+    .about-sticky-box {
+      padding: 16px 12px !important;
+    }
+    .founder-link {
+      padding: 6px 7px !important;
+      font-size: 11.5px !important;
     }
   }
 
-  @media (max-width: 860px) {
+  @media (max-width: 960px) {
     .blog-hero-split {
       grid-template-columns: 1fr !important;
       gap: 40px !important;
@@ -1211,17 +1239,27 @@ const featuredPost = enhancedPosts[0];
     }
     .blog-main-layout {
       grid-template-columns: 1fr !important;
-      gap: 32px !important;
+      gap: 36px !important;
       padding: 28px 16px 64px !important;
     }
-    .founder-sidebar {
+    .founder-sidebar,
+    .about-sidebar {
       position: static !important;
+      height: auto !important;
     }
-    .founder-sticky-box {
+    .right-sticky-wrapper {
+      height: auto !important;
+    }
+    .founder-sticky-box,
+    .about-sticky-box {
       max-height: none !important;
     }
-    .founder-nav {
+    .founder-nav,
+    .about-nav {
       max-height: 220px !important;
+    }
+    .sidebar-bg-logo-anchor {
+      margin-top: 24px !important;
     }
     .post-grid-3col {
       grid-template-columns: 1fr !important;
