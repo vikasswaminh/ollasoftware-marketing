@@ -1,9 +1,9 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import PageHero from '../primitives/PageHero.astro';
 import Btn from '../primitives/Btn.astro';
 import Tag from '../primitives/Tag.astro';
 import type { BlogPost } from '../../lib/blog';
+import { allPosts } from '../../lib/blog';
 
 interface Props {
   post: BlogPost;
@@ -13,6 +13,30 @@ interface Props {
 const { post, jsonLd } = Astro.props;
 
 const brandUrl = `https://${post.brandDomain}/`;
+
+const categoryTagMap: Record<string, string> = {
+  'networkershome': 'EDUCATION',
+  'nhprep': 'EDUCATION',
+  '21tunnel': 'API',
+  'freefreecv': 'SAAS',
+  'quicksdwan': 'SECURITY',
+  'meshwg': 'SECURITY',
+  'quickztna': 'SECURITY',
+  'ollavpn': 'SECURITY',
+  'browserfog': 'AI',
+  'memfog': 'AI',
+  'crawlcrawl': 'AI',
+  'aeoniti': 'AI',
+  'ollasync': 'API',
+  'ollastack': 'API',
+  'ollasuper': 'AI',
+  '24observe': 'AI',
+  'olladns': 'INFRA',
+  'ollanode': 'INFRA',
+  'ollabear': 'AI',
+  'ollagraph': 'AI',
+  'ollima': 'AI',
+};
 ---
 <Layout
   title={post.title}
@@ -24,102 +48,482 @@ const brandUrl = `https://${post.brandDomain}/`;
   ]}
   jsonLd={jsonLd}
 >
-  <PageHero
-    eyebrow={post.heroEyebrow}
-    title={post.heroH1}
-    sub={post.heroSub}
-    breadcrumb={[
-      { label: 'home', href: '/' },
-      { label: 'blog', href: '/blog/' },
-      { label: post.brand },
-    ]}
-  >
-    <Btn primary href={brandUrl}>Visit {post.brand} →</Btn>
-    <Btn href="/contact/">Talk to Ollasoftware</Btn>
-  </PageHero>
+  <!-- Center-Aligned Full Blog Header Hero -->
+  <section class="blog-hero-centered">
+    <div class="hero-inner">
+      <nav class="crumbs mono" aria-label="Breadcrumb">
+        <a href="/">home</a>
+        <span class="sep">/</span>
+        <a href="/blog/">blog</a>
+        <span class="sep">/</span>
+        <span class="current">{post.brand}</span>
+      </nav>
 
-  <article class="post">
-    <header class="meta">
-      <div class="meta-row">
-        <span class="meta-item mono">
-          <span class="dim">Published</span> {post.publishedOn}
-        </span>
-        <span class="meta-item mono">
-          <span class="dim">Updated</span> {post.lastUpdated}
-        </span>
-        <span class="meta-item mono">
-          <span class="dim">Read</span> {post.readingTimeMin} min
-        </span>
-        <span class="meta-item mono">
-          <span class="dim">Words</span> ~{post.wordCount.toLocaleString()}
-        </span>
-        <Tag>{post.brand} · {post.brandDomain}</Tag>
+      {post.heroEyebrow && (
+        <div class="hero-badge-wrap">
+          <span class="hero-eyebrow-pill mono">{post.heroEyebrow}</span>
+        </div>
+      )}
+
+      <h1 class="hero-h1">{post.heroH1}</h1>
+
+      {post.heroSub && (
+        <p class="hero-sub mono">{post.heroSub}</p>
+      )}
+
+      <div class="hero-actions">
+        <Btn primary href={brandUrl}>Visit {post.brand} →</Btn>
+        <Btn href="/contact/">Talk to Ollasoftware</Btn>
       </div>
-    </header>
+    </div>
+  </section>
 
-    <aside class="tldr" aria-label="Summary">
-      <div class="tldr-head mono">tl;dr — the whole post in six bullets</div>
-      <ul>
-        {post.tldr.map(b => <li>{b}</li>)}
-      </ul>
+  <!-- 3-Column Layout: Left All 21 Pieces + Center Article Content + Right About Us -->
+  <div class="post-layout-3col">
+    <!-- Left Column: Sticky Blog Directory of all 21 deep-dives -->
+    <aside class="post-sidebar left-sidebar" aria-label="All 21 Pieces Directory">
+      <div class="directory-sticky-box">
+        <div class="directory-header">
+          <span class="directory-badge mono">ALL 21 PIECES</span>
+          <h3 class="directory-h3">Blog Directory</h3>
+          <p class="directory-sub mono">Tap any brand to jump or read</p>
+        </div>
+        
+        <nav class="directory-nav" aria-label="Brand Deep Dives List">
+          {allPosts.map((p, idx) => (
+            <a
+              href={`/blog/${p.slug}/`}
+              class:list={['directory-link', { active: p.slug === post.slug }]}
+              title={`Read ${p.brand} Deep-Dive`}
+            >
+              <span class="sidebar-item-num mono">{String(idx + 1).padStart(2, '0')}</span>
+              <span class="directory-link-title">{p.brand}</span>
+              <span class="sidebar-item-cat mono">{categoryTagMap[p.slug] || 'AI'}</span>
+            </a>
+          ))}
+        </nav>
+      </div>
     </aside>
 
-    {post.sections.map((sec, i) => (
-      <section class="sec" id={`s${i + 1}`}>
-        <h2><span class="hash mono">#</span>{sec.h2}</h2>
-        {sec.paragraphs.map(p => <p set:html={p} />)}
-        {sec.subsections && sec.subsections.map(ss => (
-          <div class="sub">
-            <h3>{ss.h3}</h3>
-            {ss.paragraphs.map(p => <p set:html={p} />)}
+    <!-- Center Column: Main Article Body -->
+    <article class="post">
+      <header class="meta">
+        <div class="meta-row">
+          <span class="meta-item mono">
+            <span class="dim">Published</span> {post.publishedOn}
+          </span>
+          <span class="meta-item mono">
+            <span class="dim">Updated</span> {post.lastUpdated}
+          </span>
+          <span class="meta-item mono">
+            <span class="dim">Read</span> {post.readingTimeMin} min
+          </span>
+          <span class="meta-item mono">
+            <span class="dim">Words</span> ~{post.wordCount.toLocaleString()}
+          </span>
+          <Tag>{post.brand} · {post.brandDomain}</Tag>
+        </div>
+      </header>
+
+      <aside class="tldr" aria-label="Summary">
+        <div class="tldr-head mono">tl;dr — the whole post in six bullets</div>
+        <ul>
+          {post.tldr.map(b => <li>{b}</li>)}
+        </ul>
+      </aside>
+
+      {post.sections.map((sec, i) => (
+        <section class="sec" id={`s${i + 1}`}>
+          <h2><span class="hash mono">#</span>{sec.h2}</h2>
+          {sec.paragraphs.map(p => <p set:html={p} />)}
+          {sec.subsections && sec.subsections.map(ss => (
+            <div class="sub">
+              <h3>{ss.h3}</h3>
+              {ss.paragraphs.map(p => <p set:html={p} />)}
+            </div>
+          ))}
+          {sec.pullQuote && (
+            <blockquote class="pull">
+              <span class="pull-mark mono">“</span>
+              <span class="pull-text">{sec.pullQuote}</span>
+            </blockquote>
+          )}
+        </section>
+      ))}
+
+      <section class="sec faqs" id="faqs">
+        <h2><span class="hash mono">#</span>FAQs about {post.brand}</h2>
+        {post.faqs.map((f, i) => (
+          <div class="faq">
+            <h3>{i + 1}. {f.q}</h3>
+            <p>{f.a}</p>
           </div>
         ))}
-        {sec.pullQuote && (
-          <blockquote class="pull">
-            <span class="pull-mark mono">“</span>
-            <span class="pull-text">{sec.pullQuote}</span>
-          </blockquote>
-        )}
       </section>
-    ))}
 
-    <section class="sec faqs" id="faqs">
-      <h2><span class="hash mono">#</span>FAQs about {post.brand}</h2>
-      {post.faqs.map((f, i) => (
-        <div class="faq">
-          <h3>{i + 1}. {f.q}</h3>
-          <p>{f.a}</p>
+      <aside class="cta-card">
+        <div class="cta-head">
+          <Tag>Visit the product</Tag>
+          <h2>Ready to try {post.brand}?</h2>
+          <p class="mono">{post.brandTagline}</p>
         </div>
-      ))}
-    </section>
+        <div class="cta-actions">
+          <Btn primary href={brandUrl}>Go to {post.brandDomain} →</Btn>
+          <Btn href="/contact/">Talk to the {post.brand} team</Btn>
+        </div>
+        <p class="parent mono">
+          {post.brand} is built and operated by
+          <a href="https://ollasoftware.com/">Ollasoftware</a>,
+          the AI software development company headquartered in Bengaluru.
+          Ollasoftware is part of the
+          <a href="https://www.networkershome.com/" rel="noopener">Networkers Home</a>
+          group — a cybersecurity and networking training institute since 2007 with 45,000+ alumni placed.
+        </p>
+      </aside>
+    </article>
 
-    <aside class="cta-card">
-      <div class="cta-head">
-        <Tag>Visit the product</Tag>
-        <h2>Ready to try {post.brand}?</h2>
-        <p class="mono">{post.brandTagline}</p>
+    <!-- Right Column: Sticky About Us Directory + Big Background Building Logo Anchored at Bottom -->
+    <aside class="post-sidebar right-sidebar" aria-label="About Ollasoftware Directory">
+      <div class="right-sticky-wrapper">
+        <div class="directory-sticky-box">
+          <div class="directory-header">
+            <span class="directory-badge mono">ABOUT US</span>
+            <h3 class="directory-h3">The Company</h3>
+            <p class="directory-sub mono">Bangalore HQ · 40+ Brands</p>
+          </div>
+          
+          <nav class="directory-nav" aria-label="About Company Links">
+            <a href="/about/#founder" class="directory-link" title="Meet the Founder">
+              <span class="sidebar-item-num mono">01</span>
+              <span class="directory-link-title">FOUNDER</span>
+              <span class="sidebar-item-cat mono">CCIE</span>
+            </a>
+            <a href="/about/#the-why" class="directory-link" title="The why - Company Story">
+              <span class="sidebar-item-num mono">02</span>
+              <span class="directory-link-title">The why.</span>
+              <span class="sidebar-item-cat mono">STORY</span>
+            </a>
+            <a href="/about/#team" class="directory-link" title="The Senior Team">
+              <span class="sidebar-item-num mono">03</span>
+              <span class="directory-link-title">THE TEAM</span>
+              <span class="sidebar-item-cat mono">SENIOR</span>
+            </a>
+            <a href="/about/#where-we-work" class="directory-link" title="Global Hubs & Offices">
+              <span class="sidebar-item-num mono">04</span>
+              <span class="directory-link-title">WHERE WE WORK</span>
+              <span class="sidebar-item-cat mono">4 HUBS</span>
+            </a>
+            <a href="/jobs/" class="directory-link" title="Careers & Open Roles">
+              <span class="sidebar-item-num mono">05</span>
+              <span class="directory-link-title">CAREERS</span>
+              <span class="sidebar-item-cat mono">HIRING</span>
+            </a>
+            <a href="/about/#press" class="directory-link" title="Press & Mentions">
+              <span class="sidebar-item-num mono">06</span>
+              <span class="directory-link-title">PRESS</span>
+              <span class="sidebar-item-cat mono">MEDIA</span>
+            </a>
+          </nav>
+        </div>
+
+        <!-- Big Background Building Logo Anchored Near Bottom of Screen -->
+        <div class="sidebar-bg-logo-anchor" aria-hidden="true">
+          <img
+            src="/ollasoftware-vertical-building.png"
+            alt=""
+            class="sidebar-bg-building-img"
+          />
+        </div>
       </div>
-      <div class="cta-actions">
-        <Btn primary href={brandUrl}>Go to {post.brandDomain} →</Btn>
-        <Btn href="/contact/">Talk to the {post.brand} team</Btn>
-      </div>
-      <p class="parent mono">
-        {post.brand} is built and operated by
-        <a href="https://ollasoftware.com/">Ollasoftware</a>,
-        the AI software development company headquartered in Bengaluru.
-        Ollasoftware is part of the
-        <a href="https://www.networkershome.com/" rel="noopener">Networkers Home</a>
-        group — a cybersecurity and networking training institute since 2007 with 45,000+ alumni placed.
-      </p>
     </aside>
-  </article>
+  </div>
 </Layout>
 
 <style>
-  .post {
-    max-width: 760px;
+  /* Center-Aligned Blog Hero */
+  .blog-hero-centered {
+    padding: 72px 24px 60px;
+    border-bottom: 1px solid var(--o-line);
+    text-align: center;
+    background: var(--o-bg);
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .hero-inner {
+    max-width: 920px;
     margin: 0 auto;
-    padding: 64px 24px 96px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .crumbs {
+    font-size: 11px;
+    color: var(--o-mute);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .crumbs a {
+    color: var(--o-mute);
+    text-decoration: none;
+    transition: color .15s ease;
+  }
+  .crumbs a:hover {
+    color: #216BFF;
+  }
+  .crumbs .current {
+    color: var(--o-ink);
+    font-weight: 600;
+  }
+  .crumbs .sep {
+    color: var(--o-faint);
+  }
+
+  .hero-badge-wrap {
+    margin-bottom: 18px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero-eyebrow-pill {
+    background: rgba(33, 107, 255, 0.08);
+    color: #216BFF;
+    border: 1px solid rgba(33, 107, 255, 0.25);
+    padding: 3px 12px;
+    border-radius: 6px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .hero-h1 {
+    margin: 0 0 20px;
+    font-size: clamp(28px, 4vw, 44px);
+    line-height: 1.15;
+    letter-spacing: -0.8px;
+    font-weight: 700;
+    color: var(--o-ink);
+    text-align: center;
+    max-width: 880px;
+  }
+
+  .hero-sub {
+    font-size: clamp(13px, 1.2vw, 15px);
+    line-height: 1.65;
+    color: var(--o-mute);
+    max-width: 780px;
+    margin: 0 0 32px;
+    text-align: center;
+  }
+
+  .hero-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  /* 3-Column Post Layout */
+  .post-layout-3col {
+    display: grid;
+    grid-template-columns: 240px minmax(0, 780px) 240px;
+    justify-content: center;
+    gap: 32px;
+    max-width: 1540px;
+    margin: 0 auto;
+    padding: 48px 24px 96px;
+    box-sizing: border-box;
+    align-items: start;
+  }
+
+  .post-sidebar {
+    position: sticky;
+    top: 88px;
+    align-self: start;
+    height: fit-content;
+    z-index: 10;
+  }
+
+  .directory-sticky-box {
+    background: var(--o-panel, #ffffff);
+    border: 1px solid var(--o-line);
+    border-radius: 16px;
+    padding: 22px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-sizing: border-box;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    max-height: calc(100vh - 120px);
+  }
+
+  .directory-header {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-bottom: 1px solid var(--o-line);
+    padding-bottom: 14px;
+  }
+
+  .directory-badge {
+    align-self: flex-start;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    color: #216BFF;
+    background: rgba(33, 107, 255, 0.08);
+    border: 1px solid rgba(33, 107, 255, 0.25);
+    padding: 3px 9px;
+    border-radius: 5px;
+    text-transform: uppercase;
+  }
+
+  .directory-h3 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--o-ink);
+    line-height: 1.2;
+    letter-spacing: -0.4px;
+  }
+
+  .directory-sub {
+    font-size: 11px;
+    color: var(--o-mute);
+    line-height: 1.4;
+  }
+
+  .directory-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    overflow-y: auto;
+    padding-right: 4px;
+    max-height: calc(100vh - 240px);
+  }
+
+  .directory-nav::-webkit-scrollbar {
+    width: 4px;
+  }
+  .directory-nav::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .directory-nav::-webkit-scrollbar-thumb {
+    background: var(--o-line);
+    border-radius: 4px;
+  }
+  .directory-nav::-webkit-scrollbar-thumb:hover {
+    background: #216BFF;
+  }
+
+  .directory-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 7px 9px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: var(--o-mute);
+    font-size: 12.5px;
+    line-height: 1.3;
+    transition: all .15s ease;
+    border: 1px solid transparent;
+  }
+
+  .directory-link.active {
+    background: rgba(33, 107, 255, 0.1);
+    border-color: rgba(33, 107, 255, 0.35);
+    color: #216BFF;
+  }
+
+  .sidebar-item-num {
+    font-size: 10.5px;
+    color: #6366f1;
+    background: rgba(99, 102, 241, 0.1);
+    font-weight: 700;
+    padding: 2px 5px;
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+
+  .directory-link-title {
+    flex: 1;
+    font-weight: 700;
+    color: var(--o-ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .sidebar-item-cat {
+    font-size: 9px;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 2px 6px;
+    background: rgba(33, 107, 255, 0.06);
+    border: 1px solid rgba(33, 107, 255, 0.25);
+    border-radius: 4px;
+    color: #216BFF;
+    flex-shrink: 0;
+  }
+
+  .directory-link:hover {
+    color: #216BFF;
+    background: rgba(33, 107, 255, 0.06);
+    border-color: rgba(33, 107, 255, 0.25);
+    transform: translateX(3px);
+  }
+
+  .directory-link:hover .sidebar-item-cat {
+    background: #216BFF;
+    color: #ffffff;
+  }
+
+  /* Right Sticky Column with Background Building Logo Anchored at Screen Bottom */
+  .right-sticky-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100vh - 110px);
+    position: relative;
+  }
+
+  .sidebar-bg-logo-anchor {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    width: 100%;
+    margin-top: auto;
+    padding-top: 16px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .sidebar-bg-building-img {
+    width: 100%;
+    max-width: 175px;
+    height: auto;
+    max-height: 185px;
+    object-fit: contain;
+    object-position: bottom center;
+    display: block;
+    filter: drop-shadow(0 6px 20px rgba(33, 107, 255, 0.15));
+  }
+
+  /* Main Post Content */
+  .post {
+    min-width: 0;
+    width: 100%;
+    margin: 0 auto;
   }
 
   .meta {
@@ -294,8 +698,40 @@ const brandUrl = `https://${post.brandDomain}/`;
     text-underline-offset: 2px;
   }
 
-  @media (max-width: 700px) {
-    .post { padding: 44px 18px 64px; }
+  @media (max-width: 1300px) {
+    .post-layout-3col {
+      grid-template-columns: 220px 1fr 220px;
+      gap: 20px;
+      padding: 36px 16px 80px;
+    }
+  }
+
+  @media (max-width: 1100px) {
+    .post-layout-3col {
+      grid-template-columns: 220px 1fr;
+    }
+    .right-sidebar {
+      display: none;
+    }
+  }
+
+  @media (max-width: 860px) {
+    .blog-hero-centered {
+      padding: 56px 20px 44px;
+    }
+    .post-layout-3col {
+      grid-template-columns: 1fr;
+      padding: 24px 16px 64px;
+    }
+    .left-sidebar {
+      position: static;
+    }
+    .directory-sticky-box {
+      max-height: none;
+    }
+    .directory-nav {
+      max-height: 220px;
+    }
     .tldr, .cta-card { padding: 22px; }
     .sec h2 { font-size: 22px; }
   }

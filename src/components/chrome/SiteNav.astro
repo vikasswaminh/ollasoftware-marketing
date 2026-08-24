@@ -168,7 +168,7 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
   .nav {
     position: relative;
     width: 100%;
-    height: 56px;
+    height: 68px;
     background: rgba(255, 255, 255, 0.85) !important;
     backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
@@ -188,7 +188,7 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
   /* 3-Zone Header Layout: Left Brand, Center Links, Right CTA */
   .nav-container {
     width: 100%;
-    max-width: 1320px;
+    max-width: 1360px;
     height: 100%;
     margin: 0 auto;
     padding: 0 28px;
@@ -206,13 +206,13 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
-    gap: 7px !important;
+    gap: 10px !important;
     padding: 0;
     z-index: 2;
   }
 
   .brand-logo-img {
-    height: 28px;
+    height: 44px !important;
     width: auto;
     object-fit: contain;
     display: block !important;
@@ -234,8 +234,8 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
 
   .brand-blue-text {
     font-family: var(--o-font-sans, 'Inter', system-ui, -apple-system, sans-serif);
-    font-size: 17px;
-    font-weight: 800;
+    font-size: 24px !important;
+    font-weight: 800 !important;
     letter-spacing: -0.04em;
     color: #1D6AF3 !important;
     line-height: 1;
