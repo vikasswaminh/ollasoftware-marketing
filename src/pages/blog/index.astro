@@ -38,14 +38,15 @@ const SECURITY_SLUGS = new Set(['quickztna', 'quicksdwan', 'meshwg', 'ollavpn', 
 const DEV_APIS_SLUGS = new Set(['ollastack', 'ollanode', '21tunnel', 'crawlcrawl', '24observe', 'olladns', 'ollagraph']);
 const SAAS_SLUGS = new Set(['ollasync', 'freefreecv', 'nhprep', 'networkershome', 'ollasuper']);
 
+// Filter categories
 const filterCategories = [
-  { id: 'all', label: 'All', count: allPosts.length, symbol: '◈' },
-  { id: 'must-read', label: 'Must Read', count: MUST_READ_SLUGS.size, symbol: '✦' },
-  { id: 'editors-pick', label: "Editor's Pick", count: EDITORS_PICK_SLUGS.size, symbol: '★' },
-  { id: 'ai-agents', label: 'AI & Agents', count: AI_AGENTS_SLUGS.size, symbol: '⬡' },
-  { id: 'security', label: 'Security & VPN', count: SECURITY_SLUGS.size, symbol: '⛨' },
-  { id: 'dev-apis', label: 'Dev APIs', count: DEV_APIS_SLUGS.size, symbol: '⚙' },
-  { id: 'saas', label: 'SaaS', count: SAAS_SLUGS.size, symbol: '▲' },
+  { id: 'all', label: 'All', count: allPosts.length },
+  { id: 'must-read', label: 'Must Read', count: MUST_READ_SLUGS.size },
+  { id: 'editors-pick', label: "Editor's Pick", count: EDITORS_PICK_SLUGS.size },
+  { id: 'ai-agents', label: 'AI & Agents', count: AI_AGENTS_SLUGS.size },
+  { id: 'security', label: 'Security & VPN', count: SECURITY_SLUGS.size },
+  { id: 'dev-apis', label: 'Dev APIs', count: DEV_APIS_SLUGS.size },
+  { id: 'saas', label: 'SaaS', count: SAAS_SLUGS.size },
 ];
 
 const enhancedPosts = allPosts.map((p, i) => {
@@ -65,11 +66,13 @@ const enhancedPosts = allPosts.map((p, i) => {
   if (isSaas) tags.push('saas');
 
   let badge = '';
-  if (isMustRead) badge = '✦ Must Read';
-  else if (isEditorsPick) badge = '★ Editor’s Pick';
-  else if (p.category === 'security') badge = '⛨ Zero Trust';
-  else if (p.category === 'api') badge = '⚙ Agent API';
-  else badge = '◈ Deep Dive';
+  if (isMustRead) badge = 'Must Read';
+  else if (isEditorsPick) badge = "Editor's Pick";
+  else if (p.category === 'security') badge = 'Security';
+  else if (p.category === 'api') badge = 'Dev API';
+  else if (p.category === 'ai') badge = 'AI Agent';
+  else if (p.category === 'saas') badge = 'SaaS';
+  else badge = 'Deep Dive';
 
   return {
     ...p,
@@ -80,6 +83,8 @@ const enhancedPosts = allPosts.map((p, i) => {
     isEditorsPick
   };
 });
+
+const featuredPost = enhancedPosts[0];
 ---
 <Layout
   title="Brand Deep-Dives — Ollasoftware Blog"
@@ -140,7 +145,7 @@ const enhancedPosts = allPosts.map((p, i) => {
     </div>
   </section>
 
-  <!-- Blue Filter Bar (Replacing old credentials text with professional symbol filter items) -->
+  <!-- Blue Filter Ribbon (Clean text, numbers, perfectly centered) -->
   <aside class="trust-ribbon-blue" aria-label="Filter blog categories">
     <div class="trust-scroller mono">
       {filterCategories.map((cat, idx) => (
@@ -149,8 +154,8 @@ const enhancedPosts = allPosts.map((p, i) => {
             class={`blue-filter-btn ${idx === 0 ? 'active' : ''}`}
             data-filter={cat.id}
             type="button"
+            aria-label={`Filter by ${cat.label}`}
           >
-            <span class="sym">{cat.symbol}</span>
             <span class="lbl">{cat.label}</span>
             <span class="num">{cat.count}</span>
           </button>
@@ -160,46 +165,156 @@ const enhancedPosts = allPosts.map((p, i) => {
     </div>
   </aside>
 
-  <!-- Filterable Blog Pieces Grid (Header removed per request) -->
-  <section class="grid-wrap" id="pieces">
-    <div class="post-grid" id="postGrid">
-      {enhancedPosts.map((p) => (
-        <a class="post-card" href={`/blog/${p.slug}/`} data-tags={p.filterTags}>
-          <div class="card-top">
-            <span class="card-num mono">{p.indexStr}</span>
-            <div class="card-badges">
-              <span class="card-curated-badge mono">{p.curatedBadge}</span>
-              <span class="card-category mono">{p.category}</span>
-              <span class="card-tag mono">{p.brandDomain}</span>
+  <!-- Main Content Layout with Sticky Left Sidebar + Blog Content -->
+  <section class="blog-main-layout" id="pieces">
+    <!-- Left Column: Sticky Blog Headings Directory -->
+    <aside class="founder-sidebar" aria-label="Blog Deep-Dives Directory">
+      <div class="founder-sticky-box">
+        <div class="founder-header">
+          <span class="founder-badge mono">ALL 21 PIECES</span>
+          <h3 class="founder-h3">Blog Directory</h3>
+          <p class="founder-sub mono">Tap any brand to jump or read</p>
+        </div>
+        
+        <nav class="founder-nav" aria-label="Brand Deep Dives List">
+          {enhancedPosts.map((p) => (
+            <a
+              href={`/blog/${p.slug}/`}
+              class="founder-link sidebar-post-item"
+              data-slug={p.slug}
+              data-tags={p.filterTags}
+              title={`Read ${p.brand} Deep-Dive`}
+            >
+              <span class="sidebar-item-num mono">{p.indexStr}</span>
+              <span class="founder-link-title">{p.brand}</span>
+              <span class="sidebar-item-cat mono">{p.category}</span>
+            </a>
+          ))}
+        </nav>
+      </div>
+    </aside>
+
+    <!-- Right Column: Blog Cards Arranged in Landing Page Theme -->
+    <div class="posts-column">
+      <!-- Top Section Header -->
+      <div class="section-label-bar">
+        <span class="newest-pill" id="sectionLabelPill">NEWEST ARTICLES</span>
+      </div>
+
+      <!-- Featured Top Compact Horizontal Card with Dynamic Brand Watermark -->
+      <a
+        class="featured-hero-card"
+        id="featuredHeroCard"
+        href={`/blog/${featuredPost.slug}/`}
+      >
+        <div class="card-watermark" id="featuredWatermark" aria-hidden="true">
+          <img src="/nh-watermark.png" alt="" class="watermark-img" id="watermarkImg" />
+        </div>
+        <div class="featured-tags-row">
+          <div class="tags-left">
+            <span class="category-pill-brand" id="featuredBadge">{featuredPost.curatedBadge}</span>
+            <span class="card-domain-tag mono" id="featuredDomain">{featuredPost.brandDomain}</span>
+          </div>
+          <span class="new-badge-pill">NEW</span>
+        </div>
+        <h2 class="featured-title" id="featuredTitle">{featuredPost.brand} — {featuredPost.brandTagline}</h2>
+        <p class="featured-desc" id="featuredDesc">{featuredPost.metaDescription}</p>
+        <div class="featured-foot">
+          <span class="meta-read-time mono" id="featuredReadTime">{featuredPost.readingTimeMin} min read</span>
+          <span class="meta-read-link">Read article →</span>
+        </div>
+      </a>
+
+      <!-- 3-Column Grid for All Remaining Blog Pieces -->
+      <div class="post-grid-3col" id="postGrid">
+        {enhancedPosts.map((p) => (
+          <a
+            class="clean-post-card post-card"
+            id={`card-${p.slug}`}
+            data-slug={p.slug}
+            href={`/blog/${p.slug}/`}
+            data-tags={p.filterTags}
+          >
+            <div class="card-top-row">
+              <span class="category-pill-brand">{p.curatedBadge}</span>
+              <span class="card-domain-tag mono">{p.brandDomain}</span>
             </div>
-          </div>
-          <div class="card-main">
-            <h3 class="card-h">{p.brand}</h3>
-            <p class="card-tagline">{p.brandTagline}</p>
-            <p class="card-sub">{p.metaDescription}</p>
-          </div>
-          <div class="card-foot">
-            <span class="card-read-time mono">⏱ {p.readingTimeMin} min read</span>
-            <span class="card-cta mono">read the {p.wordCount.toLocaleString()}-word piece →</span>
-          </div>
-        </a>
-      ))}
-    </div>
-    
-    <div id="noResults" class="no-results mono" style="display: none;">
-      <p>No deep-dives found matching this filter.</p>
-      <button class="reset-filter-btn" onclick="document.querySelector('[data-filter=all]').click()">View All Pieces</button>
+            <div class="card-content-area">
+              <h3 class="card-clean-title">{p.brand}</h3>
+              <p class="card-clean-tagline">{p.brandTagline}</p>
+              <p class="card-clean-desc">{p.metaDescription}</p>
+            </div>
+            <div class="card-clean-foot">
+              <span class="card-read-time mono">{p.readingTimeMin} min read</span>
+              <span class="card-clean-cta">Read article →</span>
+            </div>
+          </a>
+        ))}
+      </div>
+      
+      <div id="noResults" class="no-results mono" style="display: none;">
+        <p>No deep-dives found matching this filter.</p>
+        <button class="reset-filter-btn" type="button" onclick="document.querySelector('[data-filter=all]')?.click()">View All Pieces</button>
+      </div>
     </div>
   </section>
 </Layout>
 
-<script is:inline>
-  document.addEventListener('DOMContentLoaded', () => {
+<script is:inline define:vars={{ postsData: enhancedPosts }}>
+  function initBlogFilters() {
     const filterBtns = document.querySelectorAll('.blue-filter-btn');
-    const cards = document.querySelectorAll('.post-card');
+    const gridCards = document.querySelectorAll('#postGrid .clean-post-card');
+    const sidebarItems = document.querySelectorAll('.sidebar-post-item');
     const noResults = document.getElementById('noResults');
 
+    const featuredHeroCard = document.getElementById('featuredHeroCard');
+    const featuredWatermark = document.getElementById('featuredWatermark');
+    const watermarkImg = document.getElementById('watermarkImg');
+    const sectionLabelPill = document.getElementById('sectionLabelPill');
+    const featuredBadge = document.getElementById('featuredBadge');
+    const featuredDomain = document.getElementById('featuredDomain');
+    const featuredTitle = document.getElementById('featuredTitle');
+    const featuredDesc = document.getElementById('featuredDesc');
+    const featuredReadTime = document.getElementById('featuredReadTime');
+
+    if (!filterBtns.length) return;
+
+    const watermarkMap = {
+      'networkershome': '/nh-watermark.png',
+      '21tunnel': '/watermarks/21tunnel.jpg',
+      'meshwg': '/watermarks/meshwg.jpg',
+      'browserfog': '/watermarks/browserfog.jpg',
+      'quicksdwan': '/watermarks/quicksdwan.jpg',
+      'nhprep': '/watermarks/nhprep.jpg',
+      'ollima': '/watermarks/21tunnel.jpg',
+      'crawlcrawl': '/watermarks/browserfog.jpg',
+      'memfog': '/watermarks/browserfog.jpg',
+      'aeoniti': '/watermarks/browserfog.jpg',
+      'ollagraph': '/watermarks/21tunnel.jpg',
+      'ollastack': '/watermarks/21tunnel.jpg',
+      'ollanode': '/watermarks/21tunnel.jpg',
+      'olladns': '/watermarks/quicksdwan.jpg',
+      'quickztna': '/watermarks/quicksdwan.jpg',
+      'ollavpn': '/watermarks/meshwg.jpg',
+      'freefreecv': '/watermarks/nhprep.jpg',
+      'ollasync': '/watermarks/nhprep.jpg',
+      'ollasuper': '/watermarks/21tunnel.jpg',
+      'ollabear': '/watermarks/browserfog.jpg',
+      '24observe': '/watermarks/21tunnel.jpg'
+    };
+
+    const labelMap = {
+      'all': 'NEWEST ARTICLES',
+      'must-read': 'FEATURED · MUST READ',
+      'editors-pick': "FEATURED · EDITOR'S PICK",
+      'ai-agents': 'FEATURED · AI & AGENTS',
+      'security': 'FEATURED · SECURITY & VPN',
+      'dev-apis': 'FEATURED · DEV APIS',
+      'saas': 'FEATURED · SAAS'
+    };
+
     function applyFilter(targetFilter) {
+      // Update active filter button
       filterBtns.forEach(btn => {
         if (btn.getAttribute('data-filter') === targetFilter) {
           btn.classList.add('active');
@@ -208,43 +323,115 @@ const enhancedPosts = allPosts.map((p, i) => {
         }
       });
 
-      let visibleCount = 0;
-      cards.forEach(card => {
-        const tags = (card.getAttribute('data-tags') || '').split(' ');
+      // Update Section Header Pill
+      if (sectionLabelPill) {
+        sectionLabelPill.textContent = labelMap[targetFilter] || 'FEATURED ARTICLES';
+      }
+
+      // Filter matching posts data
+      const matchingPosts = postsData.filter(p => {
+        if (targetFilter === 'all') return true;
+        const tags = (p.filterTags || '').split(' ');
+        return tags.includes(targetFilter);
+      });
+
+      if (matchingPosts.length > 0) {
+        const featured = matchingPosts[0];
+        const remainingSlugs = new Set(matchingPosts.slice(1).map(p => p.slug));
+
+        // Update the big featured card at top
+        if (featuredHeroCard) {
+          featuredHeroCard.classList.remove('is-hidden');
+          featuredHeroCard.href = `/blog/${featured.slug}/`;
+          if (featuredBadge) featuredBadge.textContent = featured.curatedBadge;
+          if (featuredDomain) featuredDomain.textContent = featured.brandDomain;
+          if (featuredTitle) featuredTitle.textContent = `${featured.brand} — ${featured.brandTagline}`;
+          if (featuredDesc) featuredDesc.textContent = featured.metaDescription;
+          if (featuredReadTime) featuredReadTime.textContent = `${featured.readingTimeMin} min read`;
+
+          // Dynamically display the specific brand's watermark
+          if (featuredWatermark && watermarkImg) {
+            const customWatermark = watermarkMap[featured.slug];
+            if (customWatermark) {
+              watermarkImg.src = customWatermark;
+              featuredWatermark.classList.remove('is-hidden');
+            } else {
+              featuredWatermark.classList.add('is-hidden');
+            }
+          }
+        }
+
+        // Show remaining matching posts in the 3-col grid below (excluding the featured one)
+        gridCards.forEach(card => {
+          const slug = card.getAttribute('data-slug');
+          if (remainingSlugs.has(slug)) {
+            card.classList.remove('is-hidden');
+          } else {
+            card.classList.add('is-hidden');
+          }
+        });
+
+        if (noResults) noResults.style.display = 'none';
+      } else {
+        if (featuredHeroCard) featuredHeroCard.classList.add('is-hidden');
+        gridCards.forEach(card => card.classList.add('is-hidden'));
+        if (noResults) noResults.style.display = 'block';
+      }
+
+      // Update Sidebar Items
+      sidebarItems.forEach(item => {
+        const tags = (item.getAttribute('data-tags') || '').split(' ');
         if (targetFilter === 'all' || tags.includes(targetFilter)) {
-          card.style.display = 'flex';
-          visibleCount++;
+          item.classList.remove('is-hidden');
         } else {
-          card.style.display = 'none';
+          item.classList.add('is-hidden');
         }
       });
 
-      if (noResults) {
-        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
-      }
-
+      // Update URL hash
       if (history.replaceState) {
-        const newUrl = targetFilter === 'all' ? window.location.pathname : `${window.location.pathname}#${targetFilter}`;
+        const newUrl = targetFilter === 'all' 
+          ? window.location.pathname + window.location.search 
+          : `${window.location.pathname}${window.location.search}#${targetFilter}`;
         history.replaceState(null, '', newUrl);
       }
     }
 
     filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
         const filter = btn.getAttribute('data-filter') || 'all';
         applyFilter(filter);
       });
     });
 
-    // Check hash on load
+    // Check URL hash on page load
     const hash = window.location.hash.replace('#', '');
     if (hash && document.querySelector(`[data-filter="${hash}"]`)) {
       applyFilter(hash);
+    } else {
+      applyFilter('all');
     }
-  });
+  }
+
+  // Support standard load and Astro Client Router lifecycle
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initBlogFilters);
+  } else {
+    initBlogFilters();
+  }
+  document.addEventListener('astro:page-load', initBlogFilters);
 </script>
 
 <style>
+  /* Hidden helper for fail-safe JavaScript filtering */
+  .featured-hero-card.is-hidden,
+  .clean-post-card.is-hidden,
+  .sidebar-post-item.is-hidden,
+  .card-watermark.is-hidden {
+    display: none !important;
+  }
+
   /* Split Hero Layout */
   .blog-hero-split {
     display: grid !important;
@@ -252,7 +439,7 @@ const enhancedPosts = allPosts.map((p, i) => {
     gap: 48px !important;
     padding: 72px 56px 64px !important;
     border-bottom: 1px solid var(--o-line) !important;
-    background: radial-gradient(circle at 10% 20%, rgba(200, 255, 0, 0.03) 0%, transparent 60%) !important;
+    background: radial-gradient(circle at 10% 20%, rgba(33, 107, 255, 0.04) 0%, transparent 60%) !important;
     position: relative !important;
     box-sizing: border-box !important;
   }
@@ -282,7 +469,7 @@ const enhancedPosts = allPosts.map((p, i) => {
     letter-spacing: 0.5px !important;
   }
   .crumbs a { color: var(--o-mute) !important; text-decoration: none !important; transition: color .15s !important; }
-  .crumbs a:hover { color: var(--o-accent, #c8ff00) !important; }
+  .crumbs a:hover { color: var(--o-accent, #216BFF) !important; }
   .crumbs .current { color: var(--o-ink) !important; font-weight: 500 !important; }
   .crumbs .sep { color: var(--o-faint) !important; }
 
@@ -293,14 +480,14 @@ const enhancedPosts = allPosts.map((p, i) => {
   .subtag {
     font-size: 10px !important;
     letter-spacing: 1.2px !important;
-    color: var(--o-accent, #c8ff00) !important;
+    color: var(--o-accent, #216BFF) !important;
     text-transform: uppercase !important;
     font-weight: 600 !important;
     display: inline-block !important;
     padding: 3px 8px !important;
-    border: 1px solid color-mix(in srgb, var(--o-accent, #c8ff00) 30%, transparent) !important;
-    background: color-mix(in srgb, var(--o-accent, #c8ff00) 6%, transparent) !important;
-    border-radius: 3px !important;
+    border: 1px solid color-mix(in srgb, var(--o-accent, #216BFF) 30%, transparent) !important;
+    background: color-mix(in srgb, var(--o-accent, #216BFF) 6%, transparent) !important;
+    border-radius: 4px !important;
   }
 
   .hero-h1 {
@@ -355,16 +542,16 @@ const enhancedPosts = allPosts.map((p, i) => {
     display: flex !important;
     flex-direction: column !important;
     gap: 3px !important;
-    background: var(--o-panel, rgba(255, 255, 255, 0.03)) !important;
+    background: var(--o-panel, #ffffff) !important;
     border: 1px solid var(--o-line) !important;
     padding: 10px 14px !important;
-    border-radius: var(--o-radius, 6px) !important;
+    border-radius: var(--o-radius, 8px) !important;
   }
 
   .stat-num {
     font-size: 18px !important;
     font-weight: 700 !important;
-    color: var(--o-accent, #c8ff00) !important;
+    color: var(--o-accent, #216BFF) !important;
     letter-spacing: -0.5px !important;
   }
 
@@ -375,43 +562,43 @@ const enhancedPosts = allPosts.map((p, i) => {
     letter-spacing: 0.8px !important;
   }
 
-  /* Solid Vibrant Blue Filter Ribbon */
+  /* Solid Vibrant Blue Filter Ribbon — Center Aligned */
   .trust-ribbon-blue {
-    background: #0284c7 !important;
-    background: linear-gradient(90deg, #0369a1 0%, #0284c7 50%, #0369a1 100%) !important;
-    border-top: 1px solid #38bdf8 !important;
-    border-bottom: 1px solid #0284c7 !important;
-    box-shadow: 0 4px 20px rgba(2, 132, 199, 0.25) !important;
+    background: linear-gradient(90deg, #1D6AF3 0%, #216BFF 50%, #1D6AF3 100%) !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+    border-bottom: 1px solid #1D6AF3 !important;
+    box-shadow: 0 4px 20px rgba(33, 107, 255, 0.25) !important;
     padding: 12px 24px !important;
     display: flex !important;
     justify-content: center !important;
     align-items: center !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
-
 
   .trust-scroller {
     display: flex !important;
     align-items: center !important;
-    gap: 10px !important;
+    gap: 12px !important;
     font-size: 13px !important;
     color: #e0f2fe !important;
     justify-content: center !important;
     width: 100% !important;
+    max-width: 1440px !important;
     flex-wrap: wrap !important;
   }
-
 
   .blue-filter-btn {
     display: inline-flex !important;
     align-items: center !important;
     gap: 7px !important;
-    background: rgba(255, 255, 255, 0.1) !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    background: rgba(255, 255, 255, 0.12) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
     color: #ffffff !important;
-    padding: 7px 18px !important;
+    padding: 7px 16px !important;
     border-radius: 6px !important;
-    font-size: 13.5px !important;
-    font-weight: 700 !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
     cursor: pointer !important;
     transition: all .15s ease !important;
     font-family: var(--o-font-sans, 'Inter', system-ui, sans-serif) !important;
@@ -419,180 +606,437 @@ const enhancedPosts = allPosts.map((p, i) => {
     letter-spacing: -0.2px !important;
   }
 
-  .blue-filter-btn .sym {
-    font-size: 12px !important;
-    color: #bae6fd !important;
+  .blue-filter-btn .lbl {
+    font-weight: 600 !important;
   }
 
   .blue-filter-btn .num {
-    font-size: 10px !important;
-    background: rgba(255, 255, 255, 0.2) !important;
+    font-size: 10.5px !important;
+    background: rgba(255, 255, 255, 0.22) !important;
     padding: 1px 6px !important;
     border-radius: 10px !important;
     color: #ffffff !important;
+    font-weight: 700 !important;
   }
 
   .blue-filter-btn:hover {
-    background: rgba(255, 255, 255, 0.22) !important;
+    background: rgba(255, 255, 255, 0.28) !important;
     border-color: #ffffff !important;
     transform: translateY(-1px) !important;
   }
 
   .blue-filter-btn.active {
     background: #ffffff !important;
-    color: #0369a1 !important;
+    color: #1D6AF3 !important;
     border-color: #ffffff !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2) !important;
     text-shadow: none !important;
   }
 
-  .blue-filter-btn.active .sym {
-    color: #0284c7 !important;
-  }
-
   .blue-filter-btn.active .num {
-    background: #0284c7 !important;
+    background: #1D6AF3 !important;
     color: #ffffff !important;
   }
 
   .trust-dot {
     color: #bae6fd !important;
     font-weight: 800 !important;
+    opacity: 0.7 !important;
   }
 
-  /* Blog Post Grid */
-  .grid-wrap {
-    padding: 48px 56px 96px !important;
+  /* Main 2-Column Layout (Sticky Left Sidebar + Blog Content) */
+  .blog-main-layout {
+    display: grid !important;
+    grid-template-columns: 280px 1fr !important;
+    gap: 36px !important;
+    padding: 48px 48px 96px !important;
     border-bottom: 1px solid var(--o-line) !important;
     max-width: 1440px !important;
     margin: 0 auto !important;
+    box-sizing: border-box !important;
+    align-items: start !important;
   }
 
-  .post-grid {
+  /* Sticky Blog Headings Directory Sidebar — Locked on scroll */
+  .founder-sidebar {
+    position: sticky !important;
+    top: 24px !important;
+    align-self: start !important;
+    height: fit-content !important;
+    z-index: 10 !important;
+  }
+
+  .founder-sticky-box {
+    background: var(--o-panel, #ffffff) !important;
+    border: 1px solid var(--o-line) !important;
+    border-radius: 12px !important;
+    padding: 20px 16px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 14px !important;
+    box-sizing: border-box !important;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04) !important;
+    max-height: calc(100vh - 48px) !important;
+  }
+
+  .founder-header {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+    border-bottom: 1px solid var(--o-line) !important;
+    padding-bottom: 12px !important;
+  }
+
+  .founder-badge {
+    align-self: flex-start !important;
+    font-size: 9px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.8px !important;
+    color: #216BFF !important;
+    background: rgba(33, 107, 255, 0.1) !important;
+    border: 1px solid rgba(33, 107, 255, 0.25) !important;
+    padding: 2px 7px !important;
+    border-radius: 4px !important;
+    text-transform: uppercase !important;
+  }
+
+  .founder-h3 {
+    margin: 0 !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: var(--o-ink) !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.3px !important;
+  }
+
+  .founder-sub {
+    font-size: 10px !important;
+    color: var(--o-mute) !important;
+    line-height: 1.4 !important;
+  }
+
+  .founder-nav {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    overflow-y: auto !important;
+    padding-right: 4px !important;
+    max-height: calc(100vh - 180px) !important;
+  }
+
+  .founder-nav::-webkit-scrollbar {
+    width: 4px !important;
+  }
+  .founder-nav::-webkit-scrollbar-track {
+    background: transparent !important;
+  }
+  .founder-nav::-webkit-scrollbar-thumb {
+    background: var(--o-line) !important;
+    border-radius: 4px !important;
+  }
+  .founder-nav::-webkit-scrollbar-thumb:hover {
+    background: #216BFF !important;
+  }
+
+  .founder-link {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 8px !important;
+    padding: 7px 10px !important;
+    border-radius: 6px !important;
+    text-decoration: none !important;
+    color: var(--o-mute) !important;
+    font-size: 12.5px !important;
+    line-height: 1.3 !important;
+    transition: all .15s ease !important;
+    border: 1px solid transparent !important;
+  }
+
+  .sidebar-item-num {
+    font-size: 10px !important;
+    color: var(--o-faint) !important;
+    font-weight: 600 !important;
+    width: 16px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .founder-link-title {
+    flex: 1 !important;
+    font-weight: 600 !important;
+    color: var(--o-ink) !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .sidebar-item-cat {
+    font-size: 8.5px !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    padding: 1px 5px !important;
+    background: rgba(33, 107, 255, 0.06) !important;
+    border: 1px solid rgba(33, 107, 255, 0.15) !important;
+    border-radius: 3px !important;
+    color: #216BFF !important;
+    flex-shrink: 0 !important;
+  }
+
+  .founder-link:hover {
+    color: #216BFF !important;
+    background: rgba(33, 107, 255, 0.06) !important;
+    border-color: rgba(33, 107, 255, 0.25) !important;
+    transform: translateX(3px) !important;
+  }
+
+  .founder-link:hover .sidebar-item-num {
+    color: #216BFF !important;
+  }
+
+  .founder-link:hover .sidebar-item-cat {
+    background: #216BFF !important;
+    color: #ffffff !important;
+  }
+
+  /* Right Posts Column */
+  .posts-column {
+    min-width: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 24px !important;
+  }
+
+  /* Section Header Badge Bar */
+  .section-label-bar {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    margin-bottom: -6px !important;
+  }
+
+  .newest-pill {
+    background: linear-gradient(135deg, #1D6AF3 0%, #216BFF 100%) !important;
+    color: #ffffff !important;
+    font-size: 11px !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.8px !important;
+    padding: 4px 14px !important;
+    border-radius: 20px !important;
+    text-transform: uppercase !important;
+    box-shadow: 0 2px 10px rgba(33, 107, 255, 0.25) !important;
+  }
+
+  /* Category Badge in Landing Page Royal Blue Style */
+  .category-pill-brand {
+    background: #216BFF !important;
+    color: #ffffff !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    padding: 3px 10px !important;
+    border-radius: 6px !important;
+    display: inline-block !important;
+    text-transform: none !important;
+  }
+
+  .new-badge-pill {
+    background: rgba(33, 107, 255, 0.12) !important;
+    color: #216BFF !important;
+    border: 1px solid rgba(33, 107, 255, 0.25) !important;
+    font-size: 10px !important;
+    font-weight: 800 !important;
+    padding: 2px 7px !important;
+    border-radius: 4px !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  /* Top Featured Compact Card with Watermark */
+  .featured-hero-card {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    gap: 12px !important;
+    background: var(--o-panel, #ffffff) !important;
+    border: 1.5px solid rgba(33, 107, 255, 0.3) !important;
+    border-radius: 14px !important;
+    padding: 22px 28px !important;
+    text-decoration: none !important;
+    color: var(--o-ink) !important;
+    transition: all .2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    box-shadow: 0 4px 20px rgba(33, 107, 255, 0.05) !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  .featured-hero-card:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 12px 32px rgba(33, 107, 255, 0.12) !important;
+    border-color: #216BFF !important;
+  }
+
+  .card-watermark {
+    position: absolute !important;
+    right: 24px !important;
+    bottom: 8px !important;
+    width: 210px !important;
+    height: 125px !important;
+    pointer-events: none !important;
+    opacity: 0.16 !important;
+    transition: opacity .3s ease, transform .3s ease !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    z-index: 1 !important;
+  }
+
+  .featured-hero-card:hover .card-watermark {
+    opacity: 0.28 !important;
+    transform: scale(1.04) !important;
+  }
+
+  .watermark-img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain !important;
+  }
+
+  .featured-tags-row {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    position: relative !important;
+    z-index: 2 !important;
+  }
+
+  .tags-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  .featured-title {
+    margin: 0 !important;
+    font-size: 20px !important;
+    font-weight: 700 !important;
+    color: var(--o-ink) !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.4px !important;
+    position: relative !important;
+    z-index: 2 !important;
+  }
+
+  .featured-desc {
+    margin: 0 !important;
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+    color: var(--o-mute) !important;
+    max-width: 90% !important;
+    position: relative !important;
+    z-index: 2 !important;
+  }
+
+  .featured-foot {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding-top: 12px !important;
+    margin-top: 2px !important;
+    border-top: 1px dashed var(--o-line) !important;
+    font-size: 11.5px !important;
+    position: relative !important;
+    z-index: 2 !important;
+  }
+
+  .meta-read-time {
+    color: var(--o-faint) !important;
+  }
+
+  .meta-read-link {
+    color: #216BFF !important;
+    font-weight: 600 !important;
+    transition: transform .15s ease !important;
+  }
+
+  .featured-hero-card:hover .meta-read-link {
+    transform: translateX(3px) !important;
+  }
+
+  /* 3-Column Clean Cards Grid */
+  .post-grid-3col {
     display: grid !important;
-    grid-template-columns: repeat(2, 1fr) !important;
+    grid-template-columns: repeat(3, 1fr) !important;
     gap: 18px !important;
   }
 
-  .post-card {
-    background: var(--o-panel, rgba(18, 18, 22, 0.6)) !important;
+  .clean-post-card {
+    background: var(--o-panel, #ffffff) !important;
     border: 1px solid var(--o-line) !important;
-    border-radius: var(--o-radius, 8px) !important;
-    padding: 30px !important;
+    border-radius: 14px !important;
+    padding: 22px !important;
     text-decoration: none !important;
     color: var(--o-ink) !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: space-between !important;
-    gap: 18px !important;
+    gap: 14px !important;
     transition: all .2s cubic-bezier(0.16, 1, 0.3, 1) !important;
     position: relative !important;
-    overflow: hidden !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02) !important;
   }
 
-  .post-card::before {
-    content: '' !important;
-    position: absolute !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 3px !important;
-    height: 0 !important;
-    background: var(--o-accent, #c8ff00) !important;
-    transition: height .25s ease !important;
-  }
-
-  .post-card:hover {
-    border-color: color-mix(in srgb, var(--o-accent, #c8ff00) 50%, var(--o-line)) !important;
+  .clean-post-card:hover {
+    border-color: #216BFF !important;
     transform: translateY(-3px) !important;
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25) !important;
-    background: var(--o-panel-hi, rgba(24, 24, 30, 0.8)) !important;
+    box-shadow: 0 12px 32px rgba(33, 107, 255, 0.12) !important;
   }
 
-  .post-card:hover::before {
-    height: 100% !important;
-  }
-
-  .card-top {
+  .card-top-row {
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
   }
 
-  .card-num {
-    color: var(--o-accent, #c8ff00) !important;
-    font-size: 11px !important;
-    font-weight: 700 !important;
-    letter-spacing: 1px !important;
-  }
-
-  .card-badges {
-    display: flex !important;
-    gap: 6px !important;
-    align-items: center !important;
-    flex-wrap: wrap !important;
-  }
-
-  .card-curated-badge {
-    font-size: 9.5px !important;
-    color: #38bdf8 !important;
-    background: rgba(2, 132, 199, 0.15) !important;
-    border: 1px solid rgba(56, 189, 248, 0.35) !important;
-    padding: 3px 7px !important;
-    border-radius: 4px !important;
-    font-weight: 600 !important;
-  }
-
-  .card-category {
-    font-size: 9.5px !important;
-    color: var(--o-accent, #c8ff00) !important;
-    padding: 3px 8px !important;
-    background: color-mix(in srgb, var(--o-accent, #c8ff00) 8%, transparent) !important;
-    border: 1px solid color-mix(in srgb, var(--o-accent, #c8ff00) 25%, transparent) !important;
-    border-radius: 4px !important;
-    text-transform: capitalize !important;
-  }
-
-  .card-tag {
-    font-size: 9.5px !important;
+  .card-domain-tag {
+    font-size: 10px !important;
     color: var(--o-faint) !important;
-    padding: 3px 8px !important;
-    border: 1px solid var(--o-line) !important;
-    border-radius: 4px !important;
   }
 
-  .card-main {
+  .card-content-area {
     display: flex !important;
     flex-direction: column !important;
-    gap: 8px !important;
+    gap: 6px !important;
     flex: 1 !important;
   }
 
-  .card-h {
+  .card-clean-title {
     margin: 0 !important;
-    font-size: 24px !important;
-    color: var(--o-ink) !important;
+    font-size: 18px !important;
     font-weight: 700 !important;
-    line-height: 1.2 !important;
-    letter-spacing: -0.5px !important;
+    color: var(--o-ink) !important;
+    line-height: 1.25 !important;
+    letter-spacing: -0.3px !important;
   }
 
-  .card-tagline {
+  .card-clean-tagline {
     margin: 0 !important;
-    font-size: 13px !important;
-    color: var(--o-accent, #c8ff00) !important;
-    line-height: 1.45 !important;
-    font-weight: 500 !important;
+    font-size: 12px !important;
+    color: #216BFF !important;
+    font-weight: 600 !important;
+    line-height: 1.4 !important;
   }
 
-  .card-sub {
-    margin: 4px 0 0 !important;
-    font-size: 12.5px !important;
+  .card-clean-desc {
+    margin: 2px 0 0 !important;
+    font-size: 12px !important;
+    line-height: 1.55 !important;
     color: var(--o-mute) !important;
-    line-height: 1.6 !important;
+    display: -webkit-box !important;
+    -webkit-line-clamp: 3 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
   }
 
-  .card-foot {
-    padding-top: 16px !important;
+  .card-clean-foot {
+    padding-top: 12px !important;
     border-top: 1px dashed var(--o-line) !important;
     display: flex !important;
     justify-content: space-between !important;
@@ -604,13 +1048,13 @@ const enhancedPosts = allPosts.map((p, i) => {
     color: var(--o-faint) !important;
   }
 
-  .card-cta {
-    color: var(--o-accent, #c8ff00) !important;
-    font-weight: 500 !important;
+  .card-clean-cta {
+    color: #216BFF !important;
+    font-weight: 600 !important;
     transition: transform .15s ease !important;
   }
 
-  .post-card:hover .card-cta {
+  .clean-post-card:hover .card-clean-cta {
     transform: translateX(3px) !important;
   }
 
@@ -622,7 +1066,7 @@ const enhancedPosts = allPosts.map((p, i) => {
 
   .reset-filter-btn {
     margin-top: 14px !important;
-    background: #0284c7 !important;
+    background: #216BFF !important;
     color: #ffffff !important;
     border: none !important;
     padding: 8px 18px !important;
@@ -632,6 +1076,17 @@ const enhancedPosts = allPosts.map((p, i) => {
   }
 
   /* Responsive Breakpoints */
+  @media (max-width: 1200px) {
+    .blog-main-layout {
+      grid-template-columns: 240px 1fr !important;
+      gap: 24px !important;
+      padding: 36px 28px 80px !important;
+    }
+    .post-grid-3col {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+  }
+
   @media (max-width: 1024px) {
     .blog-hero-split {
       grid-template-columns: 1fr !important;
@@ -647,26 +1102,38 @@ const enhancedPosts = allPosts.map((p, i) => {
     .hero-right {
       padding-left: 0 !important;
     }
-    .grid-wrap {
-      padding: 40px 36px 72px !important;
+    .blog-main-layout {
+      grid-template-columns: 1fr !important;
+      gap: 36px !important;
+      padding: 36px 20px 72px !important;
     }
-    .trust-scroller {
-      justify-content: flex-start !important;
+    .founder-sidebar {
+      position: static !important;
+    }
+    .founder-sticky-box {
+      max-height: none !important;
+    }
+    .founder-nav {
+      max-height: 220px !important;
     }
   }
 
   @media (max-width: 768px) {
-    .post-grid {
+    .post-grid-3col {
       grid-template-columns: 1fr !important;
     }
     .blog-hero-split {
       padding: 44px 20px 36px !important;
     }
-    .grid-wrap {
-      padding: 32px 20px 60px !important;
-    }
     .stats-mini {
       grid-template-columns: 1fr 1fr !important;
+    }
+    .trust-ribbon-blue {
+      padding: 10px 12px !important;
+    }
+    .blue-filter-btn {
+      font-size: 11.5px !important;
+      padding: 5px 10px !important;
     }
   }
 </style>
