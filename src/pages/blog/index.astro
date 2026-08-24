@@ -29,6 +29,57 @@ const blogLd = {
     dateModified: p.lastUpdated,
   })),
 };
+
+// Curated filter tags mapping
+const MUST_READ_SLUGS = new Set(['ollima', '24observe', 'ollagraph', 'quickztna', 'crawlcrawl', 'ollanode', '21tunnel']);
+const EDITORS_PICK_SLUGS = new Set(['memfog', 'ollabear', 'meshwg', 'aeoniti', 'ollastack', 'ollavpn']);
+const AI_AGENTS_SLUGS = new Set(['ollima', 'ollagraph', 'ollabear', 'ollasuper', 'memfog', 'browserfog', 'crawlcrawl', 'aeoniti', '24observe']);
+const SECURITY_SLUGS = new Set(['quickztna', 'quicksdwan', 'meshwg', 'ollavpn', 'olladns', '21tunnel']);
+const DEV_APIS_SLUGS = new Set(['ollastack', 'ollanode', '21tunnel', 'crawlcrawl', '24observe', 'olladns', 'ollagraph']);
+const SAAS_SLUGS = new Set(['ollasync', 'freefreecv', 'nhprep', 'networkershome', 'ollasuper']);
+
+const filterCategories = [
+  { id: 'all', label: 'All', count: allPosts.length, symbol: '◈' },
+  { id: 'must-read', label: 'Must Read', count: MUST_READ_SLUGS.size, symbol: '✦' },
+  { id: 'editors-pick', label: "Editor's Pick", count: EDITORS_PICK_SLUGS.size, symbol: '★' },
+  { id: 'ai-agents', label: 'AI & Agents', count: AI_AGENTS_SLUGS.size, symbol: '⬡' },
+  { id: 'security', label: 'Security & VPN', count: SECURITY_SLUGS.size, symbol: '⛨' },
+  { id: 'dev-apis', label: 'Dev APIs', count: DEV_APIS_SLUGS.size, symbol: '⚙' },
+  { id: 'saas', label: 'SaaS', count: SAAS_SLUGS.size, symbol: '▲' },
+];
+
+const enhancedPosts = allPosts.map((p, i) => {
+  const isMustRead = MUST_READ_SLUGS.has(p.slug);
+  const isEditorsPick = EDITORS_PICK_SLUGS.has(p.slug);
+  const isAi = AI_AGENTS_SLUGS.has(p.slug);
+  const isSecurity = SECURITY_SLUGS.has(p.slug);
+  const isDevApi = DEV_APIS_SLUGS.has(p.slug);
+  const isSaas = SAAS_SLUGS.has(p.slug);
+
+  const tags: string[] = ['all'];
+  if (isMustRead) tags.push('must-read');
+  if (isEditorsPick) tags.push('editors-pick');
+  if (isAi) tags.push('ai-agents');
+  if (isSecurity) tags.push('security');
+  if (isDevApi) tags.push('dev-apis');
+  if (isSaas) tags.push('saas');
+
+  let badge = '';
+  if (isMustRead) badge = '✦ Must Read';
+  else if (isEditorsPick) badge = '★ Editor’s Pick';
+  else if (p.category === 'security') badge = '⛨ Zero Trust';
+  else if (p.category === 'api') badge = '⚙ Agent API';
+  else badge = '◈ Deep Dive';
+
+  return {
+    ...p,
+    indexStr: String(i + 1).padStart(2, '0'),
+    filterTags: tags.join(' '),
+    curatedBadge: badge,
+    isMustRead,
+    isEditorsPick
+  };
+});
 ---
 <Layout
   title="Brand Deep-Dives — Ollasoftware Blog"
@@ -89,76 +140,35 @@ const blogLd = {
     </div>
   </section>
 
-  <!-- Trust & Credentials Ribbon (Networkers Home / Ollasoftware Style) -->
-  <aside class="trust-ribbon" aria-label="Credentials & Social Proof">
+  <!-- Blue Filter Bar (Replacing old credentials text with professional symbol filter items) -->
+  <aside class="trust-ribbon-blue" aria-label="Filter blog categories">
     <div class="trust-scroller mono">
-      <a href="/about/" class="trust-item" title="Meet the Founder">
-        <span class="icon">👤</span> Meet Founder · Dual CCIE #22239
-      </a>
-      <span class="trust-dot">·</span>
-
-      <a href="https://www.google.com/maps/place/NETWORKERS+HOME+Cyber+Security+and+Networking+Training+along+with+CCNA,CCNP+and+CCIE+Courses/@12.9152334,77.6295363,17z/data=!3m2!4b1!5s0x3bae148d1f7de241:0x645e9df497bd9279!4m6!3m5!1s0x3bae148cd1dba9cf:0x6908c0bcd3bc3460!8m2!3d12.9152282!4d77.6321166!16s%2Fg%2F124yprl9g" target="_blank" rel="noopener noreferrer" class="trust-item">
-        <span class="icon">⭐</span> 4.7★ Google (1,173)
-      </a>
-      <span class="trust-dot">·</span>
-
-      <a href="https://www.justdial.com/Bangalore/Networks-Home-Next-To-Behive-Work-Space-Hsr-Layout/080PXX80-XX80-180105111119-L5M6_BZDET" target="_blank" rel="noopener noreferrer" class="trust-item">
-        <span class="icon">⭐</span> 4.5★ JustDial (1,345)
-      </a>
-      <span class="trust-dot">·</span>
-
-      <a href="https://www.youtube.com/channel/UCWLd8VySHjRnfPWyvFpZGZw" target="_blank" rel="noopener noreferrer" class="trust-item">
-        <span class="icon">▶</span> 171K YouTube
-      </a>
-      <span class="trust-dot">·</span>
-
-      <a href="/work/" class="trust-item">
-        <span class="icon">🚀</span> 22+ Operating Ventures
-      </a>
-      <span class="trust-dot">·</span>
-
-      <span class="trust-item">
-        <span class="icon">💼</span> ₹500Cr+ Invoiced (21Bill)
-      </span>
-      <span class="trust-dot">·</span>
-
-      <span class="trust-item">
-        <span class="icon">🌐</span> 20M+ Users Scaled
-      </span>
-      <span class="trust-dot">·</span>
-
-      <span class="trust-item">
-        <span class="icon">🎓</span> 45,000+ Engineers Placed
-      </span>
-      <span class="trust-dot">·</span>
-
-      <a href="https://nhprep.com/" target="_blank" rel="noopener noreferrer" class="trust-item">
-        <span class="icon">📚</span> LMS: nhprep.com
-      </a>
-      <span class="trust-dot">·</span>
-
-      <a href="https://vpn.networkershome.com/" target="_blank" rel="noopener noreferrer" class="trust-item">
-        <span class="icon">⚡</span> 24/7 Labs & Infrastructure
-      </a>
+      {filterCategories.map((cat, idx) => (
+        <>
+          <button
+            class={`blue-filter-btn ${idx === 0 ? 'active' : ''}`}
+            data-filter={cat.id}
+            type="button"
+          >
+            <span class="sym">{cat.symbol}</span>
+            <span class="lbl">{cat.label}</span>
+            <span class="num">{cat.count}</span>
+          </button>
+          {idx < filterCategories.length - 1 && <span class="trust-dot">·</span>}
+        </>
+      ))}
     </div>
   </aside>
 
-  <!-- Blog Pieces Grid -->
-  <section class="grid-wrap">
-    <div class="grid-header">
-      <div class="grid-header-meta">
-        <span class="meta-tag mono">PORTFOLIO DEEP-DIVES</span>
-        <h3 class="grid-title">All {allPosts.length} Product Breakdowns</h3>
-      </div>
-      <p class="grid-desc mono">Detailed architecture, comparisons, performance benchmarks, and roadmap analysis.</p>
-    </div>
-
-    <div class="post-grid">
-      {allPosts.map((p, i) => (
-        <a class="post-card" href={`/blog/${p.slug}/`}>
+  <!-- Filterable Blog Pieces Grid (Header removed per request) -->
+  <section class="grid-wrap" id="pieces">
+    <div class="post-grid" id="postGrid">
+      {enhancedPosts.map((p) => (
+        <a class="post-card" href={`/blog/${p.slug}/`} data-tags={p.filterTags}>
           <div class="card-top">
-            <span class="card-num mono">{String(i + 1).padStart(2, '0')}</span>
+            <span class="card-num mono">{p.indexStr}</span>
             <div class="card-badges">
+              <span class="card-curated-badge mono">{p.curatedBadge}</span>
               <span class="card-category mono">{p.category}</span>
               <span class="card-tag mono">{p.brandDomain}</span>
             </div>
@@ -175,8 +185,64 @@ const blogLd = {
         </a>
       ))}
     </div>
+    
+    <div id="noResults" class="no-results mono" style="display: none;">
+      <p>No deep-dives found matching this filter.</p>
+      <button class="reset-filter-btn" onclick="document.querySelector('[data-filter=all]').click()">View All Pieces</button>
+    </div>
   </section>
 </Layout>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const filterBtns = document.querySelectorAll('.blue-filter-btn');
+    const cards = document.querySelectorAll('.post-card');
+    const noResults = document.getElementById('noResults');
+
+    function applyFilter(targetFilter) {
+      filterBtns.forEach(btn => {
+        if (btn.getAttribute('data-filter') === targetFilter) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      let visibleCount = 0;
+      cards.forEach(card => {
+        const tags = (card.getAttribute('data-tags') || '').split(' ');
+        if (targetFilter === 'all' || tags.includes(targetFilter)) {
+          card.style.display = 'flex';
+          visibleCount++;
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (noResults) {
+        noResults.style.display = visibleCount === 0 ? 'block' : 'none';
+      }
+
+      if (history.replaceState) {
+        const newUrl = targetFilter === 'all' ? window.location.pathname : `${window.location.pathname}#${targetFilter}`;
+        history.replaceState(null, '', newUrl);
+      }
+    }
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-filter') || 'all';
+        applyFilter(filter);
+      });
+    });
+
+    // Check hash on load
+    const hash = window.location.hash.replace('#', '');
+    if (hash && document.querySelector(`[data-filter="${hash}"]`)) {
+      applyFilter(hash);
+    }
+  });
+</script>
 
 <style>
   /* Split Hero Layout */
@@ -309,96 +375,97 @@ const blogLd = {
     letter-spacing: 0.8px !important;
   }
 
-  /* Trust Ribbon */
-  .trust-ribbon {
-    background: var(--o-panel-hi, rgba(15, 15, 18, 0.95)) !important;
-    border-bottom: 1px solid var(--o-line) !important;
-    padding: 14px 24px !important;
-    overflow-x: auto !important;
-    scrollbar-width: none !important;
-    -ms-overflow-style: none !important;
+  /* Solid Vibrant Blue Filter Ribbon */
+  .trust-ribbon-blue {
+    background: #0284c7 !important;
+    background: linear-gradient(90deg, #0369a1 0%, #0284c7 50%, #0369a1 100%) !important;
+    border-top: 1px solid #38bdf8 !important;
+    border-bottom: 1px solid #0284c7 !important;
+    box-shadow: 0 4px 20px rgba(2, 132, 199, 0.25) !important;
+    padding: 12px 24px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
   }
-  .trust-ribbon::-webkit-scrollbar { display: none !important; }
+
 
   .trust-scroller {
     display: flex !important;
     align-items: center !important;
-    gap: 16px !important;
-    font-size: 11px !important;
-    color: var(--o-mute) !important;
-    white-space: nowrap !important;
-    justify-content: flex-start !important;
-    max-width: 1440px !important;
-    margin: 0 auto !important;
+    gap: 10px !important;
+    font-size: 13px !important;
+    color: #e0f2fe !important;
+    justify-content: center !important;
+    width: 100% !important;
+    flex-wrap: wrap !important;
   }
 
-  .trust-item {
+
+  .blue-filter-btn {
     display: inline-flex !important;
     align-items: center !important;
-    gap: 6px !important;
-    color: var(--o-ink) !important;
-    text-decoration: none !important;
-    transition: color .15s, opacity .15s !important;
+    gap: 7px !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    color: #ffffff !important;
+    padding: 7px 18px !important;
+    border-radius: 6px !important;
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    transition: all .15s ease !important;
+    font-family: var(--o-font-sans, 'Inter', system-ui, sans-serif) !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+    letter-spacing: -0.2px !important;
   }
-  a.trust-item:hover {
-    color: var(--o-accent, #c8ff00) !important;
-    text-decoration: underline !important;
+
+  .blue-filter-btn .sym {
+    font-size: 12px !important;
+    color: #bae6fd !important;
+  }
+
+  .blue-filter-btn .num {
+    font-size: 10px !important;
+    background: rgba(255, 255, 255, 0.2) !important;
+    padding: 1px 6px !important;
+    border-radius: 10px !important;
+    color: #ffffff !important;
+  }
+
+  .blue-filter-btn:hover {
+    background: rgba(255, 255, 255, 0.22) !important;
+    border-color: #ffffff !important;
+    transform: translateY(-1px) !important;
+  }
+
+  .blue-filter-btn.active {
+    background: #ffffff !important;
+    color: #0369a1 !important;
+    border-color: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+    text-shadow: none !important;
+  }
+
+  .blue-filter-btn.active .sym {
+    color: #0284c7 !important;
+  }
+
+  .blue-filter-btn.active .num {
+    background: #0284c7 !important;
+    color: #ffffff !important;
   }
 
   .trust-dot {
-    color: var(--o-faint) !important;
-    font-weight: bold !important;
-  }
-
-  .trust-item .icon {
-    font-size: 12px !important;
+    color: #bae6fd !important;
+    font-weight: 800 !important;
   }
 
   /* Blog Post Grid */
   .grid-wrap {
-    padding: 72px 56px 96px !important;
+    padding: 48px 56px 96px !important;
     border-bottom: 1px solid var(--o-line) !important;
     max-width: 1440px !important;
     margin: 0 auto !important;
-  }
-
-  .grid-header {
-    display: flex !important;
-    justify-content: space-between !important;
-    align-items: flex-end !important;
-    margin-bottom: 40px !important;
-    padding-bottom: 20px !important;
-    border-bottom: 1px solid var(--o-line) !important;
-    gap: 24px !important;
-    flex-wrap: wrap !important;
-  }
-
-  .grid-header-meta {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 6px !important;
-  }
-
-  .meta-tag {
-    font-size: 10px !important;
-    color: var(--o-accent, #c8ff00) !important;
-    letter-spacing: 1px !important;
-    font-weight: 600 !important;
-  }
-
-  .grid-title {
-    margin: 0 !important;
-    font-size: 26px !important;
-    font-weight: 600 !important;
-    color: var(--o-ink) !important;
-    letter-spacing: -0.5px !important;
-  }
-
-  .grid-desc {
-    font-size: 12px !important;
-    color: var(--o-mute) !important;
-    margin: 0 !important;
-    max-width: 440px !important;
   }
 
   .post-grid {
@@ -460,8 +527,19 @@ const blogLd = {
 
   .card-badges {
     display: flex !important;
-    gap: 8px !important;
+    gap: 6px !important;
     align-items: center !important;
+    flex-wrap: wrap !important;
+  }
+
+  .card-curated-badge {
+    font-size: 9.5px !important;
+    color: #38bdf8 !important;
+    background: rgba(2, 132, 199, 0.15) !important;
+    border: 1px solid rgba(56, 189, 248, 0.35) !important;
+    padding: 3px 7px !important;
+    border-radius: 4px !important;
+    font-weight: 600 !important;
   }
 
   .card-category {
@@ -536,6 +614,23 @@ const blogLd = {
     transform: translateX(3px) !important;
   }
 
+  .no-results {
+    text-align: center !important;
+    padding: 60px 20px !important;
+    color: var(--o-mute) !important;
+  }
+
+  .reset-filter-btn {
+    margin-top: 14px !important;
+    background: #0284c7 !important;
+    color: #ffffff !important;
+    border: none !important;
+    padding: 8px 18px !important;
+    border-radius: 6px !important;
+    cursor: pointer !important;
+    font-size: 12px !important;
+  }
+
   /* Responsive Breakpoints */
   @media (max-width: 1024px) {
     .blog-hero-split {
@@ -553,7 +648,10 @@ const blogLd = {
       padding-left: 0 !important;
     }
     .grid-wrap {
-      padding: 56px 36px 72px !important;
+      padding: 40px 36px 72px !important;
+    }
+    .trust-scroller {
+      justify-content: flex-start !important;
     }
   }
 
@@ -565,11 +663,7 @@ const blogLd = {
       padding: 44px 20px 36px !important;
     }
     .grid-wrap {
-      padding: 44px 20px 60px !important;
-    }
-    .grid-header {
-      flex-direction: column !important;
-      align-items: flex-start !important;
+      padding: 32px 20px 60px !important;
     }
     .stats-mini {
       grid-template-columns: 1fr 1fr !important;
