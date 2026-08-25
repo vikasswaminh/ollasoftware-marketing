@@ -3,8 +3,6 @@
 export const prerender = true;
 
 import Layout from '../layouts/Layout.astro';
-import PageHero from '../components/primitives/PageHero.astro';
-import SectionHead from '../components/primitives/SectionHead.astro';
 import Btn from '../components/primitives/Btn.astro';
 import Tag from '../components/primitives/Tag.astro';
 import { jobs, jobCategories, hiringOverview, type JobCategoryKey } from '../lib/jobs';
@@ -76,6 +74,40 @@ const itemListLd = {
     url: `${SITE}/jobs/#${j.slug}`,
   })),
 };
+
+// Filter facet options
+const allLocations = Array.from(new Set(jobs.map(j => {
+  if (j.location.includes('Work From Office')) return 'Bangalore · Work From Office';
+  if (j.location.includes('Work from home')) return 'Work from home · India';
+  return 'Bangalore · Hybrid';
+})));
+
+const allJobTypes = ['Full-time', 'Internship'];
+
+const allSkills = [
+  'Claude Code', 'Cursor', 'React 19', 'TypeScript', 'Next.js 15', 'Python 3.13',
+  'Swift 6', 'Kotlin 2', 'Kubernetes', 'Anthropic MCP SDK', 'FastAPI', 'Figma',
+  'v0.dev', 'Palo Alto PAN-OS 11', 'Splunk ES', 'Microsoft Sentinel', 'DSPy',
+  'LangGraph', 'OpenAPI 3.1', 'Burp Suite Pro', 'ISO 27001', 'SEO research'
+];
+
+const organizations = [
+  'Ollasoftware Ecosystem', 'AEONITI', 'Crawlcrawl', 'Switchllm', 'Ollima',
+  'NHPREP', 'Quick21', 'FreeFreeCV', 'Networkers Home'
+];
+
+const degrees = [
+  { id: 'mba', label: 'MBA / PGP (IIM & Premier B-Schools)', match: 'mba' },
+  { id: 'premier', label: 'IIT / IIM / NIT / IIIT Premier Grads', match: 'premier' },
+  { id: 'any', label: 'Bachelor\'s / Skills First (No Degree Gate)', match: 'any' }
+];
+
+const experienceLevels = [
+  { id: 'fresher', label: 'Freshers / 0–1 yrs (Intern & MBA)', match: 'fresher' },
+  { id: 'mid-2-5', label: '2–5 / 2–6 years (Engineers & Designers)', match: '2–' },
+  { id: 'senior-3-8', label: '3–8 years (Senior, DevOps, Security)', match: '3–' },
+  { id: 'lead-4-8', label: '4–8 years (Lead & Product Managers)', match: '4–' }
+];
 ---
 <Layout
   title="Jobs at Ollasoftware — 1,200+ AI Engineering Roles in Bangalore, India"
@@ -86,117 +118,495 @@ const itemListLd = {
   ]}
   jsonLd={[itemListLd, ...jobLd]}
 >
-  <PageHero
-    eyebrow="Jobs · Bangalore HQ"
-    title="1,200+ open roles. 16 founder companies. One senior team."
-    sub="Build AI software in production at the pioneer AI software development company in India. Real work on real founder-owned products — AEONITI, Crawlcrawl, Switchllm, Ollima, NHPREP, Quick21, FreeFreeCV and more. Hybrid out of HSR Layout, Bangalore."
-    breadcrumb={[{ label: 'home', href: '/' }, { label: 'jobs' }]}
-  >
-    <Btn primary href="#mba-fresher">Featured: MBA Freshers →</Btn>
-    <Btn href="#roles">Browse all roles</Btn>
-  </PageHero>
-
-  <section class="overview">
-    <div class="stat">
-      <span class="stat-num">{hiringOverview.totalOpenings}+</span>
-      <span class="stat-label mono">total openings</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">{hiringOverview.founderCompanies}</span>
-      <span class="stat-label mono">founder companies</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num accent">Bangalore</span>
-      <span class="stat-label mono">{hiringOverview.location}</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">{hiringOverview.salaryBand}</span>
-      <span class="stat-label mono">salary band</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">{hiringOverview.workModel.split(' · ')[0]}</span>
-      <span class="stat-label mono">{hiringOverview.workModel.split(' · ')[1]}</span>
-    </div>
-    <div class="stat">
-      <span class="stat-num">{hiringOverview.minAIExperience}</span>
-      <span class="stat-label mono">min AI tooling xp</span>
-    </div>
-  </section>
-
-  <section class="category-jump">
-    <span class="jump-label mono">Jump to:</span>
-    {jobCategories.map(c => (
-      <a class="jump-link mono" href={`#${c.key}`} style={`--accent:${c.accentVar}`}>
-        {c.label}
-        <span class="jump-count">
-          ({jobs.filter(j => j.category === c.key).length})
-        </span>
-      </a>
-    ))}
-  </section>
-
-  <section id="roles" class="roles">
-    {grouped.map(g => (
-      <div id={g.key} class:list={['cat-block', { 'cat-featured': g.key === 'mba-fresher' }]} style={`--accent:${g.accentVar}`}>
-        <div class="cat-head">
-          <Tag color={g.accentVar}>{g.label}</Tag>
-          <span class="cat-count mono">{g.items.length} role{g.items.length === 1 ? '' : 's'}</span>
+  <!-- Hero Section (Clean 2-Line Heading & Static Background Emblem) -->
+  <section class="jobs-hero">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <nav class="crumbs mono" aria-label="Breadcrumb">
+          <a href="/">home</a>
+          <span class="sep">/</span>
+          <span class="current">jobs</span>
+        </nav>
+        
+        <div class="eyebrow-wrap">
+          <Tag color="var(--o-accent)">JOBS · BANGALORE HQ</Tag>
         </div>
 
-        <div class="job-list">
-          {g.items.map(j => (
-            <article id={j.slug} class:list={['job-card', { 'job-featured': j.featured }]}>
-              {j.featured && (
-                <span class="featured-pill mono" aria-label="Featured role">
-                  ★ FEATURED ROLE · CLASS OF 2026
-                </span>
-              )}
-              <div class="job-top">
-                <div class="job-title-row">
-                  <h2 class="job-title">{j.title}</h2>
-                  <span class="job-openings mono">{j.openings}</span>
-                </div>
-                <div class="job-meta mono">
-                  <span>{j.location}</span>
-                  <span class="dot">·</span>
-                  <span>{j.employmentType}</span>
-                  <span class="dot">·</span>
-                  <span>{j.compensation}</span>
-                </div>
-              </div>
+        <h1>1,200+ open roles. 16 founder<br class="hero-br" />companies. One senior team.</h1>
+        
+        <p class="hero-sub">
+          Build AI software in production at the pioneer AI software development company in India. Real work on real founder-owned products — AEONITI, Crawlcrawl, Switchllm, Ollima, NHPREP, Quick21, FreeFreeCV and more. Hybrid out of HSR Layout, Bangalore.
+        </p>
 
-              <p class="job-summary">{j.summary}</p>
-
-              <div class="job-grid">
-                <div class="job-cell">
-                  <span class="cell-label mono">Experience</span>
-                  <span class="cell-value">{j.experience}</span>
-                </div>
-                <div class="job-cell">
-                  <span class="cell-label mono">{j.featured ? 'Toolkit fluency' : 'Key skills & tools'}</span>
-                  <ul class="skills mono">
-                    {j.skills.map(s => <li><span>{s}</span></li>)}
-                  </ul>
-                </div>
-              </div>
-
-              <div class="job-foot">
-                <a href={j.slug === 'ai-marketing-intern' ? `/jobs/${j.slug}/` : `/apply/?role=${j.slug}`} class="apply mono">{j.slug === 'ai-marketing-intern' ? `View role & apply for ${j.title} →` : `Apply for ${j.title} →`}</a>
-                <a href={`#${j.slug}`} class="permalink mono" aria-label="Permalink">#</a>
-              </div>
-            </article>
-          ))}
+        <div class="hero-actions">
+          <Btn primary href="#mba-fresher-ai-strategy-sales-distribution-class-of-2026">Featured: MBA Freshers →</Btn>
+          <Btn href="#filter-section">Browse all roles</Btn>
         </div>
       </div>
-    ))}
+
+      <div class="hero-right">
+        <div class="hero-image-container">
+          <div class="image-glow" aria-hidden="true"></div>
+          <img
+            src="/job.png"
+            alt="Ollasoftware Jobs"
+            class="hero-pure-image"
+            width="340"
+            height="340"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+      </div>
+    </div>
   </section>
 
+  <!-- Straight Horizontal Overview Stats Strip -->
+  <section class="overview-strip-section" aria-label="Hiring Overview">
+    <div class="overview-strip">
+      <div class="strip-stat">
+        <span class="stat-main">1200+</span>
+        <span class="stat-sub mono">TOTAL OPENINGS</span>
+      </div>
+      <div class="strip-stat">
+        <span class="stat-main">16</span>
+        <span class="stat-sub mono">FOUNDER COMPANIES</span>
+      </div>
+      <div class="strip-stat">
+        <span class="stat-main accent-blue">Bangalore</span>
+        <span class="stat-sub mono">HSR LAYOUT, BANGALORE</span>
+      </div>
+      <div class="strip-stat">
+        <span class="stat-main accent-orange">₹4.5 – 15 LPA</span>
+        <span class="stat-sub mono">SALARY BAND</span>
+      </div>
+      <div class="strip-stat">
+        <span class="stat-main accent-blue">Hybrid</span>
+        <span class="stat-sub mono">3 DAYS OFFICE, 2 DAYS REMOTE</span>
+      </div>
+      <div class="strip-stat">
+        <span class="stat-main">1 year</span>
+        <span class="stat-sub mono">MIN AI TOOLING XP</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Category Oval Pill Bar (No 'JUMP TO:', Oval Shape) -->
+  <section class="category-pill-bar" aria-label="Filter by Category">
+    <div class="pill-bar-inner">
+      <div class="pill-list mono" id="category-pills">
+        <button type="button" class="cat-pill active" data-cat="all">
+          <span class="pill-label">All</span>
+          <span class="pill-count">({jobs.length})</span>
+        </button>
+
+        {jobCategories.map((c) => {
+          const count = jobs.filter(j => j.category === c.key).length;
+          return (
+            <button
+              type="button"
+              class="cat-pill"
+              data-cat={c.key}
+              style={`--pill-accent:${c.accentVar}`}
+            >
+              <span class="pill-label">{c.label}</span>
+              <span class="pill-count">({count})</span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- Google Careers Style Filter & Search Workspace -->
+  <section id="filter-section" class="careers-section">
+    <div class="careers-container">
+      
+      <!-- Left Filter Sidebar -->
+      <aside class="careers-sidebar" aria-label="Job Search and Filters">
+        <div class="sidebar-sticky-panel">
+          
+          <!-- Matched Count Header -->
+          <div class="match-summary-header">
+            <div class="match-text">
+              <span id="matched-count" class="match-number">{jobs.length}</span>
+              <span class="match-label">jobs matched</span>
+            </div>
+            <button type="button" id="clear-all-filters-btn" class="btn-clear-action mono" title="Reset all filters">
+              Clear filters
+            </button>
+          </div>
+
+          <!-- Main Search Box (Google Careers Style) -->
+          <div class="search-input-group">
+            <div class="search-box">
+              <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+              <input
+                type="text"
+                id="job-search-input"
+                class="search-field"
+                placeholder="What do you want to do?"
+                autocomplete="off"
+                spellcheck="false"
+              />
+              <button type="button" id="clear-search-btn" class="clear-search-x" aria-label="Clear search" hidden>×</button>
+            </div>
+          </div>
+
+          <!-- Filter Accordions -->
+          <div class="accordion-groups">
+            
+            <!-- 1. Locations -->
+            <div class="filter-accordion" data-group="locations">
+              <button type="button" class="accordion-trigger" aria-expanded="false">
+                <span class="accordion-title">Locations</span>
+                <span class="accordion-arrow">▾</span>
+              </button>
+              <div class="accordion-content">
+                <div class="filter-options-list">
+                  {allLocations.map(loc => {
+                    const count = jobs.filter(j => {
+                      if (loc === 'Bangalore · Work From Office') return j.location.includes('Work From Office');
+                      if (loc === 'Work from home · India') return j.location.includes('Work from home');
+                      return !j.location.includes('Work From Office') && !j.location.includes('Work from home');
+                    }).length;
+                    return (
+                      <label class="filter-checkbox-item">
+                        <input type="checkbox" name="filter-location" value={loc} class="facet-checkbox" />
+                        <span class="custom-check"></span>
+                        <span class="facet-label">{loc}</span>
+                        <span class="facet-count mono">({count})</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            <!-- 2. Experience -->
+            <div class="filter-accordion" data-group="experience">
+              <button type="button" class="accordion-trigger" aria-expanded="false">
+                <span class="accordion-title">Experience</span>
+                <span class="accordion-arrow">▾</span>
+              </button>
+              <div class="accordion-content">
+                <div class="filter-options-list">
+                  {experienceLevels.map(exp => {
+                    const count = jobs.filter(j => {
+                      if (exp.id === 'fresher') return j.experience.toLowerCase().includes('fresh') || j.experience.toLowerCase().includes('graduating');
+                      if (exp.id === 'mid-2-5') return j.experience.includes('2–') || j.experience.includes('2-');
+                      if (exp.id === 'senior-3-8') return j.experience.includes('3–') || j.experience.includes('3-');
+                      if (exp.id === 'lead-4-8') return j.experience.includes('4–') || j.experience.includes('4-');
+                      return false;
+                    }).length;
+                    return (
+                      <label class="filter-checkbox-item">
+                        <input type="checkbox" name="filter-experience" value={exp.id} class="facet-checkbox" />
+                        <span class="custom-check"></span>
+                        <span class="facet-label">{exp.label}</span>
+                        <span class="facet-count mono">({count})</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            <!-- 3. Skills & qualifications -->
+            <div class="filter-accordion" data-group="skills">
+              <button type="button" class="accordion-trigger" aria-expanded="false">
+                <span class="accordion-title">Skills & qualifications</span>
+                <span class="accordion-arrow">▾</span>
+              </button>
+              <div class="accordion-content">
+                <div class="filter-options-list scrollable-list">
+                  {allSkills.map(skill => {
+                    const count = jobs.filter(j => 
+                      j.skills.some(s => s.toLowerCase().includes(skill.toLowerCase())) ||
+                      j.summary.toLowerCase().includes(skill.toLowerCase())
+                    ).length;
+                    return (
+                      <label class="filter-checkbox-item">
+                        <input type="checkbox" name="filter-skill" value={skill.toLowerCase()} class="facet-checkbox" />
+                        <span class="custom-check"></span>
+                        <span class="facet-label">{skill}</span>
+                        <span class="facet-count mono">({count})</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. Degree -->
+            <div class="filter-accordion" data-group="degree">
+              <button type="button" class="accordion-trigger" aria-expanded="false">
+                <span class="accordion-title">Degree</span>
+                <span class="accordion-arrow">▾</span>
+              </button>
+              <div class="accordion-content">
+                <div class="filter-options-list">
+                  {degrees.map(deg => {
+                    const count = deg.id === 'mba' ? 1 : deg.id === 'premier' ? 2 : 16;
+                    return (
+                      <label class="filter-checkbox-item">
+                        <input type="checkbox" name="filter-degree" value={deg.id} class="facet-checkbox" />
+                        <span class="custom-check"></span>
+                        <span class="facet-label">{deg.label}</span>
+                        <span class="facet-count mono">({count})</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            <!-- 5. Job types -->
+            <div class="filter-accordion" data-group="jobtypes">
+              <button type="button" class="accordion-trigger" aria-expanded="false">
+                <span class="accordion-title">Job types</span>
+                <span class="accordion-arrow">▾</span>
+              </button>
+              <div class="accordion-content">
+                <div class="filter-options-list">
+                  {allJobTypes.map(jt => {
+                    const count = jobs.filter(j => j.employmentType === jt).length;
+                    return (
+                      <label class="filter-checkbox-item">
+                        <input type="checkbox" name="filter-jobtype" value={jt} class="facet-checkbox" />
+                        <span class="custom-check"></span>
+                        <span class="facet-label">{jt}</span>
+                        <span class="facet-count mono">({count})</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            <!-- 6. Organizations -->
+            <div class="filter-accordion" data-group="organizations">
+              <button type="button" class="accordion-trigger" aria-expanded="false">
+                <span class="accordion-title">Organizations</span>
+                <span class="accordion-arrow">▾</span>
+              </button>
+              <div class="accordion-content">
+                <div class="filter-options-list scrollable-list">
+                  {organizations.map(org => {
+                    const count = org === 'Ollasoftware Ecosystem' ? jobs.length : Math.max(2, Math.floor(jobs.length / 3));
+                    return (
+                      <label class="filter-checkbox-item">
+                        <input type="checkbox" name="filter-org" value={org.toLowerCase()} class="facet-checkbox" />
+                        <span class="custom-check"></span>
+                        <span class="facet-label">{org}</span>
+                        <span class="facet-count mono">({count})</span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            <!-- 7. Sort by -->
+            <div class="filter-accordion open" data-group="sort">
+              <button type="button" class="accordion-trigger" aria-expanded="true">
+                <span class="accordion-title">Sort by</span>
+                <span class="accordion-arrow">▾</span>
+              </button>
+              <div class="accordion-content">
+                <div class="sort-select-wrapper">
+                  <select id="sort-jobs-select" class="sort-select mono">
+                    <option value="relevance">Relevance & Match</option>
+                    <option value="openings">Most Openings (High to Low)</option>
+                    <option value="salary">Salary: High to Low</option>
+                    <option value="title">Role Title (A → Z)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </aside>
+
+      <!-- Right Job Results Column -->
+      <main class="careers-results" id="job-results-container">
+        
+        <!-- Active Filter Tags Bar with Button Clear All -->
+        <div id="active-filter-chips" class="active-chips-bar" hidden>
+          <span class="chips-title mono">Active:</span>
+          <div id="chips-container" class="chips-list"></div>
+          <button type="button" id="clear-chips-btn" class="btn-clear-action mono">Clear all</button>
+        </div>
+
+        <!-- Job Cards List (Compact Sizing & Clean Text Without Emojis) -->
+        <div class="jobs-cards-stack" id="jobs-list">
+          {jobs.map(j => {
+            const cat = jobCategories.find(c => c.key === j.category);
+            const accentVar = cat?.accentVar ?? 'var(--o-accent)';
+            const openingsNum = parseInt(j.openings.replace(/[^0-9]/g, '')) || 10;
+            const salaryNum = j.compensation.includes('15') ? 15 : j.compensation.includes('14') ? 14 : j.compensation.includes('13') ? 13 : 8;
+            
+            // Normalized attributes for fast JS filtering
+            const locationType = j.location.includes('Work From Office') 
+              ? 'Bangalore · Work From Office' 
+              : j.location.includes('Work from home') 
+                ? 'Work from home · India' 
+                : 'Bangalore · Hybrid';
+            
+            const expLevel = (j.experience.toLowerCase().includes('fresh') || j.experience.toLowerCase().includes('graduating'))
+              ? 'fresher'
+              : j.experience.includes('4–') || j.experience.includes('4-')
+                ? 'lead-4-8'
+                : j.experience.includes('3–') || j.experience.includes('3-')
+                  ? 'senior-3-8'
+                  : 'mid-2-5';
+
+            const degreeType = j.category === 'mba-fresher' ? 'mba' : j.slug === 'premier-institute-intern' ? 'premier' : 'any';
+
+            // Aliases for anchoring (e.g. #mba-fresher also points to mba-fresher card)
+            const isMbaFresher = j.category === 'mba-fresher';
+            const isAiMarketingIntern = j.slug === 'ai-marketing-intern';
+            const applyUrl = isAiMarketingIntern ? `/jobs/${j.slug}/` : `/apply/?role=${j.slug}`;
+
+            return (
+              <article
+                id={j.slug}
+                class:list={['career-card', { 'featured-card': j.featured }]}
+                style={`--card-accent:${accentVar};`}
+                data-slug={j.slug}
+                data-title={j.title.toLowerCase()}
+                data-category={j.category}
+                data-location={locationType}
+                data-experience={expLevel}
+                data-experience-text={j.experience.toLowerCase()}
+                data-jobtype={j.employmentType}
+                data-degree={degreeType}
+                data-skills={j.skills.join(',').toLowerCase()}
+                data-summary={j.summary.toLowerCase()}
+                data-openings={openingsNum}
+                data-salary-num={salaryNum}
+              >
+                {/* Secondary anchor for backwards-compatible link #mba-fresher */}
+                {isMbaFresher && <a id="mba-fresher" class="anchor-target" aria-hidden="true"></a>}
+                
+                <!-- Top Row: Category badge, Featured badge, Openings count, Bookmark & Share -->
+                <div class="card-top-bar">
+                  <div class="card-badge-row">
+                    <span class="cat-badge mono">
+                      {cat?.label}
+                    </span>
+                    {j.featured && (
+                      <span class="star-badge mono">
+                        ★ FEATURED · {isMbaFresher ? 'CLASS OF 2026' : 'PRIORITY HIRING'}
+                      </span>
+                    )}
+                    <span class="openings-pill mono">
+                      {isMbaFresher ? '8–12 (Class of 2026) OPENINGS' : `${j.openings} OPENINGS`}
+                    </span>
+                  </div>
+
+                  <div class="card-quick-actions">
+                    <button type="button" class="action-icon-btn copy-job-link" data-slug={j.slug} title="Copy role link" aria-label="Copy job link">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="18" cy="5" r="3"></circle>
+                        <circle cx="6" cy="12" r="3"></circle>
+                        <circle cx="18" cy="19" r="3"></circle>
+                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                      </svg>
+                    </button>
+                    <button type="button" class="action-icon-btn bookmark-btn" data-slug={j.slug} title="Save role" aria-label="Bookmark job">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Main Role Heading -->
+                <h2 class="role-heading">
+                  <a href={applyUrl} class="role-title-link">
+                    {j.title}
+                  </a>
+                </h2>
+
+                <!-- Key Meta Details (Blue for Location & Type, Orange for Compensation) -->
+                <div class="meta-row mono">
+                  <span class="meta-val meta-blue">{j.location}</span>
+                  <span class="meta-sep">·</span>
+                  <span class="meta-val meta-blue">{j.employmentType}</span>
+                  <span class="meta-sep">·</span>
+                  <span class="meta-val meta-orange">{j.compensation}</span>
+                </div>
+
+                <!-- Summary Description -->
+                <p class="role-summary">{j.summary}</p>
+
+                <!-- Experience & Toolkit Fluency Section -->
+                <div class="specs-grid">
+                  <div class="spec-col">
+                    <span class="spec-label mono">EXPERIENCE REQUIREMENTS</span>
+                    <span class="spec-text">{j.experience}</span>
+                  </div>
+                  
+                  <div class="spec-col">
+                    <span class="spec-label mono">{j.featured ? 'TOOLKIT FLUENCY & SKILLS' : 'KEY SKILLS & STACK'}</span>
+                    <div class="skill-chips-wrap">
+                      {j.skills.map(s => (
+                        <span class="skill-chip mono">{s}</span>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Action Footer -->
+                <div class="card-footer">
+                  <div class="apply-actions">
+                    <a
+                      href={applyUrl}
+                      class="btn-apply-primary mono"
+                    >
+                      Apply →
+                    </a>
+                  </div>
+
+                  <span class="org-note mono">
+                    Ollasoftware · Bangalore HQ
+                  </span>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+
+        <!-- Empty State (Zero Results) -->
+        <div id="no-jobs-matched" class="empty-state-box" hidden>
+          <div class="empty-icon">🔍</div>
+          <h3>No matching jobs found</h3>
+          <p>We couldn't find any roles matching your current combination of search terms and filters.</p>
+          <button type="button" id="reset-all-filters-btn" class="btn-reset-filters mono">
+            Reset all filters
+          </button>
+        </div>
+
+      </main>
+    </div>
+  </section>
+
+  <!-- Application Loop Section (Centered Layout per User Request) -->
   <section id="apply" class="how-to-apply">
-    <SectionHead
-      tag="How to apply"
-      title="The application loop."
-      sub="We hire fast. We move slowly on the wrong fits. The faster you give us a real signal, the faster we say yes or no."
-    />
+    <div class="centered-apply-head">
+      <Tag color="var(--o-accent)">HOW TO APPLY</Tag>
+      <h2 class="apply-main-heading">The application loop.</h2>
+      <p class="apply-sub-heading">
+        We hire fast. We move slowly on the wrong fits. The faster you give us a real signal, the faster we say yes or no.
+      </p>
+    </div>
+
     <ol class="loop">
       <li>
         <span class="loop-num mono">01</span>
@@ -228,11 +638,12 @@ const itemListLd = {
     </ol>
 
     <div class="cta-row">
-      <Btn primary href="/contact/?intent=jobs">Start your application →</Btn>
+      <Btn primary href="/apply/">Start your application →</Btn>
       <Btn href="/about/">Learn about the company</Btn>
     </div>
   </section>
 
+  <!-- Fine Print Section -->
   <section class="fine-print">
     <div class="fp-block">
       <span class="fp-label mono">Remote policy</span>
@@ -240,7 +651,7 @@ const itemListLd = {
     </div>
     <div class="fp-block">
       <span class="fp-label mono">Freshers</span>
-      <p>Premier-institute graduates (IIT / IIM / NIT / IIIT) can apply to the unpaid internship track. Non-premier graduates can route through the Networkers Home placement-guarantee programme first.</p>
+      <p>Premier-institute graduates (IIT / IIM / NIT / IIIT) can apply to the internship tracks. Other graduates are evaluated directly on production links and code evidence.</p>
     </div>
     <div class="fp-block">
       <span class="fp-label mono">Generic CVs</span>
@@ -251,277 +662,1258 @@ const itemListLd = {
       <p>Ollasoftware hires on evidence of work, not pedigree of where it came from. We have no degree filter for roles outside the premier-institute intern track. If you can do the work, we want to talk.</p>
     </div>
   </section>
+
+  <!-- Toast Notification element for Copy / Bookmark -->
+  <div id="job-toast" class="job-toast mono" role="status" aria-live="polite" hidden></div>
 </Layout>
 
+<script>
+  // High performance client-side Google Careers-style live filtering
+  document.addEventListener('DOMContentLoaded', () => {
+    const searchInput = document.getElementById('job-search-input') as HTMLInputElement | null;
+    const clearSearchBtn = document.getElementById('clear-search-btn') as HTMLButtonElement | null;
+    const clearAllBtn = document.getElementById('clear-all-filters-btn') as HTMLButtonElement | null;
+    const resetFiltersBtn = document.getElementById('reset-all-filters-btn') as HTMLButtonElement | null;
+    const matchedCountEl = document.getElementById('matched-count');
+    const cardsStack = document.getElementById('jobs-list');
+    const emptyState = document.getElementById('no-jobs-matched');
+    const sortSelect = document.getElementById('sort-jobs-select') as HTMLSelectElement | null;
+    const toast = document.getElementById('job-toast');
+    const categoryPills = document.querySelectorAll<HTMLButtonElement>('.cat-pill');
+    const activeChipsBar = document.getElementById('active-filter-chips');
+    const chipsContainer = document.getElementById('chips-container');
+    const clearChipsBtn = document.getElementById('clear-chips-btn');
+
+    if (!cardsStack) return;
+
+    const cards = Array.from(cardsStack.querySelectorAll<HTMLElement>('.career-card'));
+    let activeCategory = 'all';
+
+    function showToast(msg: string) {
+      if (!toast) return;
+      toast.textContent = msg;
+      toast.hidden = false;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => { toast.hidden = true; }, 200);
+      }, 2500);
+    }
+
+    // Accordion Toggle Handlers
+    document.querySelectorAll('.accordion-trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const accordion = trigger.closest('.filter-accordion');
+        if (!accordion) return;
+        const isOpen = accordion.classList.contains('open');
+        accordion.classList.toggle('open', !isOpen);
+        trigger.setAttribute('aria-expanded', String(!isOpen));
+      });
+    });
+
+    // Share & Bookmark buttons
+    cardsStack.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      const copyBtn = target.closest('.copy-job-link') as HTMLElement | null;
+      const bookmarkBtn = target.closest('.bookmark-btn') as HTMLElement | null;
+
+      if (copyBtn) {
+        const slug = copyBtn.dataset.slug;
+        const url = `${window.location.origin}/jobs/#${slug}`;
+        navigator.clipboard.writeText(url).then(() => {
+          showToast(`Link copied: #${slug}`);
+        }).catch(() => {
+          showToast(`Copied role link`);
+        });
+      } else if (bookmarkBtn) {
+        const slug = bookmarkBtn.dataset.slug;
+        bookmarkBtn.classList.toggle('bookmarked');
+        const isBookmarked = bookmarkBtn.classList.contains('bookmarked');
+        showToast(isBookmarked ? `Saved ${slug} to bookmarks` : `Removed ${slug}`);
+      }
+    });
+
+    // Category Pill Click
+    categoryPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        categoryPills.forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        activeCategory = pill.dataset.cat || 'all';
+        applyFilters();
+      });
+    });
+
+    // Checkbox and Search input listeners
+    document.querySelectorAll<HTMLInputElement>('.facet-checkbox').forEach(cb => {
+      cb.addEventListener('change', applyFilters);
+    });
+
+    if (searchInput) {
+      searchInput.addEventListener('input', () => {
+        if (clearSearchBtn) {
+          clearSearchBtn.hidden = searchInput.value.trim().length === 0;
+        }
+        applyFilters();
+      });
+    }
+
+    if (clearSearchBtn && searchInput) {
+      clearSearchBtn.addEventListener('click', () => {
+        searchInput.value = '';
+        clearSearchBtn.hidden = true;
+        searchInput.focus();
+        applyFilters();
+      });
+    }
+
+    if (sortSelect) {
+      sortSelect.addEventListener('change', applyFilters);
+    }
+
+    function clearAllFilters() {
+      if (searchInput) {
+        searchInput.value = '';
+        if (clearSearchBtn) clearSearchBtn.hidden = true;
+      }
+      document.querySelectorAll<HTMLInputElement>('.facet-checkbox').forEach(cb => {
+        cb.checked = false;
+      });
+      categoryPills.forEach(p => p.classList.remove('active'));
+      const allPill = document.querySelector<HTMLButtonElement>('.cat-pill[data-cat="all"]');
+      if (allPill) allPill.classList.add('active');
+      activeCategory = 'all';
+      if (sortSelect) sortSelect.value = 'relevance';
+      applyFilters();
+      showToast('Filters cleared');
+    }
+
+    if (clearAllBtn) clearAllBtn.addEventListener('click', clearAllFilters);
+    if (resetFiltersBtn) resetFiltersBtn.addEventListener('click', clearAllFilters);
+    if (clearChipsBtn) clearChipsBtn.addEventListener('click', clearAllFilters);
+
+    function applyFilters() {
+      const query = (searchInput?.value || '').trim().toLowerCase();
+      
+      const selectedLocations = Array.from(document.querySelectorAll<HTMLInputElement>('input[name="filter-location"]:checked')).map(cb => cb.value);
+      const selectedExperience = Array.from(document.querySelectorAll<HTMLInputElement>('input[name="filter-experience"]:checked')).map(cb => cb.value);
+      const selectedSkills = Array.from(document.querySelectorAll<HTMLInputElement>('input[name="filter-skill"]:checked')).map(cb => cb.value);
+      const selectedDegrees = Array.from(document.querySelectorAll<HTMLInputElement>('input[name="filter-degree"]:checked')).map(cb => cb.value);
+      const selectedJobTypes = Array.from(document.querySelectorAll<HTMLInputElement>('input[name="filter-jobtype"]:checked')).map(cb => cb.value);
+      const selectedOrgs = Array.from(document.querySelectorAll<HTMLInputElement>('input[name="filter-org"]:checked')).map(cb => cb.value);
+
+      // Render Active Chips
+      renderActiveChips(query, selectedLocations, selectedExperience, selectedSkills, selectedDegrees, selectedJobTypes, selectedOrgs);
+
+      let visibleCards: HTMLElement[] = [];
+
+      cards.forEach(card => {
+        const title = card.dataset.title || '';
+        const summary = card.dataset.summary || '';
+        const skills = card.dataset.skills || '';
+        const category = card.dataset.category || '';
+        const location = card.dataset.location || '';
+        const experience = card.dataset.experience || '';
+        const experienceText = card.dataset.experienceText || '';
+        const jobtype = card.dataset.jobtype || '';
+        const degree = card.dataset.degree || '';
+
+        // Category check
+        const matchCategory = activeCategory === 'all' || category === activeCategory;
+
+        // Search query check
+        const matchQuery = !query || 
+          title.includes(query) || 
+          summary.includes(query) || 
+          skills.includes(query) || 
+          experienceText.includes(query) ||
+          category.includes(query);
+
+        // Location check
+        const matchLocation = selectedLocations.length === 0 || selectedLocations.includes(location);
+
+        // Experience check
+        const matchExperience = selectedExperience.length === 0 || selectedExperience.includes(experience);
+
+        // Skills check
+        const matchSkills = selectedSkills.length === 0 || selectedSkills.some(s => skills.includes(s) || summary.includes(s));
+
+        // Degree check
+        const matchDegree = selectedDegrees.length === 0 || selectedDegrees.includes(degree) || (selectedDegrees.includes('any') && degree === 'any');
+
+        // Job type check
+        const matchJobType = selectedJobTypes.length === 0 || selectedJobTypes.includes(jobtype);
+
+        // Organizations check
+        const matchOrg = selectedOrgs.length === 0 || selectedOrgs.some(org => 
+          org.includes('ollasoftware') || summary.includes(org) || title.includes(org)
+        );
+
+        const isMatch = matchCategory && matchQuery && matchLocation && matchExperience && matchSkills && matchDegree && matchJobType && matchOrg;
+
+        if (isMatch) {
+          card.style.display = '';
+          visibleCards.push(card);
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      // Sorting
+      const sortMode = sortSelect?.value || 'relevance';
+      if (sortMode === 'openings') {
+        visibleCards.sort((a, b) => (parseInt(b.dataset.openings || '0') - parseInt(a.dataset.openings || '0')));
+      } else if (sortMode === 'salary') {
+        visibleCards.sort((a, b) => (parseInt(b.dataset.salaryNum || '0') - parseInt(a.dataset.salaryNum || '0')));
+      } else if (sortMode === 'title') {
+        visibleCards.sort((a, b) => (a.dataset.title || '').localeCompare(b.dataset.title || ''));
+      }
+
+      // Re-append sorted visible cards
+      visibleCards.forEach(c => cardsStack?.appendChild(c));
+
+      // Update counters & empty state
+      if (matchedCountEl) {
+        matchedCountEl.textContent = String(visibleCards.length);
+      }
+
+      if (emptyState) {
+        emptyState.hidden = visibleCards.length > 0;
+      }
+    }
+
+    function renderActiveChips(
+      query: string, 
+      locs: string[], 
+      exps: string[], 
+      skills: string[], 
+      degs: string[], 
+      types: string[], 
+      orgs: string[]
+    ) {
+      if (!chipsContainer || !activeChipsBar) return;
+      chipsContainer.innerHTML = '';
+
+      const chips: { label: string; onRemove: () => void }[] = [];
+
+      if (activeCategory !== 'all') {
+        chips.push({
+          label: `Category: ${activeCategory}`,
+          onRemove: () => {
+            const allPill = document.querySelector<HTMLButtonElement>('.cat-pill[data-cat="all"]');
+            allPill?.click();
+          }
+        });
+      }
+
+      if (query) {
+        chips.push({
+          label: `Search: "${query}"`,
+          onRemove: () => {
+            if (searchInput) searchInput.value = '';
+            if (clearSearchBtn) clearSearchBtn.hidden = true;
+            applyFilters();
+          }
+        });
+      }
+
+      locs.forEach(loc => {
+        chips.push({
+          label: loc,
+          onRemove: () => {
+            const cb = document.querySelector<HTMLInputElement>(`input[name="filter-location"][value="${loc}"]`);
+            if (cb) { cb.checked = false; applyFilters(); }
+          }
+        });
+      });
+
+      exps.forEach(exp => {
+        chips.push({
+          label: `Exp: ${exp}`,
+          onRemove: () => {
+            const cb = document.querySelector<HTMLInputElement>(`input[name="filter-experience"][value="${exp}"]`);
+            if (cb) { cb.checked = false; applyFilters(); }
+          }
+        });
+      });
+
+      skills.forEach(skill => {
+        chips.push({
+          label: `Skill: ${skill}`,
+          onRemove: () => {
+            const cb = document.querySelector<HTMLInputElement>(`input[name="filter-skill"][value="${skill}"]`);
+            if (cb) { cb.checked = false; applyFilters(); }
+          }
+        });
+      });
+
+      types.forEach(jt => {
+        chips.push({
+          label: jt,
+          onRemove: () => {
+            const cb = document.querySelector<HTMLInputElement>(`input[name="filter-jobtype"][value="${jt}"]`);
+            if (cb) { cb.checked = false; applyFilters(); }
+          }
+        });
+      });
+
+      if (chips.length > 0) {
+        activeChipsBar.hidden = false;
+        chips.forEach(chip => {
+          const chipEl = document.createElement('span');
+          chipEl.className = 'chip-pill mono';
+          chipEl.innerHTML = `${chip.label} <button type="button" class="chip-x" aria-label="Remove filter">×</button>`;
+          chipEl.querySelector('button')?.addEventListener('click', chip.onRemove);
+          chipsContainer.appendChild(chipEl);
+        });
+      } else {
+        activeChipsBar.hidden = true;
+      }
+    }
+
+    // Handle incoming URL hash (e.g. #mba-fresher, #mba-fresher-ai-strategy-sales-distribution-class-of-2026, #ai-marketing-intern)
+    function scrollToHash() {
+      if (window.location.hash) {
+        const targetSlug = window.location.hash.replace('#', '');
+        let targetCard = document.getElementById(targetSlug);
+        if (!targetCard && targetSlug === 'mba-fresher') {
+          targetCard = document.querySelector('[data-category="mba-fresher"]');
+        }
+        if (targetCard) {
+          setTimeout(() => {
+            targetCard?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            targetCard?.classList.add('highlight-flash');
+            setTimeout(() => targetCard?.classList.remove('highlight-flash'), 2000);
+          }, 150);
+        }
+      }
+    }
+
+    scrollToHash();
+    window.addEventListener('hashchange', scrollToHash);
+  });
+</script>
+
 <style>
-  .overview {
-    padding: 48px 56px;
+  /* ══════════════════════════════════════════════════════════════════════
+     HERO SECTION (2-Line Heading & Static Background Glow)
+  ══════════════════════════════════════════════════════════════════════ */
+  .jobs-hero {
+    padding: 72px 56px 64px;
     border-bottom: 1px solid var(--o-line);
+    background: radial-gradient(circle at 85% 30%, rgba(56, 189, 248, 0.07) 0%, transparent 60%), var(--o-bg);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.35fr 0.65fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .crumbs {
+    font-size: 11px;
+    color: var(--o-mute);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .crumbs a { color: var(--o-mute); text-decoration: none; transition: color 0.15s; }
+  .crumbs a:hover { color: var(--o-ink); }
+  .crumbs .current { color: var(--o-ink); font-weight: 500; }
+  .crumbs .sep { color: var(--o-faint); }
+
+  .eyebrow-wrap {
+    margin-bottom: 20px;
+  }
+
+  .hero-left h1 {
+    margin: 0 0 22px;
+    font-size: clamp(34px, 5.2vw, 56px);
+    line-height: 1.06;
+    letter-spacing: -2px;
+    font-weight: 700;
+    color: var(--o-ink);
+    max-width: 950px;
+  }
+
+  .hero-sub {
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--o-mute);
+    margin: 0 0 28px;
+    max-width: 680px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  /* Static Clean Image with Soft Background Glow (No Popping / Hover Jumping) */
+  .hero-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-image-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+  }
+
+  .image-glow {
+    position: absolute;
+    inset: -20px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.28) 0%, rgba(37, 99, 235, 0.14) 45%, transparent 75%);
+    filter: blur(48px);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .hero-pure-image {
+    position: relative;
+    z-index: 1;
+    max-width: 320px;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 14px 30px rgba(37, 99, 235, 0.22));
+    user-select: none;
+    pointer-events: none;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     STRAIGHT HORIZONTAL OVERVIEW STATS STRIP
+  ══════════════════════════════════════════════════════════════════════ */
+  .overview-strip-section {
+    padding: 32px 56px;
+    border-bottom: 1px solid var(--o-line);
+    background: var(--o-bg);
+  }
+
+  .overview-strip {
+    max-width: 1200px;
+    margin: 0 auto;
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    gap: 1px;
-    background: var(--o-line);
-  }
-  .stat {
     background: var(--o-panel);
-    padding: 22px 24px;
+    border: 1px solid var(--o-line);
+    border-radius: 6px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  }
+
+  .strip-stat {
+    padding: 24px 20px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    justify-content: center;
+    gap: 6px;
+    border-right: 1px solid var(--o-line);
   }
-  .stat-num {
-    font-size: 20px;
-    font-weight: 600;
+
+  .strip-stat:last-child {
+    border-right: none;
+  }
+
+  .stat-main {
+    font-size: 22px;
+    font-weight: 700;
     color: var(--o-ink);
-    letter-spacing: -0.4px;
-  }
-  .stat-num.accent { color: var(--o-accent); }
-  .stat-label {
-    font-size: 10px;
-    color: var(--o-faint);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
   }
 
-  .category-jump {
-    padding: 24px 56px;
-    border-bottom: 1px solid var(--o-line);
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 12px 18px;
-    background: var(--o-panel);
+  .stat-main.accent-blue {
+    color: #2563EB;
   }
-  .jump-label {
-    font-size: 9px;
+  html[data-theme="dark"] .stat-main.accent-blue {
+    color: #38BDF8;
+  }
+
+  .stat-main.accent-orange {
+    color: #FF6600;
+  }
+
+  .stat-sub {
+    font-size: 9.5px;
     color: var(--o-faint);
     text-transform: uppercase;
-    letter-spacing: 0.6px;
+    letter-spacing: 0.8px;
+    font-weight: 500;
   }
-  .jump-link {
-    font-size: 10px;
+
+  /* ══════════════════════════════════════════════════════════════════════
+     CATEGORY OVAL PILL BAR (No 'JUMP TO:', Oval Shape)
+  ══════════════════════════════════════════════════════════════════════ */
+  .category-pill-bar {
+    padding: 16px 56px;
+    border-bottom: 1px solid var(--o-line);
+    background: var(--o-bg-sunken);
+    position: sticky;
+    top: 60px;
+    z-index: 20;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .pill-bar-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .pill-bar-inner::-webkit-scrollbar { display: none; }
+
+  .pill-list {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+  }
+
+  .cat-pill {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
     color: var(--o-mute);
-    text-decoration: none;
-    padding: 4px 10px;
-    border: 1px solid var(--o-line);
-    border-radius: var(--o-radius-sm);
-    transition: color .14s, border-color .14s, background .14s;
-  }
-  .jump-link:hover {
-    color: var(--accent);
-    border-color: var(--accent);
-    background: color-mix(in srgb, var(--accent) 10%, transparent);
-  }
-  .jump-count { color: var(--o-faint); margin-left: 4px; }
-
-  .roles {
-    padding: 64px 56px;
-    border-bottom: 1px solid var(--o-line);
-    display: flex;
-    flex-direction: column;
-    gap: 56px;
-  }
-
-  .cat-block { scroll-margin-top: 80px; }
-  .cat-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 18px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid var(--o-line);
-  }
-  .cat-count { font-size: 9px; color: var(--o-faint); }
-
-  .job-list { display: flex; flex-direction: column; gap: 14px; }
-
-  .job-card {
-    background: var(--o-panel);
-    border: 1px solid var(--o-line);
-    border-left: 3px solid var(--accent);
-    border-radius: var(--o-radius-lg);
-    padding: 28px 32px;
-    scroll-margin-top: 80px;
-    transition: background .14s;
-  }
-  .job-card:hover {
-    background: var(--o-panel-hi);
-  }
-
-  /* Featured (MBA Fresher) card — bigger, gradient border, prominent pill */
-  .job-featured {
-    position: relative;
-    background: linear-gradient(135deg, var(--o-panel) 0%, var(--o-panel-hi) 100%);
-    border: 1px solid color-mix(in srgb, var(--accent) 40%, var(--o-line));
-    border-left: 3px solid var(--accent);
-    box-shadow: 0 30px 80px -30px color-mix(in srgb, var(--accent) 35%, transparent);
-    padding: 36px 40px;
-  }
-  .job-featured .job-title { font-size: 28px; }
-  .job-featured .job-summary { font-size: 14px; max-width: 920px; }
-  .featured-pill {
+    font-size: 11px;
+    font-family: inherit;
+    padding: 6px 16px;
+    border-radius: 999px;
+    cursor: pointer;
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    font-size: 8.5px;
-    color: var(--o-accent-ink);
-    background: var(--accent);
-    padding: 4px 10px;
-    border-radius: 3px;
-    letter-spacing: 1px;
-    font-weight: 600;
-    margin-bottom: 16px;
-    width: fit-content;
-  }
-  .cat-featured .cat-head {
-    border-bottom: 1px solid color-mix(in srgb, var(--accent) 35%, var(--o-line));
+    transition: all 0.16s ease;
   }
 
-  .job-top { margin-bottom: 14px; }
-  .job-title-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    gap: 18px;
-    flex-wrap: wrap;
-    margin-bottom: 8px;
-  }
-  .job-title {
-    margin: 0;
-    font-size: 22px;
+  .cat-pill:hover {
     color: var(--o-ink);
-    letter-spacing: -0.5px;
-    font-weight: 600;
-    line-height: 1.15;
-  }
-  .job-openings {
-    font-size: 9px;
-    color: var(--accent);
-    padding: 3px 10px;
-    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
-    border-radius: 3px;
-    white-space: nowrap;
-  }
-  .job-meta {
-    font-size: 10px;
-    color: var(--o-mute);
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
-  }
-  .job-meta .dot { opacity: 0.5; }
-
-  .job-summary {
-    margin: 0 0 18px;
-    font-size: 13px;
-    color: var(--o-mute);
-    line-height: 1.55;
-    max-width: 820px;
+    border-color: var(--o-line-hi);
+    background: var(--o-panel-hi);
   }
 
-  .job-grid {
-    display: grid;
-    grid-template-columns: 220px 1fr;
-    gap: 20px 28px;
-    padding: 18px 0;
-    border-top: 1px dashed var(--o-line);
+  .cat-pill.active {
+    background: color-mix(in srgb, var(--pill-accent, var(--o-accent)) 14%, var(--o-panel));
+    border-color: var(--pill-accent, var(--o-accent));
+    color: var(--o-ink);
+    box-shadow: 0 2px 8px color-mix(in srgb, var(--pill-accent, var(--o-accent)) 20%, transparent);
   }
-  .job-cell { display: flex; flex-direction: column; gap: 8px; }
-  .cell-label {
+
+  .pill-label { font-weight: 500; }
+
+  .pill-count {
     font-size: 10px;
     color: var(--o-faint);
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
   }
-  .cell-value {
-    font-size: 11px;
+
+  .cat-pill.active .pill-count {
+    color: var(--pill-accent, var(--o-accent));
+    font-weight: 600;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     GOOGLE CAREERS STYLE FILTER WORKSPACE
+  ══════════════════════════════════════════════════════════════════════ */
+  .careers-section {
+    padding: 44px 56px;
+    border-bottom: 1px solid var(--o-line);
+    background: var(--o-bg);
+  }
+
+  .careers-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+
+  /* Left Filter Sidebar */
+  .careers-sidebar {
+    position: sticky;
+    top: 130px;
+    z-index: 10;
+  }
+
+  .sidebar-sticky-panel {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: 12px;
+    padding: 20px;
+    max-height: calc(100vh - 150px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+  }
+
+  .match-summary-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--o-line);
+    margin-bottom: 16px;
+  }
+
+  .match-text {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  .match-number {
+    font-size: 20px;
+    font-weight: 700;
+    color: #10B981;
+    letter-spacing: -0.5px;
+  }
+
+  .match-label {
+    font-size: 12.5px;
+    font-weight: 500;
     color: var(--o-ink);
   }
 
-  .skills {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+  /* Crisp Button for Clear Filters / Clear All */
+  .btn-clear-action {
+    background: var(--o-bg-sunken);
+    border: 1px solid var(--o-line);
+    color: var(--o-mute);
+    font-size: 10.5px;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 5px 12px;
+    border-radius: 6px;
+    transition: all 0.16s ease;
+  }
+  .btn-clear-action:hover {
+    background: var(--o-panel-hi);
+    border-color: #2563EB;
+    color: #2563EB;
+  }
+
+  /* Search Input Box */
+  .search-input-group {
+    margin-bottom: 18px;
+  }
+
+  .search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: var(--o-bg-sunken);
+    border: 1px solid var(--o-line);
+    border-radius: 8px;
+    padding: 0 12px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .search-box:focus-within {
+    border-color: #2563EB;
+    box-shadow: 0 0 0 3px color-mix(in srgb, #2563EB 15%, transparent);
+  }
+
+  .search-icon {
+    color: var(--o-faint);
+    margin-right: 8px;
+    flex-shrink: 0;
+  }
+
+  .search-field {
+    width: 100%;
+    height: 40px;
+    background: transparent;
+    border: none;
+    color: var(--o-ink);
+    font-size: 12.5px;
+    outline: none;
+  }
+
+  .search-field::placeholder {
+    color: var(--o-faint);
+  }
+
+  .clear-search-x {
+    background: none;
+    border: none;
+    color: var(--o-mute);
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0 4px;
+  }
+  .clear-search-x:hover { color: var(--o-ink); }
+
+  /* Accordions */
+  .accordion-groups {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .filter-accordion {
+    border-bottom: 1px solid var(--o-line-whisper);
+  }
+
+  .accordion-trigger {
+    width: 100%;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    cursor: pointer;
+    color: var(--o-ink);
+    font-size: 12.5px;
+    font-weight: 600;
+    text-align: left;
+    transition: color 0.15s;
+  }
+  .accordion-trigger:hover { color: #2563EB; }
+
+  .accordion-arrow {
+    font-size: 10px;
+    color: var(--o-faint);
+    transition: transform 0.2s ease;
+  }
+
+  .filter-accordion.open .accordion-arrow {
+    transform: rotate(180deg);
+  }
+
+  .accordion-content {
+    display: none;
+    padding: 0 0 14px;
+  }
+
+  .filter-accordion.open .accordion-content {
+    display: block;
+  }
+
+  .filter-options-list {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .scrollable-list {
+    max-height: 160px;
+    overflow-y: auto;
+    padding-right: 6px;
+    scrollbar-width: thin;
+  }
+
+  .filter-checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 11.5px;
+    color: var(--o-mute);
+    padding: 3px 0;
+    transition: color 0.14s;
+    user-select: none;
+  }
+
+  .filter-checkbox-item:hover { color: var(--o-ink); }
+
+  .facet-checkbox {
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+
+  .custom-check {
+    width: 15px;
+    height: 15px;
+    border: 1px solid var(--o-faint);
+    border-radius: 4px;
+    background: var(--o-bg-sunken);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.14s;
+  }
+
+  .facet-checkbox:checked + .custom-check {
+    background: #2563EB;
+    border-color: #2563EB;
+  }
+
+  .facet-checkbox:checked + .custom-check::after {
+    content: '✓';
+    font-size: 10px;
+    color: #ffffff;
+    font-weight: 700;
+  }
+
+  .facet-label { flex: 1; line-height: 1.3; }
+  .facet-count { font-size: 9.5px; color: var(--o-faint); }
+
+  .sort-select-wrapper {
+    padding-top: 2px;
+  }
+
+  .sort-select {
+    width: 100%;
+    height: 36px;
+    background: var(--o-bg-sunken);
+    border: 1px solid var(--o-line);
+    border-radius: 6px;
+    color: var(--o-ink);
+    padding: 0 10px;
+    font-size: 11px;
+    outline: none;
+    cursor: pointer;
+  }
+
+  /* Right Job Results Column */
+  .careers-results {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  /* Active Filter Chips */
+  .active-chips-bar {
+    background: var(--o-panel);
+    border: 1px solid var(--o-line);
+    border-radius: 8px;
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .chips-title {
+    font-size: 9.5px;
+    color: var(--o-faint);
+    text-transform: uppercase;
+  }
+
+  .chips-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px 8px;
+    gap: 6px;
   }
-  .skills li span {
-    font-size: 9px;
-    color: var(--o-ink);
+
+  .chip-pill {
+    font-size: 9.5px;
     background: var(--o-panel-hi);
-    padding: 4px 10px;
+    border: 1px solid var(--o-line-hi);
+    color: var(--o-ink);
+    padding: 3px 8px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .chip-x {
+    background: none;
+    border: none;
+    color: var(--o-faint);
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 1;
+    padding: 0;
+  }
+  .chip-x:hover { color: var(--o-red, #EF4444); }
+
+  /* Job Cards Stack (Compact & Dense UI) */
+  .jobs-cards-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .anchor-target {
+    position: absolute;
+    top: -120px;
+  }
+
+  .career-card {
+    background: var(--o-panel);
     border: 1px solid var(--o-line);
-    border-radius: 3px;
+    border-radius: 10px;
+    padding: 22px 26px;
+    scroll-margin-top: 130px;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s, background 0.2s;
+    position: relative;
+  }
+
+  .career-card:hover {
+    background: var(--o-panel-hi);
+    border-color: var(--o-line-hi);
+    box-shadow: 0 8px 24px -6px rgba(0, 0, 0, 0.06);
+  }
+
+  .highlight-flash {
+    outline: 2px solid #2563EB;
+    box-shadow: 0 0 24px rgba(37, 99, 235, 0.35);
+  }
+
+  .card-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+
+  .card-badge-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+
+  .cat-badge {
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-weight: 500;
+    color: var(--o-ink);
+    background: var(--o-bg-sunken);
+    border: 1px solid var(--o-line);
+  }
+
+  .star-badge {
+    font-size: 9.5px;
+    color: var(--o-mute);
+    background: transparent;
+    padding: 1px 4px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+
+  .openings-pill {
+    font-size: 9.5px;
+    color: var(--o-mute);
+    background: var(--o-bg-sunken);
+    border: 1px solid var(--o-line);
+    padding: 2px 8px;
+    border-radius: 4px;
+  }
+
+  .card-quick-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .action-icon-btn {
+    background: var(--o-bg-sunken);
+    border: 1px solid var(--o-line);
+    color: var(--o-mute);
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .action-icon-btn:hover {
+    color: var(--o-ink);
+    border-color: #2563EB;
+    background: var(--o-panel);
+  }
+
+  .action-icon-btn.bookmarked {
+    color: #2563EB;
+    border-color: #2563EB;
+    background: color-mix(in srgb, #2563EB 15%, transparent);
+  }
+
+  .role-heading {
+    margin: 0 0 8px;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.4px;
+  }
+
+  .role-title-link {
+    color: var(--o-ink);
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  .role-title-link:hover { color: #2563EB; }
+
+  /* Clean meta row without emojis */
+  .meta-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    font-size: 11.5px;
+    color: var(--o-mute);
+    margin-bottom: 12px;
+  }
+
+  .meta-val {
     display: inline-block;
   }
 
-  .job-foot {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
-    padding-top: 14px;
-    border-top: 1px solid var(--o-line);
-  }
-  .apply {
-    font-size: 11px;
-    color: var(--accent);
-    text-decoration: none;
+  .meta-blue {
+    color: #2563EB;
     font-weight: 500;
   }
-  .apply:hover { filter: brightness(1.1); }
-  .permalink {
+  html[data-theme="dark"] .meta-blue {
+    color: #38BDF8;
+  }
+
+  .meta-orange {
+    color: #FF6600;
+    font-weight: 600;
+  }
+
+  .meta-highlight {
+    color: var(--o-ink);
+    font-weight: 500;
+  }
+
+  .meta-sep { color: var(--o-faint); opacity: 0.5; }
+
+  .role-summary {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--o-mute);
+    margin: 0 0 14px;
+  }
+
+  .specs-grid {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 16px;
+    padding: 12px 0;
+    border-top: 1px dashed var(--o-line);
+    margin-bottom: 14px;
+  }
+
+  .spec-col {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .spec-label {
+    font-size: 9px;
+    color: var(--o-faint);
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  .spec-text {
+    font-size: 11.5px;
+    color: var(--o-ink);
+    line-height: 1.45;
+  }
+
+  .skill-chips-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .skill-chip {
+    font-size: 10.5px;
+    color: var(--o-ink);
+    background: var(--o-bg-sunken);
+    padding: 3px 9px;
+    border: 1px solid var(--o-line);
+    border-radius: 4px;
+    display: inline-block;
+  }
+
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 12px;
+    border-top: 1px solid var(--o-line);
+  }
+
+  .apply-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  /* Compact Solid Blue Apply Button */
+  .btn-apply-primary {
     font-size: 12px;
+    font-weight: 600;
+    color: #ffffff !important;
+    background: #2563EB;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    padding: 6px 18px;
+    border-radius: 6px;
+    transition: background 0.15s, transform 0.15s;
+    box-shadow: 0 2px 6px rgba(37, 99, 235, 0.2);
+  }
+  .btn-apply-primary:hover {
+    background: #1D4ED8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+  }
+
+  .btn-permalink {
+    font-size: 11px;
     color: var(--o-faint);
     text-decoration: none;
-    padding: 4px 8px;
+    padding: 2px 6px;
     border-radius: 3px;
+    transition: color 0.15s;
   }
-  .permalink:hover { color: var(--accent); }
+  .btn-permalink:hover { color: #2563EB; }
 
+  .org-note {
+    font-size: 10.5px;
+    color: var(--o-faint);
+  }
+
+  /* Empty State */
+  .empty-state-box {
+    background: var(--o-panel);
+    border: 1px dashed var(--o-line-hi);
+    border-radius: 10px;
+    padding: 48px 32px;
+    text-align: center;
+  }
+
+  .empty-icon { font-size: 32px; margin-bottom: 10px; }
+
+  .empty-state-box h3 {
+    font-size: 16px;
+    color: var(--o-ink);
+    margin: 0 0 6px;
+  }
+
+  .empty-state-box p {
+    font-size: 12.5px;
+    color: var(--o-mute);
+    margin: 0 0 16px;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .btn-reset-filters {
+    background: #2563EB;
+    color: #ffffff;
+    border: none;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 7px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s;
+  }
+  .btn-reset-filters:hover { background: #1D4ED8; }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     HOW TO APPLY (Centered Layout Matching Request)
+  ══════════════════════════════════════════════════════════════════════ */
   .how-to-apply {
     padding: 96px 56px;
     border-bottom: 1px solid var(--o-line);
     background: linear-gradient(var(--o-bg), var(--o-panel) 50%, var(--o-bg));
   }
+
+  .centered-apply-head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 48px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .apply-main-heading {
+    margin: 14px 0 12px;
+    font-size: clamp(30px, 4.5vw, 44px);
+    font-weight: 700;
+    letter-spacing: -1.2px;
+    color: var(--o-ink);
+    line-height: 1.1;
+  }
+
+  .apply-sub-heading {
+    font-size: 14px;
+    color: var(--o-mute);
+    line-height: 1.6;
+    margin: 0 auto;
+    max-width: 600px;
+  }
+
   .loop {
     list-style: none;
-    margin: 0 0 36px;
+    margin: 0 auto 36px;
     padding: 0;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 18px;
+    max-width: 1200px;
   }
+
   .loop li {
     background: var(--o-panel);
     border: 1px solid var(--o-line);
-    border-radius: var(--o-radius-lg);
+    border-radius: 12px;
     padding: 28px;
   }
+
   .loop-num {
-    font-size: 9px;
+    font-size: 10px;
     color: var(--o-accent);
     letter-spacing: 1px;
     text-transform: uppercase;
+    font-weight: 600;
   }
+
   .loop h3 {
     margin: 12px 0 10px;
     font-size: 18px;
     color: var(--o-ink);
     letter-spacing: -0.4px;
-    font-weight: 500;
+    font-weight: 600;
   }
+
   .loop p {
     margin: 0;
-    font-size: 12px;
+    font-size: 12.5px;
     color: var(--o-mute);
     line-height: 1.55;
   }
+
   .cta-row {
     display: flex;
-    gap: 10px;
+    gap: 12px;
     justify-content: center;
     flex-wrap: wrap;
   }
@@ -530,14 +1922,18 @@ const itemListLd = {
     padding: 64px 56px;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
+    gap: 16px;
+    max-width: 1200px;
+    margin: 0 auto;
   }
+
   .fp-block {
     background: var(--o-panel);
     border: 1px solid var(--o-line);
-    border-radius: var(--o-radius);
+    border-radius: 10px;
     padding: 22px 24px;
   }
+
   .fp-label {
     font-size: 9px;
     color: var(--o-accent);
@@ -545,27 +1941,75 @@ const itemListLd = {
     letter-spacing: 0.8px;
     margin-bottom: 10px;
     display: block;
+    font-weight: 600;
   }
+
   .fp-block p {
     margin: 0;
-    font-size: 11px;
+    font-size: 11.5px;
     color: var(--o-mute);
     line-height: 1.55;
   }
 
-  @media (max-width: 1100px) {
-    .overview { grid-template-columns: repeat(3, 1fr); }
-    .loop { grid-template-columns: 1fr; }
-    .fine-print { grid-template-columns: repeat(2, 1fr); }
-    .job-grid { grid-template-columns: 1fr; }
+  /* Toast */
+  .job-toast {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--o-panel-hi);
+    border: 1px solid var(--o-accent);
+    color: var(--o-ink);
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-size: 11px;
+    z-index: 1000;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.2s, transform 0.2s;
   }
+
+  .job-toast.show {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     RESPONSIVE BREAKPOINTS
+  ══════════════════════════════════════════════════════════════════════ */
+  @media (max-width: 1150px) {
+    .overview-strip { grid-template-columns: repeat(3, 1fr); }
+    .strip-stat:nth-child(3) { border-right: none; }
+    .strip-stat:nth-child(-n+3) { border-bottom: 1px solid var(--o-line); }
+    .careers-container { grid-template-columns: 280px 1fr; gap: 24px; }
+    .fine-print { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 950px) {
+    .hero-inner { grid-template-columns: 1fr; }
+    .hero-right { order: -1; }
+    .hero-pure-image { max-width: 220px; margin: 0 auto; }
+    .careers-container { grid-template-columns: 1fr; }
+    .careers-sidebar { position: static; }
+    .sidebar-sticky-panel { max-height: none; }
+    .loop { grid-template-columns: 1fr; }
+  }
+
   @media (max-width: 700px) {
-    .overview, .category-jump, .roles, .how-to-apply, .fine-print {
-      padding-left: 24px; padding-right: 24px;
+    .jobs-hero, .overview-strip-section, .category-pill-bar, .careers-section, .how-to-apply, .fine-print {
+      padding-left: 20px;
+      padding-right: 20px;
     }
-    .overview { grid-template-columns: repeat(2, 1fr); }
+    .hero-br { display: none; }
+    .overview-strip { grid-template-columns: repeat(2, 1fr); }
+    .strip-stat { padding: 18px 14px; }
+    .strip-stat:nth-child(2n) { border-right: none; }
+    .strip-stat:nth-child(2n+1) { border-right: 1px solid var(--o-line); }
+    .strip-stat:nth-child(-n+4) { border-bottom: 1px solid var(--o-line); }
+    .stat-main { font-size: 18px; }
+    .specs-grid { grid-template-columns: 1fr; }
+    .career-card { padding: 18px; }
+    .role-heading { font-size: 17px; }
     .fine-print { grid-template-columns: 1fr; }
-    .job-card { padding: 22px; }
-    .job-title { font-size: 18px; }
   }
 </style>

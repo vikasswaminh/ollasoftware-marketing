@@ -6,6 +6,7 @@ import Layout from '../layouts/Layout.astro';
 import PageHero from '../components/primitives/PageHero.astro';
 import SectionHead from '../components/primitives/SectionHead.astro';
 import Btn from '../components/primitives/Btn.astro';
+import Tag from '../components/primitives/Tag.astro';
 import FounderBlock from '../components/founder/FounderBlock.astro';
 
 const team = [
@@ -21,11 +22,11 @@ const team = [
   { name: 'Arjun Menon',         role: 'Lead editor',              focus: 'SEO / AEO',             place: 'Bangalore', hue: 'var(--o-warn)' },
   { name: 'Ian Brewster',        role: 'Senior writer',            focus: 'Social',                place: 'Brooklyn',  hue: 'var(--o-red)' },
   { name: 'Yuna Park',           role: 'Senior video editor',      focus: 'Social / perf',         place: 'Lisboa',    hue: 'var(--o-red)' },
-  { name: 'Priya Iyer',          role: 'Senior strategist',        focus: 'Pricing &amp; ops',          place: 'Brooklyn',  hue: 'var(--o-mute)' },
+  { name: 'Priya Iyer',          role: 'Senior strategist',        focus: 'Pricing & ops',         place: 'Brooklyn',  hue: 'var(--o-mute)' },
   { name: 'Anika Devarajan',     role: 'Senior strategist',        focus: 'Discovery',             place: 'Lisboa',    hue: 'var(--o-mute)' },
   { name: 'Eli Tanaka',          role: 'Design lead',              focus: 'All of it',             place: 'Lisboa',    hue: 'var(--o-purple)' },
-  { name: 'Sam Wynter',          role: 'Operations',               focus: 'Procurement &amp; ops',      place: 'Brooklyn',  hue: 'var(--o-mute)' },
-  { name: 'Rae Okafor',          role: 'Finance &amp; people',          focus: 'Hiring &amp; payroll',       place: 'Lisboa',    hue: 'var(--o-mute)' },
+  { name: 'Sam Wynter',          role: 'Operations',               focus: 'Procurement & ops',     place: 'Brooklyn',  hue: 'var(--o-mute)' },
+  { name: 'Rae Okafor',          role: 'Finance & people',         focus: 'Hiring & payroll',      place: 'Lisboa',    hue: 'var(--o-mute)' },
   { name: 'Felix Otieno',        role: 'Senior engineer',          focus: 'AI software',           place: 'Nairobi',   hue: 'var(--o-accent)' },
 ];
 ---
@@ -33,339 +34,1210 @@ const team = [
   title="About — Ollasoftware"
   description="About Ollasoftware — pioneer AI software development company in India, headquartered in Bangalore. Owners of 40+ AI brands in production. Founded 2021. Offices in Bangalore, Brooklyn, Lisboa, Nairobi."
 >
-  <PageHero
-    eyebrow="The company · Bangalore HQ"
-    title="Pioneer AI software development company in India."
-    sub="Headquartered in Bangalore. Started in 2021 by engineers who were tired of agency PowerPoint and tired of in-house politics. Today we own and operate 40+ AI brands in production — and we build the same caliber of product for clients worldwide, who want what we ship for ourselves."
-    breadcrumb={[{ label: 'home', href: '/' }, { label: 'about' }]}
-  >
-    <Btn primary href="/contact/">Talk to us →</Btn>
-    <Btn href="/work/">See our work</Btn>
-  </PageHero>
+  <!-- About Hero Section with Left Content & Right Bangalore Globe Illustration -->
+  <section class="about-hero">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <nav class="crumbs mono" aria-label="Breadcrumb">
+          <a href="/">home</a>
+          <span class="sep">/</span>
+          <span class="current">about</span>
+        </nav>
+        
+        <div class="eyebrow-wrap">
+          <Tag color="var(--o-accent)">THE COMPANY · BANGALORE HQ</Tag>
+        </div>
+
+        <h1>Pioneer AI software development company in India.</h1>
+        
+        <p class="hero-sub mono">
+          Headquartered in Bangalore. Started in 2021 by engineers who were tired of agency PowerPoint and tired of in-house politics. Today we own and operate 40+ AI brands in production — and we build the same caliber of product for clients worldwide, who want what we ship for ourselves.
+        </p>
+
+        <div class="hero-actions">
+          <Btn primary href="/contact/">Talk to us →</Btn>
+          <Btn href="/work/">See our work</Btn>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="hero-image-container">
+          <img 
+            src="/loki.png" 
+            alt="Ollasoftware Bangalore Headquarters Globe" 
+            class="hero-globe-img"
+            width="460"
+            height="425"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
 
   <section class="founder-section" id="founder">
-    <SectionHead
-      tag="Founder"
-      title="The single founder, and the portfolio that proves the bench."
-      sub="Ollasoftware was founded by Vikas Swami — dual CCIE, operator of 22+ ventures, no personal social media. Public source: networkershome.com/vikas-swami/."
-    />
     <FounderBlock variant="full" />
   </section>
 
   <section class="story" id="the-why">
-    <div class="story-grid">
-      <div class="story-text">
-        <h2>The why.</h2>
-        <p>
-          We started Ollasoftware in 2021 because we wanted to build AI software
-          — at production scale, with our own money, on our own roadmap. No
-          investors. No quarterly slide reviews. No "please clarify the brief."
-          Just ship.
-        </p>
-        <p>
-          Five years later we own 40+ AI brands across infra, security, dev
-          tools, search, education, and consumer. Every one of them — Aeoniti,
-          Crawlcrawl, Switchllm, Ollima, Super25.ai, 24observe and the rest —
-          is in production, paying its own bills, run by the same senior team
-          we'd put on your engagement.
-        </p>
-        <p>
-          That's the pioneer thesis: we don't pitch slides about AI software,
-          we ship it. When clients hire us, they get the engineers who built
-          Crawlcrawl, the strategists who launched Aeoniti, the designers who
-          shaped Ollima — not juniors learning on someone else's dollar.
-        </p>
+    <div class="story-container">
+      <div class="story-grid">
+        <div class="story-text">
+          <span class="why-tag mono">THE WHY.</span>
+          <p>
+            We started Ollasoftware in 2021 because we wanted to build AI software
+            — at production scale, with our own money, on our own roadmap. No
+            investors. No quarterly slide reviews. No "please clarify the brief."
+            Just ship.
+          </p>
+          <p>
+            Five years later we own 40+ AI brands across infra, security, dev
+            tools, search, education, and consumer. Every one of them — Aeoniti,
+            Crawlcrawl, Switchllm, Ollima, Super25.ai, 24observe and the rest —
+            is in production, paying its own bills, run by the same senior team
+            we'd put on your engagement.
+          </p>
+          <p>
+            That's the pioneer thesis: we don't pitch slides about AI software,
+            we ship it. When clients hire us, they get the engineers who built
+            Crawlcrawl, the strategists who launched Aeoniti, the designers who
+            shaped Ollima — not juniors learning on someone else's dollar.
+          </p>
+        </div>
+
+        <aside class="story-stats-grid">
+          <!-- Stat 1: 2021 FOUNDED -->
+          <div class="why-stat-card">
+            <div class="why-stat-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                <line x1="16" y1="2" x2="16" y2="6"/>
+                <line x1="8" y1="2" x2="8" y2="6"/>
+                <line x1="3" y1="10" x2="21" y2="10"/>
+              </svg>
+            </div>
+            <div class="why-stat-info">
+              <span class="why-stat-num mono">2021</span>
+              <span class="why-stat-lbl mono">FOUNDED</span>
+            </div>
+          </div>
+
+          <!-- Stat 2: 18 PEOPLE -->
+          <div class="why-stat-card">
+            <div class="why-stat-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <div class="why-stat-info">
+              <span class="why-stat-num mono">18</span>
+              <span class="why-stat-lbl mono">PEOPLE</span>
+            </div>
+          </div>
+
+          <!-- Stat 3: 42 / 44 SPRINTS -->
+          <div class="why-stat-card">
+            <div class="why-stat-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <circle cx="12" cy="12" r="6"/>
+                <circle cx="12" cy="12" r="2"/>
+              </svg>
+            </div>
+            <div class="why-stat-info">
+              <span class="why-stat-num mono">42 / 44</span>
+              <span class="why-stat-lbl mono">SPRINTS ON TIME + PRICE</span>
+            </div>
+          </div>
+
+          <!-- Stat 4: $0 SPENT ON SALES STAFF -->
+          <div class="why-stat-card">
+            <div class="why-stat-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <path d="M12 6v12M15 9.5a2.5 2.5 0 0 0-5 0c0 3 5 2 5 5a2.5 2.5 0 0 1-5 0"/>
+              </svg>
+            </div>
+            <div class="why-stat-info">
+              <span class="why-stat-num mono">$0</span>
+              <span class="why-stat-lbl mono">SPENT ON SALES STAFF</span>
+            </div>
+          </div>
+
+          <!-- Stat 5: 4 CITIES -->
+          <div class="why-stat-card">
+            <div class="why-stat-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="4" y="2" width="16" height="20" rx="2" ry="2"/>
+                <line x1="9" y1="22" x2="9" y2="22.01"/>
+                <line x1="15" y1="22" x2="15" y2="22.01"/>
+                <line x1="9" y1="6" x2="9" y2="6.01"/>
+                <line x1="15" y1="6" x2="15" y2="6.01"/>
+                <line x1="9" y1="10" x2="9" y2="10.01"/>
+                <line x1="15" y1="10" x2="15" y2="10.01"/>
+                <line x1="9" y1="14" x2="9" y2="14.01"/>
+                <line x1="15" y1="14" x2="15" y2="14.01"/>
+                <line x1="9" y1="18" x2="9" y2="18.01"/>
+                <line x1="15" y1="18" x2="15" y2="18.01"/>
+              </svg>
+            </div>
+            <div class="why-stat-info">
+              <span class="why-stat-num mono">4</span>
+              <span class="why-stat-lbl mono">CITIES</span>
+            </div>
+          </div>
+
+          <!-- Stat 6: 0 INVESTORS, EVER -->
+          <div class="why-stat-card">
+            <div class="why-stat-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                <path d="m9 12 2 2 4-4"/>
+              </svg>
+            </div>
+            <div class="why-stat-info">
+              <span class="why-stat-num mono">0</span>
+              <span class="why-stat-lbl mono">INVESTORS, EVER</span>
+            </div>
+          </div>
+        </aside>
       </div>
-      <aside class="story-stats">
-        <div class="stat"><span class="stat-num">2021</span><span class="stat-label mono">founded</span></div>
-        <div class="stat"><span class="stat-num">18</span><span class="stat-label mono">people</span></div>
-        <div class="stat"><span class="stat-num">42 / 44</span><span class="stat-label mono">sprints on time + price</span></div>
-        <div class="stat"><span class="stat-num">$0</span><span class="stat-label mono">spent on sales staff</span></div>
-        <div class="stat"><span class="stat-num">4</span><span class="stat-label mono">cities</span></div>
-        <div class="stat"><span class="stat-num">0</span><span class="stat-label mono">investors, ever</span></div>
-      </aside>
     </div>
   </section>
 
   <section class="team" id="team">
-    <SectionHead
-      tag="The team"
-      title="Eighteen names. No avatars, on purpose."
-      sub="We don't use stock photos. We don't use AI-generated portraits. If you want to know what we look like, ask us on the call."
-    />
-    <div class="team-grid">
-      {team.map(p => (
-        <article class="card" style={`--accent:${p.hue}`}>
-          <div class="initial" aria-hidden="true">{p.name[0]}</div>
-          <div class="card-body">
-            <div class="name">{p.name}</div>
-            <div class="role mono">{p.role}</div>
-            <div class="meta">
-              <span class="focus" set:html={p.focus} />
-              <span class="dot">·</span>
-              <span class="place">{p.place}</span>
+    <div class="team-container">
+      <div class="team-header-row">
+        <div class="team-header-left">
+          <span class="team-tag mono">THE TEAM</span>
+          <h2 class="team-main-h2">Eighteen names. No avatars, on purpose.</h2>
+        </div>
+        <div class="team-header-right">
+          <p class="team-sub">
+            We don't use stock photos. We don't use AI-generated portraits. If you want to know what we look like, ask us on the call.
+          </p>
+        </div>
+      </div>
+
+      <div class="team-grid">
+        {team.map(p => (
+          <div class="team-member-item">
+            <div class="team-initial-circle" aria-hidden="true">{p.name[0]}</div>
+            <div class="team-member-info">
+              <div class="team-member-name">{p.name}</div>
+              <div class="team-member-role mono">{p.role}</div>
+              <div class="team-member-meta">
+                <span class="team-focus" set:html={p.focus} />
+                <span class="team-dot">·</span>
+                <span class="team-place">{p.place}</span>
+              </div>
             </div>
           </div>
-        </article>
-      ))}
+        ))}
+      </div>
     </div>
   </section>
 
   <section class="offices" id="where-we-work">
-    <SectionHead
-      tag="Where we work"
-      title="Headquartered in Bangalore. Four cities. Three time zones."
-    />
-    <div class="o-grid">
-      <div class="office">
-        <h4 class="mono">Bengaluru, IN · HQ</h4>
-        <p class="addr">L-149, Sector 6 · HSR Layout · Bengaluru 560102 · Karnataka, India</p>
-        <p class="hrs mono">Mon–Sat · 10:00–18:00 IST · +91-9611027980</p>
-        <p class="note">Global HQ. Most of eng, AI software, SEO, AEO, editorial.</p>
+    <div class="offices-container">
+      <div class="offices-header">
+        <span class="offices-tag mono">WHERE WE WORK</span>
+        <h2 class="offices-main-h2">Headquartered in Bangalore. Four cities. Three time zones.</h2>
       </div>
-      <div class="office">
-        <h4 class="mono">Brooklyn, NY</h4>
-        <p class="addr">68 Jay St · Suite 414 · Brooklyn, NY 11201, USA</p>
-        <p class="hrs mono">M–F · 09:00–18:00 ET</p>
-        <p class="note">North America hub. Eng, social, ops.</p>
-      </div>
-      <div class="office">
-        <h4 class="mono">Lisboa, PT</h4>
-        <p class="addr">R. da Bica de Duarte Belo 42 · 1200-053 Lisboa, Portugal</p>
-        <p class="hrs mono">M–F · 09:00–18:00 WET</p>
-        <p class="note">EU hub. Eng, perf marketing, design, finance.</p>
-      </div>
-      <div class="office">
-        <h4 class="mono">Nairobi, KE</h4>
-        <p class="addr">Riverside Square · Riverside Dr · Nairobi, Kenya</p>
-        <p class="hrs mono">M–F · 09:00–18:00 EAT</p>
-        <p class="note">Newest. Eng.</p>
+      <div class="o-grid">
+        <!-- Bangalore -->
+        <div class="office-card">
+          <h4 class="office-title mono">BENGALURU, IN · HQ</h4>
+          <div class="office-ill-wrap">
+            <img src="/city-bengaluru.png" alt="Bengaluru Vidhana Soudha Landmark" class="office-img" width="180" height="76" loading="lazy" decoding="async" />
+          </div>
+          <div class="office-info">
+            <p class="addr">L-149, Sector 6 · HSR Layout · Bengaluru 560102 · Karnataka, India</p>
+            <p class="hrs mono">Mon–Sat · 10:00–18:00 IST · +91-9611027980</p>
+            <p class="note">Global HQ. Most of eng, AI software, SEO, AEO, editorial.</p>
+          </div>
+        </div>
+
+        <!-- Brooklyn -->
+        <div class="office-card">
+          <h4 class="office-title mono">BROOKLYN, NY</h4>
+          <div class="office-ill-wrap">
+            <img src="/city-brooklyn.png" alt="Brooklyn Bridge" class="office-img" width="180" height="76" loading="lazy" decoding="async" />
+          </div>
+          <div class="office-info">
+            <p class="addr">68 Jay St · Suite 414 · Brooklyn, NY 11201, USA</p>
+            <p class="hrs mono">M–F · 09:00–18:00 ET</p>
+            <p class="note">North America hub. Eng, social, ops.</p>
+          </div>
+        </div>
+
+        <!-- Lisboa -->
+        <div class="office-card">
+          <h4 class="office-title mono">LISBOA, PT</h4>
+          <div class="office-ill-wrap">
+            <img src="/city-lisboa.png" alt="Lisboa Tram" class="office-img office-img-tall" width="76" height="76" loading="lazy" decoding="async" />
+          </div>
+          <div class="office-info">
+            <p class="addr">R. da Bica de Duarte Belo 42 · 1200-053 Lisboa, Portugal</p>
+            <p class="hrs mono">M–F · 09:00–18:00 WET</p>
+            <p class="note">EU hub. Eng, perf marketing, design, finance.</p>
+          </div>
+        </div>
+
+        <!-- Nairobi -->
+        <div class="office-card">
+          <h4 class="office-title mono">NAIROBI, KE</h4>
+          <div class="office-ill-wrap">
+            <img src="/city-nairobi.png" alt="Nairobi Skyline" class="office-img" width="180" height="76" loading="lazy" decoding="async" />
+          </div>
+          <div class="office-info">
+            <p class="addr">Riverside Square · Riverside Dr · Nairobi, Kenya</p>
+            <p class="hrs mono">M–F · 09:00–18:00 EAT</p>
+            <p class="note">Newest. Eng.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
   <section class="careers" id="careers">
-    <SectionHead
-      tag="Careers · 1,200+ open roles"
-      title="We hire at scale across 16 founder companies."
-      sub="From frontend engineers to MCP server engineers to SOC analysts to AI product managers — we always have senior roles open in Bangalore. Three teaser roles below; the full list of 17 categories lives on the jobs page."
-    >
-      <a slot="right" class="more mono" href="/jobs/">See all 1,200+ roles →</a>
-    </SectionHead>
-    <ul class="jobs">
-      <li>
-        <span class="job-tag mono">Eng</span>
-        <div>
-          <div class="job-title">Senior engineer — AI software</div>
-          <div class="job-meta mono">Brooklyn or Lisboa · full-time · $260–320k OTE · 8+ yr senior xp</div>
+    <div class="careers-container">
+      <div class="careers-layout">
+        <!-- Left Column: Title, Copy & CTA -->
+        <div class="careers-left-col">
+          <span class="careers-tag mono">CAREERS · 1,200+ OPEN ROLES</span>
+          <h2 class="careers-main-h2">We hire at scale across 16 founder companies.</h2>
+          <p class="careers-main-sub">
+            From frontend engineers to MCP server engineers to SOC analysts to AI product managers — we always have senior roles open in Bangalore. Three teaser roles below; the full list of 17 categories lives on the jobs page.
+          </p>
+          <a href="/jobs/" class="careers-cta-btn">
+            See all 1,200+ roles →
+          </a>
         </div>
-        <a class="apply mono" href="/jobs/">apply →</a>
-      </li>
-      <li>
-        <span class="job-tag mono">Editor</span>
-        <div>
-          <div class="job-title">Senior editor — SEO/AEO</div>
-          <div class="job-meta mono">Bangalore · full-time · $90–110k · 6+ yr editorial xp</div>
+
+        <!-- Right Side: 3 Teaser Job Cards -->
+        <div class="careers-cards-grid">
+          <!-- Card 1: Senior Engineer -->
+          <div class="career-card">
+            <div class="career-card-top">
+              <div class="career-icon-wrap" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="16 18 22 12 16 6"/>
+                  <polyline points="8 6 2 12 8 18"/>
+                </svg>
+              </div>
+              <span class="career-tag-pill mono">ENG</span>
+              <h3 class="career-job-title">Senior engineer — AI software</h3>
+              <div class="career-job-meta">
+                <p>Brooklyn or Lisboa · full-time</p>
+                <p>$260–320k OTE · 8+ yr senior xp</p>
+              </div>
+            </div>
+            <a href="/jobs/" class="career-apply-link">Apply →</a>
+          </div>
+
+          <!-- Card 2: Senior Editor -->
+          <div class="career-card">
+            <div class="career-card-top">
+              <div class="career-icon-wrap" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/>
+                </svg>
+              </div>
+              <span class="career-tag-pill mono">EDITOR</span>
+              <h3 class="career-job-title">Senior editor — SEO/AEO</h3>
+              <div class="career-job-meta">
+                <p>Bangalore · full-time</p>
+                <p>$90–110k · 6+ yr editorial xp</p>
+              </div>
+            </div>
+            <a href="/contact/?role=seo-ed" class="career-apply-link">Apply →</a>
+          </div>
+
+          <!-- Card 3: Senior Media Buyer -->
+          <div class="career-card">
+            <div class="career-card-top">
+              <div class="career-icon-wrap" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="18" y1="20" x2="18" y2="10"/>
+                  <line x1="12" y1="20" x2="12" y2="4"/>
+                  <line x1="6" y1="20" x2="6" y2="14"/>
+                  <path d="M4 10l8-6 8 6"/>
+                </svg>
+              </div>
+              <span class="career-tag-pill mono">PERF</span>
+              <h3 class="career-job-title">Senior media buyer — Performance</h3>
+              <div class="career-job-meta">
+                <p>Lisboa · full-time</p>
+                <p>$130–170k · 6+ yr B2B paid xp</p>
+              </div>
+            </div>
+            <a href="/contact/?role=perf-buyer" class="career-apply-link">Apply →</a>
+          </div>
         </div>
-        <a class="apply mono" href="/contact/?role=seo-ed">apply →</a>
-      </li>
-      <li>
-        <span class="job-tag mono">Perf</span>
-        <div>
-          <div class="job-title">Senior media buyer — Performance</div>
-          <div class="job-meta mono">Lisboa · full-time · $130–170k · 6+ yr B2B paid xp</div>
-        </div>
-        <a class="apply mono" href="/contact/?role=perf-buyer">apply →</a>
-      </li>
-    </ul>
+      </div>
+    </div>
   </section>
 
-  <section class="press" id="press">
-    <SectionHead
-      tag="Press"
-      title="Where we've been quoted."
-    />
-    <ul class="press-list">
-      <li><span class="when mono">2026.03</span> <span class="pub mono">The Pragmatic Engineer</span> · "Why product companies beat consultancies for AI work"</li>
-      <li><span class="when mono">2025.11</span> <span class="pub mono">a16z Future</span> · "The senior-bench-only thesis"</li>
-      <li><span class="when mono">2025.08</span> <span class="pub mono">Sifted</span> · "Brooklyn × Lisboa: a cross-Atlantic AI portfolio"</li>
-      <li><span class="when mono">2025.04</span> <span class="pub mono">Lenny's Newsletter</span> · "How Olla scopes a 4-week AI sprint"</li>
-    </ul>
-  </section>
+  <section class="press-cta-section" id="press">
+    <div class="press-cta-container">
+      <div class="press-cta-grid">
+        
+        <!-- Left Side: Press list -->
+        <div class="press-col">
+          <span class="press-tag mono">PRESS</span>
+          <h2 class="press-main-h2">Where we've been quoted.</h2>
+          <ul class="press-list">
+            <li class="press-item">
+              <span class="press-date mono">2026.03</span>
+              <strong class="press-pub">The Pragmatic Engineer</strong>
+              <span class="press-dot">·</span>
+              <span class="press-quote">"Why product companies beat consultancies for AI work"</span>
+            </li>
+            <li class="press-item">
+              <span class="press-date mono">2025.11</span>
+              <strong class="press-pub">a16z Future</strong>
+              <span class="press-dot">·</span>
+              <span class="press-quote">"The senior-bench-only thesis"</span>
+            </li>
+            <li class="press-item">
+              <span class="press-date mono">2025.08</span>
+              <strong class="press-pub">Sifted</strong>
+              <span class="press-dot">·</span>
+              <span class="press-quote">"Brooklyn × Lisboa: a cross-Atlantic AI portfolio"</span>
+            </li>
+            <li class="press-item">
+              <span class="press-date mono">2025.04</span>
+              <strong class="press-pub">Lenny's Newsletter</strong>
+              <span class="press-dot">·</span>
+              <span class="press-quote">"How Olla scopes a 4-week AI sprint"</span>
+            </li>
+          </ul>
+        </div>
 
-  <section class="cta">
-    <h2>Want to talk to a partner?</h2>
-    <p class="mono">No SDR. No qualification form. No procurement theatre. Just a 30-minute call with someone who'd actually be on your engagement.</p>
-    <div class="actions">
-      <Btn primary href="/contact/">Talk to us →</Btn>
-      <Btn href="/services/">See services</Btn>
+        <!-- Right Side: CTA Card -->
+        <div class="cta-col">
+          <div class="partner-cta-card">
+            <h3 class="partner-cta-title">Want to talk to a partner?</h3>
+            <p class="partner-cta-sub">
+              No SDR. No qualification form. No procurement theatre. Just a 30-minute call with someone who'd actually be on your engagement.
+            </p>
+            <div class="partner-cta-actions">
+              <a href="/contact/" class="partner-btn-primary">Talk to us →</a>
+              <a href="/services/" class="partner-btn-secondary">See services</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </section>
 </Layout>
 
 <style>
-  .story, .team, .offices, .careers, .press, .founder-section {
+  /* ══════════════════════════════════════════════════════════════════════
+     ABOUT HERO (2-Column Split with Right Bangalore Globe Illustration)
+  ══════════════════════════════════════════════════════════════════════ */
+  .about-hero {
+    padding: 88px 56px 72px;
+    border-bottom: 1px solid var(--o-line);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 390px;
+    gap: 48px;
+    align-items: center;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .crumbs {
+    font-size: 10px;
+    color: var(--o-mute);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+  .crumbs a { color: var(--o-mute); text-decoration: none; }
+  .crumbs a:hover { color: var(--o-ink); }
+  .crumbs .current { color: var(--o-ink); }
+  .crumbs .sep { color: var(--o-faint); }
+
+  .eyebrow-wrap {
+    margin-bottom: 14px;
+  }
+
+  .about-hero h1 {
+    margin: 0 0 18px;
+    font-size: clamp(28px, 3.6vw, 48px);
+    line-height: 1.1;
+    letter-spacing: clamp(-0.8px, -0.2vw, -1.8px);
+    font-weight: 700;
+    color: var(--o-ink);
+    max-width: 680px;
+    overflow-wrap: break-word;
+  }
+
+  .hero-sub {
+    font-size: clamp(12px, 1.1vw, 13px);
+    line-height: 1.65;
+    color: var(--o-mute);
+    max-width: 620px;
+    margin: 0 0 24px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .hero-right {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  .hero-image-container {
+    width: 100%;
+    max-width: 380px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: globeFloat 6s ease-in-out infinite alternate;
+  }
+
+  .hero-globe-img {
+    width: 100%;
+    height: auto;
+    max-height: 380px;
+    object-fit: contain;
+    filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.09));
+    transition: transform 0.3s ease;
+  }
+
+  :global(html[data-theme="dark"]) .hero-globe-img {
+    filter: drop-shadow(0 15px 36px rgba(56, 189, 248, 0.3));
+  }
+
+  @keyframes globeFloat {
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(-6px); }
+  }
+
+  @media (max-width: 1080px) {
+    .hero-inner {
+      grid-template-columns: 1fr 320px;
+      gap: 36px;
+    }
+    .hero-image-container {
+      max-width: 320px;
+    }
+    .hero-globe-img {
+      max-height: 320px;
+    }
+  }
+
+  @media (max-width: 860px) {
+    .hero-inner {
+      grid-template-columns: 1fr 270px;
+      gap: 28px;
+    }
+    .hero-image-container {
+      max-width: 270px;
+    }
+    .hero-globe-img {
+      max-height: 270px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .about-hero {
+      padding: 56px 20px 44px;
+    }
+    .hero-inner {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .hero-right {
+      justify-content: flex-start;
+    }
+    .hero-image-container {
+      max-width: 280px;
+    }
+  }
+
+  .story, .team, .offices, .careers, .press {
     padding: 96px 56px;
     border-bottom: 1px solid var(--o-line);
   }
 
+  .founder-section {
+    padding: 96px 56px;
+    background: #f7f4ef;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  :global(html[data-theme="dark"]) .founder-section {
+    background: #060913 !important;
+    border-top: 1px solid rgba(56, 189, 248, 0.12) !important;
+    border-bottom: 1px solid rgba(56, 189, 248, 0.12) !important;
+  }
+
+  .story-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
   .story-grid {
     display: grid;
-    grid-template-columns: 1.6fr 1fr;
-    gap: 48px;
-    align-items: start;
+    grid-template-columns: 1fr 1.35fr;
+    gap: 56px;
+    align-items: center;
   }
-  .story-text h2 {
-    margin: 0 0 16px;
-    font-size: clamp(22px, 3.8vw, 34px);
-    letter-spacing: clamp(-0.6px, -0.12vw, -1px);
-    font-weight: 600;
-    color: var(--o-ink);
-    line-height: 1.08;
-    overflow-wrap: break-word;
+
+  .why-tag {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--o-accent, #2563EB);
+    letter-spacing: 0.8px;
+    display: inline-block;
+    margin-bottom: 16px;
   }
+
   .story-text p {
     margin: 0 0 16px;
-    font-size: 14px;
+    font-size: 13px;
     color: var(--o-mute);
     line-height: 1.6;
   }
   .story-text p:last-child { margin-bottom: 0; }
 
-  .story-stats {
+  /* 3x2 Grid for the 6 Stats with Icons */
+  .story-stats-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    background: var(--o-panel);
-    border: 1px solid var(--o-line);
-    border-radius: var(--o-radius-lg);
-    padding: 22px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px 24px;
+    align-items: start;
   }
-  .stat { display: flex; flex-direction: column; gap: 4px; padding: 8px 4px; }
-  .stat-num {
-    font-size: 24px;
-    font-weight: 600;
-    color: var(--o-accent);
-    letter-spacing: -0.5px;
+
+  .why-stat-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
   }
-  .stat-label {
-    font-size: 10px;
+
+  .why-stat-icon {
+    color: var(--o-accent, #2563EB);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding-top: 2px;
+  }
+
+  .why-stat-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .why-stat-num {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--o-ink);
+    letter-spacing: -0.6px;
+    line-height: 1.1;
+  }
+
+  .why-stat-lbl {
+    font-size: 9.5px;
     color: var(--o-faint);
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.6px;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .team-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .team-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 32px;
+    margin-bottom: 44px;
+  }
+
+  .team-tag {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--o-accent, #2563EB);
+    letter-spacing: 0.8px;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+
+  .team-main-h2 {
+    margin: 0;
+    font-size: clamp(24px, 3.2vw, 36px);
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: -1px;
+    color: var(--o-ink);
+  }
+
+  .team-header-right {
+    max-width: 330px;
+    flex-shrink: 0;
+  }
+
+  .team-sub {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.55;
+    color: var(--o-mute);
   }
 
   .team-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 36px 16px;
+    width: 100%;
   }
-  .card {
-    background: var(--o-panel);
-    border: 1px solid var(--o-line);
-    border-radius: var(--o-radius);
-    padding: 16px 20px;
+
+  .team-member-item {
     display: flex;
-    gap: 16px;
-    align-items: center;
+    align-items: flex-start;
+    gap: 12px;
+    min-width: 0;
   }
-  .initial {
-    width: 40px;
-    height: 40px;
-    border-radius: 20px;
-    background: color-mix(in srgb, var(--accent) 15%, var(--o-bg));
-    color: var(--accent);
-    border: 1px solid var(--accent);
+
+  .team-initial-circle {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--o-accent, #2563EB);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 13.5px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-weight: 600;
     flex-shrink: 0;
+    margin-top: 1px;
   }
-  .card-body { display: flex; flex-direction: column; gap: 2px; }
-  .name { font-size: 12px; color: var(--o-ink); font-weight: 500; }
-  .role { font-size: 9px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.5px; }
-  .meta { font-size: 9px; color: var(--o-faint); margin-top: 2px; }
-  .meta .dot { margin: 0 6px; opacity: 0.6; }
+
+  .team-member-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .team-member-name {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--o-ink);
+    line-height: 1.2;
+    overflow-wrap: break-word;
+  }
+
+  .team-member-role {
+    font-size: 9px;
+    color: var(--o-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-weight: 600;
+    margin: 1px 0;
+    overflow-wrap: break-word;
+  }
+
+  .team-member-meta {
+    font-size: 11px;
+    color: var(--o-mute);
+    line-height: 1.35;
+    overflow-wrap: break-word;
+  }
+
+  .team-dot {
+    margin: 0 3px;
+    opacity: 0.6;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     WHERE WE WORK (4 CITY CARDS WITH LANDMARK ILLUSTRATIONS)
+  ══════════════════════════════════════════════════════════════════════ */
+  .offices-container {
+    max-width: 1240px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .offices-tag {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--o-accent, #2563EB);
+    letter-spacing: 0.8px;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+
+  .offices-main-h2 {
+    margin: 0 0 36px;
+    font-size: clamp(24px, 3.2vw, 36px);
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: -1px;
+    color: var(--o-ink);
+  }
 
   .o-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 14px;
+    gap: 20px;
   }
-  .office {
-    background: var(--o-panel);
-    border: 1px solid var(--o-line);
-    border-radius: var(--o-radius);
-    padding: 22px 24px;
-  }
-  .office h4 {
-    margin: 0 0 12px;
-    font-size: 10px;
-    color: var(--o-accent);
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-    font-weight: 500;
-  }
-  .addr { margin: 0 0 6px; font-size: 11px; color: var(--o-ink); line-height: 1.4; }
-  .hrs { margin: 0 0 12px; font-size: 9px; color: var(--o-faint); }
-  .note { margin: 0; font-size: 11px; color: var(--o-mute); line-height: 1.5; }
 
-  .jobs { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
-  .jobs li {
-    display: grid;
-    grid-template-columns: 80px 1fr 80px;
-    gap: 24px;
-    align-items: center;
-    background: var(--o-panel);
+  .office-card {
+    background: var(--o-panel, #ffffff);
     border: 1px solid var(--o-line);
-    border-radius: var(--o-radius);
-    padding: 18px 24px;
+    border-radius: 16px;
+    padding: 26px 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 310px;
+    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
   }
-  .job-tag {
-    font-size: 10px;
-    padding: 4px 8px;
-    border: 1px solid var(--o-line);
-    border-radius: 3px;
-    color: var(--o-accent);
-    text-transform: uppercase;
+
+  .office-card:hover {
+    border-color: var(--o-accent, #2563EB);
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .office-title {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--o-accent, #2563EB);
+    letter-spacing: 0.6px;
+    text-align: center;
+    width: 100%;
+  }
+
+  .office-ill-wrap {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 6px 0;
+    width: 100%;
     text-align: center;
   }
-  .job-title { font-size: 14px; color: var(--o-ink); font-weight: 500; }
-  .job-meta { font-size: 9px; color: var(--o-mute); margin-top: 4px; }
-  .apply { color: var(--o-accent); text-align: right; font-size: 10px; text-decoration: none; }
 
-  .press-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
-  .press-list li {
-    font-size: 12px;
-    color: var(--o-ink);
-    padding: 14px 20px;
-    background: var(--o-panel);
-    border: 1px solid var(--o-line);
-    border-radius: var(--o-radius);
+  .office-img {
+    max-height: 74px;
+    max-width: 100%;
+    width: auto;
+    object-fit: contain;
+    margin: 0 auto;
+    display: block;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.04));
+    transition: transform 0.2s ease;
+  }
+
+  .office-card:hover .office-img {
+    transform: scale(1.04);
+  }
+
+  :global(html[data-theme="dark"]) .office-img {
+    filter: invert(1) brightness(1.2) drop-shadow(0 0 6px rgba(56, 189, 248, 0.4));
+  }
+
+  .office-info {
     display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .addr {
+    margin: 0;
+    font-size: 11.5px;
+    color: var(--o-ink);
+    line-height: 1.45;
+    font-weight: 500;
+  }
+
+  .hrs {
+    margin: 0;
+    font-size: 10px;
+    color: var(--o-faint);
+  }
+
+  .note {
+    margin: 0;
+    font-size: 11px;
+    color: var(--o-mute);
+    line-height: 1.45;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     CAREERS (1 Left Column + 3 Right Cards)
+  ══════════════════════════════════════════════════════════════════════ */
+  .careers-container {
+    max-width: 1240px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .careers-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.8fr;
+    gap: 48px;
+    align-items: flex-start;
+  }
+
+  .careers-left-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .careers-tag {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--o-accent, #2563EB);
+    letter-spacing: 0.8px;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+
+  .careers-main-h2 {
+    margin: 0 0 16px;
+    font-size: clamp(24px, 3.2vw, 36px);
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: -1px;
+    color: var(--o-ink);
+  }
+
+  .careers-main-sub {
+    margin: 0 0 24px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--o-mute);
+  }
+
+  .careers-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--o-accent, #2563EB);
+    color: #ffffff;
+    padding: 12px 24px;
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.25);
+  }
+
+  .careers-cta-btn:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+  }
+
+  .careers-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .career-card {
+    background: var(--o-panel, #ffffff);
+    border: 1px solid var(--o-line);
+    border-radius: 14px;
+    padding: 24px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 250px;
+    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .career-card:hover {
+    border-color: var(--o-accent, #2563EB);
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .career-card-top {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .career-icon-wrap {
+    color: var(--o-accent, #2563EB);
+    display: flex;
+    align-items: center;
+    margin-bottom: 2px;
+  }
+
+  .career-tag-pill {
+    font-size: 9px;
+    color: var(--o-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    font-weight: 600;
+  }
+
+  .career-job-title {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--o-ink);
+    line-height: 1.25;
+    letter-spacing: -0.3px;
+  }
+
+  .career-job-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-size: 11px;
+    color: var(--o-mute);
+    line-height: 1.4;
+    margin-top: 4px;
+  }
+
+  .career-job-meta p {
+    margin: 0;
+  }
+
+  .career-apply-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--o-accent, #2563EB);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 20px;
+    transition: gap 0.15s ease;
+  }
+
+  .career-apply-link:hover {
+    text-decoration: underline;
+    gap: 6px;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     PRESS & CTA 2-COLUMN SPLIT
+  ══════════════════════════════════════════════════════════════════════ */
+  .press-cta-section {
+    padding: 80px 56px 96px;
+    border-bottom: 1px solid var(--o-line);
+  }
+
+  .press-cta-container {
+    max-width: 1240px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .press-cta-grid {
+    display: grid;
+    grid-template-columns: 1.25fr 0.95fr;
+    gap: 56px;
+    align-items: center;
+  }
+
+  .press-tag {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--o-accent, #2563EB);
+    letter-spacing: 0.8px;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+
+  .press-main-h2 {
+    margin: 0 0 24px;
+    font-size: clamp(24px, 3.2vw, 36px);
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: -1px;
+    color: var(--o-ink);
+  }
+
+  .press-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
     gap: 16px;
+  }
+
+  .press-item {
+    display: flex;
     align-items: baseline;
+    gap: 12px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    color: var(--o-ink);
     flex-wrap: wrap;
   }
-  .when { font-size: 9px; color: var(--o-faint); width: 60px; flex-shrink: 0; }
-  .pub { font-size: 9px; color: var(--o-accent); }
 
-  .cta { padding: 96px 56px; text-align: center; }
-  .cta h2 { margin: 0 0 12px; font-size: 38px; letter-spacing: -1px; font-weight: 600; color: var(--o-ink); }
-  .cta p { font-size: 12px; color: var(--o-mute); margin: 0 0 28px; }
-  .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .press-date {
+    font-size: 11.5px;
+    color: var(--o-faint);
+    width: 60px;
+    flex-shrink: 0;
+  }
 
+  .press-pub {
+    font-weight: 700;
+    color: var(--o-ink);
+    white-space: nowrap;
+  }
+
+  .press-dot {
+    color: var(--o-faint);
+    opacity: 0.7;
+    margin: 0 2px;
+  }
+
+  .press-quote {
+    color: var(--o-mute);
+  }
+
+  /* Right CTA Card */
+  .partner-cta-card {
+    background: #ffffff;
+    border: 1px solid rgba(20, 30, 50, 0.10);
+    border-radius: 18px;
+    padding: 36px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+  }
+
+  :global(html[data-theme="dark"]) .partner-cta-card {
+    background: #0D152C !important;
+    border-color: rgba(56, 189, 248, 0.18) !important;
+    box-shadow: 0 10px 30px rgba(0, 4, 18, 0.4) !important;
+  }
+
+  .partner-cta-title {
+    margin: 0;
+    font-size: clamp(22px, 2.4vw, 28px);
+    font-weight: 700;
+    color: var(--o-ink);
+    letter-spacing: -0.6px;
+    line-height: 1.2;
+  }
+
+  .partner-cta-sub {
+    margin: 0 0 8px;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--o-mute);
+  }
+
+  .partner-cta-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .partner-btn-primary {
+    background: var(--o-accent, #2563EB);
+    color: #ffffff;
+    padding: 10px 22px;
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.15s ease;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+  }
+
+  .partner-btn-primary:hover {
+    background: #1d4ed8;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+  }
+
+  .partner-btn-secondary {
+    background: #ffffff;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    color: var(--o-ink);
+    padding: 10px 20px;
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+
+  :global(html[data-theme="dark"]) .partner-btn-secondary {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+  }
+
+  .partner-btn-secondary:hover {
+    border-color: var(--o-accent, #2563EB);
+    color: var(--o-accent, #2563EB);
+  }
+
+  @media (max-width: 1200px) {
+    .team-grid { grid-template-columns: repeat(3, 1fr); gap: 28px 16px; }
+  }
   @media (max-width: 1100px) {
     .story-grid { grid-template-columns: 1fr; }
-    .team-grid { grid-template-columns: repeat(2, 1fr); }
     .o-grid { grid-template-columns: repeat(2, 1fr); }
+    .careers-layout { grid-template-columns: 1fr; gap: 36px; }
+    .press-cta-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+  @media (max-width: 768px) {
+    .team-header-row { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: 32px; }
+    .team-grid { grid-template-columns: repeat(2, 1fr); gap: 24px 12px; }
+    .careers-cards-grid { grid-template-columns: 1fr; gap: 16px; }
   }
   @media (max-width: 700px) {
-    .story, .team, .offices, .careers, .press, .cta, .founder-section { padding: 64px 24px; }
-    .team-grid { grid-template-columns: 1fr; }
+    .story, .team, .offices, .careers, .press-cta-section, .founder-section { padding: 64px 24px; }
     .o-grid { grid-template-columns: 1fr; }
-    .jobs li { grid-template-columns: 1fr; gap: 10px; }
-    .apply { text-align: left; }
+  }
+  @media (max-width: 480px) {
+    .team-grid { grid-template-columns: 1fr; }
   }
 </style>

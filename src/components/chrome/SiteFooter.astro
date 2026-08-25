@@ -12,111 +12,148 @@ const rankingLinks: Array<[string, string]> = [
 ];
 
 const cols: Array<[string, Array<[string, string]>]> = [
-  ['Services', services.map(s => [s.name, `/services/${s.slug}/`])],
-  ['Top 10 Rankings', rankingLinks],
-  ['Work',     [['Case studies', '/work/'], ['Recent work', '/work/'], ['Industries', '/work/#industries'], ['Sample SOW', '/process/#sow']]],
-  ['Company',  [['Process', '/process/'], ['About', '/about/'], ['Blog', '/blog/'], ['Jobs · 1,200+', '/jobs/'], ['Press', '/about/#press']]],
-  ['Trust',    [['SOC 2', '/process/#security'], ['GDPR / DPA', '/process/#gdpr'], ['Master MSA', '/process/#msa'], ['Security FAQ', '/process/#bounty']]],
+  ['SERVICES', services.map(s => [s.name, `/services/${s.slug}/`])],
+  ['TOP 10 RANKINGS', rankingLinks],
+  ['WORK',     [['Case studies', '/work/'], ['Recent work', '/work/'], ['Industries', '/work/#industries'], ['Sample SOW', '/process/#sow']]],
+  ['COMPANY',  [['Process', '/process/'], ['About', '/about/'], ['Blog', '/blog/'], ['Jobs · 1,200+', '/jobs/'], ['Press', '/about/#press']]],
+  ['TRUST',    [['SOC 2', '/process/#security'], ['GDPR / DPA', '/process/#gdpr'], ['Master MSA', '/process/#msa'], ['Security FAQ', '/process/#bounty']]],
 ];
 
 const year = new Date().getFullYear();
 ---
 <footer class="foot">
-  <div class="grid">
-    <div class="brand-col">
-      <div class="brand">
-        <img src="/logo-building-light.png" alt="ollasoftware logo" class="brand-logo-light" style="height: 28px; width: auto; object-fit: contain;" />
-        <img src="/logo-building-dark.png" alt="ollasoftware logo" class="brand-logo-dark" style="height: 28px; width: auto; object-fit: contain;" />
-        <span class="brand-name">ollasoftware</span>
+  <div class="foot-container">
+    <div class="grid">
+      <div class="brand-col">
+        <div class="brand">
+          <img src="/logo-building-dark.png" alt="ollasoftware logo" class="brand-logo" width="28" height="28" />
+          <span class="brand-name">ollasoftware</span>
+        </div>
+        <p class="tagline">
+          Pioneer AI software development company in India. Headquartered in
+          Bangalore. Owners of 40+ AI brands. We build custom AI, software,
+          AEO/SEO, social and performance for clients worldwide.
+        </p>
+        <form class="newsletter" onsubmit="event.preventDefault();">
+          <input
+            type="email"
+            placeholder="you@company.com"
+            class="newsletter-input"
+            aria-label="Email for field notes newsletter"
+          />
+          <button type="submit" class="newsletter-btn">
+            <span>field notes</span>
+            <span class="arrow">→</span>
+          </button>
+        </form>
+        <p class="newsletter-foot mono">monthly · case studies &amp; lessons · no funnel</p>
       </div>
-      <p class="tagline">
-        Pioneer AI software development company in India. Headquartered in
-        Bangalore. Owners of 40+ AI brands. We build custom AI, software,
-        AEO/SEO, social and performance for clients worldwide.
-      </p>
-      <form class="newsletter" onsubmit="event.preventDefault();">
-        <input
-          type="email"
-          placeholder="you@company.com"
-          class="newsletter-input"
-          aria-label="Email for field notes newsletter"
-        />
-        <button type="submit" class="newsletter-btn">
-          <span>field notes</span>
-          <span class="arrow">→</span>
-        </button>
-      </form>
-      <p class="newsletter-foot mono">monthly · case studies &amp; lessons · no funnel</p>
+
+      {cols.map(([head, items]) => (
+        <div class="col">
+          <div class="col-head mono">{head}</div>
+          <ul>
+            {items.map(([label, to]) => (
+              <li><a href={to}>{label}</a></li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
 
-    {cols.map(([head, items]) => (
-      <div class="col">
-        <div class="col-head mono">{head}</div>
-        <ul>
-          {items.map(([label, to]) => (
-            <li><a href={to}>{label}</a></li>
-          ))}
-        </ul>
-      </div>
-    ))}
-  </div>
-
-  <div class="legal">
-    <span class="mono">© {year} Ollasoftware, Inc. · Bangalore · Brooklyn · Lisboa</span>
-    <span class="mono">40+ AI brands shipped · 1 senior team</span>
+    <div class="legal">
+      <span class="mono">© {year} Ollasoftware, Inc. · Bangalore · Brooklyn · Lisboa</span>
+      <span class="mono">40+ AI brands shipped · 1 senior team</span>
+    </div>
   </div>
 </footer>
 
 <style>
   .foot {
-    padding: 64px 56px 48px;
-    background: var(--o-panel);
-    border-top: 1px solid var(--o-line);
+    padding: 72px 56px 48px;
+    background: #030816;
+    border-top: 1px solid rgba(56, 189, 248, 0.15);
+    color: #f8fafc;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .foot-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    width: 100%;
   }
 
   .grid {
     display: grid;
-    /* 5 link columns + brand column. Slightly narrower brand col to make room. */
-    grid-template-columns: 1.3fr repeat(5, 1fr);
-    gap: 32px;
+    /* 1 Brand Column + 5 Link Columns */
+    grid-template-columns: 1.4fr repeat(5, 1fr);
+    gap: 36px;
     margin-bottom: 56px;
   }
 
-  .brand { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
-  .brand-logo-dark { display: none !important; }
-  :global(html[data-theme="dark"]) .brand-logo-light { display: none !important; }
-  :global(html[data-theme="dark"]) .brand-logo-dark { display: block !important; filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.45)); }
-  .brand-name { font-weight: 600; font-size: 14px; color: var(--o-ink); }
+  .brand-col {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .brand-logo {
+    height: 28px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.5));
+  }
+
+  .brand-name {
+    font-weight: 700;
+    font-size: 16px;
+    color: #ffffff;
+    letter-spacing: -0.4px;
+  }
+
   .tagline {
-    font-size: 11px;
-    color: var(--o-mute);
-    line-height: 1.55;
-    margin: 0 0 18px;
-    max-width: 280px;
+    font-size: 12px;
+    color: #94a3b8;
+    line-height: 1.6;
+    margin: 0 0 20px;
+    max-width: 290px;
   }
 
   .newsletter {
     display: flex;
     align-items: stretch;
-    border: 1px solid var(--o-line);
+    border: 1px solid rgba(56, 189, 248, 0.25);
     border-radius: 8px;
     overflow: hidden;
     max-width: 320px;
     height: 38px;
-    background: var(--o-bg);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+    background: #070e24;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
   }
+
   .newsletter-input {
     flex: 1;
     border: none;
     background: transparent;
-    color: var(--o-ink);
+    color: #f8fafc;
     padding: 0 12px;
     font-size: 11.5px;
     font-family: var(--o-font-mono, monospace);
     outline: none;
     min-width: 0;
   }
+
+  .newsletter-input::placeholder {
+    color: #475569;
+  }
+
   .newsletter-btn {
     border: none;
     background: #1D6AF3;
@@ -134,26 +171,36 @@ const year = new Date().getFullYear();
     flex-shrink: 0;
     transition: background 0.2s ease;
   }
+
   .newsletter-btn:hover {
-    background: #1557D0;
+    background: #2563eb;
   }
+
   .newsletter-btn .arrow {
     font-size: 11px;
     display: inline-block;
     transition: transform 0.2s ease;
   }
+
   .newsletter-btn:hover .arrow {
     transform: translateX(2px);
   }
-  .newsletter-foot { font-size: 10px; color: var(--o-faint); margin: 8px 0 0; }
+
+  .newsletter-foot {
+    font-size: 10px;
+    color: #64748b;
+    margin: 10px 0 0;
+  }
 
   .col-head {
-    font-size: 9px;
-    color: var(--o-faint);
+    font-size: 11px;
+    font-weight: 700;
+    color: #ffffff;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 14px;
+    letter-spacing: 0.8px;
+    margin-bottom: 16px;
   }
+
   .col ul {
     margin: 0;
     padding: 0;
@@ -162,27 +209,67 @@ const year = new Date().getFullYear();
     flex-direction: column;
     gap: 10px;
   }
+
   .col a {
-    color: var(--o-ink);
-    font-size: 11px;
+    color: #94a3b8;
+    font-size: 12px;
     text-decoration: none;
+    transition: color 0.15s ease, transform 0.15s ease;
+    display: inline-block;
   }
-  .col a:hover { color: var(--o-accent); }
+
+  .col a:hover {
+    color: #38bdf8;
+    transform: translateX(2px);
+  }
 
   .legal {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding-top: 24px;
-    border-top: 1px solid var(--o-line);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
     flex-wrap: wrap;
     gap: 12px;
   }
-  .legal span { font-size: 9px; color: var(--o-faint); }
 
-  @media (max-width: 900px) {
-    .foot { padding: 48px 24px 32px; }
-    .grid { grid-template-columns: 1fr 1fr; gap: 32px; }
-    .brand-col { grid-column: 1 / -1; }
+  .legal span {
+    font-size: 11px;
+    color: #64748b;
+  }
+
+  @media (max-width: 1100px) {
+    .grid {
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 36px;
+    }
+    .brand-col {
+      grid-column: 1 / -1;
+      margin-bottom: 12px;
+    }
+  }
+
+  @media (max-width: 700px) {
+    .foot {
+      padding: 56px 24px 36px;
+    }
+    .grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+    .brand-col {
+      grid-column: 1 / -1;
+    }
+    .legal {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

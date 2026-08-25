@@ -10,17 +10,15 @@ interface Props {
 
 const { variant = 'compact' } = Astro.props;
 
-// Stable, factual data — kept as a constant so JSON-LD elsewhere can import
-// the same object without duplicate copy.
 const FOUNDER = {
   name: 'Vikas Swami',
   title: 'Founder, Ollasoftware',
-  credentials: 'Dual CCIE #22239 (Routing & Switching, Security) · cleared both within 90 days, 2008–09',
-  history: 'Cisco TAC VPN team (2004) · Wipro · HP · Mobily · Networkers Home (founded 2007)',
+  credentials: 'Dual CCIE #22239 (Routing & Switching, Security) · cleared both within 90 days, 2008–09.',
+  history: 'Cisco TAC VPN team (2004) · Wipro · HP · Mobily · Networkers Home (founded 2007).',
   hq: 'L-149, Sector 6, HSR Layout, Bengaluru 560102',
   hours: 'Mon–Sat · 10:00–18:00 IST',
   phone: '+91-9611027980',
-  quote: '"Not the two CCIE labs… it is the alumni network — over 45,000 engineers placed… many from small towns in India who had no other path."',
+  quote: '“Not the two CCIE labs… it is the alumni network — over 45,000 engineers placed… many from small towns in India who had no other path.”',
   noSocial: 'Runs no personal social media. The only public surface is the Networkers Home YouTube channel (171K subscribers).',
   source: 'https://www.networkershome.com/vikas-swami/',
   stats: [
@@ -31,201 +29,662 @@ const FOUNDER = {
     { value: '171K', label: 'YouTube subscribers' },
     { value: '22+', label: 'operating ventures' },
   ],
-  ventures: {
-    'VPN (7)': ['QuickZTNA', 'QuickSDWAN', '21Tunnel', 'StandVPN', 'MeshWG', '+2 more'],
-    'Post-Quantum & Blockchain (6)': ['QSecNiti', 'QSecNetwork', '+4 more'],
-    'AI & SaaS': ['Crawlcrawl', 'Aeoniti', 'Quick21', '24Observe (MIT open-source)', '21Bill (₹500+ cr invoiced · 20M+ users)'],
-    'India Stack': ['MailSetu', 'NamahOS', 'DNS anycast (in build)'],
-    'Education': ['Networkers Home (since 2007)'],
-  },
+  ventureCards: [
+    {
+      id: 'vpn',
+      title: 'VPN (7)',
+      items: 'QuickZTNA · QuickSDWAN · 21Tunnel · StandVPN · MeshWG · +2 more',
+      icon: 'shield'
+    },
+    {
+      id: 'pq-blockchain',
+      title: 'Post-Quantum & Blockchain (6)',
+      items: 'QSecNiti · QSecNetwork · +4 more',
+      icon: 'cube'
+    },
+    {
+      id: 'ai-saas',
+      title: 'AI & SaaS',
+      items: 'Crawlcrawl · Aeoniti · Quick21 · 24Observe (MIT open-source) · 21Bill (₹500+ cr invoiced · 20M+ users)',
+      icon: 'sparkle'
+    },
+    {
+      id: 'india-stack',
+      title: 'India Stack',
+      items: 'MailSetu · NamahOS · DNS anycast (in build)',
+      icon: 'stack'
+    },
+    {
+      id: 'education',
+      title: 'Education',
+      items: 'Networkers Home (since 2007)',
+      icon: 'academic'
+    },
+  ],
   education: 'Mechanical Engineering (Production & Industrial Management) · Executive Program in Innovation, NUS Singapore',
 };
 ---
-<section class="founder" data-variant={variant}>
-  <header class="founder-head">
-    <span class="eyebrow mono">Founder</span>
-    <h3 class="name">{FOUNDER.name}</h3>
-    <p class="title mono">{FOUNDER.title}</p>
-  </header>
 
-  <p class="credentials">
-    <strong>{FOUNDER.credentials}.</strong> {FOUNDER.history}.
-  </p>
-
-  <dl class="stats">
-    {FOUNDER.stats.map(s => (
-      <div class="stat">
-        <dt class="stat-value">{s.value}</dt>
-        <dd class="stat-label mono">{s.label}</dd>
+{variant === 'full' ? (
+  <div class="founder-full-container">
+    
+    <!-- Top 3-Column Section (Main Heading | Center Photo | Founder Bio) -->
+    <div class="founder-hero-grid">
+      <!-- Col 1: Main Section Title -->
+      <div class="founder-title-col">
+        <span class="founder-tag mono">FOUNDER</span>
+        <h2 class="founder-main-h2">The single founder, and the portfolio that proves the bench.</h2>
+        <p class="founder-main-sub">
+          Ollasoftware was founded by Vikas Swami — dual CCIE, operator of 22+ ventures, no personal social media.<br />
+          Public source: <a href={FOUNDER.source} target="_blank" rel="noopener" class="public-source-link">networkershome.com/vikas-swami/</a>.
+        </p>
       </div>
-    ))}
-  </dl>
 
-  <blockquote class="quote">
-    {FOUNDER.quote}
-    <cite class="cite mono">— Vikas Swami</cite>
-  </blockquote>
+      <!-- Col 2: Founder Photo in Rounded Dark Frame -->
+      <div class="founder-photo-col">
+        <div class="founder-portrait-card">
+          <div class="portrait-glow" aria-hidden="true"></div>
+          <img
+            src="/vikas-swami.png"
+            alt="Vikas Swami — Founder, Ollasoftware"
+            class="founder-portrait-img"
+            width="320"
+            height="360"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+      </div>
 
-  {variant === 'full' && (
-    <div class="ventures">
-      <h4 class="vent-head mono">22+ operating ventures</h4>
-      <dl class="vent-list">
-        {Object.entries(FOUNDER.ventures).map(([cat, items]) => (
-          <div class="vent-row">
-            <dt class="vent-cat mono">{cat}</dt>
-            <dd class="vent-items">{items.join(' · ')}</dd>
+      <!-- Col 3: Founder Credentials & Bio -->
+      <div class="founder-bio-col">
+        <span class="founder-tag mono">FOUNDER</span>
+        <h3 class="founder-name">{FOUNDER.name}</h3>
+        <p class="founder-role mono">{FOUNDER.title}</p>
+        
+        <p class="founder-ccie mono">
+          {FOUNDER.credentials}
+        </p>
+        
+        <p class="founder-history">
+          {FOUNDER.history}
+        </p>
+      </div>
+    </div>
+
+    <!-- 6 Big Stats Grid -->
+    <div class="founder-stats-strip">
+      {FOUNDER.stats.map(s => (
+        <div class="f-stat-item">
+          <span class="f-stat-num mono">{s.value}</span>
+          <span class="f-stat-lbl mono">{s.label}</span>
+        </div>
+      ))}
+    </div>
+
+    <!-- Quote Callout Card (Center-Aligned with Big Bold Typography) -->
+    <div class="founder-quote-card">
+      <div class="quote-symbol" aria-hidden="true">“</div>
+      <div class="quote-body">
+        <p class="quote-text">
+          “Not the two CCIE labs… it is the alumni network — over 45,000 engineers placed…<br class="quote-br" />
+          many from small towns in India who had no other path.”
+        </p>
+        <cite class="quote-cite mono">— Vikas Swami</cite>
+      </div>
+    </div>
+
+    <!-- 22+ Operating Ventures (5 Cards in a Row) -->
+    <div class="ventures-section">
+      <span class="ventures-tag mono">22+ OPERATING VENTURES</span>
+      
+      <div class="ventures-grid">
+        {FOUNDER.ventureCards.map(v => (
+          <div class="venture-card">
+            <div class="v-icon-wrap" aria-hidden="true">
+              {v.icon === 'shield' && (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+              )}
+              {v.icon === 'cube' && (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                  <line x1="12" y1="22.08" x2="12" y2="12"/>
+                </svg>
+              )}
+              {v.icon === 'sparkle' && (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 3l1.912 5.885L19.798 9.5l-4.706 4.365 1.353 6.135L12 16.75l-4.445 3.25 1.353-6.135-4.706-4.365 5.886-.615L12 3z"/>
+                </svg>
+              )}
+              {v.icon === 'stack' && (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 2 7 12 12 22 7 12 2"/>
+                  <polyline points="2 17 12 22 22 17"/>
+                  <polyline points="2 12 12 17 22 12"/>
+                </svg>
+              )}
+              {v.icon === 'academic' && (
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                  <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                </svg>
+              )}
+            </div>
+
+            <h4 class="v-title">{v.title}</h4>
+            <p class="v-items">{v.items}</p>
           </div>
         ))}
-      </dl>
+      </div>
     </div>
-  )}
 
-  <p class="meta mono">
-    <span class="meta-row"><span class="meta-k">HQ</span> {FOUNDER.hq}</span>
-    <span class="meta-row"><span class="meta-k">Hours</span> {FOUNDER.hours} · <span class="meta-k">Phone</span> <a href={`tel:${FOUNDER.phone.replace(/[^+\d]/g, '')}`}>{FOUNDER.phone}</a></span>
-    <span class="meta-row"><span class="meta-k">Education</span> {FOUNDER.education}</span>
-    <span class="meta-row dim">{FOUNDER.noSocial}</span>
-    <span class="meta-row dim">Source: <a href={FOUNDER.source} target="_blank" rel="noopener">{FOUNDER.source}</a></span>
-  </p>
-</section>
+    <!-- Metadata & Address Footer -->
+    <div class="founder-meta-footer mono">
+      <div class="meta-line">
+        <span class="meta-key">HQ:</span> {FOUNDER.hq} · <span class="meta-key">Hours:</span> {FOUNDER.hours} · <span class="meta-key">Phone:</span> <a href={`tel:${FOUNDER.phone.replace(/[^+\d]/g, '')}`}>{FOUNDER.phone}</a>
+      </div>
+      <div class="meta-line">
+        <span class="meta-key">Education:</span> {FOUNDER.education}
+      </div>
+      <div class="meta-line meta-dim">
+        {FOUNDER.noSocial}
+      </div>
+      <div class="meta-line meta-dim">
+        Source: <a href={FOUNDER.source} target="_blank" rel="noopener">{FOUNDER.source}</a>
+      </div>
+    </div>
+
+  </div>
+) : (
+  <!-- Compact Variant (for Top 10 listicles) -->
+  <section class="founder-compact" data-variant="compact">
+    <div class="compact-head">
+      <div class="compact-avatar">
+        <img src="/vikas-swami.png" alt="Vikas Swami" width="56" height="56" class="avatar-img" />
+      </div>
+      <div class="compact-info">
+        <span class="eyebrow mono">FOUNDER</span>
+        <h3 class="name">{FOUNDER.name}</h3>
+        <p class="title mono">{FOUNDER.title}</p>
+      </div>
+    </div>
+
+    <p class="credentials">
+      <strong class="text-accent">{FOUNDER.credentials}</strong> {FOUNDER.history}
+    </p>
+
+    <div class="compact-stats">
+      {FOUNDER.stats.slice(0, 3).map(s => (
+        <div class="c-stat">
+          <span class="c-num mono">{s.value}</span>
+          <span class="c-lbl mono">{s.label}</span>
+        </div>
+      ))}
+    </div>
+
+    <blockquote class="compact-quote">
+      {FOUNDER.quote}
+      <cite class="cite mono">— Vikas Swami</cite>
+    </blockquote>
+  </section>
+)}
 
 <style>
-  .founder {
+  /* ══════════════════════════════════════════════════════════════════════
+     FULL VARIANT (AS SEEN IN REFERENCE DESIGN)
+  ══════════════════════════════════════════════════════════════════════ */
+  .founder-full-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Top 3-Column Grid */
+  .founder-hero-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 0.85fr 1fr;
+    gap: 36px;
+    align-items: center;
+    margin-bottom: 40px;
+  }
+
+  .founder-tag {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--o-accent, #2563EB);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    display: inline-block;
+    margin-bottom: 12px;
+  }
+
+  .founder-main-h2 {
+    margin: 0 0 16px;
+    font-size: clamp(24px, 3.2vw, 36px);
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: -1px;
+    color: var(--o-ink);
+  }
+
+  .founder-main-sub {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--o-mute);
+  }
+
+  .public-source-link {
+    color: var(--o-accent, #2563EB);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .public-source-link:hover {
+    text-decoration: underline;
+  }
+
+  /* Center Portrait Card */
+  .founder-photo-col {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .founder-portrait-card {
+    position: relative;
+    width: 100%;
+    max-width: 280px;
+    height: 320px;
+    border-radius: 20px;
+    background: radial-gradient(circle at 50% 30%, #1e293b 0%, #0a1120 100%);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 20px 45px -12px rgba(15, 23, 42, 0.45);
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .portrait-glow {
+    position: absolute;
+    top: -20%;
+    left: 10%;
+    right: 10%;
+    height: 60%;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.3) 0%, transparent 70%);
+    filter: blur(30px);
+    pointer-events: none;
+  }
+
+  .founder-portrait-img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    user-select: none;
+  }
+
+  /* Right Bio Col */
+  .founder-bio-col {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .founder-name {
+    margin: 0;
+    font-size: clamp(26px, 3.2vw, 36px);
+    font-weight: 700;
+    color: var(--o-ink);
+    letter-spacing: -0.8px;
+    line-height: 1.1;
+  }
+
+  .founder-role {
+    font-size: 13px;
+    color: var(--o-mute);
+    margin: 0 0 6px;
+  }
+
+  .founder-ccie {
+    font-size: 12.5px;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--o-accent, #2563EB);
+    margin: 0;
+  }
+
+  .founder-history {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--o-mute);
+    margin: 0;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     6 STATS STRIP
+  ══════════════════════════════════════════════════════════════════════ */
+  .founder-stats-strip {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
+    padding: 32px 0;
+    border-top: 1px solid var(--o-line);
+    border-bottom: 1px solid var(--o-line);
+    margin-bottom: 32px;
+  }
+
+  .f-stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .f-stat-num {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--o-accent, #2563EB);
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+  }
+
+  .f-stat-lbl {
+    font-size: 11px;
+    color: var(--o-mute);
+    line-height: 1.45;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     QUOTE CARD
+  ══════════════════════════════════════════════════════════════════════ */
+  .founder-quote-card {
+    background: #ffffff;
+    border: 1px solid rgba(37, 99, 235, 0.18);
+    border-radius: 16px;
+    padding: 32px 36px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  }
+  :global(html[data-theme="dark"]) .founder-quote-card {
+    background: #0D152C !important;
+    border-color: rgba(56, 189, 248, 0.2) !important;
+    box-shadow: 0 4px 20px rgba(0, 4, 18, 0.4) !important;
+  }
+
+  .quote-symbol {
+    font-size: 48px;
+    line-height: 1;
+    font-weight: 800;
+    color: var(--o-accent, #2563EB);
+    font-family: Georgia, serif;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .quote-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    max-width: 920px;
+    width: 100%;
+  }
+
+  .quote-text {
+    margin: 0;
+    font-size: clamp(16px, 1.85vw, 21px);
+    line-height: 1.48;
+    color: var(--o-ink);
+    font-weight: 700;
+    letter-spacing: -0.4px;
+    text-align: center;
+  }
+
+  .quote-cite {
+    font-size: 12px;
+    color: var(--o-faint);
+    font-style: normal;
+    text-align: center;
+    display: block;
+    margin-top: 4px;
+  }
+
+  @media (max-width: 680px) {
+    .founder-quote-card {
+      padding: 24px 20px;
+    }
+    .quote-br {
+      display: inline;
+    }
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     22+ OPERATING VENTURES (5-CARD ROW)
+  ══════════════════════════════════════════════════════════════════════ */
+  .ventures-section {
+    margin-bottom: 32px;
+  }
+
+  .ventures-tag {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--o-accent, #2563EB);
+    letter-spacing: 0.8px;
+    display: inline-block;
+    margin-bottom: 16px;
+  }
+
+  .ventures-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+  }
+
+  .venture-card {
+    background: #ffffff;
+    border: 1px solid rgba(20, 30, 50, 0.10);
+    border-radius: 12px;
+    padding: 20px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.02);
+    transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .venture-card:hover {
+    border-color: #2563EB;
+    box-shadow: 0 8px 22px rgba(37, 99, 235, 0.12);
+    transform: translateY(-2px);
+  }
+
+  :global(html[data-theme="dark"]) .venture-card {
+    background: #0D152C !important;
+    border-color: rgba(255, 255, 255, 0.10) !important;
+  }
+  :global(html[data-theme="dark"]) .venture-card:hover {
+    border-color: rgba(56, 189, 248, 0.4) !important;
+    box-shadow: 0 8px 24px rgba(0, 4, 18, 0.5) !important;
+  }
+
+  .v-icon-wrap {
+    color: var(--o-accent, #2563EB);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .v-title {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--o-ink);
+    letter-spacing: -0.2px;
+  }
+
+  .v-items {
+    margin: 0;
+    font-size: 11px;
+    line-height: 1.5;
+    color: var(--o-mute);
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     FOOTER METADATA
+  ══════════════════════════════════════════════════════════════════════ */
+  .founder-meta-footer {
+    padding-top: 20px;
+    border-top: 1px dashed var(--o-line);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 10.5px;
+    color: var(--o-mute);
+    line-height: 1.5;
+  }
+
+  .meta-key {
+    color: var(--o-faint);
+    font-weight: 600;
+  }
+
+  .meta-dim {
+    color: var(--o-faint);
+  }
+
+  .founder-meta-footer a {
+    color: var(--o-accent, #2563EB);
+    text-decoration: none;
+  }
+  .founder-meta-footer a:hover {
+    text-decoration: underline;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     COMPACT VARIANT (TOP 10 LISTICLES)
+  ══════════════════════════════════════════════════════════════════════ */
+  .founder-compact {
     background: var(--o-panel);
     border: 1px solid var(--o-line);
     border-left: 3px solid var(--o-accent);
     border-radius: var(--o-radius-lg);
-    box-shadow: var(--o-shadow-card);
-    padding: 28px 32px;
-    margin: 24px 0;
+    padding: 22px 24px;
+    margin: 20px 0;
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 14px;
   }
 
-  .eyebrow {
-    font-size: 10px;
-    color: var(--o-accent);
-    text-transform: uppercase;
-    letter-spacing: 1px;
+  .compact-head {
+    display: flex;
+    align-items: center;
+    gap: 16px;
   }
-  .name {
-    margin: 4px 0 2px;
-    font-size: 22px;
-    color: var(--o-ink);
-    font-weight: 600;
-    letter-spacing: -0.4px;
-    line-height: 1.1;
+
+  .compact-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--o-accent);
+    flex-shrink: 0;
   }
+
+  .avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .eyebrow { font-size: 10px; color: var(--o-accent); text-transform: uppercase; letter-spacing: 1px; }
+  .name { margin: 2px 0; font-size: 18px; color: var(--o-ink); font-weight: 700; }
   .title { font-size: 10px; color: var(--o-mute); margin: 0; }
 
-  .credentials {
-    margin: 0;
-    font-size: 13px;
-    color: var(--o-ink);
-    line-height: 1.55;
-  }
-  .credentials strong { color: var(--o-accent); font-weight: 600; }
+  .credentials { margin: 0; font-size: 12.5px; color: var(--o-ink); line-height: 1.5; }
+  .text-accent { color: var(--o-accent); font-weight: 600; }
 
-  .stats {
+  .compact-stats {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--o-line);
-    border: 1px solid var(--o-line);
-    border-radius: var(--o-radius);
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-  }
-  .stat {
-    background: var(--o-panel-hi);
-    padding: 14px 16px;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-  .stat-value {
-    margin: 0;
-    font-size: 16px;
-    color: var(--o-accent);
-    font-weight: 600;
-    letter-spacing: -0.3px;
-  }
-  .stat-label {
-    margin: 0;
-    font-size: 10px;
-    color: var(--o-faint);
-    line-height: 1.4;
+    gap: 10px;
+    padding: 10px 0;
+    border-top: 1px dashed var(--o-line);
+    border-bottom: 1px dashed var(--o-line);
   }
 
-  .quote {
+  .c-stat { display: flex; flex-direction: column; gap: 2px; }
+  .c-num { font-size: 15px; font-weight: 700; color: var(--o-accent); }
+  .c-lbl { font-size: 9.5px; color: var(--o-faint); }
+
+  .compact-quote {
     margin: 0;
-    padding: 14px 18px;
-    border-left: 2px solid var(--o-accent);
+    padding: 10px 14px;
     background: color-mix(in srgb, var(--o-accent) 6%, transparent);
-    font-size: 12px;
+    border-left: 2px solid var(--o-accent);
+    font-size: 11.5px;
     color: var(--o-ink);
-    line-height: 1.55;
     font-style: italic;
-    border-radius: 0 var(--o-radius) var(--o-radius) 0;
   }
-  .cite {
-    display: block;
-    margin-top: 6px;
-    font-style: normal;
-    font-size: 9px;
-    color: var(--o-faint);
+  .cite { display: block; margin-top: 4px; font-style: normal; font-size: 9px; color: var(--o-faint); }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     RESPONSIVE BREAKPOINTS
+  ══════════════════════════════════════════════════════════════════════ */
+  @media (max-width: 1080px) {
+    .founder-hero-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .founder-photo-col {
+      order: -1;
+      grid-column: span 2;
+      margin-bottom: 10px;
+    }
+    .founder-portrait-card {
+      max-width: 240px;
+      height: 280px;
+    }
+    .founder-stats-strip {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .ventures-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 
-  .ventures {
-    border-top: 1px dashed var(--o-line);
-    padding-top: 16px;
-  }
-  .vent-head {
-    font-size: 9px;
-    color: var(--o-faint);
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin: 0 0 10px;
-  }
-  .vent-list { margin: 0; display: flex; flex-direction: column; gap: 6px; }
-  .vent-row {
-    display: grid;
-    grid-template-columns: 200px 1fr;
-    gap: 16px;
-    font-size: 10.5px;
-    line-height: 1.45;
-  }
-  .vent-cat { color: var(--o-accent); font-size: 9px; }
-  .vent-items { color: var(--o-ink); margin: 0; }
-
-  .meta {
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    font-size: 9px;
-    line-height: 1.5;
-    color: var(--o-mute);
-    padding-top: 14px;
-    border-top: 1px dashed var(--o-line);
-  }
-  .meta-row { display: block; }
-  .meta-k { color: var(--o-faint); margin-right: 6px; }
-  .meta a { color: var(--o-accent); text-decoration: none; }
-  .meta a:hover { text-decoration: underline; }
-  .meta .dim { color: var(--o-faint); }
-
-  @media (max-width: 700px) {
-    .founder { padding: 22px 18px; }
-    .stats { grid-template-columns: repeat(2, 1fr); }
-    .vent-row { grid-template-columns: 1fr; gap: 4px; }
-  }
-  @media (max-width: 420px) {
-    .name { font-size: 18px; }
-    .credentials { font-size: 12px; }
-    .stats { grid-template-columns: 1fr 1fr; }
-    .stat-value { font-size: 14px; }
+  @media (max-width: 680px) {
+    .founder-hero-grid {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .founder-photo-col {
+      grid-column: span 1;
+    }
+    .founder-stats-strip {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+    .ventures-grid {
+      grid-template-columns: 1fr;
+    }
+    .founder-quote-card {
+      padding: 18px 20px;
+    }
   }
 </style>

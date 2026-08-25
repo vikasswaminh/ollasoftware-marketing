@@ -3,275 +3,629 @@
 export const prerender = true;
 
 import Layout from '../../layouts/Layout.astro';
-import PageHero from '../../components/primitives/PageHero.astro';
 import Btn from '../../components/primitives/Btn.astro';
+import Tag from '../../components/primitives/Tag.astro';
 import { o, services } from '../../lib/tokens';
 ---
 <Layout
   title="Services — Ollasoftware"
   description="Six services. One senior team. AI software, custom software, AEO, SEO, social media, and performance marketing — all under one roof."
+  breadcrumb={[{ name: 'Home', url: 'https://ollasoftware.com/' }, { name: 'Services', url: 'https://ollasoftware.com/services/' }]}
 >
-  <PageHero
-    eyebrow="The lineup"
-    title="Six services. One senior team."
-    sub="Built to work alone. Better together. Each detail page covers the gnarlier bits — sample SOWs, eval methodology, what we won't take on."
-    breadcrumb={[{ label: 'home', href: '/' }, { label: 'services' }]}
-  >
-    <Btn primary href="/contact/">Start a project →</Btn>
-    <Btn href="/contact/">Talk to us</Btn>
-  </PageHero>
+  <!-- Services Hero Section with Left Content & Right Building 3D Image -->
+  <section class="services-hero">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <nav class="crumbs mono" aria-label="Breadcrumb">
+          <a href="/">home</a>
+          <span class="sep">/</span>
+          <span class="current">services</span>
+        </nav>
 
-  <section class="rows">
-    {services.map(s => (
-      <a class="row" href={`/services/${s.slug}/`} style={`--accent:${s.accent}`}>
-        <div class="left">
-          <div class="row-top">
-            <div class="glyph" aria-hidden="true">{s.glyph}</div>
-            <span class="chip mono">{s.chip}</span>
-          </div>
-          <div>
-            <div class="name">{s.name}</div>
-            <div class="tag mono">{s.tag}</div>
-          </div>
-          <p class="blurb">{s.blurb}</p>
-          <ul class="bullets mono">
-            {s.bullets.map(b => <li><span class="arr">›</span>{b}</li>)}
-          </ul>
+        <div class="eyebrow-wrap">
+          <Tag color="var(--o-accent)">THE LINEUP</Tag>
         </div>
-        <div class="right">
-          <pre class="sample mono"><Fragment set:html={`<span class="comment"># sample engagement</span>
-<span class="key">service</span>  : <span class="str">'${s.name}'</span>
-<span class="key">cadence</span>  : <span class="str">'${s.chip}'</span>
-<span class="key">delivery</span> : <span class="str">'in your stack · your accounts'</span>
-<span class="key">team</span>     : [<span class="str">'lead'</span>, <span class="str">'specialist'</span>, <span class="str">'strategist'</span>]
-<span class="key">price</span>    : <span class="str">'fixed or monthly · no surprise invoices'</span>`} /></pre>
-          <span class="more mono">read full brief →</span>
-        </div>
-      </a>
-    ))}
-  </section>
 
-  <section class="compare">
-    <h2>How they compare</h2>
-    <div class="table-wrap">
-      <table>
-        <thead>
-          <tr>
-            <th></th>
-            {services.map(s => <th style={`color:${s.accent}`}>{s.name}</th>)}
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="row-h">Engagement</td>
-            {services.map(s => <td class="mono">{s.chip}</td>)}
-          </tr>
-          <tr>
-            <td class="row-h">Team shape</td>
-            <td class="mono">2–4 eng + lead</td>
-            <td class="mono">2–6 eng + PM</td>
-            <td class="mono">strategist + writer</td>
-            <td class="mono">strategist + writer</td>
-            <td class="mono">strategist + editor</td>
-            <td class="mono">strategist + buyer</td>
-          </tr>
-          <tr>
-            <td class="row-h">Cancel notice</td>
-            <td class="mono">end of sprint</td>
-            <td class="mono">end of sprint</td>
-            <td class="mono">30 days</td>
-            <td class="mono">30 days</td>
-            <td class="mono">30 days</td>
-            <td class="mono">30 days</td>
-          </tr>
-          <tr>
-            <td class="row-h">You own outputs</td>
-            {services.map(() => <td class="mono yes">✓ day one</td>)}
-          </tr>
-          <tr>
-            <td class="row-h">Reporting cadence</td>
-            <td class="mono">weekly demo</td>
-            <td class="mono">weekly demo</td>
-            <td class="mono">monthly</td>
-            <td class="mono">monthly</td>
-            <td class="mono">weekly</td>
-            <td class="mono">weekly</td>
-          </tr>
-        </tbody>
-      </table>
+        <h1>Six services. One senior team.</h1>
+
+        <p class="hero-sub mono">
+          Built to work alone. Better together. Each detail page covers the gnarlier bits — sample SOWs, eval methodology, what we won't take on.
+        </p>
+
+        <div class="hero-actions">
+          <Btn primary href="/contact/">Start a project →</Btn>
+          <Btn href="/contact/">Talk to us</Btn>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="hero-image-container">
+          <div class="image-glow" aria-hidden="true"></div>
+          <img
+            src="/services-hero.png"
+            alt="Ollasoftware Services Lineup"
+            class="hero-pure-image"
+            width="380"
+            height="380"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+      </div>
     </div>
   </section>
 
+  <!-- 2 Cards in a Row Premium Services Grid (Uniform Brand Color) -->
+  <section class="services-section">
+    <div class="services-grid">
+      {services.map(s => (
+        <a class="service-card" href={`/services/${s.slug}/`} style="--accent: var(--o-accent);">
+          
+          <!-- Card Top Bar: Cadence & Scope Tag -->
+          <div class="card-header">
+            <div class="header-left">
+              <span class="cadence-chip mono">{s.chip}</span>
+              <span class="scope-tag mono">{s.tag}</span>
+            </div>
+            <span class="arrow-indicator" aria-hidden="true">→</span>
+          </div>
+
+          <!-- Service Title & Summary -->
+          <div class="card-body">
+            <h2 class="service-title">{s.name}</h2>
+            <p class="service-blurb">{s.blurb}</p>
+          </div>
+
+          <!-- Core Deliverables -->
+          <div class="deliverables-box">
+            <span class="deliverables-title mono">CORE DELIVERABLES</span>
+            <ul class="bullets mono">
+              {s.bullets.map(b => (
+                <li>
+                  <span class="bullet-dot" style="background: var(--o-accent);"></span>
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Sample Engagement Preview -->
+          <div class="engagement-preview">
+            <pre class="sample-code mono"><Fragment set:html={`<span class="comment"># engagement profile</span>
+<span class="key">service</span>  : <span class="str">'${s.name}'</span>
+<span class="key">delivery</span> : <span class="str">'in your stack · your accounts'</span>
+<span class="key">team</span>     : [<span class="str">'senior lead'</span>, <span class="str">'specialist eng'</span>]`} /></pre>
+          </div>
+
+          <!-- Card Footer CTA -->
+          <div class="card-footer">
+            <span class="btn-read-brief mono">
+              Read full brief <span class="btn-arrow">→</span>
+            </span>
+          </div>
+
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Comparison Matrix -->
+  <section class="compare">
+    <div class="compare-inner">
+      <div class="section-heading-centered">
+        <Tag color="var(--o-accent)">COMPARISON MATRIX</Tag>
+        <h2>How they compare</h2>
+        <p class="mono sub-text">Side-by-side engagement models, team composition, and delivery terms.</p>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th></th>
+              {services.map(s => <th style="color: var(--o-accent);">{s.name}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="row-h">Engagement</td>
+              {services.map(s => <td class="mono">{s.chip}</td>)}
+            </tr>
+            <tr>
+              <td class="row-h">Team shape</td>
+              <td class="mono">2–4 eng + lead</td>
+              <td class="mono">2–6 eng + PM</td>
+              <td class="mono">strategist + writer</td>
+              <td class="mono">strategist + writer</td>
+              <td class="mono">strategist + editor</td>
+              <td class="mono">strategist + buyer</td>
+            </tr>
+            <tr>
+              <td class="row-h">Cancel notice</td>
+              <td class="mono">end of sprint</td>
+              <td class="mono">end of sprint</td>
+              <td class="mono">30 days</td>
+              <td class="mono">30 days</td>
+              <td class="mono">30 days</td>
+              <td class="mono">30 days</td>
+            </tr>
+            <tr>
+              <td class="row-h">You own outputs</td>
+              {services.map(() => <td class="mono yes">✓ day one</td>)}
+            </tr>
+            <tr>
+              <td class="row-h">Reporting cadence</td>
+              <td class="mono">weekly demo</td>
+              <td class="mono">weekly demo</td>
+              <td class="mono">monthly</td>
+              <td class="mono">monthly</td>
+              <td class="mono">weekly</td>
+              <td class="mono">weekly</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Centered Bottom CTA -->
   <section class="cta">
-    <h2>Not sure which fits?</h2>
-    <p class="mono">A 30-minute call. We'll tell you which service (or which combo) gives you the cheapest path to the outcome.</p>
-    <div class="actions">
-      <Btn primary href="/contact/">Book a 30-min call →</Btn>
-      <Btn href="/contact/">Talk to us</Btn>
+    <div class="cta-inner">
+      <h2>Not sure which fits?</h2>
+      <p class="mono">A 30-minute call. We'll tell you which service (or which combo) gives you the cheapest path to the outcome.</p>
+      <div class="actions">
+        <Btn primary href="/contact/">Book a 30-min call →</Btn>
+        <Btn href="/contact/">Talk to us</Btn>
+      </div>
     </div>
   </section>
 </Layout>
 
 <style>
-  .rows {
-    padding: 64px 56px;
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
+  /* ══════════════════════════════════════════════════════════════════════
+     SERVICES HERO SECTION (LEFT CONTENT & RIGHT BUILDING 3D IMAGE)
+  ══════════════════════════════════════════════════════════════════════ */
+  .services-hero {
+    padding: 72px 56px 64px;
     border-bottom: 1px solid var(--o-line);
+    background: radial-gradient(circle at 85% 30%, rgba(56, 189, 248, 0.08) 0%, transparent 60%), radial-gradient(circle at 15% 30%, rgba(56, 189, 248, 0.06) 0%, transparent 65%), var(--o-bg);
+    position: relative;
+    overflow: hidden;
   }
 
-  .row {
+  .hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .crumbs {
+    font-size: 11px;
+    color: var(--o-mute);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .crumbs a { color: var(--o-mute); text-decoration: none; transition: color 0.15s; }
+  .crumbs a:hover { color: var(--o-ink); }
+  .crumbs .current { color: var(--o-ink); font-weight: 500; }
+  .crumbs .sep { color: var(--o-faint); }
+
+  .eyebrow-wrap {
+    margin-bottom: 20px;
+  }
+
+  .hero-left h1 {
+    margin: 0 0 20px;
+    font-size: clamp(34px, 5.2vw, 56px);
+    line-height: 1.06;
+    letter-spacing: -2px;
+    font-weight: 700;
+    color: var(--o-ink);
+    max-width: 860px;
+  }
+
+  .hero-sub {
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--o-mute);
+    margin: 0 0 28px;
+    max-width: 680px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  /* Right Side Image & Glow */
+  .hero-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-image-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+  }
+
+  .image-glow {
+    position: absolute;
+    inset: -20px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.28) 0%, rgba(37, 99, 235, 0.14) 45%, transparent 75%);
+    filter: blur(48px);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .hero-pure-image {
+    position: relative;
+    z-index: 1;
+    max-width: 360px;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 14px 30px rgba(37, 99, 235, 0.22));
+    user-select: none;
+    pointer-events: none;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     PREMIUM 2-COLUMN SERVICES GRID (No Symbols)
+  ══════════════════════════════════════════════════════════════════════ */
+  .services-section {
+    padding: 64px 56px;
+    border-bottom: 1px solid var(--o-line);
+    background: var(--o-bg);
+  }
+
+  .services-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .service-card {
     background: var(--o-panel);
     border: 1px solid var(--o-line);
-    border-radius: var(--o-radius-lg);
-    overflow: hidden;
+    border-radius: 14px;
+    padding: 32px 34px;
     text-decoration: none;
     color: inherit;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    transition: border-color .14s, transform .14s;
-  }
-  .row:hover {
-    border-color: color-mix(in srgb, var(--accent) 53%, transparent);
-    transform: translateY(-2px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
   }
 
-  .left { padding: 36px; display: flex; flex-direction: column; gap: 18px; }
-  .row-top { display: flex; justify-content: space-between; align-items: flex-start; }
-  .glyph {
-    width: 56px; height: 56px;
-    border-radius: var(--o-radius-lg);
-    background: var(--o-bg);
-    border: 1px solid var(--accent);
-    display: flex; align-items: center; justify-content: center;
-    color: var(--accent);
-    font-size: 24px; line-height: 1;
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--accent);
+    opacity: 0.8;
+    transition: opacity 0.2s ease;
   }
-  .chip {
+
+  .service-card:hover {
+    background: var(--o-panel-hi);
+    border-color: color-mix(in srgb, var(--accent) 55%, var(--o-line));
+    box-shadow: 0 16px 36px -10px color-mix(in srgb, var(--accent) 18%, transparent), 0 0 0 1px color-mix(in srgb, var(--accent) 25%, transparent);
+    transform: translateY(-3px);
+  }
+
+  .service-card:hover::before {
+    opacity: 1;
+    height: 4px;
+  }
+
+  /* Card Header */
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .cadence-chip {
     font-size: 10px;
-    color: var(--o-faint);
-    padding: 3px 7px;
-    border: 1px solid var(--o-line);
-    border-radius: 3px;
-  }
-  .name {
-    font-size: 34px;
     font-weight: 600;
-    color: var(--o-ink);
-    letter-spacing: -1px;
-    line-height: 1.05;
+    text-transform: uppercase;
+    color: var(--o-faint);
+    background: var(--o-bg-sunken);
+    border: 1px solid var(--o-line);
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.6px;
   }
-  .tag {
+
+  .scope-tag {
     font-size: 10px;
     color: var(--accent);
     text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-top: 6px;
+    letter-spacing: 0.8px;
+    font-weight: 600;
   }
-  .blurb { font-size: 14px; color: var(--o-mute); line-height: 1.55; margin: 0; max-width: 440px; }
+
+  .arrow-indicator {
+    font-size: 16px;
+    color: var(--o-faint);
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+
+  .service-card:hover .arrow-indicator {
+    color: var(--accent);
+    transform: translate(3px, -3px);
+  }
+
+  /* Card Body */
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .service-title {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--o-ink);
+    letter-spacing: -0.6px;
+    line-height: 1.15;
+    transition: color 0.15s ease;
+  }
+
+  .service-card:hover .service-title {
+    color: var(--accent);
+  }
+
+  .service-blurb {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--o-mute);
+    margin: 0;
+  }
+
+  /* Core Deliverables */
+  .deliverables-box {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--o-line);
+  }
+
+  .deliverables-title {
+    font-size: 9.5px;
+    color: var(--o-faint);
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
   .bullets {
     margin: 0;
     padding: 0;
     list-style: none;
-    font-size: 10px;
-    color: var(--o-ink);
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px 18px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px 14px;
+    font-size: 11px;
+    color: var(--o-ink);
   }
-  .bullets li { display: flex; gap: 10px; }
-  .arr { color: var(--accent); }
 
-  .right {
-    background: var(--o-panel-hi);
-    padding: 28px 32px;
+  .bullets li {
     display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 18px;
-    border-left: 1px solid var(--o-line);
+    align-items: center;
+    gap: 8px;
+    line-height: 1.35;
   }
-  .sample {
+
+  .bullet-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  /* Engagement Preview */
+  .engagement-preview {
+    background: var(--o-bg-sunken);
+    border: 1px solid var(--o-line);
+    border-radius: 8px;
+    padding: 12px 16px;
+  }
+
+  .sample-code {
     margin: 0;
     font-size: 10px;
-    line-height: 1.8;
+    line-height: 1.7;
     color: var(--o-ink);
-    white-space: pre-wrap;
     font-family: var(--o-font-mono);
   }
-  .sample .comment { color: var(--o-faint); }
-  .sample .key { color: var(--o-warn); }
-  .sample .str { color: var(--o-accent); }
 
-  .more { color: var(--accent); font-size: 10px; text-align: right; }
+  .sample-code .comment { color: var(--o-faint); }
+  .sample-code .key { color: var(--accent); opacity: 0.9; }
+  .sample-code .str { color: var(--o-mute); }
 
+  /* Card Footer CTA */
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-top: 12px;
+    border-top: 1px solid var(--o-line);
+  }
+
+  .btn-read-brief {
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: gap 0.15s ease;
+  }
+
+  .service-card:hover .btn-read-brief {
+    gap: 9px;
+  }
+
+  .btn-arrow {
+    transition: transform 0.15s ease;
+  }
+  .service-card:hover .btn-arrow {
+    transform: translateX(2px);
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     COMPARISON MATRIX & CTA
+  ══════════════════════════════════════════════════════════════════════ */
   .compare {
     padding: 96px 56px;
     border-bottom: 1px solid var(--o-line);
+    background: var(--o-bg);
   }
-  .compare h2 {
-    margin: 0 0 32px;
-    font-size: 34px;
+
+  .compare-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .section-heading-centered {
+    text-align: center;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .section-heading-centered h2 {
+    margin: 12px 0 8px;
+    font-size: 32px;
     letter-spacing: -1px;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--o-ink);
   }
+
+  .sub-text {
+    font-size: 13px;
+    color: var(--o-mute);
+    margin: 0;
+  }
+
   .table-wrap {
     overflow-x: auto;
     border: 1px solid var(--o-line);
-    border-radius: var(--o-radius-lg);
+    border-radius: 12px;
     background: var(--o-panel);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
   }
+
   table {
     width: 100%;
     border-collapse: collapse;
     font-size: 11px;
   }
+
   th, td {
     text-align: left;
     padding: 14px 18px;
     border-bottom: 1px solid var(--o-line);
     white-space: nowrap;
   }
+
   th {
-    font-size: 10px;
+    font-size: 10.5px;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    color: var(--o-mute);
+    letter-spacing: 0.6px;
     font-family: var(--o-font-mono);
-    font-weight: 500;
+    font-weight: 600;
   }
+
   .row-h { color: var(--o-ink); font-weight: 500; }
-  .yes { color: var(--o-accent); }
+  .yes { color: #10B981; font-weight: 600; }
   tbody tr:last-child td { border-bottom: none; }
 
   .cta {
     padding: 96px 56px;
     text-align: center;
+    background: linear-gradient(var(--o-bg), var(--o-panel) 50%, var(--o-bg));
   }
+
+  .cta-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
   .cta h2 {
     margin: 0 0 12px;
-    font-size: 38px;
+    font-size: 36px;
     letter-spacing: -1px;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--o-ink);
   }
+
   .cta p {
-    font-size: 12px;
+    font-size: 13px;
     color: var(--o-mute);
     margin: 0 0 28px;
+    line-height: 1.6;
   }
-  .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
 
-  @media (max-width: 1100px) {
-    .row { grid-template-columns: 1fr; }
-    .right { border-left: none; border-top: 1px solid var(--o-line); }
+  .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     RESPONSIVE BREAKPOINTS
+  ══════════════════════════════════════════════════════════════════════ */
+  @media (max-width: 1050px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .hero-right {
+      order: -1;
+    }
+    .hero-pure-image {
+      max-width: 240px;
+    }
   }
-  @media (max-width: 700px) {
-    .rows, .compare, .cta { padding-left: 24px; padding-right: 24px; }
-    .left, .right { padding: 24px; }
-    .name { font-size: 26px; }
+
+  @media (max-width: 950px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .services-hero, .services-section, .compare, .cta {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+  }
+
+  @media (max-width: 600px) {
     .bullets { grid-template-columns: 1fr; }
+    .service-card { padding: 22px; }
+    .service-title { font-size: 20px; }
   }
 </style>

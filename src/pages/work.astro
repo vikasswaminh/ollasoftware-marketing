@@ -3,279 +3,560 @@
 export const prerender = true;
 
 import Layout from '../layouts/Layout.astro';
-import PageHero from '../components/primitives/PageHero.astro';
 import SectionHead from '../components/primitives/SectionHead.astro';
 import Btn from '../components/primitives/Btn.astro';
-import CountUp from "@astroanimate/core/CountUp";
+import Tag from '../components/primitives/Tag.astro';
 import { services } from '../lib/tokens';
 
-function parseMetric(str: string) {
-  if (str.includes('→')) return null;
-  const match = str.match(/^([+$#\-]?)\s*([\d,]+(?:\.\d+)?)\s*(%|×|M|k|s|wks|mo|d)?$/);
-  if (!match) return null;
-  const prefix = match[1] || '';
-  const numStr = match[2].replace(/,/g, '');
-  const num = parseFloat(numStr);
-  if (isNaN(num)) return null;
-  const decimals = numStr.includes('.') ? numStr.split('.')[1].length : 0;
-  const suffix = match[3] || '';
-  return { value: num, prefix, suffix, decimals };
-}
-
 const entries = [
-  { date: '2026.05.18', svc: 'ai-software',           title: 'Intake agent for a 4M-customer bank',
+  { 
+    date: '2026.05.18', 
+    svcName: 'AI Software',
+    title: 'Intake agent for a 4M-customer bank',
     client: 'Helio Bank',
     body: 'Triages support tickets, drafts replies, routes escalations to the right team. Shipped in 5 weeks. 86% precision on the gold set, $0.04/run inference cost.',
-    metrics: [['86%', 'precision'], ['$0.04', 'cost/run'], ['5 wks', 'sprint'], ['9 mo', 'in prod, no callbacks']] },
-
-  { date: '2026.05.11', svc: 'seo',                   title: 'Doubled organic pipeline for a fintech',
+    metrics: [['86%', 'precision'], ['$0.04', 'cost/run'], ['5 wks', 'sprint'], ['9 mo', 'in prod']] 
+  },
+  { 
+    date: '2026.05.11', 
+    svcName: 'SEO',
+    title: 'Doubled organic pipeline for a fintech',
     client: 'Pelago',
     body: 'New cluster strategy, technical SEO fixes, 60-page content sprint over 90 days. Migrated off a JS-rendered stack that was blocking indexation.',
-    metrics: [['+14', 'top-10 keywords'], ['2.1×', 'qualified pipeline'], ['90 d', 'time to impact'], ['$0', 'paid spend']] },
-
-  { date: '2026.05.04', svc: 'social-media',          title: 'Founder-led playbook for a Series B SaaS',
+    metrics: [['+14', 'top-10 keywords'], ['2.1×', 'pipeline'], ['90 d', 'time to impact'], ['$0', 'paid spend']] 
+  },
+  { 
+    date: '2026.05.04', 
+    svcName: 'Social Media',
+    title: 'Founder-led playbook for a Series B SaaS',
     client: 'Forma Health',
     body: 'Weekly LinkedIn + X cadence built around the CEO\'s voice. 4 short-form videos/week from existing podcast footage. DM-ops handled by our team.',
-    metrics: [['2.4M', 'monthly impressions'], ['38%', 'MoM follower growth'], ['18', 'inbound enterprise convos'], ['6', 'closed-won attributed']] },
-
-  { date: '2026.04.28', svc: 'performance-marketing', title: 'CAC down 38% in six weeks',
+    metrics: [['2.4M', 'impressions'], ['38%', 'MoM growth'], ['18', 'enterprise convos'], ['6', 'closed-won']] 
+  },
+  { 
+    date: '2026.04.28', 
+    svcName: 'Performance Marketing',
+    title: 'CAC down 38% in six weeks',
     client: 'Sundial',
-    body: 'Rebuilt the Meta + Google funnels, server-side tracking, new LPs in our stack, full attribution wired to their CRM. Killed two channels that weren\'t paying back.',
-    metrics: [['-38%', 'CAC'], ['$68 → $42', 'blended CAC'], ['4.1 → 6.8', 'LTV/CAC'], ['6 wks', 'to first lift']] },
-
-  { date: '2026.04.20', svc: 'aeo',                   title: 'Became the cited answer in a B2B category',
+    body: 'Rebuilt the Meta + Google funnels, server-side tracking, new LPs in our stack, full attribution wired to their CRM. Killed non-performing channels.',
+    metrics: [['-38%', 'CAC'], ['$68 → $42', 'blended CAC'], ['4.1 → 6.8', 'LTV/CAC'], ['6 wks', 'first lift']] 
+  },
+  { 
+    date: '2026.04.20', 
+    svcName: 'AEO',
+    title: 'Became the cited answer in a B2B category',
     client: 'Riverlane',
-    body: 'AEO-first content rebuild across the top 40 pages. llms.txt, schema rollout, citation outreach to the sources AI engines pull from. Tracked across all four major answer engines.',
-    metrics: [['62%', 'prompt coverage'], ['#1', 'cited in ChatGPT for top 8 prompts'], ['3.2×', 'attributed inbound from AI'], ['90 d', 'to first citation']] },
-
-  { date: '2026.04.12', svc: 'software-dev',          title: 'Compliance portal · 0 → SOC 2 in 8 weeks',
+    body: 'AEO-first content rebuild across the top 40 pages. llms.txt, schema rollout, citation outreach to the sources AI engines pull from.',
+    metrics: [['62%', 'prompt coverage'], ['#1', 'ChatGPT prompt'], ['3.2×', 'AI inbound'], ['90 d', 'first citation']] 
+  },
+  { 
+    date: '2026.04.12', 
+    svcName: 'Custom Software',
+    title: 'Compliance portal · 0 → SOC 2 in 8 weeks',
     client: 'Northwind',
-    body: 'Internal portal for evidence collection, audit prep, and policy management. TypeScript + Astro + Postgres, deployed in their VPC. Replaced a Notion + Drive setup that was costing them an audit cycle.',
-    metrics: [['8 wks', 'sprint'], ['6', 'evidence types'], ['2k', 'MAU'], ['<500ms', 'p95']] },
-
-  { date: '2026.03.30', svc: 'ai-software',           title: 'RAG copilot embedded in a legal SaaS',
+    body: 'Internal portal for evidence collection, audit prep, and policy management. TypeScript + Astro + Postgres, deployed in their VPC.',
+    metrics: [['8 wks', 'sprint'], ['6', 'evidence types'], ['2k', 'MAU'], ['<500ms', 'p95']] 
+  },
+  { 
+    date: '2026.03.30', 
+    svcName: 'AI Software',
+    title: 'RAG copilot embedded in a legal SaaS',
     client: 'Kestrel',
-    body: 'Copilot that answers questions about a customer\'s own contract library. Built in their codebase, runs in their VPC, uses their existing auth + audit pipeline.',
-    metrics: [['91%', 'precision'], ['1.8s', 'p95 latency'], ['7 wks', 'sprint'], ['$0.02', 'cost/run']] },
-
-  { date: '2026.03.22', svc: 'seo',                   title: 'Replatform without losing rankings',
+    body: 'Copilot that answers questions about a customer\'s own contract library. Built in their codebase, runs in their VPC with existing auth.',
+    metrics: [['91%', 'precision'], ['1.8s', 'p95 latency'], ['7 wks', 'sprint'], ['$0.02', 'cost/run']] 
+  },
+  { 
+    date: '2026.03.22', 
+    svcName: 'SEO',
+    title: 'Replatform without losing rankings',
     client: 'Arclight',
-    body: 'Migration from a legacy CMS to a headless stack we built. Pre-migration audit, redirect map for 4,800 URLs, post-launch monitoring. Net result: rankings flat-to-up through the cutover.',
-    metrics: [['4,800', 'URLs migrated'], ['0', 'top-100 rankings lost'], ['+12%', 'organic 30d post-launch'], ['3 wks', 'cutover']] },
+    body: 'Migration from a legacy CMS to a headless stack we built. Pre-migration audit, redirect map for 4,800 URLs, post-launch monitoring.',
+    metrics: [['4,800', 'URLs migrated'], ['0', 'rankings lost'], ['+12%', 'organic 30d'], ['3 wks', 'cutover']] 
+  },
 ];
-
-const byService = Object.fromEntries(
-  services.map(s => [s.slug, s])
-);
 ---
 <Layout
   title="Work — Ollasoftware"
   description="Recent ships across AI software, custom software, AEO, SEO, social, and performance marketing."
+  breadcrumb={[{ name: 'Home', url: 'https://ollasoftware.com/' }, { name: 'Work', url: 'https://ollasoftware.com/work/' }]}
 >
-  <PageHero
-    eyebrow="Recent ships"
-    title="What we shipped, last 90 days."
-    sub="Names real where we have permission. Numbers honest. Every case study links to a sample of the deliverable — the SOW, the eval set, the report — wherever we can share it."
-    breadcrumb={[{ label: 'home', href: '/' }, { label: 'work' }]}
-  >
-    <Btn primary href="/contact/">Start a project →</Btn>
-    <Btn href="/services/">See all services</Btn>
-  </PageHero>
+  <!-- Work Hero Section with Left Content & Right Emblem Image -->
+  <section class="work-hero">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <nav class="crumbs mono" aria-label="Breadcrumb">
+          <a href="/">home</a>
+          <span class="sep">/</span>
+          <span class="current">work</span>
+        </nav>
+        
+        <div class="eyebrow-wrap">
+          <Tag color="var(--o-accent)">RECENT SHIPS</Tag>
+        </div>
 
-  <section class="feed">
-    {entries.map(e => {
-      const svc = byService[e.svc]!;
-      return (
-        <article class="entry" style={`--accent:${svc.accent}`}>
-          <div class="entry-meta">
-            <span class="date mono">{e.date}</span>
-            <span class="svc mono">{svc.glyph} {svc.name}</span>
-            <span class="client mono">{e.client}</span>
-          </div>
-          <h2>{e.title}</h2>
-          <p class="body">{e.body}</p>
-          <dl class="metrics">
-            {e.metrics.map(([num, label]) => {
-              const p = parseMetric(num);
-              return (
-                <div class="metric">
-                  <dt class="num">
-                    {p ? (
-                      <CountUp
-                        value={p.value}
-                        prefix={p.prefix}
-                        suffix={p.suffix}
-                        decimals={p.decimals}
-                        duration={2000}
-                        enhance={true}
-                        fontSize="inherit"
-                        textColor="inherit"
-                      />
-                    ) : (
-                      num
-                    )}
-                  </dt>
-                  <dd class="label mono">{label}</dd>
-                </div>
-              );
-            })}
-          </dl>
-        </article>
-      );
-    })}
+        <h1>What we shipped, last 90 days.</h1>
+        
+        <p class="hero-sub mono">
+          Names real where we have permission. Numbers honest. Every case study links to a sample of the deliverable — the SOW, the eval set, the report — wherever we can share it.
+        </p>
+
+        <div class="hero-actions">
+          <Btn primary href="/contact/">Start a project →</Btn>
+          <Btn href="/services/">See all services</Btn>
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="hero-image-container">
+          <div class="image-glow" aria-hidden="true"></div>
+          <img
+            src="/work-hero.png"
+            alt="Ollasoftware Recent Ships"
+            class="hero-pure-image"
+            width="340"
+            height="340"
+            loading="eager"
+            decoding="async"
+          />
+        </div>
+      </div>
+    </div>
   </section>
 
-  <section class="more">
-    <SectionHead
-      tag="Selected, not all"
-      title="Older work, by category."
-      sub="A line per engagement. Ping us if you want the long form on any of them."
-    />
-    <div class="categories">
-      {services.map(s => (
-        <div class="cat" style={`--accent:${s.accent}`}>
-          <div class="cat-head">
-            <span class="cat-glyph">{s.glyph}</span>
-            <span class="cat-name">{s.name}</span>
+  <!-- 8 Work Cards in 2-Columns with Orange Metrics and Unified Brand Color -->
+  <section class="work-section" aria-label="Recent Work">
+    <div class="work-grid">
+      {entries.map(e => (
+        <article class="work-card">
+          <!-- Top Row: Date, Service Tag & Client -->
+          <div class="card-header">
+            <div class="card-meta">
+              <span class="work-date mono">{e.date}</span>
+              <span class="work-svc mono">{e.svcName}</span>
+            </div>
+            <span class="work-client mono">{e.client}</span>
           </div>
-          <ul>
-            <li><span class="cat-year mono">2025</span> Migration + agent rollout · undisclosed retailer</li>
-            <li><span class="cat-year mono">2025</span> Internal tooling refactor · undisclosed insurer</li>
-            <li><span class="cat-year mono">2024</span> 12-week sprint · undisclosed health-tech</li>
-            <li><span class="cat-year mono">2024</span> Audit + roadmap · undisclosed Series A</li>
-          </ul>
-        </div>
+
+          <!-- Title & Body -->
+          <div class="card-body">
+            <h2 class="work-title">{e.title}</h2>
+            <p class="work-desc">{e.body}</p>
+          </div>
+
+          <!-- Compact 4-column Metrics Grid in Vibrant Orange -->
+          <div class="metrics-grid">
+            {e.metrics.map(([num, label]) => (
+              <div class="metric-box">
+                <span class="metric-val mono">{num}</span>
+                <span class="metric-lbl mono">{label}</span>
+              </div>
+            ))}
+          </div>
+        </article>
       ))}
     </div>
   </section>
 
+  <!-- Older Work, By Category (2 Cards in a Row, No Symbols, Unified Color) -->
+  <section class="older-work-section">
+    <div class="older-work-container">
+      <SectionHead
+        tag="Selected, not all"
+        title="Older work, by category."
+        sub="A line per engagement. Ping us if you want the long form on any of them."
+      />
+
+      <div class="categories-grid">
+        {services.map(s => (
+          <div class="category-card">
+            <div class="category-header">
+              <span class="category-title">{s.name}</span>
+            </div>
+            <ul class="engagements-list">
+              <li><span class="cat-year mono">2025</span> <span>Migration + agent rollout · undisclosed retailer</span></li>
+              <li><span class="cat-year mono">2025</span> <span>Internal tooling refactor · undisclosed insurer</span></li>
+              <li><span class="cat-year mono">2024</span> <span>12-week sprint · undisclosed health-tech</span></li>
+              <li><span class="cat-year mono">2024</span> <span>Audit + roadmap · undisclosed Series A</span></li>
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom CTA -->
   <section class="cta">
-    <h2>Want a case study like this?</h2>
-    <p class="mono">Tell us what you're trying to ship. We'll tell you what we'd do, whether it fits, and what it would cost.</p>
-    <div class="actions">
-      <Btn primary href="/contact/">Start a project →</Btn>
-      <Btn href="/contact/">Talk to us</Btn>
+    <div class="cta-inner">
+      <h2>Want a case study like this?</h2>
+      <p class="mono">Tell us what you're trying to ship. We'll tell you what we'd do, whether it fits, and what it would cost.</p>
+      <div class="actions">
+        <Btn primary href="/contact/">Start a project →</Btn>
+        <Btn href="/contact/">Talk to us</Btn>
+      </div>
     </div>
   </section>
 </Layout>
 
 <style>
-  .feed {
+  /* ══════════════════════════════════════════════════════════════════════
+     WORK HERO SECTION (LEFT CONTENT & RIGHT EMBLEM IMAGE)
+  ══════════════════════════════════════════════════════════════════════ */
+  .work-hero {
+    padding: 72px 56px 64px;
+    border-bottom: 1px solid var(--o-line);
+    background: radial-gradient(circle at 85% 30%, rgba(56, 189, 248, 0.08) 0%, transparent 60%), radial-gradient(circle at 15% 30%, rgba(56, 189, 248, 0.06) 0%, transparent 65%), var(--o-bg);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.35fr 0.65fr;
+    gap: 40px;
+    align-items: center;
+  }
+
+  .crumbs {
+    font-size: 11px;
+    color: var(--o-mute);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 24px;
+  }
+  .crumbs a { color: var(--o-mute); text-decoration: none; transition: color 0.15s; }
+  .crumbs a:hover { color: var(--o-ink); }
+  .crumbs .current { color: var(--o-ink); font-weight: 500; }
+  .crumbs .sep { color: var(--o-faint); }
+
+  .eyebrow-wrap {
+    margin-bottom: 20px;
+  }
+
+  .hero-left h1 {
+    margin: 0 0 20px;
+    font-size: clamp(34px, 5.2vw, 56px);
+    line-height: 1.06;
+    letter-spacing: -2px;
+    font-weight: 700;
+    color: var(--o-ink);
+    max-width: 950px;
+  }
+
+  .hero-sub {
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--o-mute);
+    margin: 0 0 28px;
+    max-width: 680px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  /* Right Side Image & Glow */
+  .hero-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .hero-image-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+  }
+
+  .image-glow {
+    position: absolute;
+    inset: -20px;
+    background: radial-gradient(circle, rgba(56, 189, 248, 0.28) 0%, rgba(37, 99, 235, 0.14) 45%, transparent 75%);
+    filter: blur(48px);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .hero-pure-image {
+    position: relative;
+    z-index: 1;
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 14px 30px rgba(37, 99, 235, 0.22));
+    user-select: none;
+    pointer-events: none;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     8 WORK CARDS (2 CARDS IN A ROW, UNIFIED SINGLE COLOR)
+  ══════════════════════════════════════════════════════════════════════ */
+  .work-section {
     padding: 64px 56px;
     border-bottom: 1px solid var(--o-line);
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
+    background: var(--o-bg);
   }
-  .entry {
+
+  .work-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .work-card {
     background: var(--o-panel);
     border: 1px solid var(--o-line);
-    border-left: 3px solid var(--accent);
-    border-radius: var(--o-radius-lg);
-    padding: 32px 36px;
+    border-radius: 12px;
+    padding: 28px 30px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    justify-content: space-between;
+    gap: 18px;
+    position: relative;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
   }
-  .entry-meta {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-    align-items: center;
-    font-size: 9px;
-  }
-  .entry-meta .date { color: var(--o-faint); }
-  .entry-meta .svc {
-    color: var(--accent);
-    padding: 3px 8px;
-    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
-    border-radius: 3px;
-  }
-  .entry-meta .client { color: var(--o-mute); }
 
-  .entry h2 {
-    margin: 0;
-    font-size: 24px;
-    color: var(--o-ink);
-    letter-spacing: -0.6px;
-    font-weight: 600;
-    line-height: 1.15;
+  .work-card:hover {
+    background: var(--o-panel-hi);
+    border-color: color-mix(in srgb, var(--o-accent) 45%, var(--o-line));
+    box-shadow: 0 12px 30px -8px color-mix(in srgb, var(--o-accent) 15%, transparent);
+    transform: translateY(-2px);
   }
-  .body {
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .card-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .work-date {
+    font-size: 10.5px;
+    color: var(--o-faint);
+  }
+
+  .work-svc {
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--o-accent);
+    background: color-mix(in srgb, var(--o-accent) 10%, var(--o-panel));
+    border: 1px solid color-mix(in srgb, var(--o-accent) 25%, var(--o-line));
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+
+  .work-client {
+    font-size: 11px;
+    color: var(--o-mute);
+    font-weight: 500;
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex-grow: 1;
+  }
+
+  .work-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.4px;
+    color: var(--o-ink);
+  }
+
+  .work-desc {
     margin: 0;
     font-size: 13px;
+    line-height: 1.6;
     color: var(--o-mute);
-    line-height: 1.55;
-    max-width: 800px;
   }
-  .metrics {
-    margin: 8px 0 0;
-    padding: 16px 0 0;
+
+  /* Compact 4-column Metrics Grid with Vibrant Orange Numbers */
+  .metrics-grid {
+    padding-top: 16px;
     border-top: 1px dashed var(--o-line);
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 24px;
+    gap: 12px 16px;
   }
-  .metric { display: flex; flex-direction: column; gap: 4px; }
-  .num {
-    margin: 0;
-    font-size: 20px;
-    color: var(--accent);
-    font-weight: 600;
-    letter-spacing: -0.4px;
+
+  .metric-box {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
   }
-  .label {
-    margin: 0;
-    font-size: 10px;
+
+  .metric-val {
+    font-size: 18px;
+    font-weight: 700;
+    color: #FF6600 !important;
+    letter-spacing: -0.3px;
+    line-height: 1.1;
+  }
+
+  .metric-lbl {
+    font-size: 9.5px;
     color: var(--o-faint);
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
 
-  .more {
-    padding: 96px 56px;
+  /* ══════════════════════════════════════════════════════════════════════
+     OLDER WORK, BY CATEGORY (2 CARDS IN A ROW, NO SYMBOLS, UNIFIED COLOR)
+  ══════════════════════════════════════════════════════════════════════ */
+  .older-work-section {
+    padding: 80px 56px;
     border-bottom: 1px solid var(--o-line);
+    background: var(--o-bg);
   }
-  .categories {
+
+  .older-work-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .categories-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 14px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
   }
-  .cat {
+
+  .category-card {
     background: var(--o-panel);
     border: 1px solid var(--o-line);
-    border-radius: var(--o-radius);
+    border-radius: 10px;
     padding: 22px 24px;
+    transition: border-color 0.15s ease, background 0.15s ease;
   }
-  .cat-head { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
-  .cat-glyph { color: var(--accent); font-size: 16px; }
-  .cat-name { color: var(--o-ink); font-weight: 500; font-size: 13px; }
-  .cat ul { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
-  .cat li { font-size: 11px; color: var(--o-mute); display: flex; gap: 12px; }
-  .cat-year { color: var(--o-faint); font-size: 9px; width: 40px; flex-shrink: 0; }
 
+  .category-card:hover {
+    border-color: color-mix(in srgb, var(--o-accent) 40%, var(--o-line));
+    background: var(--o-panel-hi);
+  }
+
+  .category-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--o-line-whisper, var(--o-line));
+  }
+
+  .category-title {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--o-ink);
+    letter-spacing: -0.2px;
+  }
+
+  .engagements-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+
+  .engagements-list li {
+    font-size: 11px;
+    color: var(--o-mute);
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    line-height: 1.45;
+  }
+
+  .cat-year {
+    font-size: 9.5px;
+    color: var(--o-faint);
+    width: 32px;
+    flex-shrink: 0;
+    letter-spacing: 0.5px;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     CTA SECTION
+  ══════════════════════════════════════════════════════════════════════ */
   .cta {
     padding: 96px 56px;
     text-align: center;
+    background: linear-gradient(var(--o-bg), var(--o-panel) 50%, var(--o-bg));
   }
+
+  .cta-inner {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
   .cta h2 {
     margin: 0 0 12px;
-    font-size: 38px;
+    font-size: 36px;
     letter-spacing: -1px;
-    font-weight: 600;
+    font-weight: 700;
     color: var(--o-ink);
   }
-  .cta p { font-size: 12px; color: var(--o-mute); margin: 0 0 28px; }
-  .actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
 
-  @media (max-width: 1100px) {
-    .metrics { grid-template-columns: repeat(2, 1fr); }
-    .categories { grid-template-columns: repeat(2, 1fr); }
+  .cta p {
+    font-size: 13px;
+    color: var(--o-mute);
+    margin: 0 0 28px;
+    line-height: 1.6;
   }
+
+  .actions {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ══════════════════════════════════════════════════════════════════════
+     RESPONSIVE BREAKPOINTS
+  ══════════════════════════════════════════════════════════════════════ */
+  @media (max-width: 1050px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .hero-right {
+      order: -1;
+    }
+    .hero-pure-image {
+      max-width: 200px;
+    }
+    .work-grid { grid-template-columns: repeat(2, 1fr); }
+    .categories-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
   @media (max-width: 700px) {
-    .feed, .more, .cta { padding-left: 24px; padding-right: 24px; }
-    .entry { padding: 22px; }
-    .entry h2 { font-size: 18px; }
-    .categories { grid-template-columns: 1fr; }
+    .work-hero, .work-section, .older-work-section, .cta {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+    .work-grid { grid-template-columns: 1fr; }
+    .categories-grid { grid-template-columns: 1fr; }
+    .work-card { padding: 20px; }
+    .work-title { font-size: 16px; }
+    .metrics-grid { grid-template-columns: repeat(2, 1fr); }
   }
 </style>
