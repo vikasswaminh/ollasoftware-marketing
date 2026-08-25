@@ -22,7 +22,10 @@ import { services } from '../../lib/tokens';
     </div>
 
     <!-- ── 2. EDITORIAL SERVICE CATALOGUE CAROUSEL ── -->
-    <div class="services-carousel-box">
+    <div class="services-carousel-box" id="zoom-services-box">
+      <!-- Left Edge Dynamic Blur & Fade Overlay -->
+      <div class="carousel-edge-fade edge-fade-left" id="zoom-edge-left" aria-hidden="true"></div>
+
       <div class="services-carousel-track" id="zoom-services-track">
         {services.map((s, index) => (
           <div
@@ -65,6 +68,9 @@ import { services } from '../../lib/tokens';
         ))}
       </div>
 
+      <!-- Right Edge Dynamic Blur & Fade Overlay -->
+      <div class="carousel-edge-fade edge-fade-right" id="zoom-edge-right" aria-hidden="true"></div>
+
       <!-- ── 3. MINIMAL ARROW & ACTIVE INDEX CONTROLS ── -->
       <div class="zoom-controls-wrapper">
         <button type="button" class="zoom-nav-arrow prev-arrow" id="zoom-prev-btn" aria-label="Previous service">
@@ -105,6 +111,8 @@ import { services } from '../../lib/tokens';
       const prevBtn = document.getElementById('zoom-prev-btn');
       const nextBtn = document.getElementById('zoom-next-btn');
       const dotsBar = document.getElementById('zoom-dots-bar');
+      const edgeLeft = document.getElementById('zoom-edge-left');
+      const edgeRight = document.getElementById('zoom-edge-right');
 
       if (!track || !prevBtn || !nextBtn || !dotsBar) return;
 
@@ -118,10 +126,24 @@ import { services } from '../../lib/tokens';
         return cards[0] ? cards[0].offsetWidth + 18 : 380;
       };
 
+      const updateEdgeFades = () => {
+        const scrollLeft = track.scrollLeft;
+        const maxScroll = track.scrollWidth - track.clientWidth;
+
+        if (edgeLeft) {
+          edgeLeft.style.opacity = scrollLeft > 6 ? '1' : '0';
+        }
+
+        if (edgeRight) {
+          edgeRight.style.opacity = (maxScroll - scrollLeft > 6) ? '1' : '0';
+        }
+      };
+
       const syncActiveDot = () => {
         const maxScroll = track.scrollWidth - track.clientWidth;
         if (maxScroll > 0 && track.scrollLeft >= maxScroll - 20) {
           dots.forEach((d, i) => d.classList.toggle('active', i === dots.length - 1));
+          updateEdgeFades();
           return;
         }
 
@@ -135,6 +157,8 @@ import { services } from '../../lib/tokens';
         dots.forEach((d, i) => {
           d.classList.toggle('active', i === activeIdx);
         });
+
+        updateEdgeFades();
       };
 
       prevBtn.onclick = (e) => {
@@ -169,6 +193,7 @@ import { services } from '../../lib/tokens';
         }
       };
 
+      window.addEventListener('resize', syncActiveDot, { passive: true });
       syncActiveDot();
     };
 
@@ -311,42 +336,43 @@ import { services } from '../../lib/tokens';
     overflow: hidden;
   }
 
-  /* Left & Right Edge Blur & Gradient Mask */
-  .services-carousel-box::before,
-  .services-carousel-box::after {
-    content: '';
+  /* Left & Right Dynamic Edge Blur & Gradient Mask (Viewport Boundary Attached) */
+  .carousel-edge-fade {
     position: absolute;
     top: 0;
     bottom: 0;
-    width: 140px;
+    width: 44px;
     z-index: 5;
     pointer-events: none;
+    transition: opacity 0.2s ease;
   }
 
-  .services-carousel-box::before {
+  .edge-fade-left {
     left: 0;
-    background: linear-gradient(to right, #ebe5dc 15%, rgba(235, 229, 220, 0.8) 45%, rgba(235, 229, 220, 0) 100%);
+    background: linear-gradient(to right, #ebe5dc 20%, rgba(235, 229, 220, 0.75) 60%, rgba(235, 229, 220, 0) 100%);
     backdrop-filter: blur(2px);
     -webkit-backdrop-filter: blur(2px);
-    mask-image: linear-gradient(to right, black, transparent);
-    -webkit-mask-image: linear-gradient(to right, black, transparent);
+    mask-image: linear-gradient(to right, black 25%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to right, black 25%, transparent 100%);
+    opacity: 0;
   }
 
-  .services-carousel-box::after {
+  .edge-fade-right {
     right: 0;
-    background: linear-gradient(to left, #ebe5dc 15%, rgba(235, 229, 220, 0.8) 45%, rgba(235, 229, 220, 0) 100%);
+    background: linear-gradient(to left, #ebe5dc 20%, rgba(235, 229, 220, 0.75) 60%, rgba(235, 229, 220, 0) 100%);
     backdrop-filter: blur(2px);
     -webkit-backdrop-filter: blur(2px);
-    mask-image: linear-gradient(to left, black, transparent);
-    -webkit-mask-image: linear-gradient(to left, black, transparent);
+    mask-image: linear-gradient(to left, black 25%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to left, black 25%, transparent 100%);
+    opacity: 1;
   }
 
-  :global(html[data-theme="dark"]) .services-carousel-box::before {
-    background: linear-gradient(to right, #060913 15%, rgba(6, 9, 19, 0.8) 45%, rgba(6, 9, 19, 0) 100%);
+  :global(html[data-theme="dark"]) .edge-fade-left {
+    background: linear-gradient(to right, #060913 20%, rgba(6, 9, 19, 0.75) 60%, rgba(6, 9, 19, 0) 100%);
   }
 
-  :global(html[data-theme="dark"]) .services-carousel-box::after {
-    background: linear-gradient(to left, #060913 15%, rgba(6, 9, 19, 0.8) 45%, rgba(6, 9, 19, 0) 100%);
+  :global(html[data-theme="dark"]) .edge-fade-right {
+    background: linear-gradient(to left, #060913 20%, rgba(6, 9, 19, 0.75) 60%, rgba(6, 9, 19, 0) 100%);
   }
 
   .services-carousel-track {
