@@ -56,36 +56,47 @@ const { eyebrow, title, sub, breadcrumb } = Astro.props;
   .crumbs .sep { color: var(--o-faint); }
 
   h1 {
-    margin: 20px 0 22px;
-    /* Fluid: 32px on tiny phones, 64px on desktop. */
-    font-size: clamp(30px, 6vw, 62px);
-    line-height: 1.0;
-    letter-spacing: clamp(-1px, -0.25vw, -2.2px);
-    font-weight: 600;
+    margin: 16px 0 16px;
+    font-size: clamp(24px, 5.5vw, 56px);
+    line-height: 1.05;
+    letter-spacing: clamp(-0.8px, -0.25vw, -2px);
+    font-weight: 700;
     color: var(--o-ink);
     max-width: 880px;
     overflow-wrap: break-word;
+    font-family: 'Lato', sans-serif;
   }
 
   .sub {
-    font-size: clamp(12px, 1.2vw, 13px);
-    line-height: 1.65;
+    font-size: clamp(11.5px, 1.2vw, 13px);
+    line-height: 1.55;
     color: var(--o-mute);
     max-width: 620px;
     margin: 0;
+    font-family: 'Lato', sans-serif;
   }
 
   .actions {
-    margin-top: 28px;
+    margin-top: 20px;
     display: flex;
     gap: 10px;
     flex-wrap: wrap;
   }
 
   @media (max-width: 900px) {
-    .hero { padding: 56px 20px 44px; }
+    .hero { padding: 48px 16px 36px; }
   }
   @media (max-width: 500px) {
-    .hero { padding: 44px 18px 36px; }
+    .hero { padding: 28px 14px 28px; }
+    h1 {
+      font-size: clamp(20px, 6.5vw, 28px);
+      margin: 10px 0 10px;
+    }
+    .sub {
+      font-size: 12px;
+    }
+    .crumbs {
+      margin-bottom: 14px;
+    }
   }
 </style>

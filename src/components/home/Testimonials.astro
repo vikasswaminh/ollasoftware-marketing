@@ -111,7 +111,7 @@ const carouselItems = [...quotes, ...quotes];
 
   .centered-head :global(.sub) {
     margin: 0 auto !important;
-    font-family: "Inter", sans-serif !important;
+    font-family: "Lato", sans-serif !important;
     font-size: 14px !important;
     color: #64748b !important;
     max-width: 620px !important;
@@ -123,11 +123,11 @@ const carouselItems = [...quotes, ...quotes];
   }
 
   .centered-head :global(h2) {
-    font-family: "Inter", sans-serif !important;
+    font-family: "Lato", sans-serif !important;
     font-optical-sizing: auto !important;
     font-style: normal !important;
     color: #0f172a !important;
-    font-size: clamp(28px, 4.4vw, 48px) !important;
+    font-size: clamp(26px, 4.4vw, 48px) !important;
     letter-spacing: -1.2px !important;
     margin: 10px 0 8px !important;
     text-align: center !important;
@@ -138,7 +138,7 @@ const carouselItems = [...quotes, ...quotes];
   }
 
   .centered-head :global(.tag) {
-    font-family: "Inter", sans-serif !important;
+    font-family: "Lato", sans-serif !important;
     color: #216BFF !important;
   }
 
@@ -220,14 +220,14 @@ const carouselItems = [...quotes, ...quotes];
     background: #ffffff !important;
     border: 1px solid #e5e7eb !important;
     border-radius: 20px !important;
-    padding: 40px 36px !important;
-    width: 480px !important;
-    min-height: 260px !important;
+    padding: clamp(24px, 3.5vw, 40px) clamp(20px, 3vw, 36px) !important;
+    width: clamp(280px, 80vw, 480px) !important;
+    min-height: 240px !important;
     flex-shrink: 0 !important;
     display: flex !important;
     flex-direction: column !important;
     justify-content: space-between !important;
-    gap: 28px !important;
+    gap: 24px !important;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04) !important;
     transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease !important;
     box-sizing: border-box !important;
@@ -241,8 +241,8 @@ const carouselItems = [...quotes, ...quotes];
 
   .quote-text {
     margin: 0 !important;
-    font-family: 'Inter', sans-serif !important;
-    font-size: 16px !important;
+    font-family: 'Lato', sans-serif !important;
+    font-size: 15.5px !important;
     line-height: 1.65 !important;
     color: #111827 !important;
     letter-spacing: -0.2px !important;
@@ -253,14 +253,14 @@ const carouselItems = [...quotes, ...quotes];
     display: flex !important;
     align-items: center !important;
     gap: 14px !important;
-    padding-top: 20px !important;
+    padding-top: 18px !important;
     border-top: 1px dashed #e5e7eb !important;
     margin-top: auto !important;
   }
 
   .avatar {
-    width: 44px !important;
-    height: 44px !important;
+    width: 42px !important;
+    height: 42px !important;
     border-radius: 50% !important;
     background: #1769FF !important;
     display: flex !important;
@@ -268,9 +268,10 @@ const carouselItems = [...quotes, ...quotes];
     justify-content: center !important;
     color: #ffffff !important;
     font-size: 16px !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
     box-shadow: 0 4px 12px rgba(23, 105, 255, 0.25) !important;
     flex-shrink: 0 !important;
+    font-family: 'Lato', sans-serif !important;
   }
 
   .meta {
@@ -282,7 +283,8 @@ const carouselItems = [...quotes, ...quotes];
   .name {
     font-size: 15px !important;
     color: #111827 !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
+    font-family: 'Lato', sans-serif !important;
   }
 
   .role {
@@ -333,14 +335,46 @@ const carouselItems = [...quotes, ...quotes];
 
   @media (max-width: 767px) {
     .testimonial-section {
-      padding: 72px 0 !important;
+      padding: 32px 0 36px !important;
+    }
+    .centered-head :global(.sub) {
+      font-size: 12px !important;
+    }
+    .centered-head :global(h2) {
+      font-size: clamp(20px, 5.5vw, 26px) !important;
+      margin: 6px 0 6px !important;
+    }
+    .centered-head :global(.tag) {
+      font-size: 9.5px !important;
+    }
+    .carousel-track {
+      gap: 10px !important;
     }
     .testimonial-card {
-      width: 320px !important;
-      padding: 28px 24px !important;
+      width: clamp(230px, 75vw, 280px) !important;
+      padding: 12px 14px !important;
+      min-height: 165px !important;
+      gap: 12px !important;
+      border-radius: 12px !important;
     }
     .quote-text {
-      font-size: 14px !important;
+      font-size: 12px !important;
+      line-height: 1.45 !important;
+    }
+    .who {
+      gap: 8px !important;
+      padding-top: 8px !important;
+    }
+    .avatar {
+      width: 30px !important;
+      height: 30px !important;
+      font-size: 11px !important;
+    }
+    .name {
+      font-size: 12.5px !important;
+    }
+    .role {
+      font-size: 10px !important;
     }
   }
 </style>

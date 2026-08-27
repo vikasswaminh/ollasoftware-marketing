@@ -85,6 +85,37 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
       <a href="/jobs/" class:list={['nav-link', { active: isActive('/jobs/') }]}>Jobs</a>
       <a href="/about/" class:list={['nav-link', { active: isActive('/about/') }]}>About</a>
       <a href="/contact/" class:list={['nav-link', { active: isActive('/contact/') }]}>Contact</a>
+
+      <!-- Theme Switcher Row inside Mobile Menu Drawer -->
+      <div class="drawer-theme-toggle-row">
+        <span class="drawer-theme-label">Dark Mode</span>
+        <button
+          type="button"
+          class="theme-toggle-switch drawer-theme-btn"
+          aria-label="Toggle dark mode"
+          role="switch"
+          aria-checked="false"
+        >
+          <span class="toggle-track">
+            <span class="toggle-thumb">
+              <svg class="thumb-icon icon-sun" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5"/>
+                <line x1="12" y1="1" x2="12" y2="3"/>
+                <line x1="12" y1="21" x2="12" y2="23"/>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                <line x1="1" y1="12" x2="3" y2="12"/>
+                <line x1="21" y1="12" x2="23" y2="12"/>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+              </svg>
+              <svg class="thumb-icon icon-moon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#1769FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+              </svg>
+            </span>
+          </span>
+        </button>
+      </div>
     </nav>
   </div>
 </header>
@@ -127,22 +158,24 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
       mq.addEventListener('change', (e) => { if (e.matches) setOpen(false); });
     }
 
-    // ── Dark Mode Toggle ──
+    // ── Dark Mode Toggle (Synchronize all toggle buttons on page) ──
     const initThemeToggle = () => {
       const html = document.documentElement;
-      const toggleBtn = document.getElementById('theme-toggle');
-      if (!toggleBtn) return;
+      const toggleButtons = document.querySelectorAll('.theme-toggle-switch');
+      if (!toggleButtons.length) return;
 
       const updateToggleState = (isDark) => {
-        toggleBtn.setAttribute('aria-checked', String(isDark));
+        toggleButtons.forEach((btn) => {
+          btn.setAttribute('aria-checked', String(isDark));
+        });
       };
 
       const isCurrentDark = html.getAttribute('data-theme') === 'dark';
       updateToggleState(isCurrentDark);
 
-      // Handle user click
-      toggleBtn.onclick = (e) => {
+      const toggleTheme = (e) => {
         e.preventDefault();
+        e.stopPropagation();
         const nowDark = html.getAttribute('data-theme') === 'dark';
         if (nowDark) {
           html.removeAttribute('data-theme');
@@ -154,6 +187,10 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
           updateToggleState(true);
         }
       };
+
+      toggleButtons.forEach((btn) => {
+        btn.onclick = toggleTheme;
+      });
     };
 
     if (document.readyState === 'loading') {
@@ -233,7 +270,7 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
   }
 
   .brand-blue-text {
-    font-family: var(--o-font-sans, 'Inter', system-ui, -apple-system, sans-serif);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
     font-size: 24px !important;
     font-weight: 800 !important;
     letter-spacing: -0.04em;
@@ -262,8 +299,8 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
 
   .nav-link {
     color: #4b5563;
-    font-family: var(--o-font-sans, 'Inter', system-ui, -apple-system, sans-serif);
-    font-size: 13.5px;
+    font-family: 'Lato', sans-serif;
+    font-size: 14px;
     font-weight: 500;
     text-decoration: none;
     padding: 3px 0;
@@ -354,9 +391,9 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
     gap: 8px;
     background: #1D6AF3;
     color: #ffffff;
-    font-family: var(--o-font-sans, 'Inter', system-ui, -apple-system, sans-serif);
+    font-family: 'Lato', sans-serif;
     font-size: 14.5px;
-    font-weight: 600;
+    font-weight: 700;
     line-height: 1.2;
     padding: 10px 22px;
     border-radius: 100px;
@@ -394,6 +431,7 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
     align-items: center;
     justify-content: center;
     gap: 4px;
+    flex-shrink: 0;
   }
 
   .burger-line {
@@ -408,6 +446,10 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
     background: transparent !important;
   }
 
+  :global(html[data-theme="dark"]) .nav-burger {
+    border-color: rgba(255, 255, 255, 0.18);
+  }
+
   :global(html[data-theme="dark"]) .burger-line {
     background: #ffffff;
   }
@@ -420,7 +462,11 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
     display: none !important;
   }
 
-  /* Mobile Responsive */
+  .drawer-theme-toggle-row {
+    display: none;
+  }
+
+  /* Tablet & Mobile Responsive */
   @media (max-width: 900px) {
     .nav {
       height: 64px;
@@ -430,15 +476,22 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 20px;
+      padding: 0 16px;
     }
-    .nav-left { display: none !important; }
-    .brand { justify-self: auto; padding: 0; transform: none; }
-    .nav-right-link { display: none !important; }
+    .nav-center {
+      display: none !important;
+    }
+    .brand {
+      justify-self: auto;
+      padding: 0;
+      transform: none;
+    }
     .nav-right {
-      gap: 12px;
+      gap: 10px;
     }
-    .nav-burger { display: inline-flex; }
+    .nav-burger {
+      display: inline-flex;
+    }
 
     .nav-links {
       display: none !important;
@@ -447,24 +500,82 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
       left: 0;
       right: 0;
       transform: none;
-      background: #000000;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      background: #ffffff;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
       flex-direction: column;
       align-items: flex-start;
       gap: 0;
       padding: 12px 20px 24px;
       max-height: calc(100vh - 64px);
       overflow-y: auto;
+      z-index: 999;
     }
 
-    .nav.nav-open .nav-links { display: flex !important; }
+    :global(html[data-theme="dark"]) .nav-links {
+      background: #060913 !important;
+      border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+    }
+
+    .nav.nav-open .nav-links {
+      display: flex !important;
+    }
 
     .nav-links .nav-link {
       width: 100%;
-      padding: 12px 0;
-      font-size: 15px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      color: #ffffff !important;
+      padding: 14px 4px;
+      font-size: 16px;
+      font-weight: 600;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      color: #0f172a !important;
+      font-family: 'Lato', sans-serif;
+    }
+
+    :global(html[data-theme="dark"]) .nav-links .nav-link {
+      border-bottom-color: rgba(255, 255, 255, 0.08);
+      color: #f8fafc !important;
+    }
+
+    .drawer-theme-toggle-row {
+      display: flex !important;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      padding: 16px 4px 8px;
+      margin-top: 4px;
+    }
+
+    .drawer-theme-label {
+      font-size: 16px;
+      font-weight: 600;
+      color: #0f172a;
+      font-family: 'Lato', sans-serif;
+    }
+
+    :global(html[data-theme="dark"]) .drawer-theme-label {
+      color: #f8fafc;
+    }
+  }
+
+  @media (max-width: 540px) {
+    .brand-blue-text {
+      font-size: 19px !important;
+    }
+    .brand-logo-img {
+      height: 36px !important;
+    }
+    .cta-btn {
+      padding: 8px 14px;
+      font-size: 12.5px;
+    }
+    .cta-btn span {
+      display: inline-block;
+    }
+  }
+
+  @media (max-width: 380px) {
+    .cta-btn {
+      display: none !important;
     }
   }
 </style>

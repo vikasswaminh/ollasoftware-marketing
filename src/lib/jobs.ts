@@ -1,6 +1,6 @@
-// Jobs data — mirrored 1:1 from networkershome.com/jobs (the founder's
-// training-and-hiring brand, also a portfolio company). Five categories,
-// 17 roles, ~1,200 total openings across the founder-product portfolio.
+// Jobs data — mirrored from networkershome.com/jobs (the founder's
+// training-and-hiring brand, also a portfolio company). Six categories,
+// 19 open roles across the founder-product portfolio.
 
 export type JobCategoryKey =
   | 'mba-fresher'
@@ -49,7 +49,7 @@ const slug = (title: string) =>
 const make = (j: Omit<Job, 'slug'>): Job => ({ ...j, slug: slug(j.title) });
 
 export const hiringOverview = {
-  totalOpenings: 1200,
+  totalOpenings: 19,
   founderCompanies: 16,
   location: 'HSR Layout, Bangalore',
   workModel: 'Hybrid · 3 days office, 2 days remote',

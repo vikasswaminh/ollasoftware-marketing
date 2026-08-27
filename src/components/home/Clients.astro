@@ -271,7 +271,7 @@ const categoryTitles: Record<string, { first: string; amp: string; second: strin
     margin-top: 8px;
   }
 
-  /* ─── LEFT: Sticky category info & heading & vertical filter list (VERTICALLY & HORIZONTALLY CENTERED) ─── */
+  /* ─── LEFT: Sticky category info & heading & vertical filter list ─── */
   .left-sticky-col {
     position: sticky;
     top: 80px;
@@ -293,7 +293,7 @@ const categoryTitles: Record<string, { first: string; amp: string; second: strin
     width: 100%;
   }
   .category-count {
-    font-family: "Inter", sans-serif;
+    font-family: "Lato", sans-serif;
     font-size: 11.5px;
     font-weight: 700;
     color: var(--o-mute);
@@ -302,7 +302,7 @@ const categoryTitles: Record<string, { first: string; amp: string; second: strin
     text-align: center;
   }
   .editorial-heading {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Lato', sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
     font-size: clamp(1.8rem, 2.5vw, 2.6rem);
@@ -360,7 +360,7 @@ const categoryTitles: Record<string, { first: string; amp: string; second: strin
     background: transparent;
     padding: 10px 14px;
     border-radius: 10px;
-    font-family: "Inter", system-ui, -apple-system, sans-serif;
+    font-family: 'Lato', sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
     font-size: 13.5px;
@@ -416,14 +416,12 @@ const categoryTitles: Record<string, { first: string; amp: string; second: strin
   .right-scroll-col {
     min-width: 0;
     width: 100%;
-    min-height: 520px;
   }
   .cards-grid {
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 16px;
     width: 100%;
-    min-height: 480px;
     align-content: start;
   }
 
@@ -535,7 +533,7 @@ const categoryTitles: Record<string, { first: string; amp: string; second: strin
   }
 
   .product-title {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Lato', sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
     font-size: 19px;
@@ -592,8 +590,8 @@ const categoryTitles: Record<string, { first: string; amp: string; second: strin
   :global(html[data-theme="dark"]) .product-card:hover .product-title { color: #38bdf8; }
 
   .product-blurb {
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    font-size: 12px;
+    font-family: 'Lato', system-ui, -apple-system, sans-serif;
+    font-size: 12.5px;
     line-height: 1.45;
     color: #64748b;
     margin: 0;
@@ -638,7 +636,7 @@ const categoryTitles: Record<string, { first: string; amp: string; second: strin
   /* ─── FOOTNOTE ─── */
   .footnote {
     margin-top: 48px;
-    font-family: "Inter", sans-serif;
+    font-family: "Lato", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
     font-size: 13.5px;
@@ -655,42 +653,113 @@ const categoryTitles: Record<string, { first: string; amp: string; second: strin
 
   /* ─── RESPONSIVE (Stripe-style fluid layout) ─── */
   @media (max-width: 1024px) {
-    .clients-section { padding: 90px 32px; }
+    .clients-section { padding: 36px 16px; }
     .split-container {
-      grid-template-columns: 250px 1fr;
-      gap: 44px;
+      grid-template-columns: 190px 1fr;
+      gap: 16px;
+    }
+    .cards-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 10px;
     }
     .editorial-heading {
-      font-size: clamp(1.8rem, 2.6vw, 2.8rem);
+      font-size: clamp(1.4rem, 2.2vw, 2rem);
     }
   }
 
-  @media (max-width: 768px) {
-    .clients-section { padding: 64px 20px; }
+  @media (max-width: 900px) {
+    .clients-section {
+      padding: 16px 10px 24px !important;
+    }
+    .section-head-wrap {
+      margin-bottom: 8px !important;
+    }
     .split-container {
-      grid-template-columns: 1fr;
-      gap: 36px;
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 8px !important;
+      margin-top: 0 !important;
     }
     .left-sticky-col {
-      position: relative;
-      top: 0;
+      position: relative !important;
+      top: 0 !important;
+      height: auto !important;
+      min-height: auto !important;
+      padding: 0 !important;
+      margin-bottom: 4px !important;
+      align-items: stretch !important;
     }
     .sticky-content {
-      align-items: flex-start;
-      text-align: left;
+      align-items: stretch !important;
+      text-align: left !important;
+    }
+    .category-count {
+      display: none !important;
     }
     .editorial-heading {
-      font-size: 2.4rem;
-      flex-direction: row;
-      gap: 10px;
-      align-items: baseline;
+      display: none !important;
+    }
+    .vertical-filter-nav {
+      flex-direction: row !important;
+      flex-wrap: wrap !important;
+      gap: 4px !important;
+      padding: 4px 6px !important;
+      border-radius: 8px !important;
+      margin-bottom: 4px !important;
+    }
+    .v-filter-btn {
+      width: auto !important;
+      padding: 4px 8px !important;
+      font-size: 10px !important;
+      border-radius: 5px !important;
+    }
+    .v-count {
+      font-size: 8.5px !important;
+      margin-left: 3px !important;
+    }
+    .right-scroll-col {
+      min-height: auto !important;
+      width: 100% !important;
     }
     .cards-grid {
-      grid-template-columns: 1fr;
-      gap: 20px;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 6px !important;
+      min-height: auto !important;
+      width: 100% !important;
     }
     .product-card {
-      padding: 24px;
+      padding: 8px 8px 6px !important;
+      min-height: auto !important;
+      border-radius: 8px !important;
+    }
+    .card-title-row {
+      margin-bottom: 3px !important;
+      gap: 3px !important;
+    }
+    .product-title {
+      font-size: clamp(11.5px, 3.2vw, 13.5px) !important;
+      line-height: 1.15 !important;
+    }
+    .cat-pill {
+      font-size: 7px !important;
+      padding: 1px 3.5px !important;
+      border-radius: 3px !important;
+    }
+    .product-blurb {
+      font-size: 9.5px !important;
+      line-height: 1.25 !important;
+    }
+    .card-bottom {
+      margin-top: 5px !important;
+      padding-top: 3px !important;
+    }
+    .product-domain {
+      font-size: 8.5px !important;
+      gap: 2px !important;
+    }
+    .footnote {
+      margin-top: 14px !important;
+      font-size: 10.5px !important;
     }
   }
 </style>

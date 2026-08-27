@@ -4,7 +4,7 @@
 
 @import './tokens.css';
 
-/* ── Uniform Site-Wide Container (Clean side gutters matching screenshot) ── */
+/* ── Uniform Site-Wide Container (Clean side gutters & fully responsive) ── */
 .site-container,
 .hero-container,
 .nav-container,
@@ -18,6 +18,8 @@
   margin-right: auto !important;
   width: 100% !important;
   box-sizing: border-box !important;
+  padding-left: clamp(14px, 3.5vw, 28px);
+  padding-right: clamp(14px, 3.5vw, 28px);
 }
 
 /* Base resets & smooth transitions */
@@ -30,15 +32,135 @@ html {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  html {
+    font-size: 14.5px;
+  }
+}
+
+@media (max-width: 480px) {
+  html {
+    font-size: 13.5px;
+  }
 }
 
 body {
   margin: 0;
   padding: 0;
-  font-family: var(--o-font-sans);
+  font-family: 'Lato', sans-serif;
   background-color: var(--o-bg);
   color: var(--o-ink);
   transition: background-color 0.3s ease, color 0.3s ease;
+  overflow-x: hidden;
+  width: 100%;
+  position: relative;
+}
+
+/* Universal fluid media & code blocks */
+img, svg, video, canvas {
+  max-width: 100%;
+}
+
+pre {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ─────────────────────────────────────────────
+   LATO TYPOGRAPHY UTILITIES (User Requested)
+───────────────────────────────────────────── */
+.lato-thin {
+  font-family: "Lato", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.lato-light {
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.lato-regular {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.lato-bold {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.lato-black {
+  font-family: "Lato", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.lato-thin-italic {
+  font-family: "Lato", sans-serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.lato-light-italic {
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.lato-regular-italic {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.lato-bold-italic {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.lato-black-italic {
+  font-family: "Lato", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+}
+
+/* ─────────────────────────────────────────────
+   GLOBAL LATO ENFORCEMENT & LOGO PROTECTION
+───────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6, p, a, span, button, input, select, textarea, li, label, div {
+  font-family: 'Lato', sans-serif;
+}
+
+/* STRICT LOGO PROTECTION: DO NOT CHANGE FONT OF OLLASOFTWARE LOGO */
+.brand-name,
+.brand-logo-text,
+.brand-blue-text,
+.site-logo,
+.brand .brand-name,
+.logo .brand-name,
+.brand-logo {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+}
+
+/* PROTECT MONOSPACE FONT (Tags, code, stats counters) */
+.mono,
+code,
+kbd,
+samp,
+pre,
+.hero-code,
+.mono-tag {
+  font-family: var(--o-font-mono, 'JetBrains Mono', monospace) !important;
 }
 
 /* Visually Hidden Utility */
