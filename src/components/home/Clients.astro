@@ -99,7 +99,13 @@ const categoryTitles: Record<string, { first: string; amp: string; second: strin
               </div>
               <div class="card-bottom">
                 <span class="product-domain mono">
-                  {item.domain} <span class="arrow">↗</span>
+                  {item.domain}
+                  <span class="arrow" aria-hidden="true">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="7" y1="17" x2="17" y2="7"/>
+                      <polyline points="7 7 17 7 17 17"/>
+                    </svg>
+                  </span>
                 </span>
               </div>
             </a>
@@ -630,8 +636,13 @@ const categoryTitles: Record<string, { first: string; amp: string; second: strin
   }
 
   .product-domain .arrow {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
     transition: transform 200ms ease;
+  }
+  .product-domain .arrow svg {
+    display: block;
   }
   .product-card:hover .product-domain { color: #1769ff; }
   :global(html[data-theme="dark"]) .product-card:hover .product-domain { color: #38bdf8; }
