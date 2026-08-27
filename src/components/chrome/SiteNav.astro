@@ -285,7 +285,8 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
 
 <style>
   .nav {
-    position: relative;
+    position: sticky;
+    top: 0;
     width: 100%;
     height: 68px;
     background: rgba(255, 255, 255, 0.85) !important;
@@ -656,9 +657,9 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
     .drawer-content-scroll {
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      gap: 24px;
-      padding: 20px 20px 48px;
+      justify-content: flex-start;
+      gap: 0;
+      padding: 20px 20px 40px;
       width: 100%;
       height: calc(100vh - 64px);
       overflow-y: auto;
@@ -811,7 +812,7 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
       gap: 16px;
       padding-top: 18px;
       border-top: 1px solid rgba(0, 0, 0, 0.08);
-      margin-top: 6px;
+      margin-top: auto;
     }
 
     :global(html[data-theme="dark"]) .drawer-bottom-zone {
