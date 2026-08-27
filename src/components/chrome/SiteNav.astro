@@ -119,33 +119,26 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
         </a>
       </div>
 
-      <!-- SECTION 1: SERVICES (Full Row with 2 Columns) -->
-      <div class="drawer-section">
-        <div class="drawer-sec-head">SERVICES</div>
-        <div class="drawer-grid-2col">
+      <!-- ROW 1: SERVICES (Left) & TOP 10 RANKINGS (Right) -->
+      <div class="drawer-row-split">
+        <div class="drawer-sub-section">
+          <div class="drawer-sec-head">SERVICES</div>
           <div class="drawer-col">
             <a href="/services/ai-software/" class="drawer-item-link">AI Software Development</a>
             <a href="/services/software-dev/" class="drawer-item-link">Software Development</a>
             <a href="/services/aeo/" class="drawer-item-link">Answer Engine Optimization</a>
-          </div>
-          <div class="drawer-col">
             <a href="/services/seo/" class="drawer-item-link">Search Engine Optimization</a>
             <a href="/services/social-media/" class="drawer-item-link">Social Media Marketing</a>
             <a href="/services/performance-marketing/" class="drawer-item-link">Performance Marketing</a>
           </div>
         </div>
-      </div>
 
-      <!-- SECTION 2: TOP 10 RANKINGS (Full Row with 2 Columns) -->
-      <div class="drawer-section">
-        <div class="drawer-sec-head">TOP 10 RANKINGS</div>
-        <div class="drawer-grid-2col">
+        <div class="drawer-sub-section">
+          <div class="drawer-sec-head">TOP 10 RANKINGS</div>
           <div class="drawer-col">
             <a href="/top-10/ai-software-development-companies-bangalore/" class="drawer-item-link">AI Software · BLR</a>
             <a href="/top-10/software-development-companies-bangalore/" class="drawer-item-link">Software Dev · BLR</a>
             <a href="/top-10/aeo-companies-india/" class="drawer-item-link">AEO · India</a>
-          </div>
-          <div class="drawer-col">
             <a href="/top-10/seo-agencies-bangalore/" class="drawer-item-link">SEO · BLR</a>
             <a href="/top-10/social-media-marketing-agencies-bangalore/" class="drawer-item-link">Social · BLR</a>
             <a href="/top-10/performance-marketing-agencies-bangalore/" class="drawer-item-link">Performance · BLR</a>
@@ -153,50 +146,42 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
         </div>
       </div>
 
-      <!-- SECTION 3: WORK (Full Row with 2 Columns) -->
-      <div class="drawer-section">
-        <div class="drawer-sec-head">WORK</div>
-        <div class="drawer-grid-2col">
+      <!-- ROW 2: WORK (Left) & COMPANY (Right) -->
+      <div class="drawer-row-split">
+        <div class="drawer-sub-section">
+          <div class="drawer-sec-head">WORK</div>
           <div class="drawer-col">
             <a href="/work/" class="drawer-item-link">Case studies</a>
             <a href="/work/" class="drawer-item-link">Recent work</a>
-          </div>
-          <div class="drawer-col">
             <a href="/work/#industries" class="drawer-item-link">Industries</a>
             <a href="/process/#sow" class="drawer-item-link">Sample SOW</a>
           </div>
         </div>
-      </div>
 
-      <!-- SECTION 4: COMPANY (Full Row with 2 Columns) -->
-      <div class="drawer-section">
-        <div class="drawer-sec-head">COMPANY</div>
-        <div class="drawer-grid-2col">
+        <div class="drawer-sub-section">
+          <div class="drawer-sec-head">COMPANY</div>
           <div class="drawer-col">
             <a href="/process/" class="drawer-item-link">Process</a>
             <a href="/about/" class="drawer-item-link">About</a>
             <a href="/blog/" class="drawer-item-link">Blog</a>
-          </div>
-          <div class="drawer-col">
             <a href="/jobs/" class="drawer-item-link">Jobs · 19 roles</a>
             <a href="/about/#press" class="drawer-item-link">Press</a>
           </div>
         </div>
       </div>
 
-      <!-- SECTION 5: TRUST (Full Row with 2 Columns) -->
-      <div class="drawer-section">
-        <div class="drawer-sec-head">TRUST</div>
-        <div class="drawer-grid-2col">
+      <!-- ROW 3: TRUST (Left) -->
+      <div class="drawer-row-split">
+        <div class="drawer-sub-section">
+          <div class="drawer-sec-head">TRUST</div>
           <div class="drawer-col">
             <a href="/process/#security" class="drawer-item-link">SOC 2</a>
             <a href="/process/#gdpr" class="drawer-item-link">GDPR / DPA</a>
-          </div>
-          <div class="drawer-col">
             <a href="/process/#msa" class="drawer-item-link">Master MSA</a>
             <a href="/process/#bounty" class="drawer-item-link">Security FAQ</a>
           </div>
         </div>
+        <div class="drawer-sub-section"></div>
       </div>
 
       <!-- BOTTOM CONTROLS: Dark Mode & Contact us Button -->
@@ -830,6 +815,17 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 16px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    :global(html[data-theme="dark"]) .drawer-row-split {
+      border-bottom-color: rgba(255, 255, 255, 0.07);
+    }
+
+    .drawer-row-split:last-of-type {
+      border-bottom: none;
+      padding-bottom: 0;
     }
 
     .drawer-sub-section {
