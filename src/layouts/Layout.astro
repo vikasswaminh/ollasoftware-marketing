@@ -28,8 +28,8 @@ const {
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
-const ogImageAbs = new URL(ogImage, Astro.site).toString();
-const ogImageSquareAbs = new URL('/og-image-square.png', Astro.site).toString();
+const ogImageAbs = new URL(ogImage, Astro.site).toString() + '?v=3';
+const ogImageSquareAbs = new URL('/og-image-square.png', Astro.site).toString() + '?v=3';
 
 // Always inject Organization + WebSite; add Breadcrumb if provided; then any
 // page-specific schemas the caller passed via `jsonLd`.
