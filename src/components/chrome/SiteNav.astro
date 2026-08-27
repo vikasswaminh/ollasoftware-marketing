@@ -77,54 +77,119 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
       </button>
     </div>
 
-    <!-- Mobile Drawer Links -->
+    <!-- Mobile Drawer Links (Categorized Multi-Column Layout Matching Design Picture) -->
     <nav class="nav-links" id="nav-links" aria-label="Mobile Navigation">
-      <a href="/services/" class:list={['nav-link', { active: isActive('/services/') }]}>Services</a>
-      <a href="/work/" class:list={['nav-link', { active: isActive('/work/') }]}>Work</a>
-      <a href="/blog/" class:list={['nav-link', { active: isActive('/blog/') }]}>Blog</a>
-      <a href="/jobs/" class:list={['nav-link', { active: isActive('/jobs/') }]}>Jobs</a>
-      <a href="/about/" class:list={['nav-link', { active: isActive('/about/') }]}>About</a>
+      <div class="drawer-content-scroll">
+        
+        <!-- SECTION 1: SERVICES (2 Columns) -->
+        <div class="drawer-section">
+          <div class="drawer-sec-head">SERVICES</div>
+          <div class="drawer-grid-2col">
+            <div class="drawer-col">
+              <a href="/services/ai-software/" class="drawer-item-link">AI Software Development</a>
+              <a href="/services/software-dev/" class="drawer-item-link">Software Development</a>
+              <a href="/services/aeo/" class="drawer-item-link">Answer Engine Optimization</a>
+            </div>
+            <div class="drawer-col">
+              <a href="/services/seo/" class="drawer-item-link">Search Engine Optimization</a>
+              <a href="/services/social-media/" class="drawer-item-link">Social Media Marketing</a>
+              <a href="/services/performance-marketing/" class="drawer-item-link">Performance Marketing</a>
+            </div>
+          </div>
+        </div>
 
-      <!-- Theme Switcher Row inside Mobile Menu Drawer -->
-      <div class="drawer-theme-toggle-row">
-        <span class="drawer-theme-label">Dark Mode</span>
-        <button
-          type="button"
-          class="theme-toggle-switch drawer-theme-btn"
-          aria-label="Toggle dark mode"
-          role="switch"
-          aria-checked="false"
-        >
-          <span class="toggle-track">
-            <span class="toggle-thumb">
-              <svg class="thumb-icon icon-sun" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="5"/>
-                <line x1="12" y1="1" x2="12" y2="3"/>
-                <line x1="12" y1="21" x2="12" y2="23"/>
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                <line x1="1" y1="12" x2="3" y2="12"/>
-                <line x1="21" y1="12" x2="23" y2="12"/>
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-              </svg>
-              <svg class="thumb-icon icon-moon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#1769FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-              </svg>
-            </span>
-          </span>
-        </button>
-      </div>
+        <!-- SECTION 2: TOP 10 RANKINGS (Left) & WORK (Right) -->
+        <div class="drawer-row-split">
+          <div class="drawer-sub-section">
+            <div class="drawer-sec-head">TOP 10 RANKINGS</div>
+            <div class="drawer-col">
+              <a href="/top-10/ai-software-development-companies-bangalore/" class="drawer-item-link">AI Software · BLR</a>
+              <a href="/top-10/software-development-companies-bangalore/" class="drawer-item-link">Software Dev · BLR</a>
+              <a href="/top-10/aeo-companies-india/" class="drawer-item-link">AEO · India</a>
+              <a href="/top-10/seo-agencies-bangalore/" class="drawer-item-link">SEO · BLR</a>
+              <a href="/top-10/social-media-marketing-agencies-bangalore/" class="drawer-item-link">Social · BLR</a>
+              <a href="/top-10/performance-marketing-agencies-bangalore/" class="drawer-item-link">Performance · BLR</a>
+            </div>
+          </div>
 
-      <!-- Drawer Contact Us CTA Button -->
-      <div class="drawer-cta-wrap">
-        <a href="/contact/" class="drawer-cta-btn">
-          <span>Contact us</span>
-          <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="5" y1="12" x2="19" y2="12"/>
-            <polyline points="12 5 19 12 12 19"/>
-          </svg>
-        </a>
+          <div class="drawer-sub-section">
+            <div class="drawer-sec-head">WORK</div>
+            <div class="drawer-col">
+              <a href="/work/" class="drawer-item-link">Case studies</a>
+              <a href="/work/" class="drawer-item-link">Recent work</a>
+              <a href="/work/#industries" class="drawer-item-link">Industries</a>
+              <a href="/process/#sow" class="drawer-item-link">Sample SOW</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 3: COMPANY (Left) & TRUST (Right) -->
+        <div class="drawer-row-split">
+          <div class="drawer-sub-section">
+            <div class="drawer-sec-head">COMPANY</div>
+            <div class="drawer-col">
+              <a href="/process/" class="drawer-item-link">Process</a>
+              <a href="/about/" class="drawer-item-link">About</a>
+              <a href="/blog/" class="drawer-item-link">Blog</a>
+              <a href="/jobs/" class="drawer-item-link">Jobs · 19 roles</a>
+              <a href="/about/#press" class="drawer-item-link">Press</a>
+            </div>
+          </div>
+
+          <div class="drawer-sub-section">
+            <div class="drawer-sec-head">TRUST</div>
+            <div class="drawer-col">
+              <a href="/process/#security" class="drawer-item-link">SOC 2</a>
+              <a href="/process/#gdpr" class="drawer-item-link">GDPR / DPA</a>
+              <a href="/process/#msa" class="drawer-item-link">Master MSA</a>
+              <a href="/process/#bounty" class="drawer-item-link">Security FAQ</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- BOTTOM CONTROLS: Dark Mode & Contact us Button -->
+        <div class="drawer-bottom-zone">
+          <div class="drawer-theme-toggle-row">
+            <span class="drawer-theme-label">Dark Mode</span>
+            <button
+              type="button"
+              class="theme-toggle-switch drawer-theme-btn"
+              aria-label="Toggle dark mode"
+              role="switch"
+              aria-checked="false"
+            >
+              <span class="toggle-track">
+                <span class="toggle-thumb">
+                  <svg class="thumb-icon icon-sun" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                  </svg>
+                  <svg class="thumb-icon icon-moon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#1769FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                  </svg>
+                </span>
+              </span>
+            </button>
+          </div>
+
+          <div class="drawer-cta-wrap">
+            <a href="/contact/" class="drawer-cta-btn">
+              <span>Contact us</span>
+              <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"/>
+                <polyline points="12 5 19 12 12 19"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
       </div>
     </nav>
   </div>
@@ -517,16 +582,17 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
       top: 64px;
       left: 0;
       right: 0;
+      bottom: 0;
       transform: none;
       background: #ffffff;
       border-bottom: 1px solid rgba(0, 0, 0, 0.1);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
       flex-direction: column;
-      align-items: flex-start;
+      align-items: stretch;
       gap: 0;
-      padding: 12px 20px 24px;
-      max-height: calc(100vh - 64px);
+      padding: 0;
       overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
       z-index: 999;
     }
 
@@ -539,19 +605,94 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
       display: flex !important;
     }
 
-    .nav-links .nav-link {
+    .drawer-content-scroll {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+      padding: 20px 20px 36px;
       width: 100%;
-      padding: 14px 4px;
-      font-size: 16px;
-      font-weight: 600;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-      color: #0f172a !important;
-      font-family: 'Lato', sans-serif;
+      box-sizing: border-box;
     }
 
-    :global(html[data-theme="dark"]) .nav-links .nav-link {
-      border-bottom-color: rgba(255, 255, 255, 0.08);
-      color: #f8fafc !important;
+    .drawer-section {
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .drawer-sec-head {
+      font-family: 'Lato', sans-serif;
+      font-size: 11.5px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #0f172a;
+      margin-bottom: 12px;
+      padding-bottom: 4px;
+    }
+
+    :global(html[data-theme="dark"]) .drawer-sec-head {
+      color: #f8fafc;
+    }
+
+    .drawer-grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .drawer-row-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .drawer-sub-section {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .drawer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .drawer-item-link {
+      font-family: 'Lato', sans-serif;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: #475569 !important;
+      text-decoration: none;
+      line-height: 1.35;
+      padding: 2px 0;
+      transition: color 0.15s ease, transform 0.15s ease;
+      word-break: break-word;
+    }
+
+    .drawer-item-link:hover {
+      color: #1D6AF3 !important;
+      transform: translateX(2px);
+    }
+
+    :global(html[data-theme="dark"]) .drawer-item-link {
+      color: #94a3b8 !important;
+    }
+
+    :global(html[data-theme="dark"]) .drawer-item-link:hover {
+      color: #38BDF8 !important;
+    }
+
+    .drawer-bottom-zone {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(0, 0, 0, 0.08);
+      margin-top: 6px;
+    }
+
+    :global(html[data-theme="dark"]) .drawer-bottom-zone {
+      border-top-color: rgba(255, 255, 255, 0.08);
     }
 
     .drawer-theme-toggle-row {
@@ -559,18 +700,12 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      padding: 16px 4px 12px;
-      margin-top: 4px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-    }
-
-    :global(html[data-theme="dark"]) .drawer-theme-toggle-row {
-      border-bottom-color: rgba(255, 255, 255, 0.08);
+      padding: 4px 0;
     }
 
     .drawer-theme-label {
-      font-size: 16px;
-      font-weight: 600;
+      font-size: 14.5px;
+      font-weight: 700;
       color: #0f172a;
       font-family: 'Lato', sans-serif;
     }
@@ -581,7 +716,6 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
 
     .drawer-cta-wrap {
       width: 100%;
-      padding-top: 18px;
     }
 
     .drawer-cta-btn {
@@ -594,8 +728,8 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
       border-radius: 100px;
       background: #1D6AF3;
       color: #ffffff !important;
-      font-size: 15px;
-      font-weight: 600;
+      font-size: 14.5px;
+      font-weight: 700;
       text-decoration: none;
       box-shadow: 0 4px 16px rgba(29, 106, 243, 0.35);
       font-family: 'Lato', sans-serif;
