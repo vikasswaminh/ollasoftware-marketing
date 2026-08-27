@@ -53,8 +53,8 @@
   --o-radius:    10px;
   --o-radius-lg: 14px;
 
-  --o-font-sans: 'Lato', sans-serif;
-  --o-font-mono: 'Geist Mono', ui-monospace, 'JetBrains Mono', monospace;
+  --o-font-sans: 'Lato', system-ui, -apple-system, sans-serif;
+  --o-font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace;
 }
 
 /* ══════════════════════════════════════════════════════════════════════
