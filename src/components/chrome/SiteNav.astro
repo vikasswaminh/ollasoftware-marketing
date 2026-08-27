@@ -301,8 +301,10 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
   }
 
   :global(html[data-theme="dark"]) .nav {
-    background: rgba(7, 10, 18, 0.85) !important;
-    border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+    background: rgba(7, 10, 18, 0.92) !important;
+    backdrop-filter: blur(16px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+    border-bottom: 1px solid rgba(56, 189, 248, 0.16) !important;
   }
 
   /* 3-Zone Header Layout: Left Brand, Center Links, Right CTA */
@@ -525,16 +527,13 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
     transition: transform 0.18s, opacity 0.14s;
   }
 
-  :global(html[data-theme="dark"]) .nav:not(.nav--sticky) {
-    background: transparent !important;
-  }
-
   :global(html[data-theme="dark"]) .nav-burger {
-    border-color: rgba(255, 255, 255, 0.18);
+    border-color: rgba(56, 189, 248, 0.3) !important;
+    background: rgba(255, 255, 255, 0.05) !important;
   }
 
   :global(html[data-theme="dark"]) .burger-line {
-    background: #ffffff;
+    background: #ffffff !important;
   }
 
   .nav-open .burger-line:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
