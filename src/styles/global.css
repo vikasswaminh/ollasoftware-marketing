@@ -36,6 +36,11 @@ html {
   width: 100%;
 }
 
+html.nav-drawer-open,
+html.nav-drawer-open body {
+  overflow: hidden !important;
+}
+
 body {
   margin: 0;
   padding: 0;
