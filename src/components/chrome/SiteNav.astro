@@ -84,7 +84,6 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
       <a href="/blog/" class:list={['nav-link', { active: isActive('/blog/') }]}>Blog</a>
       <a href="/jobs/" class:list={['nav-link', { active: isActive('/jobs/') }]}>Jobs</a>
       <a href="/about/" class:list={['nav-link', { active: isActive('/about/') }]}>About</a>
-      <a href="/contact/" class:list={['nav-link', { active: isActive('/contact/') }]}>Contact</a>
 
       <!-- Theme Switcher Row inside Mobile Menu Drawer -->
       <div class="drawer-theme-toggle-row">
@@ -115,6 +114,17 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
             </span>
           </span>
         </button>
+      </div>
+
+      <!-- Drawer Contact Us CTA Button -->
+      <div class="drawer-cta-wrap">
+        <a href="/contact/" class="drawer-cta-btn">
+          <span>Contact us</span>
+          <svg class="arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </a>
       </div>
     </nav>
   </div>
@@ -485,12 +495,20 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
       justify-self: auto;
       padding: 0;
       transform: none;
-    }
-    .nav-right {
       gap: 10px;
     }
+    .nav-right {
+      gap: 0;
+    }
+
+    /* ── Hide top-navbar toggle and Contact Us button on mobile screens ── */
+    .nav-right .theme-toggle-switch:not(.drawer-theme-btn),
+    .nav-right .cta-btn {
+      display: none !important;
+    }
+
     .nav-burger {
-      display: inline-flex;
+      display: inline-flex !important;
     }
 
     .nav-links {
@@ -541,8 +559,13 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
       align-items: center;
       justify-content: space-between;
       width: 100%;
-      padding: 16px 4px 8px;
+      padding: 16px 4px 12px;
       margin-top: 4px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    :global(html[data-theme="dark"]) .drawer-theme-toggle-row {
+      border-bottom-color: rgba(255, 255, 255, 0.08);
     }
 
     .drawer-theme-label {
@@ -555,27 +578,42 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
     :global(html[data-theme="dark"]) .drawer-theme-label {
       color: #f8fafc;
     }
+
+    .drawer-cta-wrap {
+      width: 100%;
+      padding-top: 18px;
+    }
+
+    .drawer-cta-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 12px 20px;
+      border-radius: 100px;
+      background: #1D6AF3;
+      color: #ffffff !important;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      box-shadow: 0 4px 16px rgba(29, 106, 243, 0.35);
+      font-family: 'Lato', sans-serif;
+      box-sizing: border-box;
+      transition: background 0.2s ease;
+    }
+
+    .drawer-cta-btn:hover {
+      background: #1557D0;
+    }
   }
 
   @media (max-width: 540px) {
     .brand-blue-text {
-      font-size: 19px !important;
+      font-size: 20px !important;
     }
     .brand-logo-img {
       height: 36px !important;
-    }
-    .cta-btn {
-      padding: 8px 14px;
-      font-size: 12.5px;
-    }
-    .cta-btn span {
-      display: inline-block;
-    }
-  }
-
-  @media (max-width: 380px) {
-    .cta-btn {
-      display: none !important;
     }
   }
 </style>
