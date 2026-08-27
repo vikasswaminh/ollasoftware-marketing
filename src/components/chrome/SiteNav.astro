@@ -119,70 +119,7 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
         </a>
       </div>
 
-      <!-- ROW 1: SERVICES (Left) & TOP 10 RANKINGS (Right) -->
-      <div class="drawer-row-split">
-        <div class="drawer-sub-section">
-          <div class="drawer-sec-head">SERVICES</div>
-          <div class="drawer-col">
-            <a href="/services/ai-software/" class="drawer-item-link">AI Software Development</a>
-            <a href="/services/software-dev/" class="drawer-item-link">Software Development</a>
-            <a href="/services/aeo/" class="drawer-item-link">Answer Engine Optimization</a>
-            <a href="/services/seo/" class="drawer-item-link">Search Engine Optimization</a>
-            <a href="/services/social-media/" class="drawer-item-link">Social Media Marketing</a>
-            <a href="/services/performance-marketing/" class="drawer-item-link">Performance Marketing</a>
-          </div>
-        </div>
 
-        <div class="drawer-sub-section">
-          <div class="drawer-sec-head">TOP 10 RANKINGS</div>
-          <div class="drawer-col">
-            <a href="/top-10/ai-software-development-companies-bangalore/" class="drawer-item-link">AI Software · BLR</a>
-            <a href="/top-10/software-development-companies-bangalore/" class="drawer-item-link">Software Dev · BLR</a>
-            <a href="/top-10/aeo-companies-india/" class="drawer-item-link">AEO · India</a>
-            <a href="/top-10/seo-agencies-bangalore/" class="drawer-item-link">SEO · BLR</a>
-            <a href="/top-10/social-media-marketing-agencies-bangalore/" class="drawer-item-link">Social · BLR</a>
-            <a href="/top-10/performance-marketing-agencies-bangalore/" class="drawer-item-link">Performance · BLR</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- ROW 2: WORK (Left) & COMPANY (Right) -->
-      <div class="drawer-row-split">
-        <div class="drawer-sub-section">
-          <div class="drawer-sec-head">WORK</div>
-          <div class="drawer-col">
-            <a href="/work/" class="drawer-item-link">Case studies</a>
-            <a href="/work/" class="drawer-item-link">Recent work</a>
-            <a href="/work/#industries" class="drawer-item-link">Industries</a>
-            <a href="/process/#sow" class="drawer-item-link">Sample SOW</a>
-          </div>
-        </div>
-
-        <div class="drawer-sub-section">
-          <div class="drawer-sec-head">COMPANY</div>
-          <div class="drawer-col">
-            <a href="/process/" class="drawer-item-link">Process</a>
-            <a href="/about/" class="drawer-item-link">About</a>
-            <a href="/blog/" class="drawer-item-link">Blog</a>
-            <a href="/jobs/" class="drawer-item-link">Jobs · 19 roles</a>
-            <a href="/about/#press" class="drawer-item-link">Press</a>
-          </div>
-        </div>
-      </div>
-
-      <!-- ROW 3: TRUST (Left) -->
-      <div class="drawer-row-split">
-        <div class="drawer-sub-section">
-          <div class="drawer-sec-head">TRUST</div>
-          <div class="drawer-col">
-            <a href="/process/#security" class="drawer-item-link">SOC 2</a>
-            <a href="/process/#gdpr" class="drawer-item-link">GDPR / DPA</a>
-            <a href="/process/#msa" class="drawer-item-link">Master MSA</a>
-            <a href="/process/#bounty" class="drawer-item-link">Security FAQ</a>
-          </div>
-        </div>
-        <div class="drawer-sub-section"></div>
-      </div>
 
       <!-- BOTTOM CONTROLS: Dark Mode & Contact us Button -->
       <div class="drawer-bottom-zone">
@@ -719,8 +656,9 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
     .drawer-content-scroll {
       display: flex;
       flex-direction: column;
-      gap: 20px;
-      padding: 16px 18px 48px;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 20px 20px 48px;
       width: 100%;
       height: calc(100vh - 64px);
       overflow-y: auto;
@@ -731,27 +669,28 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
     .drawer-primary-nav {
       display: flex;
       flex-direction: column;
-      gap: 4px;
-      padding-bottom: 14px;
-      border-bottom: 1.5px solid rgba(0, 0, 0, 0.08);
-    }
-
-    :global(html[data-theme="dark"]) .drawer-primary-nav {
-      border-bottom-color: rgba(255, 255, 255, 0.1);
+      gap: 2px;
+      padding-bottom: 8px;
     }
 
     .drawer-main-link {
       font-family: 'Lato', sans-serif;
-      font-size: 16.5px;
+      font-size: 18px;
       font-weight: 700;
       color: #0f172a !important;
       text-decoration: none;
-      padding: 8px 8px;
-      border-radius: 8px;
+      padding: 14px 12px;
+      border-radius: 10px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
       display: flex;
       align-items: center;
       justify-content: space-between;
       transition: all 0.15s ease;
+    }
+
+    :global(html[data-theme="dark"]) .drawer-main-link {
+      color: #f8fafc !important;
+      border-bottom-color: rgba(255, 255, 255, 0.06);
     }
 
     .drawer-main-link:hover,
@@ -762,11 +701,13 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
 
     .nav-arrow {
       color: #94a3b8;
-      font-size: 14px;
+      font-size: 16px;
+      transition: transform 0.15s ease;
     }
 
-    :global(html[data-theme="dark"]) .drawer-main-link {
-      color: #f8fafc !important;
+    .drawer-main-link:hover .nav-arrow {
+      transform: translateX(4px);
+      color: #1D6AF3;
     }
 
     :global(html[data-theme="dark"]) .drawer-main-link:hover,
