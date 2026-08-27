@@ -211,40 +211,58 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
 
 <script is:inline>
   (() => {
-    // ── Mobile Menu Toggle ──
-    const nav = document.getElementById('site-nav');
-    if (nav) {
+    function initMobileNav() {
+      const nav = document.getElementById('site-nav');
+      if (!nav) return;
       const btn = nav.querySelector('.nav-burger');
+      const drawer = document.getElementById('nav-links');
+      if (!btn || !drawer) return;
+
       const setOpen = (open) => {
-        nav.classList.toggle('nav-open', open);
-        if (btn) {
-          btn.setAttribute('aria-expanded', String(open));
-          btn.setAttribute('aria-label', open ? 'Close navigation menu' : 'Open navigation menu');
+        if (open) {
+          nav.classList.add('nav-open');
+          btn.setAttribute('aria-expanded', 'true');
+          btn.setAttribute('aria-label', 'Close navigation menu');
+          document.body.style.overflow = 'hidden';
+        } else {
+          nav.classList.remove('nav-open');
+          btn.setAttribute('aria-expanded', 'false');
+          btn.setAttribute('aria-label', 'Open navigation menu');
+          document.body.style.overflow = '';
         }
-        document.documentElement.style.overflow = open ? 'hidden' : '';
       };
 
-      if (btn) {
-        btn.addEventListener('click', () => {
-          setOpen(!nav.classList.contains('nav-open'));
+      btn.onclick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        const isOpen = nav.classList.contains('nav-open');
+        setOpen(!isOpen);
+      };
+
+      drawer.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => {
+          setOpen(false);
         });
-      }
-
-      nav.querySelectorAll('.nav-links a').forEach((a) => {
-        a.addEventListener('click', () => setOpen(false));
-      });
-
-      document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && nav.classList.contains('nav-open')) setOpen(false);
       });
 
       document.addEventListener('click', (e) => {
         if (!nav.classList.contains('nav-open')) return;
-        if (e.target instanceof Element && !nav.contains(e.target)) setOpen(false);
+        if (e.target instanceof Element && !nav.contains(e.target)) {
+          setOpen(false);
+        }
       });
 
-      const mq = window.matchMedia('(min-width: 901px)');
-      mq.addEventListener('change', (e) => { if (e.matches) setOpen(false); });
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && nav.classList.contains('nav-open')) {
+          setOpen(false);
+        }
+      });
+
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 900 && nav.classList.contains('nav-open')) {
+          setOpen(false);
+        }
+      });
     }
 
     // ── Dark Mode Toggle (Synchronize all toggle buttons on page) ──
@@ -282,11 +300,17 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
       });
     };
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initThemeToggle);
-    } else {
+    const setup = () => {
+      initMobileNav();
       initThemeToggle();
+    };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setup);
+    } else {
+      setup();
     }
+    document.addEventListener('astro:page-load', setup);
   })();
 </script>
 
@@ -607,7 +631,7 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
       padding: 0;
       overflow-y: auto;
       -webkit-overflow-scrolling: touch;
-      z-index: 999;
+      z-index: 99999 !important;
     }
 
     :global(html[data-theme="dark"]) .nav-links {
@@ -615,8 +639,12 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
       border-bottom-color: rgba(255, 255, 255, 0.12) !important;
     }
 
-    .nav.nav-open .nav-links {
+    .nav.nav-open .nav-links,
+    #site-nav.nav-open .nav-links {
       display: flex !important;
+      visibility: visible !important;
+      opacity: 1 !important;
+      pointer-events: auto !important;
     }
 
     .drawer-content-scroll {
