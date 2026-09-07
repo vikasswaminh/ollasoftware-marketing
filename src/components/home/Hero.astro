@@ -35,13 +35,25 @@ const statItems = [
   <div class="hero-container">
     <!-- 1. FULL-WIDTH HERO IMAGE ON TOP -->
     <div class="hero-ecosystem-visual">
+        <!-- Light mode image -->
         <img
           src="/hadiya.png"
           alt="Ollasoftware Hero"
-          class="hero-ecosystem-img"
+          class="hero-ecosystem-img hero-img-light"
           loading="eager"
           decoding="async"
         />
+        <!-- Dark mode image -->
+        <picture class="hero-img-dark">
+          <source srcset="/hero-ecosystem-dark.webp" type="image/webp" />
+          <img
+            src="/hero-ecosystem-dark.png"
+            alt="Ollasoftware Global AI Innovation and 49+ Indian AI Brands in Production"
+            class="hero-ecosystem-img"
+            loading="eager"
+            decoding="async"
+          />
+        </picture>
       </div>
 
     <!-- 2. TWO-COLUMN CONTENT: Headline on Left, Description + CTAs on Right -->

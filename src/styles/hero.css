@@ -100,6 +100,24 @@ html[data-theme="dark"] .hero-ecosystem-dark {
   display: block !important;
 }
 
+/* Light / dark hero image visibility */
+.hero-img-light {
+  display: block;
+}
+
+.hero-img-dark {
+  display: none;
+  width: 100%;
+}
+
+html[data-theme="dark"] .hero-img-light {
+  display: none !important;
+}
+
+html[data-theme="dark"] .hero-img-dark {
+  display: block !important;
+}
+
 .hero-ecosystem-img {
   width: 100%;
   max-width: 100%;
