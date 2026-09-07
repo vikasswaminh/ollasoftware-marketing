@@ -18,14 +18,9 @@
 }
 
 html[data-theme="dark"] .hero-section {
-  background-color: #080f1d !important;
-  background: #080f1d !important;
-  background-image:
-    radial-gradient(circle at 50% 20%, rgba(33, 107, 255, 0.16) 0%, rgba(255, 122, 0, 0.06) 42%, transparent 70%),
-    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px) !important;
-  background-size: 100% 100%, 46px 46px, 46px 46px !important;
-  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+  background-color: #010818 !important;
+  background: #010818 !important;
+  border-bottom-color: rgba(255, 255, 255, 0.06) !important;
 }
 
 /* Ambient overlay for dark mode depth */
