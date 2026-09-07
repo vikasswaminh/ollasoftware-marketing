@@ -103,11 +103,25 @@ html[data-theme="dark"] .hero-ecosystem-dark {
 /* Light / dark hero image visibility */
 .hero-img-light {
   display: block;
+  width: 100%;
 }
 
 .hero-img-dark {
   display: none;
   width: 100%;
+  line-height: 0;
+  font-size: 0;
+}
+
+.hero-img-dark img {
+  width: 100%;
+  max-width: 100%;
+  max-height: clamp(400px, 58vh, 580px);
+  height: auto;
+  object-fit: contain;
+  object-position: top center;
+  display: block;
+  margin: 0 auto;
 }
 
 html[data-theme="dark"] .hero-img-light {
