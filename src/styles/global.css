@@ -4,22 +4,78 @@
 
 @import './tokens.css';
 
-/* ── Uniform Site-Wide Container (Clean side gutters & fully responsive) ── */
+/* ── Uniform Site-Wide Container (Matching Networkers Home max-w-7xl mx-auto px-4 sm:px-6 lg:px-8) ── */
 .site-container,
 .hero-container,
-.nav-container,
 .services-zoom-container,
 .process-rules-container,
 .work-container,
 .asymmetric-bento-grid,
-.page-container {
-  max-width: 1200px !important;
+.page-container,
+.cta-container,
+.foot-container {
+  max-width: 1280px !important;
   margin-left: auto !important;
   margin-right: auto !important;
   width: 100% !important;
   box-sizing: border-box !important;
-  padding-left: clamp(14px, 3.5vw, 28px);
-  padding-right: clamp(14px, 3.5vw, 28px);
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
+
+@media (min-width: 640px) {
+  .site-container,
+  .hero-container,
+  .services-zoom-container,
+  .process-rules-container,
+  .work-container,
+  .asymmetric-bento-grid,
+  .page-container,
+  .cta-container,
+  .foot-container {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .site-container,
+  .hero-container,
+  .services-zoom-container,
+  .process-rules-container,
+  .work-container,
+  .asymmetric-bento-grid,
+  .page-container,
+  .cta-container,
+  .foot-container {
+    padding-left: 32px !important;
+    padding-right: 32px !important;
+  }
+}
+
+/* ── Full-Width Navigation Container (Matching Networkers Home w-full px-4 sm:px-6 lg:px-8) ── */
+.nav-container {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  box-sizing: border-box !important;
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
+
+@media (min-width: 640px) {
+  .nav-container {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .nav-container {
+    padding-left: 32px !important;
+    padding-right: 32px !important;
+  }
 }
 
 /* Base resets & smooth transitions */

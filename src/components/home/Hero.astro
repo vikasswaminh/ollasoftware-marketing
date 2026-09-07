@@ -16,97 +16,97 @@ const {
   titleAccent = 'Pioneer',
   title = 'AI software company',
   titleSuffix = 'out of India.',
-  description = 'Ollasoftware is the pioneer AI software development company in India, <strong class="hl-sub">headquartered in Bangalore</strong>. Owners of 40+ AI brands in production — Aeoniti, Crawlcrawl, Switchllm, Ollima, Super25.ai and more. We build the same caliber of product for clients worldwide, in your repo, on your stack.',
-  showLogo = true,
+  description = 'Ollasoftware is the pioneer AI software development company in India, headquartered in Bangalore. Owners of 40+ AI brands in production — Aeoniti, Crawlcrawl, Switchllm, Ollima, Super25.ai and more. We build the same caliber of product for clients worldwide, in your repo, on your stack.',
+  showLogo = false,
 } = Astro.props;
 
-const trustItems = [
-  'Discovery in 5 days',
-  'SOC 2 Type II',
-  'You own the code',
-  'SOW signed in a week'
+const statItems = [
+  { value: '05 DAYS', label: 'Discovery' },
+  { value: 'SOC 2', label: 'Type II' },
+  { value: '100%', label: 'Code ownership' },
+  { value: '01 WEEK', label: 'SOW' }
 ];
 ---
 
 <section class="hero-section" id="hero">
-  <!-- Subtle center radial glow for contrast -->
-  <div class="hero-radial-glow" aria-hidden="true"></div>
+  <!-- Subtle overlay gradient for crisp typography contrast -->
+  <div class="hero-bg-overlay" aria-hidden="true"></div>
 
   <div class="hero-container">
-    <!-- LEFT COLUMN: Content aligned to left -->
-    <div class="hero-left-content">
-      <!-- 1. Top Metadata Tag -->
-      <FadeInText duration={0.6} yOffset={15}>
-        <div class="hero-meta-tag">
-          <span>{eyebrow}</span>
-        </div>
-      </FadeInText>
+    <!-- 1. FULL-WIDTH HERO IMAGE ON TOP -->
+    <div class="hero-ecosystem-visual">
+        <img
+          src="/hadiya.png"
+          alt="Ollasoftware Hero"
+          class="hero-ecosystem-img"
+          loading="eager"
+          decoding="async"
+        />
+      </div>
 
-      <!-- 2. Main 3-Line Headline -->
-      <FadeInText duration={0.8} yOffset={25}>
-        <h1 class="hero-headline">
-          <span class="hl-pioneer">{titleAccent}</span>
-          <span class="hl-main">{title}</span><br />
-          <span class="hl-subtext">{titleSuffix.replace(/\.$/, '')}<span class="hl-dot">.</span></span>
-        </h1>
-      </FadeInText>
-
-      <!-- 3. Description Paragraph -->
-      <FadeInText enhance={true} duration={0.8} yOffset={30}>
-        <p class="hero-desc" set:html={description} />
-      </FadeInText>
-
-      <!-- 4. CTA Action Buttons -->
-      <FadeInText enhance={true} duration={0.8} delay={0.1} yOffset={25}>
-        <div class="hero-actions">
-          <a href="/contact/" class="hero-btn primary">
-            <span>Contact us →</span>
-          </a>
-          <a href="/services/" class="hero-btn secondary">
-            <span>See what we ship</span>
-          </a>
-        </div>
-      </FadeInText>
-
-      <!-- 5. Trust / Proof Badge Pill -->
-      <FadeInText enhance={true} duration={0.8} delay={0.2} yOffset={20}>
-        <div class="hero-proof-pill">
-          <div class="proof-pill-content">
-            {trustItems.map((item, index) => (
-              <span class="proof-item">
-                <span class="proof-check-circle">✓</span>
-                <span>{item}</span>
-                {index < trustItems.length - 1 && <span class="proof-dot-separator">·</span>}
-              </span>
-            ))}
+    <!-- 2. TWO-COLUMN CONTENT: Headline on Left, Description + CTAs on Right -->
+    <div class="hero-content-grid">
+      <!-- LEFT COLUMN: Eyebrow + Big Headline -->
+      <div class="hero-col-left">
+        <FadeInText duration={0.6} yOffset={15}>
+          <div class="hero-eyebrow-wrap">
+            <span class="eyebrow-line" aria-hidden="true"></span>
+            <span class="hero-meta-tag">{eyebrow}</span>
           </div>
-        </div>
-      </FadeInText>
+        </FadeInText>
+
+        <FadeInText duration={0.8} yOffset={25}>
+          <h1 class="hero-headline">
+            <span class="hl-pioneer">{titleAccent}</span>
+            <span class="hl-main">{title}</span><br />
+            <span class="hl-subtext">{titleSuffix.replace(/\.$/, '')}<span class="hl-dot">.</span></span>
+          </h1>
+        </FadeInText>
+      </div>
+
+      <!-- RIGHT COLUMN: Paragraph Description + CTA Buttons -->
+      <div class="hero-col-right">
+        <FadeInText enhance={true} duration={0.8} yOffset={25}>
+          <p class="hero-desc" set:html={description} />
+        </FadeInText>
+
+        <FadeInText enhance={true} duration={0.8} delay={0.1} yOffset={20}>
+          <div class="hero-actions">
+            <a href="/contact/" class="hero-btn primary">
+              <span>Contact us</span>
+              <span class="btn-arrow" aria-hidden="true">→</span>
+            </a>
+            <a href="/services/" class="hero-btn secondary">
+              <span>See what we ship</span>
+            </a>
+          </div>
+        </FadeInText>
+      </div>
     </div>
 
-    <!-- RIGHT COLUMN: New Ollasoftware Building Emblem (Light & Dark, Static & Sharp) -->
-    {showLogo && (
-      <FadeInText enhance={true} duration={0.8} delay={0.15} yOffset={20} blur="0px">
-        <div class="hero-right-visual">
-          <div class="hero-3d-logo-wrapper" id="hero-static-logo">
-            <img
-              src="/logo-building-light.png"
-              alt="Ollasoftware Building Emblem"
-              class="hero-3d-logo-img hero-logo-light"
-              loading="eager"
-              decoding="async"
-            />
-            <img
-              src="/logo-building-dark.png"
-              alt="Ollasoftware Building Emblem"
-              class="hero-3d-logo-img hero-logo-dark"
-              loading="eager"
-              decoding="async"
-            />
-          </div>
+    <!-- 3. BOTTOM METRICS ROW: Stats on Left, Brand Slogan Tagline on Right -->
+    <FadeInText enhance={true} duration={0.8} delay={0.15} yOffset={15}>
+      <div class="hero-bottom-bar">
+        <div class="hero-stats-row">
+          {statItems.map((stat, index) => (
+            <div class="hero-stat-col">
+              <div class="hero-stat-item">
+                <span class="hero-stat-value">{stat.value}</span>
+                <span class="hero-stat-label">{stat.label}</span>
+              </div>
+              {index < statItems.length - 1 && (
+                <div class="hero-stat-divider" aria-hidden="true"></div>
+              )}
+            </div>
+          ))}
         </div>
-      </FadeInText>
-    )}
+
+        <div class="hero-tagline-col">
+          <span class="tagline-line" aria-hidden="true"></span>
+          <span class="hero-tagline-text">IDEAS &nbsp; PRODUCTS &nbsp; PEOPLE &nbsp; A BRIGHTER TOMORROW</span>
+        </div>
+      </div>
+    </FadeInText>
   </div>
 </section>
 

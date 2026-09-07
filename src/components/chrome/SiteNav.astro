@@ -310,15 +310,27 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
   /* 3-Zone Header Layout: Left Brand, Center Links, Right CTA */
   .nav-container {
     width: 100%;
-    max-width: 1360px;
+    max-width: 1440px;
     height: 100%;
     margin: 0 auto;
-    padding: 0 28px;
+    padding: 0 clamp(20px, 3.5vw, 48px);
     display: grid;
     grid-template-columns: auto 1fr auto;
     align-items: center;
     box-sizing: border-box;
     position: relative;
+  }
+
+  @media (min-width: 640px) {
+    .nav-container {
+      padding: 0 24px !important;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .nav-container {
+      padding: 0 32px !important;
+    }
   }
 
   /* LEFT ZONE: Brand / Logo */
