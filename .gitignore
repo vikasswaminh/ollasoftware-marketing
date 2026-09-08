@@ -29,3 +29,9 @@ Thumbs.db
 .cf-*.tmp.json
 *.html.tmp
 .ollastack-*.tmp.json
+
+# local-only hero assets (do not push)
+public/ollasoftware_hero_exact_size_svg.svg
+public/tintu.svg
+public/hero-dark.png
+public/hero-light.png
