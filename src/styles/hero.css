@@ -8,13 +8,14 @@
   position: relative;
   background-color: #FFFFFF !important;
   background: #FFFFFF !important;
-  padding: 0 clamp(20px, 3.5vw, 48px) clamp(24px, 3vw, 44px);
+  /* No top padding — image sits flush against the nav */
+  padding: 0 0 clamp(16px, 2vw, 32px);
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  border-bottom: none;
 }
 
 html[data-theme="dark"] .hero-section {
@@ -50,21 +51,21 @@ html[data-theme="dark"] .hero-bg-overlay {
 
 /* ── 1. FULL WIDTH ECOSYSTEM ILLUSTRATION ── */
 .hero-ecosystem-visual {
-  width: calc(100% + clamp(40px, 7vw, 96px));
-  margin-left: calc(-1 * clamp(20px, 3.5vw, 48px));
-  margin-right: calc(-1 * clamp(20px, 3.5vw, 48px));
-  margin-top: -24px;
+  /* Full bleed — touches the nav on both sides and top */
+  width: 100%;
+  margin: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 0;
   position: relative;
-  border: none;
-  outline: none;
-  box-shadow: none;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
   background: transparent;
   line-height: 0;
   font-size: 0;
+  overflow: visible;
 }
 
 .hero-ecosystem-light {
@@ -98,7 +99,14 @@ html[data-theme="dark"] .hero-ecosystem-dark {
 /* Light / dark hero image visibility */
 .hero-img-light {
   display: block;
-  width: 100%;
+  width: 110%;
+  max-width: none;
+  margin-left: -5%;
+  /* mix-blend-mode: multiply makes the white border baked into the PNG
+     invisible against the white page background (white × white = white) */
+  mix-blend-mode: multiply;
+  margin-top: -100px;
+  margin-bottom: -60px;
 }
 
 .hero-img-dark {
@@ -106,12 +114,14 @@ html[data-theme="dark"] .hero-ecosystem-dark {
   width: 100%;
   line-height: 0;
   font-size: 0;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 .hero-img-dark img {
   width: 100%;
   max-width: 100%;
-  max-height: clamp(400px, 58vh, 580px);
   height: auto;
   object-fit: contain;
   object-position: top center;
@@ -130,15 +140,16 @@ html[data-theme="dark"] .hero-img-dark {
 .hero-ecosystem-img {
   width: 100%;
   max-width: 100%;
-  max-height: clamp(400px, 58vh, 580px);
+  /* No max-height — let the SVG fill full width at its natural aspect ratio */
   height: auto;
   object-fit: contain;
   object-position: top center;
   display: block;
   margin: 0 auto;
-  border: none;
-  outline: none;
-  box-shadow: none;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
   vertical-align: bottom;
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
@@ -155,11 +166,12 @@ html[data-theme="dark"] .hero-img-dark {
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
   align-items: start;
-  gap: clamp(32px, 5vw, 68px);
+  gap: clamp(24px, 4vw, 48px);
   width: 100%;
+  /* Zero gap between image and text */
   margin-top: 0;
-  margin-bottom: clamp(28px, 3.5vw, 48px);
-  padding-top: 0;
+  margin-bottom: clamp(16px, 2vw, 32px);
+  padding: 0 clamp(20px, 3.5vw, 48px) 0;
 }
 
 /* LEFT COLUMN: Eyebrow + Headline (Aligned directly with Left Corner Logo) */
@@ -205,10 +217,10 @@ html[data-theme="dark"] .hero-meta-tag {
 
 .hero-headline {
   font-family: 'Lato', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: clamp(2.6rem, 4.4vw, 4.5rem);
+  font-size: clamp(2rem, 3.2vw, 3.5rem);
   font-weight: 900;
-  line-height: 1.05;
-  letter-spacing: -0.04em;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
   color: #0f172a;
   margin: 0;
   text-align: left;
@@ -221,10 +233,21 @@ html[data-theme="dark"] .hero-headline {
 .hero-headline .hl-pioneer {
   color: #1769FF;
   display: block;
+  white-space: nowrap;
 }
 
 html[data-theme="dark"] .hero-headline .hl-pioneer {
   color: #1769FF !important;
+}
+
+.hero-headline .hl-main {
+  display: block;
+  white-space: nowrap;
+}
+
+.hero-headline .hl-subtext {
+  display: block;
+  white-space: nowrap;
 }
 
 .hero-headline .hl-dot {
@@ -241,7 +264,7 @@ html[data-theme="dark"] .hero-headline .hl-dot {
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
-  padding-top: clamp(20px, 2.6vw, 36px);
+  padding-top: clamp(10px, 1.5vw, 20px);
 }
 
 .hero-desc {
@@ -354,6 +377,8 @@ html[data-theme="dark"] .hero-btn.secondary:hover {
   justify-content: space-between;
   width: 100%;
   gap: 24px;
+  padding: 0 clamp(20px, 3.5vw, 48px);
+  box-sizing: border-box;
 }
 
 .hero-stats-row {
@@ -376,7 +401,7 @@ html[data-theme="dark"] .hero-btn.secondary:hover {
 
 .hero-stat-value {
   font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 800;
   color: #0f172a;
   letter-spacing: -0.01em;
@@ -391,7 +416,7 @@ html[data-theme="dark"] .hero-stat-value {
 
 .hero-stat-label {
   font-family: 'Lato', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 500;
   color: #64748b;
   line-height: 1.2;
@@ -460,7 +485,7 @@ html[data-theme="dark"] .hero-tagline-text {
 
 @media (max-width: 1024px) {
   .hero-section {
-    padding: clamp(20px, 3vw, 36px) clamp(16px, 3vw, 32px) 36px;
+    padding: 0 clamp(16px, 3vw, 32px) 36px;
   }
 
   .hero-content-grid {
@@ -487,7 +512,7 @@ html[data-theme="dark"] .hero-tagline-text {
 
 @media (max-width: 640px) {
   .hero-section {
-    padding: 16px 16px 32px;
+    padding: 0 16px 32px;
   }
 
   .hero-ecosystem-visual {
@@ -510,7 +535,7 @@ html[data-theme="dark"] .hero-tagline-text {
   }
 
   .hero-headline {
-    font-size: clamp(1.85rem, 8vw, 2.5rem);
+    font-size: clamp(2rem, 8vw, 2.75rem);
     letter-spacing: -0.03em;
     line-height: 1.1;
   }

@@ -1,6 +1,5 @@
 ---
 import '../../styles/hero.css';
-import FadeInText from "@astroanimate/core/FadeInText";
 
 interface Props {
   eyebrow?: string;
@@ -37,7 +36,7 @@ const statItems = [
     <div class="hero-ecosystem-visual">
         <!-- Light mode image -->
         <img
-          src="/hadiya.png"
+          src="/hero-light-new.png"
           alt="Ollasoftware Hero"
           class="hero-ecosystem-img hero-img-light"
           loading="eager"
@@ -46,7 +45,7 @@ const statItems = [
         <!-- Dark mode image -->
         <picture class="hero-img-dark">
           <img
-            src="/tintu.png"
+            src="/hero-dark.png"
             alt="Ollasoftware Hero Dark"
             class="hero-ecosystem-img"
             loading="eager"
@@ -59,94 +58,54 @@ const statItems = [
     <div class="hero-content-grid">
       <!-- LEFT COLUMN: Eyebrow + Big Headline -->
       <div class="hero-col-left">
-        <FadeInText duration={0.6} yOffset={15}>
-          <div class="hero-eyebrow-wrap">
-            <span class="eyebrow-line" aria-hidden="true"></span>
-            <span class="hero-meta-tag">{eyebrow}</span>
-          </div>
-        </FadeInText>
+        <div class="hero-eyebrow-wrap">
+          <span class="eyebrow-line" aria-hidden="true"></span>
+          <span class="hero-meta-tag">{eyebrow}</span>
+        </div>
 
-        <FadeInText duration={0.8} yOffset={25}>
-          <h1 class="hero-headline">
-            <span class="hl-pioneer">{titleAccent}</span>
-            <span class="hl-main">{title}</span><br />
-            <span class="hl-subtext">{titleSuffix.replace(/\.$/, '')}<span class="hl-dot">.</span></span>
-          </h1>
-        </FadeInText>
+        <h1 class="hero-headline">
+          <span class="hl-pioneer">{titleAccent}</span>
+          <span class="hl-main">{title}</span>
+          <span class="hl-subtext">{titleSuffix.replace(/\.$/, '')}<span class="hl-dot">.</span></span>
+        </h1>
       </div>
 
       <!-- RIGHT COLUMN: Paragraph Description + CTA Buttons -->
       <div class="hero-col-right">
-        <FadeInText enhance={true} duration={0.8} yOffset={25}>
-          <p class="hero-desc" set:html={description} />
-        </FadeInText>
+        <p class="hero-desc" set:html={description} />
 
-        <FadeInText enhance={true} duration={0.8} delay={0.1} yOffset={20}>
-          <div class="hero-actions">
-            <a href="/contact/" class="hero-btn primary">
-              <span>Contact us</span>
-              <span class="btn-arrow" aria-hidden="true">→</span>
-            </a>
-            <a href="/services/" class="hero-btn secondary">
-              <span>See what we ship</span>
-            </a>
-          </div>
-        </FadeInText>
+        <div class="hero-actions">
+          <a href="/contact/" class="hero-btn primary">
+            <span>Contact us</span>
+            <span class="btn-arrow" aria-hidden="true">→</span>
+          </a>
+          <a href="/services/" class="hero-btn secondary">
+            <span>See what we ship</span>
+          </a>
+        </div>
       </div>
     </div>
 
     <!-- 3. BOTTOM METRICS ROW: Stats on Left, Brand Slogan Tagline on Right -->
-    <FadeInText enhance={true} duration={0.8} delay={0.15} yOffset={15}>
-      <div class="hero-bottom-bar">
-        <div class="hero-stats-row">
-          {statItems.map((stat, index) => (
-            <div class="hero-stat-col">
-              <div class="hero-stat-item">
-                <span class="hero-stat-value">{stat.value}</span>
-                <span class="hero-stat-label">{stat.label}</span>
-              </div>
-              {index < statItems.length - 1 && (
-                <div class="hero-stat-divider" aria-hidden="true"></div>
-              )}
+    <div class="hero-bottom-bar">
+      <div class="hero-stats-row">
+        {statItems.map((stat, index) => (
+          <div class="hero-stat-col">
+            <div class="hero-stat-item">
+              <span class="hero-stat-value">{stat.value}</span>
+              <span class="hero-stat-label">{stat.label}</span>
             </div>
-          ))}
-        </div>
-
-        <div class="hero-tagline-col">
-          <span class="tagline-line" aria-hidden="true"></span>
-          <span class="hero-tagline-text">IDEAS &nbsp; PRODUCTS &nbsp; PEOPLE &nbsp; A BRIGHTER TOMORROW</span>
-        </div>
+            {index < statItems.length - 1 && (
+              <div class="hero-stat-divider" aria-hidden="true"></div>
+            )}
+          </div>
+        ))}
       </div>
-    </FadeInText>
+
+      <div class="hero-tagline-col">
+        <span class="tagline-line" aria-hidden="true"></span>
+        <span class="hero-tagline-text">IDEAS &nbsp; PRODUCTS &nbsp; PEOPLE &nbsp; A BRIGHTER TOMORROW</span>
+      </div>
+    </div>
   </div>
 </section>
-
-<script>
-  import { gsap } from 'gsap';
-
-  function initHeroAnimations() {
-    const hero = document.getElementById('hero');
-    if (!hero) return;
-
-    const items = hero.querySelectorAll('.hero-animate-item');
-    if (items.length) {
-      gsap.fromTo(
-        items,
-        { y: 16, opacity: 0 },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.65,
-          stagger: 0.08,
-          ease: 'power3.out'
-        }
-      );
-    }
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initHeroAnimations);
-  } else {
-    initHeroAnimations();
-  }
-</script>
