@@ -100,7 +100,7 @@ html.nav-drawer-open body {
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Lato', system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   background-color: var(--o-bg);
   color: var(--o-ink);
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -121,39 +121,39 @@ pre {
 }
 
 /* ─────────────────────────────────────────────
-   GLOBAL LATO ENFORCEMENT & LOGO PROTECTION
+   GLOBAL INTER ENFORCEMENT & LOGO PROTECTION
 ───────────────────────────────────────────── */
 h1, h2, h3, h4, h5, h6, p, a, span, button, input, select, textarea, li, label, div {
-  font-family: 'Lato', system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 /* Heading Hierarchy & Weights (Matching Networkers Home) */
 h1 {
-  font-family: 'Lato', system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   font-weight: 800;
   line-height: 1.11;
   letter-spacing: -0.03em;
 }
 h2 {
-  font-family: 'Lato', system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   font-weight: 700;
   line-height: 1.33;
   letter-spacing: -0.025em;
 }
 h3 {
-  font-family: 'Lato', system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   font-weight: 600;
   line-height: 1.45;
   letter-spacing: -0.02em;
 }
 h4 {
-  font-family: 'Lato', system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   font-weight: 600;
   line-height: 1.5;
   letter-spacing: -0.015em;
 }
 h5, h6 {
-  font-family: 'Lato', system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
   font-weight: 600;
   line-height: 1.5;
   letter-spacing: -0.01em;
@@ -167,7 +167,7 @@ h5, h6 {
 .section-eyebrow,
 .drawer-sec-head,
 .overline {
-  font-family: 'Lato', system-ui, -apple-system, sans-serif !important;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
   font-size: 10px !important;
   font-weight: 700 !important;
   letter-spacing: 0.14em !important;
@@ -253,64 +253,64 @@ pre,
 }
 
 /* ─────────────────────────────────────────────
-   LATO TYPOGRAPHY UTILITIES
+   INTER TYPOGRAPHY UTILITIES
 ───────────────────────────────────────────── */
-.lato-thin {
-  font-family: "Lato", system-ui, -apple-system, sans-serif;
+.inter-thin {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
   font-weight: 100;
   font-style: normal;
 }
 
-.lato-light {
-  font-family: "Lato", system-ui, -apple-system, sans-serif;
+.inter-light {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
   font-weight: 300;
   font-style: normal;
 }
 
-.lato-regular {
-  font-family: "Lato", system-ui, -apple-system, sans-serif;
+.inter-regular {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
   font-weight: 400;
   font-style: normal;
 }
 
-.lato-bold {
-  font-family: "Lato", system-ui, -apple-system, sans-serif;
+.inter-bold {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
   font-weight: 700;
   font-style: normal;
 }
 
-.lato-black {
-  font-family: "Lato", system-ui, -apple-system, sans-serif;
+.inter-black {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
   font-weight: 900;
   font-style: normal;
 }
 
-.lato-thin-italic {
-  font-family: "Lato", system-ui, -apple-system, sans-serif;
+.inter-thin-italic {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
   font-weight: 100;
   font-style: italic;
 }
 
-.lato-light-italic {
-  font-family: "Lato", system-ui, -apple-system, sans-serif;
+.inter-light-italic {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
   font-weight: 300;
   font-style: italic;
 }
 
-.lato-regular-italic {
-  font-family: "Lato", system-ui, -apple-system, sans-serif;
+.inter-regular-italic {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
   font-weight: 400;
   font-style: italic;
 }
 
-.lato-bold-italic {
-  font-family: "Lato", system-ui, -apple-system, sans-serif;
+.inter-bold-italic {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
   font-weight: 700;
   font-style: italic;
 }
 
-.lato-black-italic {
-  font-family: "Lato", system-ui, -apple-system, sans-serif;
+.inter-black-italic {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
   font-weight: 900;
   font-style: italic;
 }
