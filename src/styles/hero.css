@@ -7,7 +7,11 @@
   width: 100%;
   position: relative;
   background-color: #FFFFFF !important;
-  background: #FFFFFF !important;
+  background-image: 
+    linear-gradient(to right, rgba(23, 105, 255, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(23, 105, 255, 0.08) 1px, transparent 1px) !important;
+  background-size: 50px 50px !important;
+  background-position: center top !important;
   /* No top padding — image sits flush against the nav */
   padding: 0 0 clamp(16px, 2vw, 32px);
   box-sizing: border-box;
@@ -120,13 +124,16 @@ html[data-theme="dark"] .hero-ecosystem-dark {
 }
 
 .hero-img-dark img {
-  width: 100%;
-  max-width: 100%;
+  width: 110%;
+  max-width: none;
+  margin-left: -5%;
+  margin-top: 60px;
+  margin-bottom: 20px;
+  mix-blend-mode: lighten;
   height: auto;
   object-fit: contain;
   object-position: top center;
   display: block;
-  margin: 0 auto;
 }
 
 html[data-theme="dark"] .hero-img-light {
