@@ -18,11 +18,13 @@
 
 <style>
   .parent-banner {
-    background: #EAF2FF;
+    background: #E6F0FF;
     color: #172033;
     border-bottom: 1px solid rgba(23, 32, 51, 0.08);
     width: 100%;
-    min-height: 28px;
+    height: 40px;
+    min-height: 40px;
+    box-sizing: border-box;
     position: relative;
     z-index: 101;
     display: flex;
@@ -35,11 +37,13 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 4px 16px;
+    padding: 0 16px;
+    height: 100%;
+    box-sizing: border-box;
     text-decoration: none;
     color: #172033;
     font-family: 'Lato', sans-serif;
-    font-size: 11.5px;
+    font-size: 13px;
     line-height: 1.2;
     transition: background 0.15s ease;
   }
@@ -56,8 +60,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     border-radius: 4px;
     background: #172033;
     color: #ffffff;
@@ -79,30 +83,36 @@
   .pb-prefix {
     color: #172033;
     font-weight: 500;
+    font-size: 13px;
   }
 
   .pb-name {
     color: #172033;
     font-weight: 700;
     letter-spacing: 0.4px;
-    font-size: 11.5px;
+    font-size: 13px;
   }
 
   .pb-suffix {
     color: #172033;
     font-weight: 500;
+    font-size: 13px;
   }
 
   .pb-arrow {
     color: #172033;
-    font-size: 11.5px;
+    font-size: 13px;
     transition: transform 0.15s ease;
     flex-shrink: 0;
   }
 
   @media (max-width: 500px) {
-    .pb-link { padding: 4px 10px; gap: 6px; font-size: 10px; }
-    .pb-badge { width: 16px; height: 16px; font-size: 8.5px; }
-    .pb-name { font-size: 10px; }
+    .parent-banner {
+      height: 36px;
+      min-height: 36px;
+    }
+    .pb-link { padding: 0 10px; gap: 6px; font-size: 11px; }
+    .pb-badge { width: 17px; height: 17px; font-size: 8.5px; }
+    .pb-prefix, .pb-name, .pb-suffix, .pb-arrow { font-size: 11px; }
   }
 </style>
