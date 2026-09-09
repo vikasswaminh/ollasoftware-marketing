@@ -127,15 +127,14 @@ html[data-theme="dark"] .hero-ecosystem-dark {
 /* ── Light-mode wrapper (mirrors .hero-img-dark exactly) ── */
 .hero-img-light {
   display: block;              /* visible in light mode */
-  width: 107%;
+  width: 110%;
   max-width: none;
-  margin-left: -3.5%;
-  /* Reduced top margin so live site matches localhost visual height.
-     mix-blend-mode:multiply collapses the white PNG padding locally
-     but not on Cloudflare, so we compensate here. */
-  margin-top: 20px;
-  margin-bottom: 10px;
-  /* Cap height so the image block stays the same size as localhost */
+  margin-left: -5%;
+  /* Match dark mode top/bottom margins so the heading content grid
+     below sits at the exact same vertical position as in dark mode. */
+  margin-top: 35px;
+  margin-bottom: 20px;
+  /* Cap height so the image block stays the same size as dark mode */
   max-height: 370px;
   height: auto;
   object-fit: contain;
@@ -154,7 +153,7 @@ html[data-theme="dark"] .hero-ecosystem-dark {
   width: 110%;
   max-width: none;
   margin-left: -5%;
-  margin-top: 60px;
+  margin-top: 45px;
   margin-bottom: 20px;
   height: auto;
   line-height: 0;
@@ -401,6 +400,8 @@ html[data-theme="dark"] .hero-btn.secondary:hover {
   gap: 24px;
   padding: 0 clamp(20px, 3.5vw, 48px);
   box-sizing: border-box;
+  /* Ensure a stable min-height so tagline never jumps between themes */
+  min-height: 48px;
 }
 
 .hero-stats-row {
@@ -465,7 +466,9 @@ html[data-theme="dark"] .hero-stat-divider {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 4px;
+  /* Always pin to the bottom of the flex row, same as dark mode */
+  align-self: flex-end;
+  margin-bottom: 0;
 }
 
 .tagline-line {
