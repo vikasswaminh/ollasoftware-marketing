@@ -41,9 +41,11 @@ jobs:
       - name: Purge Cloudflare Edge Cache
         if: github.ref == 'refs/heads/main'
         run: |
-          ZONE_ID=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones?name=ollasoftware.com" \
+          ZONE_RES=$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones?name=ollasoftware.com" \
             -H "Authorization: Bearer ${{ secrets.CLOUDFLARE_API_TOKEN }}" \
-            -H "Content-Type: application/json" | node -e 'const d=JSON.parse(require("fs").readFileSync(0,"utf-8")); console.log(d.result?.[0]?.id || "");')
+            -H "Content-Type: application/json")
+          echo "Zone lookup response: $ZONE_RES"
+          ZONE_ID=$(echo "$ZONE_RES" | node -e 'const d=JSON.parse(require("fs").readFileSync(0,"utf-8")); console.log(d.result?.[0]?.id || "");')
           if [ -n "$ZONE_ID" ]; then
             echo "Purging Cloudflare cache for zone $ZONE_ID..."
             PURGE_RES=$(curl -s -X POST "https://api.cloudflare.com/client/v4/zones/$ZONE_ID/purge_cache" \
