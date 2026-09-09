@@ -127,9 +127,9 @@ html[data-theme="dark"] .hero-ecosystem-dark {
 /* ── Light-mode wrapper (mirrors .hero-img-dark exactly) ── */
 .hero-img-light {
   display: block;              /* visible in light mode */
-  width: 110%;
+  width: 107%;
   max-width: none;
-  margin-left: -5%;
+  margin-left: -3.5%;
   margin-top: 60px;
   margin-bottom: 20px;
   height: auto;
