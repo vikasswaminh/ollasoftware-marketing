@@ -74,6 +74,8 @@ html[data-theme="dark"] .hero-bg-overlay {
   line-height: 0;
   font-size: 0;
   overflow: visible;
+  /* Cap the whole image block so content below stays in viewport */
+  max-height: 44vh;
 }
 
 .hero-ecosystem-light {
@@ -136,9 +138,8 @@ html[data-theme="dark"] .hero-ecosystem-dark {
   margin-left: -3.5%;
   margin-top: 0;
   margin-bottom: 0;
-  /* Scale down image height so content below fits in viewport */
+  height: 100%;
   max-height: 44vh;
-  height: auto;
   object-fit: contain;
   object-position: top center;
   mix-blend-mode: multiply;
@@ -157,9 +158,8 @@ html[data-theme="dark"] .hero-ecosystem-dark {
   margin-left: -5%;
   margin-top: 0;
   margin-bottom: 0;
-  /* Scale down image height so content below fits in viewport */
+  height: 100%;
   max-height: 44vh;
-  height: auto;
   line-height: 0;
   font-size: 0;
   border: none !important;
