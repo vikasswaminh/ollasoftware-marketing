@@ -130,8 +130,13 @@ html[data-theme="dark"] .hero-ecosystem-dark {
   width: 107%;
   max-width: none;
   margin-left: -3.5%;
-  margin-top: 60px;
-  margin-bottom: 20px;
+  /* Reduced top margin so live site matches localhost visual height.
+     mix-blend-mode:multiply collapses the white PNG padding locally
+     but not on Cloudflare, so we compensate here. */
+  margin-top: 20px;
+  margin-bottom: 10px;
+  /* Cap height so the image block stays the same size as localhost */
+  max-height: 370px;
   height: auto;
   object-fit: contain;
   object-position: top center;
