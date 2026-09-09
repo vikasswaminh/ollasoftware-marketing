@@ -100,59 +100,15 @@ html[data-theme="dark"] .hero-ecosystem-dark {
   display: block !important;
 }
 
-/* Light / dark hero image visibility */
-.hero-img-light {
-  display: block;
-  width: 110%;
-  max-width: none;
-  margin-left: -5%;
-  /* mix-blend-mode: multiply makes the white border baked into the PNG
-     invisible against the white page background (white × white = white) */
-  mix-blend-mode: multiply;
-  margin-top: -100px;
-  margin-bottom: -60px;
-}
+/* ── Light / dark hero image visibility ──
+   Both wrappers (.hero-img-light / .hero-img-dark) share identical
+   container behaviour; only blend-mode differs per theme.
+   .hero-ecosystem-img carries shared image rendering but does NOT
+   set width/margin so the per-mode rules below win cleanly.
+*/
 
-.hero-img-dark {
-  display: none;
-  width: 100%;
-  line-height: 0;
-  font-size: 0;
-  border: none !important;
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-.hero-img-dark img {
-  width: 110%;
-  max-width: none;
-  margin-left: -5%;
-  margin-top: 60px;
-  margin-bottom: 20px;
-  mix-blend-mode: lighten;
-  height: auto;
-  object-fit: contain;
-  object-position: top center;
-  display: block;
-}
-
-html[data-theme="dark"] .hero-img-light {
-  display: none !important;
-}
-
-html[data-theme="dark"] .hero-img-dark {
-  display: block !important;
-}
-
+/* Shared image-rendering baseline — no layout overrides here */
 .hero-ecosystem-img {
-  width: 100%;
-  max-width: 100%;
-  /* No max-height — let the SVG fill full width at its natural aspect ratio */
-  height: auto;
-  object-fit: contain;
-  object-position: top center;
-  display: block;
-  margin: 0 auto;
   border: none !important;
   outline: none !important;
   box-shadow: none !important;
@@ -166,6 +122,60 @@ html[data-theme="dark"] .hero-img-dark {
   transform: translateZ(0);
   will-change: auto;
   filter: contrast(1.04) saturate(1.08);
+}
+
+/* ── Light-mode wrapper (mirrors .hero-img-dark exactly) ── */
+.hero-img-light {
+  display: block;              /* visible in light mode */
+  width: 110%;
+  max-width: none;
+  margin-left: -5%;
+  margin-top: 60px;
+  margin-bottom: 20px;
+  height: auto;
+  object-fit: contain;
+  object-position: top center;
+  mix-blend-mode: multiply;
+  line-height: 0;
+  font-size: 0;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* ── Dark-mode wrapper ── */
+.hero-img-dark {
+  display: none;               /* hidden in light mode */
+  width: 110%;
+  max-width: none;
+  margin-left: -5%;
+  margin-top: 60px;
+  margin-bottom: 20px;
+  height: auto;
+  line-height: 0;
+  font-size: 0;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* img inside dark-mode wrapper */
+.hero-img-dark img {
+  width: 100%;
+  max-width: none;
+  height: auto;
+  object-fit: contain;
+  object-position: top center;
+  display: block;
+  mix-blend-mode: lighten;
+}
+
+html[data-theme="dark"] .hero-img-light {
+  display: none !important;
+}
+
+html[data-theme="dark"] .hero-img-dark {
+  display: block !important;
 }
 
 /* ── 2. TWO-COLUMN SPLIT CONTENT (Aligned with Reference Mockup) ── */
