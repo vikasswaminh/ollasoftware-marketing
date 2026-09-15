@@ -4,6 +4,7 @@ import Btn from '../primitives/Btn.astro';
 import Tag from '../primitives/Tag.astro';
 import type { BlogPost } from '../../lib/blog';
 import { allPosts } from '../../lib/blog';
+import { getBlogImage } from '../../lib/blogImages';
 
 interface Props {
   post: BlogPost;
@@ -13,6 +14,7 @@ interface Props {
 const { post, jsonLd } = Astro.props;
 
 const brandUrl = `https://${post.brandDomain}/`;
+const featuredImage = getBlogImage(post.slug, post.category);
 
 const categoryTagMap: Record<string, string> = {
   'networkershome': 'EDUCATION',
@@ -37,10 +39,28 @@ const categoryTagMap: Record<string, string> = {
   'ollagraph': 'AI',
   'ollima': 'AI',
 };
+
+const blogKeywords = [
+  'top seo agency in bangalore',
+  'software development company in bangalore',
+  'ai software development company bangalore',
+  'seo agency bangalore',
+  'custom software development company in bangalore',
+  'best software development company in bangalore',
+  'aeo agency bangalore',
+  'answer engine optimization india',
+  'performance marketing agency bangalore',
+  post.brand,
+  post.brandDomain,
+  post.category,
+  'ollasoftware',
+  'hsr layout bangalore',
+];
 ---
 <Layout
   title={post.title}
   description={post.metaDescription}
+  keywords={blogKeywords}
   breadcrumb={[
     { name: 'Home', url: 'https://ollasoftware.com/' },
     { name: 'Blog', url: 'https://ollasoftware.com/blog/' },
@@ -125,6 +145,23 @@ const categoryTagMap: Record<string, string> = {
         </div>
       </header>
 
+      <!-- Featured Topic Cover Image (Visible when opening the blog post) -->
+      {featuredImage && (
+        <div class="article-featured-image-wrap">
+          <img
+            src={featuredImage}
+            alt={`${post.brand} — ${post.title}`}
+            class="article-featured-image"
+            loading="eager"
+          />
+          <div class="article-image-caption">
+            <span class="caption-brand mono">{post.brand}</span>
+            <span class="caption-sep">·</span>
+            <span class="caption-text">{post.brandTagline}</span>
+          </div>
+        </div>
+      )}
+
       <aside class="tldr" aria-label="Summary">
         <div class="tldr-head mono">tl;dr — the whole post in six bullets</div>
         <ul>
@@ -174,7 +211,8 @@ const categoryTagMap: Record<string, string> = {
         <p class="parent mono">
           {post.brand} is built and operated by
           <a href="https://ollasoftware.com/">Ollasoftware</a>,
-          the AI software development company headquartered in Bengaluru.
+          the premier software development company in Bangalore and top SEO agency in Bangalore.
+          Specialising in enterprise AI software, sovereign application architectures, and Answer Engine Optimization (AEO).
           Ollasoftware is part of the
           <a href="https://www.networkershome.com/" rel="noopener">Networkers Home</a>
           group — a cybersecurity and networking training institute since 2007 with 45,000+ alumni placed.
@@ -328,6 +366,56 @@ const categoryTagMap: Record<string, string> = {
     align-items: center;
     gap: 14px;
     flex-wrap: wrap;
+  }
+
+  /* Featured Topic Cover Image (Visible on blog open) */
+  .article-featured-image-wrap {
+    margin: 0 0 44px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #f8fafc;
+    border: 1px solid var(--o-line);
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06);
+  }
+
+  .article-featured-image {
+    width: 100%;
+    height: auto;
+    max-height: 420px;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .article-featured-image-wrap:hover .article-featured-image {
+    transform: scale(1.015);
+  }
+
+  .article-image-caption {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: #fafbfd;
+    border-top: 1px solid var(--o-line);
+    font-size: 12px;
+    color: var(--o-mute);
+  }
+
+  .caption-brand {
+    font-weight: 800;
+    color: #2563eb;
+    letter-spacing: 0.5px;
+  }
+
+  .caption-sep {
+    color: #cbd5e1;
+    font-weight: 700;
+  }
+
+  .caption-text {
+    color: #475467;
   }
 
   /* 3-Column Post Layout */
