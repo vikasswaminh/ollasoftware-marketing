@@ -2,37 +2,35 @@
 // expressions (e.g. inline SVG strokes, conditional styles). Keep in lockstep
 // with tokens.css.
 
-// Light theme (form4dev port, 2026-06-01). 1:1 mirror of tokens.css.
-// Per-service decorative accents are Tailwind-600 weights so they read
-// cleanly on white backgrounds.
+// MeshWG theme. 1:1 mirror of tokens.css.
 export const o = {
   bg:        '#ffffff',
-  panel:     '#fafafa',
-  panelHi:   '#f4f4f5',
-  line:      '#e5e5e7',
-  lineHi:    '#ddddde',
+  panel:     '#ffffff',
+  panelHi:   '#f8fafc',
+  line:      '#e8eef5',
+  lineHi:    '#d0d7e1',
 
-  // net-new surface tokens
-  bgSunken:    '#f4f4f5',
-  bgDeep:      '#ebebed',
-  lineWhisper: '#f0f0f1',
+  // surface tokens
+  bgSunken:    '#f8fafc',
+  bgDeep:      '#e8eef5',
+  lineWhisper: '#f1f5f9',
 
-  ink:       '#0a0a0a',
-  mute:      '#52525b',
-  faint:     '#8a8a93',
+  ink:       '#0B1220',
+  mute:      '#526071',
+  faint:     '#94a3b8',
 
-  accent:    '#0066ff',
-  accent2:   '#0052cc',
-  accentDim: '#e7efff',
+  accent:    '#2563eb',
+  accent2:   '#1d4ed8',
+  accentDim: '#eff6ff',
   accentInk: '#ffffff',
 
-  // per-service decorative accents (Tailwind-600)
-  warn:      '#ea580c',
-  red:       '#dc2626',
+  // Service accents unified in technical blues (MeshWG palette)
+  warn:      '#1e3a8a',
+  red:       '#2563eb',
   blue:      '#2563eb',
-  purple:    '#7c3aed',
-  teal:      '#0d9488',
-  green:     '#16a34a',   // AI Software identity — was o.accent (lime)
+  purple:    '#1d4ed8',
+  teal:      '#3b82f6',
+  green:     '#2563eb',
 } as const;
 
 // Six services × six accents — single source of truth for service color/glyph

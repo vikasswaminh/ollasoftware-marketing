@@ -1,15 +1,15 @@
 :root {
   --white: hsl(0, 0%, 100%);
-  --blue-primary: rgba(23, 105, 255, 1);
-  --blue-glow: rgba(23, 105, 255, 0.25);
-  --blue-border: rgba(23, 105, 255, 0.8);
-  --border-color: rgba(20, 30, 50, 0.12);
+  --blue-primary: rgba(37, 99, 235, 1);
+  --blue-glow: rgba(37, 99, 235, 0.25);
+  --blue-border: rgba(37, 99, 235, 0.8);
+  --border-color: #e8eef5;
   --background-card: #ffffff;
 }
 
 :global(html[data-theme="dark"]) {
-  --border-color: rgba(255, 255, 255, 0.1);
-  --background-card: #0e1526;
+  --border-color: rgba(56, 189, 248, 0.14);
+  --background-card: #0F172A;
 }
 
 .magic-bento-root {
@@ -32,7 +32,7 @@
         var(--glow-y, 50%),
       color-mix(
         in srgb,
-        var(--glow-color, rgb(23, 105, 255))
+        var(--glow-color, rgb(37, 99, 235))
           calc(
             var(--glow-intensity, 0) *
               90%
@@ -42,7 +42,7 @@
         0%,
       color-mix(
         in srgb,
-        var(--glow-color, rgb(23, 105, 255))
+        var(--glow-color, rgb(37, 99, 235))
           calc(
             var(--glow-intensity, 0) *
               45%
@@ -87,7 +87,7 @@
   content: '';
   position: absolute;
   inset: -2px;
-  background: rgba(23, 105, 255, 0.35);
+  background: rgba(37, 99, 235, 0.35);
   border-radius: 50%;
   z-index: -1;
 }

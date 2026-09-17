@@ -7,11 +7,11 @@ import CountUp from "@astroanimate/core/CountUp";
 import '../MagicBento.css';
 
 const timeline: Array<[string, string, string]> = [
-  ['day 01', 'kickoff · 3 stakeholders',        '#1D6AF3'],
-  ['day 03', 'strategy doc · v1',               '#ea580c'],
+  ['day 01', 'kickoff · 3 stakeholders',        '#2563EB'],
+  ['day 03', 'strategy doc · v1',               '#38BDF8'],
   ['day 07', '↳ first deliverable shipped',     '#64748b'],
-  ['day 12', '⏸ review · scope check-in',       '#2563eb'],
-  ['day 14', '✓ demo · staging green',          '#1D6AF3'],
+  ['day 12', '⏸ review · scope check-in',       '#2563EB'],
+  ['day 14', '✓ demo · staging green',          '#2563EB'],
 ];
 
 const bars = Array.from({ length: 30 }, (_, i) => i);
@@ -24,7 +24,7 @@ const config = JSON.stringify({
   spotlightRadius: 400,
   particleCount: 12,
   enableTilt: false,
-  glowColor: '23, 105, 255',
+  glowColor: '37, 99, 235',
   clickEffect: true,
   enableMagnetism: false
 });
@@ -44,7 +44,7 @@ const config = JSON.stringify({
     <div
       class="bento-card card-cadence magic-bento-card magic-bento-card--border-glow particle-container"
       data-card-index="0"
-      style="--glow-color: rgb(23, 105, 255);"
+      style="--glow-color: rgb(37, 99, 235);"
     >
       <TileHead label="cadence / engagement" tag="every sprint" />
       <div class="cadence-body">
@@ -66,7 +66,7 @@ const config = JSON.stringify({
     <div
       class="bento-card card-sow magic-bento-card magic-bento-card--border-glow particle-container"
       data-card-index="1"
-      style="--glow-color: rgb(23, 105, 255);"
+      style="--glow-color: rgb(37, 99, 235);"
     >
       <TileHead label="scope / SOW" tag="fixed price" />
       <div class="sow-body">
@@ -84,7 +84,7 @@ const config = JSON.stringify({
     <div
       class="bento-card card-speed magic-bento-card magic-bento-card--border-glow particle-container"
       data-card-index="2"
-      style="--glow-color: rgb(23, 105, 255);"
+      style="--glow-color: rgb(37, 99, 235);"
     >
       <TileHead label="speed / kickoff" tag="median" />
       <div class="speed-body">
@@ -104,15 +104,15 @@ const config = JSON.stringify({
     <div
       class="bento-card card-schema magic-bento-card magic-bento-card--border-glow particle-container"
       data-card-index="3"
-      style="--glow-color: rgb(23, 105, 255);"
+      style="--glow-color: rgb(37, 99, 235);"
     >
       <TileHead label="a 4-week sprint, written down" tag="real SOW excerpt" />
       <pre class="schema-code mono"><Fragment set:html={`<span style="color:${o.faint}">// scope a project the way you'd scope a function</span>
 <span style="color:${o.purple}">engagement</span> <span style="color:${o.blue}">acme.intakeAgent</span> = {
-  <span style="color:${o.warn}">outcome</span>:   <span style="color:#1D6AF3">'agent that triages support tickets'</span>,
-  <span style="color:${o.warn}">success</span>:   <span style="color:#1D6AF3">'≥85% precision · &lt;2s p95 · in-app'</span>,
-  <span style="color:${o.warn}">team</span>:      [<span style="color:#1D6AF3">'@rin (lead)'</span>, <span style="color:#1D6AF3">'@marco'</span>, <span style="color:#1D6AF3">'@anika'</span>],
-  <span style="color:${o.warn}">stack</span>:     [<span style="color:#1D6AF3">'your repo'</span>, <span style="color:#1D6AF3">'your VPC'</span>, <span style="color:#1D6AF3">'your eval set'</span>],
+  <span style="color:${o.warn}">outcome</span>:   <span style="color:#2563EB">'agent that triages support tickets'</span>,
+  <span style="color:${o.warn}">success</span>:   <span style="color:#2563EB">'≥85% precision · &lt;2s p95 · in-app'</span>,
+  <span style="color:${o.warn}">team</span>:      [<span style="color:#2563EB">'@rin (lead)'</span>, <span style="color:#2563EB">'@marco'</span>, <span style="color:#2563EB">'@anika'</span>],
+  <span style="color:${o.warn}">stack</span>:     [<span style="color:#2563EB">'your repo'</span>, <span style="color:#2563EB">'your VPC'</span>, <span style="color:#2563EB">'your eval set'</span>],
 }`} /></pre>
     </div>
 
@@ -120,7 +120,7 @@ const config = JSON.stringify({
     <div
       class="bento-card card-track magic-bento-card magic-bento-card--border-glow particle-container"
       data-card-index="4"
-      style="--glow-color: rgb(23, 105, 255);"
+      style="--glow-color: rgb(37, 99, 235);"
     >
       <TileHead label="track record" tag="last 24 mo" />
       <div class="track-body">
@@ -135,7 +135,7 @@ const config = JSON.stringify({
           {bars.map(i => (
             <div
               class="bar"
-              style={`background:${i === 19 || i === 27 ? '#ea580c' : '#1D6AF3'};height:${i === 19 || i === 27 ? '10px' : '20px'}`}
+              style={`background:${i === 19 || i === 27 ? '#64748b' : '#2563EB'};height:${i === 19 || i === 27 ? '10px' : '20px'}`}
             ></div>
           ))}
         </div>
@@ -213,7 +213,7 @@ const config = JSON.stringify({
         createParticle(
           Math.random() * rect.width,
           Math.random() * rect.height,
-          config.glowColor || '23, 105, 255'
+          config.glowColor || '37, 99, 235'
         )
       );
       particleTemplates.set(card, particles);
@@ -474,16 +474,16 @@ const config = JSON.stringify({
 <style>
   .bento {
     padding: 36px 24px 44px;
-    border-top: 1px solid rgba(217, 56, 30, 0.12);
-    border-bottom: 1px solid rgba(217, 56, 30, 0.12);
-    background: #f3eee8 !important;
+    border-top: 1px solid #e8eef5;
+    border-bottom: 1px solid #e8eef5;
+    background: #f8fafc !important;
     color: var(--foreground);
     position: relative;
   }
 
   :global(html[data-theme="dark"]) .bento {
-    background: #090e1a !important;
-    border-color: rgba(255, 255, 255, 0.08);
+    background: #0B1220 !important;
+    border-color: rgba(56, 189, 248, 0.12);
   }
 
   .centered-head {
@@ -529,7 +529,7 @@ const config = JSON.stringify({
   .bento-card {
     background: #ffffff;
     color: var(--card-foreground);
-    border: 1px solid rgba(20, 30, 50, 0.10);
+    border: 1px solid #e8eef5;
     border-radius: 10px;
     box-shadow: 0 3px 12px rgba(0, 0, 0, 0.03);
     overflow: hidden;
@@ -540,20 +540,20 @@ const config = JSON.stringify({
   }
 
   :global(html[data-theme="dark"]) .bento-card {
-    background: #0e1526;
-    border-color: rgba(255, 255, 255, 0.09);
+    background: #0F172A;
+    border-color: rgba(56, 189, 248, 0.12);
     box-shadow: 0 3px 16px rgba(0, 0, 0, 0.3);
   }
 
   .bento-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(23, 105, 255, 0.12);
-    border-color: #1D6AF3;
+    box-shadow: 0 8px 24px rgba(37, 99, 235, 0.12);
+    border-color: #2563EB;
   }
 
   :global(html[data-theme="dark"]) .bento-card:hover {
-    border-color: #60a5fa;
-    box-shadow: 0 8px 24px rgba(96, 165, 250, 0.2);
+    border-color: #38BDF8;
+    box-shadow: 0 8px 24px rgba(56, 189, 248, 0.2);
   }
 
   /* Card Grid Placements */
@@ -603,7 +603,7 @@ const config = JSON.stringify({
   }
 
   .lead-text .accent-link {
-    color: #1D6AF3;
+    color: #2563EB;
     text-decoration: underline;
     text-underline-offset: 3px;
     font-weight: 600;
@@ -713,7 +713,7 @@ const config = JSON.stringify({
 
   .metric-delta {
     font-size: 10px;
-    color: #ea580c;
+    color: #2563EB;
     font-weight: 700;
   }
 
@@ -729,7 +729,7 @@ const config = JSON.stringify({
   }
 
   :global(html[data-theme="dark"]) .schema-code {
-    background: #0e1526;
+    background: #0F172A;
   }
 
   .track-body {
@@ -746,7 +746,7 @@ const config = JSON.stringify({
   }
 
   .metric-num.accent {
-    color: #ea580c;
+    color: #2563EB;
   }
 
   .metric-num .faded {

@@ -109,9 +109,9 @@ const rules = [
   ═══════════════════════════════════════════ */
   .process-rules-section {
     padding: 40px 32px 28px;
-    background: #ebe5dc !important;
-    border-top: 1px solid rgba(217, 56, 30, 0.12);
-    border-bottom: 1px solid rgba(217, 56, 30, 0.12);
+    background: #f8fafc !important;
+    border-top: 1px solid #e8eef5;
+    border-bottom: 1px solid #e8eef5;
     width: 100%;
     box-sizing: border-box;
     display: flex;
@@ -121,7 +121,7 @@ const rules = [
   }
 
   :global(html[data-theme="dark"]) .process-rules-section {
-    background: #060913 !important;
+    background: #0B1220 !important;
     border-color: rgba(56, 189, 248, 0.12);
   }
 
@@ -147,7 +147,7 @@ const rules = [
 
   .rules-badge {
     font-size: 11px;
-    color: #d9381e;
+    color: #2563EB;
     text-transform: uppercase;
     letter-spacing: 1.5px;
     margin-bottom: 14px;
@@ -161,7 +161,7 @@ const rules = [
 
   :global(html[data-theme="dark"]) .rules-badge {
     background: transparent;
-    color: #ff6b4a;
+    color: #38BDF8;
     border: none;
   }
 
@@ -209,29 +209,29 @@ const rules = [
     padding: 9px 18px;
     border-radius: 8px;
     background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    border: 1px solid #e8eef5;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
     transition: all 0.2s ease;
     font-family: 'Lato', sans-serif;
   }
 
   .rules-action-btn:hover {
-    background: #0f172a;
+    background: #0B1220;
     color: #ffffff;
-    border-color: #0f172a;
+    border-color: #0B1220;
     transform: translateY(-2px);
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
   }
 
   :global(html[data-theme="dark"]) .rules-action-btn {
-    background: #0e1526;
-    border-color: rgba(255, 255, 255, 0.12);
+    background: #0F172A;
+    border-color: rgba(56, 189, 248, 0.14);
     color: #F5F7FB;
   }
 
   :global(html[data-theme="dark"]) .rules-action-btn:hover {
-    background: #d9381e;
-    border-color: #d9381e;
+    background: #2563EB;
+    border-color: #2563EB;
     color: #ffffff;
   }
 
@@ -261,7 +261,7 @@ const rules = [
 
   .rule-accordion-item {
     background: #ffffff;
-    border: 1px solid rgba(20, 30, 50, 0.10);
+    border: 1px solid #e8eef5;
     border-radius: 16px;
     padding: 22px 28px;
     cursor: pointer;
@@ -273,13 +273,13 @@ const rules = [
   }
 
   :global(html[data-theme="dark"]) .rule-accordion-item {
-    background: #0D152C;
+    background: #0F172A;
     border-color: rgba(56, 189, 248, 0.14);
     box-shadow: 0 4px 20px rgba(0, 4, 18, 0.35);
   }
 
   .rule-accordion-item:hover {
-    border-color: rgba(23, 105, 255, 0.4);
+    border-color: rgba(37, 99, 235, 0.4);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
   }
 
@@ -289,12 +289,12 @@ const rules = [
 
   .rule-accordion-item.active {
     background: #ffffff;
-    border-color: #216BFF;
-    box-shadow: 0 8px 26px rgba(33, 107, 255, 0.12);
+    border-color: #2563EB;
+    box-shadow: 0 8px 26px rgba(37, 99, 235, 0.12);
   }
 
   :global(html[data-theme="dark"]) .rule-accordion-item.active {
-    background: #131F3F;
+    background: #17253D;
     border-color: #38BDF8;
     box-shadow: 0 8px 30px rgba(56, 189, 248, 0.18);
   }
@@ -317,12 +317,12 @@ const rules = [
 
   .rule-accordion-item.active .rule-index-num,
   .rule-accordion-item:hover .rule-index-num {
-    color: #d9381e;
+    color: #2563EB;
   }
 
   :global(html[data-theme="dark"]) .rule-accordion-item.active .rule-index-num,
   :global(html[data-theme="dark"]) .rule-accordion-item:hover .rule-index-num {
-    color: #ff985d;
+    color: #38BDF8;
   }
 
   .rule-item-title {

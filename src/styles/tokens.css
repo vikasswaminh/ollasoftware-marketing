@@ -32,21 +32,21 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
-  /* Olla Brand Tokens - Light */
-  --o-bg:           #faf9f6;
-  --o-bg-sunken:    #f3eee8;
-  --o-bg-deep:      #f0eae1;
+  /* Olla Brand Tokens - MeshWG Light */
+  --o-bg:           #ffffff;
+  --o-bg-sunken:    #f8fafc;
+  --o-bg-deep:      #e8eef5;
   --o-panel:        #ffffff;
-  --o-panel-hi:     #ffffff;
-  --o-line:         rgba(20, 30, 50, 0.09);
-  --o-line-hi:      rgba(20, 30, 50, 0.16);
-  --o-line-whisper: rgba(20, 30, 50, 0.04);
-  --o-ink:          #0f172a;
-  --o-mute:         #475569;
+  --o-panel-hi:     #f8fafc;
+  --o-line:         #e8eef5;
+  --o-line-hi:      #d0d7e1;
+  --o-line-whisper: #f1f5f9;
+  --o-ink:          #0B1220;
+  --o-mute:         #526071;
   --o-faint:        #94a3b8;
-  --o-accent:       #216BFF;
-  --o-accent-2:     #1769FF;
-  --o-accent-dim:   rgba(33, 107, 255, 0.08);
+  --o-accent:       #2563EB;
+  --o-accent-2:     #1D4ED8;
+  --o-accent-dim:   rgba(37, 99, 235, 0.08);
   --o-accent-ink:   #ffffff;
 
   --o-radius-sm: 6px;
@@ -58,23 +58,23 @@
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   PREMIUM OBSIDIAN SAPPHIRE DARK THEME
-   Deep cosmic midnight tones with luminous cyan-sapphire luminescence
-══════════════════════════════════════════════════════════════════════ */
+   MESHWG DEEP NAVY SAPPHIRE DARK THEME
+   Deep navy tones with technical blue luminescence
+ ══════════════════════════════════════════════════════════════════════ */
 html[data-theme="dark"], .dark {
-  --background: #060913;
+  --background: #0B1220;
   --foreground: #F8FAFC;
-  --card: #0c1326;
+  --card: #0F172A;
   --card-foreground: #F8FAFC;
-  --popover: #0c1326;
+  --popover: #0F172A;
   --popover-foreground: #F8FAFC;
   --primary: #38BDF8;
-  --primary-foreground: #060913;
-  --secondary: #111c38;
+  --primary-foreground: #0B1220;
+  --secondary: #131F37;
   --secondary-foreground: #F8FAFC;
-  --muted: #111c38;
+  --muted: #131F37;
   --muted-foreground: #94A3B8;
-  --accent: #216BFF;
+  --accent: #2563EB;
   --accent-foreground: #ffffff;
   --destructive: #f87171;
   --border: rgba(56, 189, 248, 0.14);
@@ -82,29 +82,29 @@ html[data-theme="dark"], .dark {
   --ring: #38BDF8;
 
   --chart-1: #38BDF8;
-  --chart-2: #216BFF;
-  --chart-3: #818CF8;
-  --chart-4: #34D399;
-  --chart-5: #F472B6;
+  --chart-2: #2563EB;
+  --chart-3: #60A5FA;
+  --chart-4: #3B82F6;
+  --chart-5: #1D4ED8;
 
-  /* Olla Brand Tokens - Midnight Obsidian Sapphire */
-  --o-bg:           #060913;   /* Pure deep midnight void with cosmic undertone */
-  --o-bg-sunken:    #090E1F;   /* Sunken secondary section backdrop */
-  --o-bg-deep:      #04060D;   /* Darkest obsidian contrast layer */
-  --o-panel:        #0D152C;   /* Frosted sapphire card surface */
-  --o-panel-hi:     #131F3F;   /* Elevated hover card surface */
-  --o-line:         rgba(56, 189, 248, 0.14);  /* Subtle cyan-tinted glass border */
+  /* Olla Brand Tokens - MeshWG Deep Navy Sapphire */
+  --o-bg:           #0B1220;   /* MeshWG signature deep navy void */
+  --o-bg-sunken:    #080E18;   /* Sunken secondary section backdrop */
+  --o-bg-deep:      #050810;   /* Darkest obsidian contrast layer */
+  --o-panel:        #0F172A;   /* Deep slate navy surface */
+  --o-panel-hi:     #17253D;   /* Elevated hover card surface */
+  --o-line:         rgba(56, 189, 248, 0.14);  /* Subtle cool blue border */
   --o-line-hi:      rgba(56, 189, 248, 0.32);  /* Luminous border on focus/active */
   --o-line-whisper: rgba(255, 255, 255, 0.05);
 
-  --o-ink:          #F8FAFC;   /* Crisp diamond white */
-  --o-mute:         #94A3B8;   /* Cool moonlight silver */
+  --o-ink:          #F8FAFC;   /* Crisp white */
+  --o-mute:         #94A3B8;   /* Cool slate silver */
   --o-faint:        #64748B;   /* Muted technical gray */
 
-  --o-accent:       #38BDF8;   /* Vivid electric cyan */
-  --o-accent-2:     #216BFF;   /* Deep sapphire blue */
+  --o-accent:       #38BDF8;   /* Vivid electric blue */
+  --o-accent-2:     #2563EB;   /* Strong technical blue */
   --o-accent-dim:   rgba(56, 189, 248, 0.12); /* Soft radiant glow tint */
-  --o-accent-ink:   #060913;
+  --o-accent-ink:   #0B1220;
 
   color-scheme: dark;
 }

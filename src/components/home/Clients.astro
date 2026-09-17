@@ -214,13 +214,13 @@ const categoryTitles: Record<string, { first: string; amp: string; second: strin
   /* ─── SECTION SHELL ─── */
   .clients-section {
     padding: 64px 48px 76px;
-    background: #f7f4ef;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    background: #ffffff;
+    border-top: 1px solid #e8eef5;
+    border-bottom: 1px solid #e8eef5;
   }
 
   :global(html[data-theme="dark"]) .clients-section {
-    background: #060913 !important;
+    background: #0B1220 !important;
     border-top: 1px solid rgba(56, 189, 248, 0.12) !important;
     border-bottom: 1px solid rgba(56, 189, 248, 0.12) !important;
   }
@@ -338,7 +338,7 @@ const categoryTitles: Record<string, { first: string; amp: string; second: strin
   }
   .editorial-heading .ampersand {
     font-style: italic;
-    color: #d9381e;
+    color: #2563EB;
     padding-left: 0;
     line-height: 0.85;
     text-align: center;
@@ -352,7 +352,7 @@ const categoryTitles: Record<string, { first: string; amp: string; second: strin
     gap: 4px;
     width: 100%;
     background: #ffffff;
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    border: 1px solid #e8eef5;
     border-radius: 14px;
     padding: 8px;
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
@@ -360,7 +360,7 @@ const categoryTitles: Record<string, { first: string; amp: string; second: strin
   }
 
   :global(html[data-theme="dark"]) .vertical-filter-nav {
-    background: #0D152C;
+    background: #0F172A;
     border-color: rgba(56, 189, 248, 0.14);
     box-shadow: 0 4px 20px rgba(0, 4, 18, 0.4);
   }
@@ -399,15 +399,15 @@ const categoryTitles: Record<string, { first: string; amp: string; second: strin
     color: #ffffff;
   }
   .v-filter-btn.active {
-    background: rgba(29, 106, 243, 0.08);
-    color: #1D6AF3;
+    background: rgba(37, 99, 235, 0.08);
+    color: #2563EB;
     font-weight: 700;
-    border-color: rgba(29, 106, 243, 0.25);
+    border-color: rgba(37, 99, 235, 0.25);
   }
   :global(html[data-theme="dark"]) .v-filter-btn.active {
-    background: rgba(29, 106, 243, 0.18);
-    color: #60a5fa;
-    border-color: rgba(96, 165, 250, 0.35);
+    background: rgba(37, 99, 235, 0.18);
+    color: #38BDF8;
+    border-color: rgba(56, 189, 248, 0.35);
   }
   .v-label {
     flex-grow: 1;
@@ -438,7 +438,7 @@ const categoryTitles: Record<string, { first: string; amp: string; second: strin
   /* ─── REFINED CARD DESIGN WITH DISTINCT CATEGORY LIGHT COLORS ─── */
   .product-card {
     background: #ffffff;
-    border: 1px solid rgba(20, 30, 50, 0.10);
+    border: 1px solid #e8eef5;
     border-radius: 14px;
     padding: 20px 18px;
     min-height: 155px;
@@ -454,80 +454,72 @@ const categoryTitles: Record<string, { first: string; amp: string; second: strin
     box-sizing: border-box;
   }
 
-  /* 1. AI & ML — Light Electric Blue / Sky tint */
+  /* 1. AI & ML */
   .product-card.card-cat-ai {
     background: #f8fbff;
-    border-color: rgba(33, 107, 255, 0.18);
+    border-color: rgba(37, 99, 235, 0.18);
   }
   .product-card.card-cat-ai:hover {
-    border-color: #216bff;
-    box-shadow: 0 10px 24px rgba(33, 107, 255, 0.12);
+    border-color: #2563EB;
+    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.12);
   }
 
-  /* 2. APIs & Dev Tools — Light Purple / Indigo tint */
+  /* 2. APIs & Dev Tools */
   .product-card.card-cat-api {
-    background: #faf8ff;
-    border-color: rgba(124, 58, 237, 0.18);
+    background: #f8fafc;
+    border-color: #e8eef5;
   }
   .product-card.card-cat-api:hover {
-    border-color: #7c3aed;
-    box-shadow: 0 10px 24px rgba(124, 58, 237, 0.12);
+    border-color: #2563EB;
+    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.12);
   }
 
-  /* 3. Security & Networking — Light Crimson / Warm Coral tint */
+  /* 3. Security & Networking */
   .product-card.card-cat-security {
-    background: #fff8f6;
-    border-color: rgba(217, 56, 30, 0.18);
+    background: #f8fafc;
+    border-color: #e8eef5;
   }
   .product-card.card-cat-security:hover {
-    border-color: #d9381e;
-    box-shadow: 0 10px 24px rgba(217, 56, 30, 0.12);
+    border-color: #2563EB;
+    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.12);
   }
 
-  /* 4. Consumer & SaaS — Light Mint / Emerald tint */
+  /* 4. Consumer & SaaS */
   .product-card.card-cat-saas {
-    background: #f4fbf7;
-    border-color: rgba(16, 185, 129, 0.22);
+    background: #f8fafc;
+    border-color: #e8eef5;
   }
   .product-card.card-cat-saas:hover {
-    border-color: #10b981;
-    box-shadow: 0 10px 24px rgba(16, 185, 129, 0.12);
+    border-color: #2563EB;
+    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.12);
   }
 
-  /* 5. Training & Education — Light Amber / Warm Gold tint */
+  /* 5. Training & Education */
   .product-card.card-cat-training {
-    background: #fffbf2;
-    border-color: rgba(217, 119, 6, 0.22);
+    background: #f8fafc;
+    border-color: #e8eef5;
   }
   .product-card.card-cat-training:hover {
-    border-color: #d97706;
-    box-shadow: 0 10px 24px rgba(217, 119, 6, 0.12);
+    border-color: #2563EB;
+    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.12);
   }
 
   /* Dark mode variants */
   :global(html[data-theme="dark"]) .product-card {
-    background: #0D152C !important;
-    border-color: rgba(255, 255, 255, 0.10) !important;
+    background: #0F172A !important;
+    border-color: rgba(56, 189, 248, 0.12) !important;
   }
-  :global(html[data-theme="dark"]) .product-card.card-cat-ai {
-    background: rgba(33, 107, 255, 0.08) !important;
-    border-color: rgba(56, 189, 248, 0.25) !important;
-  }
-  :global(html[data-theme="dark"]) .product-card.card-cat-api {
-    background: rgba(139, 92, 246, 0.08) !important;
-    border-color: rgba(167, 139, 250, 0.25) !important;
-  }
-  :global(html[data-theme="dark"]) .product-card.card-cat-security {
-    background: rgba(239, 68, 68, 0.08) !important;
-    border-color: rgba(248, 113, 113, 0.25) !important;
-  }
-  :global(html[data-theme="dark"]) .product-card.card-cat-saas {
-    background: rgba(16, 185, 129, 0.08) !important;
-    border-color: rgba(52, 211, 153, 0.25) !important;
-  }
+  :global(html[data-theme="dark"]) .product-card.card-cat-ai,
+  :global(html[data-theme="dark"]) .product-card.card-cat-api,
+  :global(html[data-theme="dark"]) .product-card.card-cat-security,
+  :global(html[data-theme="dark"]) .product-card.card-cat-saas,
   :global(html[data-theme="dark"]) .product-card.card-cat-training {
-    background: rgba(245, 158, 11, 0.08) !important;
-    border-color: rgba(251, 191, 36, 0.25) !important;
+    background: #0F172A !important;
+    border-color: rgba(56, 189, 248, 0.12) !important;
+  }
+  :global(html[data-theme="dark"]) .product-card:hover {
+    border-color: #38BDF8 !important;
+    box-shadow: 0 10px 24px rgba(56, 189, 248, 0.16) !important;
   }
 
   .product-card:hover {
@@ -569,35 +561,26 @@ const categoryTitles: Record<string, { first: string; amp: string; second: strin
     border-radius: 6px;
     flex-shrink: 0;
   }
-  .cat-pill-ai {
-    background: rgba(33, 107, 255, 0.12);
-    color: #1769ff;
-  }
-  .cat-pill-api {
-    background: rgba(124, 58, 237, 0.12);
-    color: #7c3aed;
-  }
-  .cat-pill-security {
-    background: rgba(217, 56, 30, 0.12);
-    color: #d9381e;
-  }
-  .cat-pill-saas {
-    background: rgba(16, 185, 129, 0.14);
-    color: #059669;
-  }
+  .cat-pill-ai,
+  .cat-pill-api,
+  .cat-pill-security,
+  .cat-pill-saas,
   .cat-pill-training {
-    background: rgba(217, 119, 6, 0.14);
-    color: #b45309;
+    background: rgba(37, 99, 235, 0.08);
+    color: #2563EB;
   }
 
-  :global(html[data-theme="dark"]) .cat-pill-ai { color: #60a5fa; background: rgba(33, 107, 255, 0.25); }
-  :global(html[data-theme="dark"]) .cat-pill-api { color: #c084fc; background: rgba(139, 92, 246, 0.25); }
-  :global(html[data-theme="dark"]) .cat-pill-security { color: #f87171; background: rgba(239, 68, 68, 0.25); }
-  :global(html[data-theme="dark"]) .cat-pill-saas { color: #4ade80; background: rgba(16, 185, 129, 0.25); }
-  :global(html[data-theme="dark"]) .cat-pill-training { color: #fbbf24; background: rgba(245, 158, 11, 0.25); }
+  :global(html[data-theme="dark"]) .cat-pill-ai,
+  :global(html[data-theme="dark"]) .cat-pill-api,
+  :global(html[data-theme="dark"]) .cat-pill-security,
+  :global(html[data-theme="dark"]) .cat-pill-saas,
+  :global(html[data-theme="dark"]) .cat-pill-training {
+    color: #38BDF8;
+    background: rgba(56, 189, 248, 0.15);
+  }
 
-  .product-card:hover .product-title { color: #1769ff; }
-  :global(html[data-theme="dark"]) .product-card:hover .product-title { color: #38bdf8; }
+  .product-card:hover .product-title { color: #2563EB; }
+  :global(html[data-theme="dark"]) .product-card:hover .product-title { color: #38BDF8; }
 
   .product-blurb {
     font-family: 'Lato', system-ui, -apple-system, sans-serif;
@@ -644,8 +627,8 @@ const categoryTitles: Record<string, { first: string; amp: string; second: strin
   .product-domain .arrow svg {
     display: block;
   }
-  .product-card:hover .product-domain { color: #1769ff; }
-  :global(html[data-theme="dark"]) .product-card:hover .product-domain { color: #38bdf8; }
+  .product-card:hover .product-domain { color: #2563EB; }
+  :global(html[data-theme="dark"]) .product-card:hover .product-domain { color: #38BDF8; }
   .product-card:hover .product-domain .arrow { transform: translate(3px,-2px); }
 
   /* ─── FOOTNOTE ─── */
@@ -659,7 +642,7 @@ const categoryTitles: Record<string, { first: string; amp: string; second: strin
     text-align: left;
   }
   .footnote a {
-    color: #d9381e;
+    color: #2563EB;
     font-weight: 600;
     text-decoration: none;
     margin-left: 6px;

@@ -334,11 +334,11 @@ pre,
    Toggled by [data-theme="dark"] on <html>
 ───────────────────────────────────────────── */
 html[data-theme="dark"] {
-  --o-bg:           #060913;
-  --o-bg-sunken:    #090E1F;
-  --o-bg-deep:      #04060D;
-  --o-panel:        #0D152C;
-  --o-panel-hi:     #131F3F;
+  --o-bg:           #0B1220;
+  --o-bg-sunken:    #080E18;
+  --o-bg-deep:      #050810;
+  --o-panel:        #0F172A;
+  --o-panel-hi:     #17253D;
   --o-line:         rgba(56, 189, 248, 0.14);
   --o-line-hi:      rgba(56, 189, 248, 0.35);
   --o-line-whisper: rgba(255, 255, 255, 0.05);
@@ -348,15 +348,15 @@ html[data-theme="dark"] {
   --o-faint:        #64748B;
 
   --o-accent:       #38BDF8;
-  --o-accent-2:     #216BFF;
+  --o-accent-2:     #2563EB;
   --o-accent-dim:   rgba(56, 189, 248, 0.12);
-  --o-accent-ink:   #060913;
+  --o-accent-ink:   #0B1220;
 
   color-scheme: dark;
 }
 
 html[data-theme="dark"] body {
-  background: #060913 !important;
+  background: #0B1220 !important;
   color: #F8FAFC !important;
 }
 
@@ -381,14 +381,14 @@ html[data-theme="dark"] .text .sub {
 /* Top Announcement Banner */
 html[data-theme="dark"] .announcement-bar,
 html[data-theme="dark"] .top-banner {
-  background: #04060D !important;
+  background: #050810 !important;
   border-bottom: 1px solid rgba(56, 189, 248, 0.12) !important;
   color: #cbd5e1 !important;
 }
 
 /* Header & Sticky Nav in Dark Mode */
 html[data-theme="dark"] #site-nav {
-  background: rgba(7, 10, 18, 0.92) !important;
+  background: rgba(11, 18, 32, 0.92) !important;
   backdrop-filter: blur(16px) saturate(180%) !important;
   -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
   border-bottom: 1px solid rgba(56, 189, 248, 0.16) !important;
@@ -405,12 +405,12 @@ html[data-theme="dark"] .nav-link.active {
 
 /* Bento Section Dark Mode */
 html[data-theme="dark"] .bento {
-  background: #080D1A !important;
+  background: #0B1220 !important;
   border-color: rgba(56, 189, 248, 0.12) !important;
 }
 
 html[data-theme="dark"] .bento-card {
-  background: #0D152C !important;
+  background: #0F172A !important;
   border-color: rgba(56, 189, 248, 0.14) !important;
   box-shadow: 0 8px 28px rgba(0, 4, 18, 0.5) !important;
 }
@@ -434,7 +434,7 @@ html[data-theme="dark"] .track-sub {
 
 /* Clients Section Dark Mode */
 html[data-theme="dark"] .clients-section {
-  background: #060913 !important;
+  background: #0B1220 !important;
 }
 
 html[data-theme="dark"] .editorial-heading,
@@ -449,7 +449,7 @@ html[data-theme="dark"] .category-count {
 }
 
 html[data-theme="dark"] .product-card {
-  background: #0D152C !important;
+  background: #0F172A !important;
   border-color: rgba(56, 189, 248, 0.14) !important;
 }
 
@@ -460,12 +460,12 @@ html[data-theme="dark"] .product-card:hover {
 
 /* Services 03 Section Dark Mode */
 html[data-theme="dark"] .services-zoom-section {
-  background: #090E1F !important;
+  background: #080E18 !important;
   border-color: rgba(56, 189, 248, 0.12) !important;
 }
 
 html[data-theme="dark"] .zoom-service-card {
-  background: #0D152C !important;
+  background: #0F172A !important;
   border-color: rgba(56, 189, 248, 0.14) !important;
   box-shadow: 0 8px 30px rgba(0, 4, 18, 0.45) !important;
 }
@@ -477,31 +477,31 @@ html[data-theme="dark"] .zoom-service-card:hover {
 
 /* Process 04 Section Dark Mode */
 html[data-theme="dark"] .process-rules-section {
-  background: #060913 !important;
+  background: #0B1220 !important;
   border-color: rgba(56, 189, 248, 0.12) !important;
 }
 
 html[data-theme="dark"] .rule-accordion-item {
-  background: #0D152C !important;
+  background: #0F172A !important;
   border-color: rgba(56, 189, 248, 0.14) !important;
 }
 
 /* Testimonials 05 Section Dark Mode */
 html[data-theme="dark"] .testimonials-section,
 html[data-theme="dark"] .room-section {
-  background: #090E1F !important;
+  background: #080E18 !important;
   border-color: rgba(56, 189, 248, 0.12) !important;
 }
 
 html[data-theme="dark"] .testimonial-card,
 html[data-theme="dark"] .room-card {
-  background: #0D152C !important;
+  background: #0F172A !important;
   border-color: rgba(56, 189, 248, 0.14) !important;
 }
 
 /* CTA Section Dark Mode */
 html[data-theme="dark"] .cta-section {
-  background: #060913 !important;
+  background: #0B1220 !important;
 }
 
 html[data-theme="dark"] .headline {
@@ -513,7 +513,7 @@ html[data-theme="dark"] .supporting {
 }
 
 html[data-theme="dark"] .btn-secondary {
-  background: #0D152C !important;
+  background: #0F172A !important;
   border-color: rgba(56, 189, 248, 0.2) !important;
   color: #F8FAFC !important;
 }

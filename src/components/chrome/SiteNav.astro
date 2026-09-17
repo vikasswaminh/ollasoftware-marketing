@@ -49,7 +49,7 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
               <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
             </svg>
             <!-- Moon icon in thumb when dark -->
-            <svg class="thumb-icon icon-moon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#1769FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <svg class="thumb-icon icon-moon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
             </svg>
           </span>
@@ -145,7 +145,7 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
                   <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
                   <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
                 </svg>
-                <svg class="thumb-icon icon-moon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#1769FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <svg class="thumb-icon icon-moon" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                   <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
                 </svg>
               </span>
@@ -301,7 +301,7 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
   }
 
   :global(html[data-theme="dark"]) .nav {
-    background: rgba(7, 10, 18, 0.92) !important;
+    background: rgba(11, 18, 32, 0.92) !important;
     backdrop-filter: blur(16px) saturate(180%) !important;
     -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
     border-bottom: 1px solid rgba(56, 189, 248, 0.16) !important;
@@ -371,7 +371,7 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
     font-size: 24px !important;
     font-weight: 800 !important;
     letter-spacing: -0.04em;
-    color: #1D6AF3 !important;
+    color: #2563EB !important;
     line-height: 1;
   }
 
@@ -411,12 +411,12 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
   }
 
   .nav-link:hover, .nav-link.active {
-    color: #1D6AF3;
+    color: #2563EB;
   }
 
   :global(html[data-theme="dark"]) .nav-link:hover,
   :global(html[data-theme="dark"]) .nav-link.active {
-    color: #60a5fa;
+    color: #38BDF8;
   }
 
   /* ─── iOS Style Horizontal Toggle Switch ─── */
@@ -464,9 +464,9 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
   }
 
   html[data-theme="dark"] .toggle-track {
-    background: #1769FF;
-    border-color: #2979ff;
-    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3), 0 0 12px rgba(23, 105, 255, 0.4);
+    background: #2563EB;
+    border-color: #3b82f6;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3), 0 0 12px rgba(37, 99, 235, 0.4);
   }
 
   html[data-theme="dark"] .toggle-thumb {
@@ -486,7 +486,7 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: #1D6AF3;
+    background: #2563EB;
     color: #ffffff;
     font-family: 'Lato', sans-serif;
     font-size: 14.5px;
@@ -495,15 +495,15 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
     padding: 10px 22px;
     border-radius: 100px;
     text-decoration: none;
-    box-shadow: 0 4px 14px rgba(29, 106, 243, 0.28);
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28);
     transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
     white-space: nowrap;
   }
 
   .cta-btn:hover {
-    background: #1557D0;
+    background: #1D4ED8;
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(29, 106, 243, 0.38);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.38);
   }
 
   .arrow {
@@ -622,7 +622,7 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
     }
 
     :global(html[data-theme="dark"]) .nav-links {
-      background: #070a12 !important;
+      background: #0B1220 !important;
     }
 
     .nav.nav-open .nav-links,
@@ -647,7 +647,7 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
     }
 
     :global(html[data-theme="dark"]) .drawer-header-bar {
-      background: #070a12;
+      background: #0B1220;
       border-bottom-color: rgba(255, 255, 255, 0.1);
     }
 
@@ -713,8 +713,8 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
 
     .drawer-main-link:hover,
     .drawer-main-link.active {
-      color: #1D6AF3 !important;
-      background: rgba(29, 106, 243, 0.06);
+      color: #2563EB !important;
+      background: rgba(37, 99, 235, 0.06);
     }
 
     .nav-arrow {
@@ -725,7 +725,7 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
 
     .drawer-main-link:hover .nav-arrow {
       transform: translateX(4px);
-      color: #1D6AF3;
+      color: #2563EB;
     }
 
     :global(html[data-theme="dark"]) .drawer-main-link:hover,
@@ -811,7 +811,7 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
     }
 
     .drawer-item-link:hover {
-      color: #1D6AF3 !important;
+      color: #2563EB !important;
       transform: translateX(2px);
     }
 
@@ -867,19 +867,19 @@ const isActive = (to: string) => to === path || (to !== '/' && path.startsWith(t
       width: 100%;
       padding: 12px 20px;
       border-radius: 100px;
-      background: #1D6AF3;
+      background: #2563EB;
       color: #ffffff !important;
       font-size: 14.5px;
       font-weight: 700;
       text-decoration: none;
-      box-shadow: 0 4px 16px rgba(29, 106, 243, 0.35);
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
       font-family: 'Lato', sans-serif;
       box-sizing: border-box;
       transition: background 0.2s ease;
     }
 
     .drawer-cta-btn:hover {
-      background: #1557D0;
+      background: #1D4ED8;
     }
   }
 
