@@ -49,6 +49,11 @@
   --o-accent-dim:   rgba(37, 99, 235, 0.08);
   --o-accent-ink:   #ffffff;
 
+  /* MeshWG Brand Colors */
+  --brand-red:      #DA291C;
+  --brand-red-2:    #b3211a;
+  --brand-red-soft: #fde8e6;
+
   --o-radius-sm: 6px;
   --o-radius:    10px;
   --o-radius-lg: 14px;
