@@ -214,9 +214,9 @@ const categoryTitles: Record<string, { first: string; amp: string; second: strin
   /* ─── SECTION SHELL ─── */
   .clients-section {
     padding: 64px 48px 76px;
-    background: #ffffff;
-    border-top: 1px solid #e8eef5;
-    border-bottom: 1px solid #e8eef5;
+    background: #f7f4ef;
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   }
 
   :global(html[data-theme="dark"]) .clients-section {
@@ -454,72 +454,80 @@ const categoryTitles: Record<string, { first: string; amp: string; second: strin
     box-sizing: border-box;
   }
 
-  /* 1. AI & ML */
+  /* 1. AI & ML — Light Electric Blue / Sky tint */
   .product-card.card-cat-ai {
     background: #f8fbff;
-    border-color: rgba(37, 99, 235, 0.18);
+    border-color: rgba(33, 107, 255, 0.18);
   }
   .product-card.card-cat-ai:hover {
-    border-color: #2563EB;
-    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.12);
+    border-color: #216bff;
+    box-shadow: 0 10px 24px rgba(33, 107, 255, 0.12);
   }
 
-  /* 2. APIs & Dev Tools */
+  /* 2. APIs & Dev Tools — Light Purple / Indigo tint */
   .product-card.card-cat-api {
-    background: #f8fafc;
-    border-color: #e8eef5;
+    background: #faf8ff;
+    border-color: rgba(124, 58, 237, 0.18);
   }
   .product-card.card-cat-api:hover {
-    border-color: #2563EB;
-    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.12);
+    border-color: #7c3aed;
+    box-shadow: 0 10px 24px rgba(124, 58, 237, 0.12);
   }
 
-  /* 3. Security & Networking */
+  /* 3. Security & Networking — Light Crimson / Warm Coral tint */
   .product-card.card-cat-security {
-    background: #f8fafc;
-    border-color: #e8eef5;
+    background: #fff8f6;
+    border-color: rgba(217, 56, 30, 0.18);
   }
   .product-card.card-cat-security:hover {
-    border-color: #2563EB;
-    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.12);
+    border-color: #d9381e;
+    box-shadow: 0 10px 24px rgba(217, 56, 30, 0.12);
   }
 
-  /* 4. Consumer & SaaS */
+  /* 4. Consumer & SaaS — Light Mint / Emerald tint */
   .product-card.card-cat-saas {
-    background: #f8fafc;
-    border-color: #e8eef5;
+    background: #f4fbf7;
+    border-color: rgba(16, 185, 129, 0.22);
   }
   .product-card.card-cat-saas:hover {
-    border-color: #2563EB;
-    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.12);
+    border-color: #10b981;
+    box-shadow: 0 10px 24px rgba(16, 185, 129, 0.12);
   }
 
-  /* 5. Training & Education */
+  /* 5. Training & Education — Light Amber / Warm Gold tint */
   .product-card.card-cat-training {
-    background: #f8fafc;
-    border-color: #e8eef5;
+    background: #fffbf2;
+    border-color: rgba(217, 119, 6, 0.22);
   }
   .product-card.card-cat-training:hover {
-    border-color: #2563EB;
-    box-shadow: 0 10px 24px rgba(37, 99, 235, 0.12);
+    border-color: #d97706;
+    box-shadow: 0 10px 24px rgba(217, 119, 6, 0.12);
   }
 
   /* Dark mode variants */
   :global(html[data-theme="dark"]) .product-card {
     background: #0F172A !important;
-    border-color: rgba(56, 189, 248, 0.12) !important;
+    border-color: rgba(255, 255, 255, 0.10) !important;
   }
-  :global(html[data-theme="dark"]) .product-card.card-cat-ai,
-  :global(html[data-theme="dark"]) .product-card.card-cat-api,
-  :global(html[data-theme="dark"]) .product-card.card-cat-security,
-  :global(html[data-theme="dark"]) .product-card.card-cat-saas,
+  :global(html[data-theme="dark"]) .product-card.card-cat-ai {
+    background: rgba(33, 107, 255, 0.08) !important;
+    border-color: rgba(56, 189, 248, 0.25) !important;
+  }
+  :global(html[data-theme="dark"]) .product-card.card-cat-api {
+    background: rgba(139, 92, 246, 0.08) !important;
+    border-color: rgba(167, 139, 250, 0.25) !important;
+  }
+  :global(html[data-theme="dark"]) .product-card.card-cat-security {
+    background: rgba(239, 68, 68, 0.08) !important;
+    border-color: rgba(248, 113, 113, 0.25) !important;
+  }
+  :global(html[data-theme="dark"]) .product-card.card-cat-saas {
+    background: rgba(16, 185, 129, 0.08) !important;
+    border-color: rgba(52, 211, 153, 0.25) !important;
+  }
   :global(html[data-theme="dark"]) .product-card.card-cat-training {
-    background: #0F172A !important;
-    border-color: rgba(56, 189, 248, 0.12) !important;
-  }
-  :global(html[data-theme="dark"]) .product-card:hover {
-    border-color: #38BDF8 !important;
-    box-shadow: 0 10px 24px rgba(56, 189, 248, 0.16) !important;
+    background: rgba(245, 158, 11, 0.08) !important;
+    border-color: rgba(251, 191, 36, 0.25) !important;
   }
 
   .product-card:hover {
@@ -561,23 +569,32 @@ const categoryTitles: Record<string, { first: string; amp: string; second: strin
     border-radius: 6px;
     flex-shrink: 0;
   }
-  .cat-pill-ai,
-  .cat-pill-api,
-  .cat-pill-security,
-  .cat-pill-saas,
+  .cat-pill-ai {
+    background: rgba(33, 107, 255, 0.12);
+    color: #1769ff;
+  }
+  .cat-pill-api {
+    background: rgba(124, 58, 237, 0.12);
+    color: #7c3aed;
+  }
+  .cat-pill-security {
+    background: rgba(217, 56, 30, 0.12);
+    color: #d9381e;
+  }
+  .cat-pill-saas {
+    background: rgba(16, 185, 129, 0.14);
+    color: #059669;
+  }
   .cat-pill-training {
-    background: rgba(37, 99, 235, 0.08);
-    color: #2563EB;
+    background: rgba(217, 119, 6, 0.14);
+    color: #b45309;
   }
 
-  :global(html[data-theme="dark"]) .cat-pill-ai,
-  :global(html[data-theme="dark"]) .cat-pill-api,
-  :global(html[data-theme="dark"]) .cat-pill-security,
-  :global(html[data-theme="dark"]) .cat-pill-saas,
-  :global(html[data-theme="dark"]) .cat-pill-training {
-    color: #38BDF8;
-    background: rgba(56, 189, 248, 0.15);
-  }
+  :global(html[data-theme="dark"]) .cat-pill-ai { color: #60a5fa; background: rgba(33, 107, 255, 0.25); }
+  :global(html[data-theme="dark"]) .cat-pill-api { color: #c084fc; background: rgba(139, 92, 246, 0.25); }
+  :global(html[data-theme="dark"]) .cat-pill-security { color: #f87171; background: rgba(239, 68, 68, 0.25); }
+  :global(html[data-theme="dark"]) .cat-pill-saas { color: #4ade80; background: rgba(16, 185, 129, 0.25); }
+  :global(html[data-theme="dark"]) .cat-pill-training { color: #fbbf24; background: rgba(245, 158, 11, 0.25); }
 
   .product-card:hover .product-title { color: #2563EB; }
   :global(html[data-theme="dark"]) .product-card:hover .product-title { color: #38BDF8; }
